@@ -83,6 +83,15 @@ def load_params(config):
     P["riskPct"] = min(P["riskPct"], P["maxRiskCapP"])
     P["redPct"] = min(P["redPct"], P["maxRiskCapP"])
     P["withdrawPct"] = min(max(P["withdrawPct"], 0.0), 100.0)
+    # 규칙 변경 이력: [{"until": "YYYY-MM-DD HH:MM", "rules": 설명, "params": {...}}, ...] (시간순)
+    # 각 항목의 params 는 'until 이전' 봉에 적용, 마지막 until 이후엔 위의 현재 설정을 적용.
+    # 이미 지나간 거래는 그때 규칙으로 기록되고, 보유 중이던 포지션은 그대로 이어진다.
+    hist = []
+    for h in config.get("rule_history") or []:
+        base = dict(config); base.pop("rule_history", None); base.update(h.get("params", {}))
+        hp = load_params(base)
+        hist.append((parse_kst(h["until"]), hp))
+    P["rule_history"] = sorted(hist, key=lambda x: x[0])
     return P
 
 
@@ -248,6 +257,10 @@ def run(D, P, start_time=None, close_at_end=False):
       - 하루 기준 금액(목표·손실 한도) = 그날 첫 봉의 거래 계좌 평가 잔고 (기존 v1.4.1 과 같은 정의)
     """
     T, O, H, L, C, V = D.T, D.O, D.H, D.L, D.C, D.V
+    P_final = P
+    phases = list(P.get("rule_history") or [])     # [(until, params)] — until 이전 봉에 그 params 적용
+    if phases:
+        P = phases[0][1]
     n, sw, tol = D.n, P["swLen"], P["zoneTolP"] / 100
     fee, slip, eq0 = P["fee"], P["slip"], P["capital"]
     capP = P["maxRiskCapP"]
@@ -316,6 +329,11 @@ def run(D, P, start_time=None, close_at_end=False):
     for i in range(n):
         o, h, l, c, v = O[i], H[i], L[i], C[i], V[i]
         can_trade = start_time is None or T[i] >= start_time
+        # 규칙 변경 시각을 지나면 다음 규칙으로 (자금 관리 값만 바뀜, 보유 포지션·오늘 기록은 이어짐)
+        while phases and T[i] >= phases[0][0]:
+            phases.pop(0)
+            P = phases[0][1] if phases else P_final
+            capP = P["maxRiskCapP"]; tgtP = P["dayTargetP"]
         closed_now = []
         # ---------- 0) 주간 출금 (월요일 00:00 KST, 이번 봉의 체결보다 먼저) ----------
         wk = T[i].date() - dt.timedelta(days=T[i].weekday())
