@@ -1,0 +1,42 @@
+name: gemini-key-check
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gemini API 키 동작 확인 (키 값은 출력하지 않음)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python3 - <<'EOF'
+          import os, json, urllib.request, urllib.error
+          k = os.environ.get("GEMINI_API_KEY", "")
+          print("키 등록:", "있음" if k else "없음")
+          def call(model):
+              url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+              body = json.dumps({"contents":[{"parts":[{"text":"'준비됨'이라고만 답해."}]}]}).encode()
+              req = urllib.request.Request(url, data=body, headers={"Content-Type":"application/json","x-goog-api-key":k})
+              try:
+                  with urllib.request.urlopen(req, timeout=60) as r:
+                      d = json.load(r)
+                      print(model, "HTTP", r.status, "→", d["candidates"][0]["content"]["parts"][0]["text"].strip()[:50])
+                      return True
+              except urllib.error.HTTPError as e:
+                  msg = json.load(e).get("error", {})
+                  print(model, "HTTP", e.code, msg.get("status"), str(msg.get("message"))[:200])
+                  return False
+          # 모델 목록에서 flash 계열 하나 골라 시험
+          try:
+              req = urllib.request.Request("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", headers={"x-goog-api-key":k})
+              with urllib.request.urlopen(req, timeout=60) as r:
+                  ms = [m["name"].split("/")[1] for m in json.load(r).get("models", []) if "generateContent" in m.get("supportedGenerationMethods", [])]
+              print("사용 가능 모델 수:", len(ms))
+              print("flash 계열:", [m for m in ms if "flash" in m][:12])
+          except urllib.error.HTTPError as e:
+              print("모델 목록 HTTP", e.code); ms = []
+          cand = [m for m in ms if "flash" in m and "lite" not in m and "image" not in m and "tts" not in m and "live" not in m]
+          for m in (cand[-1:] + ["gemini-2.5-flash"])[:2]:
+              if call(m): break
+          EOF
