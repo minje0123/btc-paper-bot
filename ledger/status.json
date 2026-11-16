@@ -47,7 +47,7 @@
   "last_bar_time": "2026-11-16 20:00:00",
   "last_price": 88228000,
   "data_source": "upbit",
-  "data_source_this_run": "upbit",
-  "updated_at": "2026-11-16 20:05:21",
+  "data_source_this_run": null,
+  "updated_at": "2026-11-16 20:05:36",
   "warnings": []
 }
