@@ -4,9 +4,9 @@
   "start_time": "2026-11-16 13:40:00",
   "initial_capital": 1000000.0,
   "balance": 1000000,
-  "equity": 999231,
+  "equity": 999411,
   "realized_pnl": 0,
-  "unrealized_pnl": -769,
+  "unrealized_pnl": -589,
   "trades_count": 0,
   "win_rate": 0.0,
   "avg_R": 0.0,
@@ -29,8 +29,8 @@
     "risk_money": 2500,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 88235000,
-    "unrealized_pnl": -769,
+    "last_price": 88206000,
+    "unrealized_pnl": -589,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -42,10 +42,10 @@
     "no_new_entries": false,
     "reason": null
   },
-  "last_bar_time": "2026-11-16 15:15:00",
-  "last_price": 88235000,
+  "last_bar_time": "2026-11-16 15:20:00",
+  "last_price": 88206000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-16 15:20:21",
+  "updated_at": "2026-11-16 15:25:21",
   "warnings": []
 }
