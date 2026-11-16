@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1117">
+<title>BTC 가상 매매 계좌</title>
+<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+  :root{
+    --bg:#0d1117; --card:#151b24; --line:#232b38; --text:#e6edf3; --muted:#8b96a5;
+    --up:#f04452; --down:#3182f6; --ok:#2fbf71; --warn:#f5a524;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+    font-size:15px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;padding:14px 14px 40px}
+  header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+  h1{font-size:19px;margin:0 0 4px;letter-spacing:-.3px}
+  .sub{color:var(--muted);font-size:12.5px;line-height:1.5}
+  .price{text-align:right}
+  .price .p{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+  .price .c{font-size:12.5px;font-variant-numeric:tabular-nums}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted);margin-right:5px;vertical-align:1px}
+  .dot.live{background:var(--ok);box-shadow:0 0 0 0 rgba(47,191,113,.6);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,191,113,.6)}70%{box-shadow:0 0 0 7px rgba(47,191,113,0)}100%{box-shadow:0 0 0 0 rgba(47,191,113,0)}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+  .card h2{font-size:14px;margin:0 0 10px;color:var(--muted);font-weight:600;display:flex;justify-content:space-between;align-items:center}
+  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700}
+  .b-none{background:#232b38;color:var(--muted)}
+  .b-long{background:rgba(240,68,82,.15);color:var(--up)}
+  .b-short{background:rgba(49,130,246,.15);color:var(--down)}
+  .b-warn{background:rgba(245,165,36,.15);color:var(--warn)}
+  .pos-head{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:800;margin-bottom:10px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  @media (max-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .kv{background:#10161f;border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+  .kv .k{font-size:11.5px;color:var(--muted);margin-bottom:3px}
+  .kv .v{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;word-break:keep-all}
+  .kv .v small{font-size:11.5px;font-weight:500;color:var(--muted)}
+  .up{color:var(--up)} .down{color:var(--down)} .muted{color:var(--muted)}
+  .note{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:8px}
+  .alert{border-radius:10px;padding:9px 11px;font-size:13px;margin-bottom:10px;line-height:1.5}
+  .alert.warn{background:rgba(245,165,36,.1);border:1px solid rgba(245,165,36,.35);color:#f8c873}
+  .alert.info{background:rgba(49,130,246,.1);border:1px solid rgba(49,130,246,.35);color:#9cc2ff}
+  .chart{height:330px;width:100%}
+  .chart.eq{height:200px}
+  .seg{display:flex;gap:4px}
+  .seg button{background:#10161f;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:12px;cursor:pointer}
+  .seg button.on{color:var(--text);border-color:#3a4558;background:#1b2330}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:11.5px;color:var(--muted);margin-top:8px}
+  .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse;width:100%;font-size:12.8px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  th,td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:right}
+  th{color:var(--muted);font-weight:600;font-size:11.5px;position:sticky;top:0;background:var(--card)}
+  td.l,th.l{text-align:left}
+  tr.trow{cursor:pointer}
+  tr.trow:hover td{background:#1a212c}
+  tr.detail td{background:#10161f;color:var(--muted);white-space:normal;text-align:left;font-size:12px;line-height:1.6}
+  .empty{color:var(--muted);text-align:center;padding:22px 0;font-size:13px}
+  footer{color:var(--muted);font-size:11.5px;line-height:1.6;margin-top:16px}
+  footer a{color:#9cc2ff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>BTC 5분봉 가상 매매 계좌</h1>
+      <div class="sub">원칙 v1.4.1 · <b>실제 돈을 쓰지 않는 가상 매매</b><br>
+        <span id="wsState"><span class="dot"></span>시세 연결 중…</span> · <span id="ledgerAge">장부 불러오는 중…</span></div>
+    </div>
+    <div class="price">
+      <div class="sub">업비트 KRW-BTC</div>
+      <div class="p" id="livePrice">–</div>
+      <div class="c" id="liveChg"></div>
+    </div>
+  </header>
+
+  <div id="alerts"></div>
+
+  <section class="card" id="posCard">
+    <h2>현재 포지션 <span id="posTime" class="muted" style="font-weight:400;font-size:12px"></span></h2>
+    <div id="posBody"><div class="empty">불러오는 중…</div></div>
+  </section>
+
+  <section class="card">
+    <h2>계좌 요약</h2>
+    <div class="grid" id="kpis"></div>
+  </section>
+
+  <section class="card">
+    <h2>차트 · 진입/청산 표시
+      <span class="seg" id="rangeBtns">
+        <button data-h="6">6시간</button><button data-h="24" class="on">1일</button><button data-h="72">3일</button><button data-h="0">전체</button>
+      </span>
+    </h2>
+    <div class="chart" id="chart"></div>
+    <div class="legend">
+      <span><span class="up">▲</span> 롱 진입</span><span><span class="down">▼</span> 숏 진입</span>
+      <span>● 청산(초록 이익 / 회색 본절 / 주황 손실)</span><span>점선: 현재 포지션 진입·손절·T1</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>자산 곡선 <span class="muted" style="font-weight:400;font-size:12px">청산 기준 + 현재 평가</span></h2>
+    <div class="chart eq" id="eqChart"></div>
+  </section>
+
+  <section class="card">
+    <h2>매매 기록 <span class="muted" style="font-weight:400;font-size:12px">행을 누르면 청산 내역</span></h2>
+    <div class="tbl" id="tradesTbl"></div>
+  </section>
+
+  <section class="card">
+    <h2>기간별 손익</h2>
+    <div class="tbl" id="periodTbl"></div>
+  </section>
+
+  <footer>
+    규칙: 위험 0.25%(1시간 반대·B+·C 0.15%) · 최소 손절폭 0.40%, 최대 1.5% · 레버리지 상한 10배 · 수수료 0.05%·슬리피지 1틱 ·
+    T1에서 50% 익절 후 남은 물량 본절 · 하루 −2% 또는 2연속 손절이면 그날 신규 진입 금지.<br>
+    장부는 GitHub 봇이 5분마다 갱신해요(GitHub 사정으로 늦어질 수 있어요). 현재가·미실현 손익은 업비트 실시간 시세로 이 화면에서 계산해요.<br>
+    <a id="repoLink" href="#" target="_blank" rel="noopener">GitHub 장부 보기</a>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const OWNER = 'minje0123', REPO = 'btc-paper-bot', FEE = 0.0005;
+  const DEMO = new URLSearchParams(location.search).has('demo');
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const won = n => (n == null || isNaN(n)) ? '–' : Math.round(n).toLocaleString('ko-KR');
+  const sWon = n => (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(Math.round(n)).toLocaleString('ko-KR') + '원';
+  const cls = n => n > 0 ? 'up' : n < 0 ? 'down' : 'muted';
+  const kstTs = s => { // "YYYY-MM-DD HH:MM(:SS)" (KST) -> 차트용 초(KST 시계를 그대로 표시)
+    const m = String(s).match(/(\d{4})-(\d\d)-(\d\d)[ T](\d\d):(\d\d)(?::(\d\d))?/);
+    return m ? Date.UTC(+m[1], m[2]-1, +m[3], +m[4], +m[5], +(m[6]||0)) / 1000 : null;
+  };
+  const nowKst = () => Math.floor((Date.now() + 9*3600e3) / 1000);
+  const bar5 = t => t - (t % 300);
+  $('repoLink').href = `https://github.com/${OWNER}/${REPO}/blob/main/ledger/ACCOUNT.md`;
+
+  // ---------- CSV ----------
+  function parseCSV(text) {
+    text = text.replace(/^\uFEFF/, '');
+    const rows = []; let row = [], f = '', q = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (q) { if (c === '"') { if (text[i+1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+      else if (c === '"') q = true;
+      else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n') { row.push(f); rows.push(row); row = []; f = ''; }
+      else if (c !== '\r') f += c;
+    }
+    if (f !== '' || row.length) { row.push(f); rows.push(row); }
+    const head = rows.shift() || [];
+    return rows.filter(r => r.length > 1).map(r => Object.fromEntries(head.map((h, i) => [h, r[i]])));
+  }
+
+  // ---------- 상태 ----------
+  let S = null, trades = [], candles = [], lastSha = null;
+  let livePrice = null, liveBar = null, posLines = [];
+
+  // ---------- 차트 ----------
+  const LC = window.LightweightCharts;
+  const baseOpt = {
+    autoSize: true,
+    layout: { background: { color: 'transparent' }, textColor: '#8b96a5', fontSize: 11 },
+    grid: { vertLines: { color: '#1b2230' }, horzLines: { color: '#1b2230' } },
+    rightPriceScale: { borderColor: '#232b38' },
+    timeScale: { borderColor: '#232b38', timeVisible: true, secondsVisible: false },
+    localization: { priceFormatter: p => Math.round(p).toLocaleString('ko-KR'), locale: 'ko-KR' },
+    crosshair: { mode: 0 },
+  };
+  let chart, cs, eqChart, eqS;
+  if (LC) {
+    chart = LC.createChart($('chart'), baseOpt);
+    cs = chart.addCandlestickSeries({ upColor: '#f04452', downColor: '#3182f6', borderVisible: false,
+      wickUpColor: '#f04452', wickDownColor: '#3182f6', priceFormat: { type: 'price', precision: 0, minMove: 1000 } });
+    eqChart = LC.createChart($('eqChart'), { ...baseOpt, timeScale: { ...baseOpt.timeScale } });
+    eqS = eqChart.addBaselineSeries({ baseValue: { type: 'price', price: 1000000 },
+      topLineColor: '#f04452', topFillColor1: 'rgba(240,68,82,.25)', topFillColor2: 'rgba(240,68,82,.02)',
+      bottomLineColor: '#3182f6', bottomFillColor1: 'rgba(49,130,246,.02)', bottomFillColor2: 'rgba(49,130,246,.25)',
+      lineWidth: 2, priceFormat: { type: 'price', precision: 0, minMove: 1 } });
+  } else {
+    $('chart').innerHTML = $('eqChart').innerHTML = '<div class="empty">차트 라이브러리를 불러오지 못했어요.</div>';
+  }
+  let rangeH = 24;
+  $('rangeBtns').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    [...$('rangeBtns').children].forEach(x => x.classList.toggle('on', x === b));
+    rangeH = +b.dataset.h; applyRange();
+  });
+  function applyRange() {
+    if (!chart || !candles.length) return;
+    const last = liveBar ? liveBar.time : candles[candles.length - 1].time;
+    if (!rangeH) chart.timeScale().fitContent();
+    else chart.timeScale().setVisibleRange({ from: last - rangeH * 3600, to: last + 600 });
+  }
+
+  // ---------- 데이터 ----------
+  async function latestSha() {
+    try {
+      const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits/main`,
+        { headers: { Accept: 'application/vnd.github.sha' }, cache: 'no-store' });
+      if (r.ok) return (await r.text()).trim();
+    } catch (e) {}
+    return null;
+  }
+  async function getText(path, sha) {
+    const url = DEMO ? `./demo/${path}` :
+      sha ? `https://raw.githubusercontent.com/${OWNER}/${REPO}/${sha}/${path}`
+          : `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/${path}?t=${Date.now()}`;
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) throw new Error(path + ' ' + r.status);
+    return r.text();
+  }
+  async function load(force) {
+    try {
+      const sha = DEMO ? 'demo' : await latestSha();
+      if (!force && sha && sha === lastSha) { renderAge(); return; }
+      const useSha = DEMO ? null : sha;
+      const [st, tr, cd] = await Promise.all([
+        getText('ledger/status.json', useSha), getText('ledger/trades.csv', useSha), getText('data/candles_5m.csv', useSha)]);
+      S = JSON.parse(st);
+      trades = parseCSV(tr);
+      const rows = parseCSV(cd).slice(-4000);
+      candles = rows.map(r => ({ time: kstTs(r.time_kst), open: +r.open, high: +r.high, low: +r.low, close: +r.close }))
+                    .filter(c => c.time).sort((a, b) => a.time - b.time);
+      lastSha = sha;
+      renderAll(true);
+    } catch (e) {
+      $('ledgerAge').textContent = '장부를 불러오지 못했어요 (' + e.message + ') — 잠시 후 다시 시도해요';
+    }
+  }
+
+  // ---------- 계산 ----------
+  const sideSign = s => s === '롱' ? 1 : -1;
+  function liveUnreal() {
+    const p = S && S.position; if (!p) return 0;
+    const px = livePrice ?? p.last_price;
+    return sideSign(p.side) * (px - p.entry) * p.qty_open - p.entry * p.qty_open * FEE;
+  }
+  function liveEquity() { return S ? S.equity - (S.unrealized_pnl || 0) + liveUnreal() : null; }
+
+  // ---------- 렌더 ----------
+  function renderAge() {
+    if (!S) return;
+    const age = Math.round((nowKst() - kstTs(S.updated_at)) / 60);
+    $('ledgerAge').innerHTML = `장부 ${esc(S.updated_at.slice(5, 16))} 기준 (${age <= 0 ? '방금' : age + '분 전'}) · 마지막 봉 ${esc((S.last_bar_time || '').slice(11, 16))}`;
+    const al = [];
+    if (DEMO) al.push('<div class="alert info">🧪 데모 데이터로 보는 중이에요. 실제 장부는 주소 끝의 <b>?demo</b>를 지우면 보여요.</div>');
+    if (!DEMO && age > 20) al.push(`<div class="alert warn">⏱️ 장부가 ${age}분 전 기준이에요. GitHub 예약 실행이 늦어지고 있어요. 다음 실행 때 빠진 봉까지 채워서 다시 계산해요.</div>`);
+    if (S.today && S.today.no_new_entries) al.push(`<div class="alert warn">⛔ 오늘 신규 진입 금지: ${esc(S.today.reason || '')}</div>`);
+    (S.warnings || []).forEach(w => al.push(`<div class="alert warn">⚠️ ${esc(w)}</div>`));
+    $('alerts').innerHTML = al.join('');
+  }
+
+  function renderPosition() {
+    const p = S.position, q = S.pending_entry;
+    let h = '';
+    if (!p) {
+      h += `<div class="pos-head"><span class="badge b-none">포지션 없음</span><span style="font-size:14px;font-weight:500" class="muted">신호를 기다리는 중</span></div>`;
+      h += `<div class="grid">
+        <div class="kv"><div class="k">롱 진입 / 손절 / 목표</div><div class="v muted">신호 없음</div></div>
+        <div class="kv"><div class="k">숏 진입 / 손절 / 목표</div><div class="v muted">신호 없음</div></div></div>`;
+      $('posTime').textContent = '';
+    } else {
+      const long = p.side === '롱', u = liveUnreal(), r = p.risk_money ? u / p.risk_money : 0;
+      h += `<div class="pos-head"><span class="badge ${long ? 'b-long' : 'b-short'}">${long ? '▲ 롱' : '▼ 숏'}</span>
+        <span>${esc(p.setup)}${esc(p.grade || '')}</span>${p.t1_done ? '<span class="badge b-warn">T1 반익절 완료 · 본절</span>' : ''}</div>`;
+      h += `<div class="grid">
+        <div class="kv"><div class="k">진입가</div><div class="v">${won(p.entry)}</div></div>
+        <div class="kv"><div class="k">손절${p.t1_done ? ' (본절)' : ''}</div><div class="v down">${won(p.stop)}</div></div>
+        <div class="kv"><div class="k">목표 T1${p.t1_done ? ' ✅' : ''}</div><div class="v up">${won(p.t1)}</div></div>
+        <div class="kv"><div class="k">다음 목표</div><div class="v">${p.next_target ? won(p.next_target) : '–'}</div></div>
+        <div class="kv"><div class="k">수량 (남은/처음)</div><div class="v">${(+p.qty_open).toFixed(4)} <small>/ ${(+p.qty).toFixed(4)} BTC</small></div></div>
+        <div class="kv"><div class="k">레버리지 · 위험금액</div><div class="v">${(+p.leverage).toFixed(1)}배 <small>· ${won(p.risk_money)}원</small></div></div>
+        <div class="kv"><div class="k">미실현 손익 (실시간)</div><div class="v ${cls(u)}" id="uPnl">${sWon(u)} <small>${r >= 0 ? '+' : ''}${r.toFixed(2)}R</small></div></div>
+        <div class="kv"><div class="k">이 거래 실현분</div><div class="v ${cls(p.realized_part)}">${sWon(p.realized_part || 0)}</div></div></div>`;
+      $('posTime').textContent = '진입 ' + p.entry_time.slice(5, 16);
+    }
+    if (q) h += `<div class="alert info" style="margin:10px 0 0">⏳ 진입 대기: ${esc(q.signal_time.slice(5, 16))} 봉 마감 신호 → 다음 봉 시가에 <b>${esc(q.side)} [${esc(q.setup)}${esc(q.grade || '')}]</b> 진입 예정 · 손절 ${won(q.stop)} · T1 ${won(q.t1)} · ${(+q.qty).toFixed(4)} BTC</div>`;
+    if (S.pending_close) h += `<div class="alert info" style="margin:10px 0 0">⏳ 청산 대기: 다음 봉 시가에 남은 물량 청산 (${esc(S.pending_close)})</div>`;
+    $('posBody').innerHTML = h;
+  }
+
+  function renderKpis() {
+    const cap = S.initial_capital, eq = liveEquity(), td = S.today || {};
+    const k = [
+      ['평가 잔고 (실시간)', `<span class="${cls(eq - cap)}">${won(eq)}</span><small>원</small>`, 'kEq'],
+      ['누적 실현손익', `<span class="${cls(S.realized_pnl)}">${sWon(S.realized_pnl)}</span> <small>${(S.realized_pnl / cap * 100).toFixed(2)}%</small>`],
+      ['거래 · 승률', `${S.trades_count}건 <small>· ${S.trades_count ? S.win_rate.toFixed(1) + '%' : '–'}</small>`],
+      ['평균 R', `<span class="${cls(S.avg_R)}">${S.avg_R >= 0 ? '+' : ''}${(+S.avg_R).toFixed(2)}R</span>`],
+      ['최대 낙폭', `${(+S.max_drawdown_pct).toFixed(2)}%`],
+      ['오늘 실현손익', `<span class="${cls(td.realized_pnl)}">${sWon(td.realized_pnl || 0)}</span>`],
+      ['연속 손절', `${td.consecutive_losses || 0}회`],
+      ['오늘 신규 진입', td.no_new_entries ? '<span style="color:var(--warn)">⛔ 금지</span>' : '<span style="color:var(--ok)">✅ 가능</span>'],
+    ];
+    $('kpis').innerHTML = k.map(([a, b, id]) => `<div class="kv"><div class="k">${a}</div><div class="v"${id ? ` id="${id}"` : ''}>${b}</div></div>`).join('')
+      + `<div class="kv" style="grid-column:1/-1"><div class="k">시작</div><div class="v" style="font-size:13px;font-weight:500">${esc(S.start_time.slice(0, 16))} · 초기 자금 ${won(cap)}원</div></div>`;
+  }
+
+  // 청산 내역 "사유@가격x수량(MM-DD HH:MM) | ..."
+  function parseExits(t) {
+    const y = (t['진입시각'] || '').slice(0, 4);
+    return String(t['청산내역'] || '').split('|').map(s => s.trim()).filter(Boolean).map(s => {
+      const m = s.match(/^(.+?)@([\d,]+)x([\d.]+)\((\d\d-\d\d \d\d:\d\d)\)/);
+      return m ? { reason: m[1], price: +m[2].replace(/,/g, ''), qty: +m[3], time: kstTs(`${y}-${m[4]}`), raw: s } : { raw: s };
+    });
+  }
+
+  function renderChart() {
+    if (!cs || !candles.length) return;
+    const data = candles.slice();
+    if (liveBar && liveBar.time > data[data.length - 1].time) data.push({ ...liveBar });
+    cs.setData(data);
+    const have = new Set(data.map(c => c.time));
+    const mk = [];
+    const add = m => { m.time = bar5(m.time); if (have.has(m.time)) mk.push(m); };
+    trades.forEach(t => {
+      const long = t['방향'] === '롱', pnl = +t['손익원'];
+      add({ time: kstTs(t['진입시각']), position: long ? 'belowBar' : 'aboveBar', color: long ? '#f04452' : '#3182f6',
+            shape: long ? 'arrowUp' : 'arrowDown', text: `${t['방향']} ${t['셋업']}${t['등급'] || ''}` });
+      parseExits(t).forEach(x => x.time && add({ time: x.time, position: long ? 'aboveBar' : 'belowBar',
+        color: x.reason.startsWith('T1') || pnl > 0 ? '#2fbf71' : pnl === 0 ? '#8b96a5' : '#f5a524', shape: 'circle',
+        text: x.reason.replace('반익절', '').trim() }));
+    });
+    const p = S.position;
+    if (p) add({ time: kstTs(p.entry_time), position: p.side === '롱' ? 'belowBar' : 'aboveBar',
+      color: p.side === '롱' ? '#f04452' : '#3182f6', shape: p.side === '롱' ? 'arrowUp' : 'arrowDown', text: `${p.side} ${p.setup}${p.grade || ''} (보유)` });
+    mk.sort((a, b) => a.time - b.time);
+    cs.setMarkers(mk);
+    posLines.forEach(l => cs.removePriceLine(l)); posLines = [];
+    if (p) {
+      const L = (price, color, title) => posLines.push(cs.createPriceLine({ price, color, lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title }));
+      L(p.entry, '#e6edf3', '진입'); L(p.stop, '#3182f6', p.t1_done ? '본절' : '손절'); if (!p.t1_done) L(p.t1, '#f04452', 'T1');
+      if (p.next_target) L(p.next_target, '#f5a524', '다음 목표');
+    }
+    applyRange();
+  }
+
+  function renderEquity() {
+    if (!eqS) return;
+    const cap = S.initial_capital;
+    eqS.applyOptions({ baseValue: { type: 'price', price: cap } });
+    const pts = new Map(); pts.set(kstTs(S.start_time), cap);
+    let bal = cap;
+    trades.slice().sort((a, b) => kstTs(a['청산시각']) - kstTs(b['청산시각'])).forEach(t => {
+      bal += +t['손익원']; pts.set(kstTs(t['청산시각']), bal);
+    });
+    let arr = [...pts].sort((a, b) => a[0] - b[0]).map(([time, value]) => ({ time, value: Math.round(value) }));
+    const lastT = arr[arr.length - 1].time, now = Math.max(nowKst(), lastT + 60);
+    arr.push({ time: now, value: Math.round(liveEquity()) });
+    eqS.setData(arr);
+    eqChart.timeScale().fitContent();
+  }
+
+  function renderTrades() {
+    if (!trades.length) { $('tradesTbl').innerHTML = '<div class="empty">아직 청산된 거래가 없어요. 첫 거래가 끝나면 여기에 쌓여요.</div>'; return; }
+    const rows = trades.slice().reverse().map((t, i) => {
+      const pnl = +t['손익원'], R = +t['R'], long = t['방향'] === '롱';
+      const ex = parseExits(t).map(x => esc(x.raw)).join('<br>');
+      return `<tr class="trow" data-i="${i}">
+        <td>${esc(t['번호'])}</td><td class="l">${esc(t['진입시각'].slice(5))}</td>
+        <td class="l ${long ? 'up' : 'down'}">${long ? '▲ 롱' : '▼ 숏'}</td><td class="l">${esc(t['셋업'])}${esc(t['등급'] || '')}</td>
+        <td>${won(+t['진입가'])}</td><td>${won(+t['최초손절'])}</td><td>${won(+t['T1'])}</td><td>${(+t['수량BTC']).toFixed(4)}</td>
+        <td class="l">${esc(t['마지막청산'])}</td><td class="l">${esc(t['청산시각'].slice(5))}</td>
+        <td class="${cls(pnl)}"><b>${sWon(pnl)}</b></td><td class="${cls(R)}">${R >= 0 ? '+' : ''}${R.toFixed(2)}R</td></tr>
+        <tr class="detail" data-d="${i}" hidden><td colspan="12">레버리지 ${(+t['레버리지']).toFixed(2)}배 · 위험금액 ${won(+t['위험금액'])}원 · 1시간 방향 ${+t['1시간방향'] > 0 ? '상승' : +t['1시간방향'] < 0 ? '하락' : '중립'}<br>${ex}</td></tr>`;
+    }).join('');
+    $('tradesTbl').innerHTML = `<table><thead><tr><th>#</th><th class="l">진입</th><th class="l">방향</th><th class="l">셋업</th>
+      <th>진입가</th><th>손절</th><th>T1</th><th>수량</th><th class="l">청산</th><th class="l">청산 시각</th><th>손익</th><th>R</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+  $('tradesTbl').addEventListener('click', e => {
+    const tr = e.target.closest('tr.trow'); if (!tr) return;
+    const d = $('tradesTbl').querySelector(`tr[data-d="${tr.dataset.i}"]`); if (d) d.hidden = !d.hidden;
+  });
+
+  function renderPeriods() {
+    if (!trades.length) { $('periodTbl').innerHTML = '<div class="empty">거래가 쌓이면 일별·주별 손익이 보여요.</div>'; return; }
+    const agg = (keyFn) => {
+      const m = new Map();
+      trades.forEach(t => {
+        const k = keyFn(t['청산시각'].slice(0, 10)); const o = m.get(k) || { n: 0, w: 0, pnl: 0, R: 0 };
+        o.n++; if (+t['손익원'] > 0) o.w++; o.pnl += +t['손익원']; o.R += +t['R']; m.set(k, o);
+      });
+      return [...m].sort((a, b) => b[0].localeCompare(a[0]));
+    };
+    const wk = d => { const t = new Date(d + 'T00:00:00Z'); const w = (t.getUTCDay() + 6) % 7; t.setUTCDate(t.getUTCDate() - w); return t.toISOString().slice(0, 10) + ' 주'; };
+    const row = ([k, o]) => `<tr><td class="l">${esc(k)}</td><td>${o.n}</td><td>${(o.w / o.n * 100).toFixed(0)}%</td>
+      <td class="${cls(o.pnl)}"><b>${sWon(o.pnl)}</b></td><td class="${cls(o.R)}">${o.R >= 0 ? '+' : ''}${o.R.toFixed(2)}R</td></tr>`;
+    const head = t => `<tr><th class="l">${t}</th><th>거래</th><th>승률</th><th>손익</th><th>합계 R</th></tr>`;
+    $('periodTbl').innerHTML = `<table><thead>${head('주 (월요일 시작)')}</thead><tbody>${agg(wk).map(row).join('')}</tbody></table>
+      <div style="height:10px"></div><table><thead>${head('날짜')}</thead><tbody>${agg(d => d).slice(0, 14).map(row).join('')}</tbody></table>`;
+  }
+
+  function renderAll() {
+    if (!S) return;
+    renderAge(); renderPosition(); renderKpis(); renderChart(); renderEquity(); renderTrades(); renderPeriods();
+    if (livePrice == null && S.last_price) $('livePrice').textContent = won(S.last_price);
+  }
+
+  // ---------- 실시간 시세 (업비트 웹소켓) ----------
+  let ws, wsTimer;
+  function setWs(on, txt) { $('wsState').innerHTML = `<span class="dot ${on ? 'live' : ''}"></span>${txt}`; }
+  function connect() {
+    try { ws = new WebSocket('wss://api.upbit.com/websocket/v1'); } catch (e) { setWs(false, '실시간 시세 연결 실패'); return; }
+    ws.binaryType = 'arraybuffer';
+    ws.onopen = () => { setWs(true, '실시간'); ws.send(JSON.stringify([{ ticket: 'paper-' + Math.random().toString(36).slice(2) }, { type: 'ticker', codes: ['KRW-BTC'] }])); };
+    ws.onmessage = e => {
+      let d; try { d = JSON.parse(typeof e.data === 'string' ? e.data : new TextDecoder().decode(e.data)); } catch (x) { return; }
+      if (d.trade_price) onPrice(d.trade_price, d.trade_timestamp || Date.now(), d.signed_change_rate);
+    };
+    ws.onclose = () => { setWs(false, '재연결 중…'); clearTimeout(wsTimer); wsTimer = setTimeout(connect, 3000); };
+    ws.onerror = () => { try { ws.close(); } catch (x) {} };
+  }
+  let lastPaint = 0;
+  function onPrice(px, tsMs, chg) {
+    livePrice = px;
+    $('livePrice').textContent = won(px);
+    if (chg != null) { $('liveChg').innerHTML = `<span class="${cls(chg)}">${chg >= 0 ? '+' : ''}${(chg * 100).toFixed(2)}%</span> <span class="muted">전일 대비</span>`; }
+    const t = bar5(Math.floor((tsMs + 9 * 3600e3) / 1000));
+    const lastC = candles.length ? candles[candles.length - 1] : null;
+    if (cs && lastC && t > lastC.time) {
+      if (!liveBar || liveBar.time !== t) liveBar = { time: t, open: liveBar && liveBar.time < t ? liveBar.close : lastC.close, high: px, low: px, close: px };
+      liveBar.high = Math.max(liveBar.high, px); liveBar.low = Math.min(liveBar.low, px); liveBar.close = px;
+      try { cs.update({ ...liveBar }); } catch (x) {}
+    }
+    const now = Date.now();
+    if (S && now - lastPaint > 1000) {
+      lastPaint = now;
+      if (S.position) {
+        const u = liveUnreal(), r = S.position.risk_money ? u / S.position.risk_money : 0, el = $('uPnl');
+        if (el) { el.className = 'v ' + cls(u); el.innerHTML = `${sWon(u)} <small>${r >= 0 ? '+' : ''}${r.toFixed(2)}R</small>`; }
+      }
+      const eq = liveEquity(), k = $('kEq');
+      if (k) k.innerHTML = `<span class="${cls(eq - S.initial_capital)}">${won(eq)}</span><small>원</small>`;
+    }
+  }
+
+  load(true);
+  setInterval(() => load(false), DEMO ? 3600e3 : 90e3);
+  setInterval(renderAge, 30e3);
+  setInterval(() => { if (S && S.position) renderEquity(); }, 60e3);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) load(false); });
+  connect();
+})();
+</script>
+</body>
+</html>
