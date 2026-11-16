@@ -1,0 +1,42 @@
+{
+  "_설명": "BTC 5분봉 가상 매매 봇 설정 (원칙 v1.4.1). '_'로 시작하는 키는 설명이라 엔진이 무시합니다. start_time 이 null 이면 첫 실행 시각(KST, 5분 단위)으로 자동으로 채워집니다. 값을 바꾸면 start_time 이후 전체가 새 값으로 다시 계산됩니다.",
+  "start_time": null,
+  "initial_capital": 1000000,
+  "market": "KRW-BTC",
+  "warmup_days": 3,
+  "max_backfill_days": 30,
+
+  "_위험·수량": "기본 위험 0.25%, 1시간 반대·시험 셋업(B+, C) 0.15%, 레버리지 상한 10배, 최소 손절폭 0.40%, 최대 1.5%, 손절 여유 0.05%",
+  "riskPct": 0.25,
+  "redPct": 0.15,
+  "maxLev": 10,
+  "minStopP": 0.40,
+  "maxStopP": 1.5,
+  "bufP": 0.05,
+
+  "_진입": "확인 캔들 등급 A+B, 셋업 구간/B+/C 사용, 롱·숏 허용, 스윙 좌우 3봉, 구간 오차 0.10%, 방향 기준 20SMA 기울기 0.02%, 추격 금지 이격 0.8%",
+  "gradeMode": "A+B",
+  "useZone": true,
+  "useBp": true,
+  "useC": true,
+  "allowLong": true,
+  "allowShort": true,
+  "swLen": 3,
+  "zoneTolP": 0.10,
+  "slopeThr": 0.02,
+  "chaseP": 0.8,
+
+  "_익절": "T1 최소 0.8R, 3R 넘으면 1.5R로 대체. T1에서 50% 청산 + 남은 물량 본절. 잔량: 반대 장악형·거래량 2.5배·다음 스윙·본절",
+  "t1MinR": 0.8,
+  "t1MaxR": 3.0,
+  "t1FbR": 1.5,
+  "volExitX": 2.5,
+  "useOppEng": true,
+  "exitMode": "v14",
+
+  "_하루 한도·비용": "하루 실현 −2% 또는 2연속 손절 시 그날(KST) 신규 진입 금지. 수수료 편도 0.05%, 슬리피지 1틱(1,000원)",
+  "dayLossP": 2.0,
+  "maxConsec": 2,
+  "fee": 0.0005,
+  "slip": 1000
+}

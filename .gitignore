@@ -1,0 +1,18 @@
+# 파이썬
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 임시 파일 (봇이 원자적 저장에 쓰는 .tmp)
+*.tmp
+
+# 로컬 시험 실행 결과 (GitHub 실행 결과인 data/ ledger/ state/ 는 커밋해야 하므로 무시하지 않음)
+dryrun/
+.env
+
+# OS·편집기
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

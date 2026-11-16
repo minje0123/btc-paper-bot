@@ -1,0 +1,52 @@
+# BTC 5분봉 가상 매매 봇 (원칙 v1.4.1) — 실제 주문 없음, 공개 시세만 조회
+name: BTC 가상 매매 봇
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"      # 5분마다 (GitHub 사정으로 몇 분~수십 분 늦어질 수 있음 — 늦어도 빠진 봉은 다음 실행에서 채움)
+  workflow_dispatch: {}         # Actions 탭에서 수동 실행
+
+permissions:
+  contents: write               # data/·ledger/·state/ 커밋·푸시용
+
+concurrency:
+  group: btc-paper-bot          # 동시에 하나만 실행 (겹치면 앞 실행이 끝날 때까지 대기)
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 저장소 받기
+        uses: actions/checkout@v4
+
+      - name: 파이썬 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 봇 실행 (표준 라이브러리만 사용, 설치 없음)
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          TZ: Asia/Seoul
+        run: python bot.py
+
+      - name: 변경분 커밋·푸시
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for p in data ledger state config.json; do
+            if [ -e "$p" ]; then git add "$p"; fi
+          done
+          if git diff --cached --quiet; then
+            echo "변경 없음"
+            exit 0
+          fi
+          git commit -m "봇 장부 업데이트 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') KST [skip ci]"
+          for i in 1 2 3; do
+            if git pull --rebase --autostash && git push; then exit 0; fi
+            sleep 5
+          done
+          echo "푸시 실패" && exit 1
