@@ -3,139 +3,194 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0d1117">
-<title>BTC 가상 매매 계좌</title>
+<meta name="theme-color" content="#05070a">
+<title>BTC.PAPER // 가상 매매 터미널</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
 <style>
   :root{
-    --bg:#0d1117; --card:#151b24; --line:#232b38; --text:#e6edf3; --muted:#8b96a5;
-    --up:#f04452; --down:#3182f6; --ok:#2fbf71; --warn:#f5a524;
+    --bg:#05070a; --panel:#0a0e13; --panel2:#0d1219; --line:#1a222d; --line2:#243041;
+    --text:#d4dbe3; --muted:#6b7787; --dim:#465262;
+    --neon:#00ff9c; --cyan:#22d3ee; --amber:#ffb020;
+    --up:#ff3d5a; --down:#2f8bff; --ok:#00ff9c; --warn:#ffb020;
+    --mono:"JetBrains Mono","D2Coding",Consolas,ui-monospace,"Malgun Gothic",monospace;
+    /* 스크립트가 쓰는 옛 변수 이름도 유지 */
+    --card:var(--panel);
   }
   *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
-    font-size:15px;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:980px;margin:0 auto;padding:14px 14px 40px}
-  header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
-  h1{font-size:19px;margin:0 0 4px;letter-spacing:-.3px}
-  .sub{color:var(--muted);font-size:12.5px;line-height:1.5}
-  .price{text-align:right}
-  .price .p{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
-  .price .c{font-size:12.5px;font-variant-numeric:tabular-nums}
-  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted);margin-right:5px;vertical-align:1px}
-  .dot.live{background:var(--ok);box-shadow:0 0 0 0 rgba(47,191,113,.6);animation:pulse 1.6s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,191,113,.6)}70%{box-shadow:0 0 0 7px rgba(47,191,113,0)}100%{box-shadow:0 0 0 0 rgba(47,191,113,0)}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
-  .card h2{font-size:14px;margin:0 0 10px;color:var(--muted);font-weight:600;display:flex;justify-content:space-between;align-items:center}
-  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700}
-  .b-none{background:#232b38;color:var(--muted)}
-  .b-long{background:rgba(240,68,82,.15);color:var(--up)}
-  .b-short{background:rgba(49,130,246,.15);color:var(--down)}
-  .b-warn{background:rgba(245,165,36,.15);color:var(--warn)}
-  .pos-head{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:800;margin-bottom:10px}
-  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-  @media (max-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
-  .kv{background:#10161f;border:1px solid var(--line);border-radius:10px;padding:9px 10px}
-  .kv .k{font-size:11.5px;color:var(--muted);margin-bottom:3px}
-  .kv .v{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;word-break:keep-all}
-  .kv .v small{font-size:11.5px;font-weight:500;color:var(--muted)}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13.5px;
+    -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;
+    background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)}
+  ::selection{background:rgba(0,255,156,.25)}
+
+  /* ── 상단 티커 바 ── */
+  .ticker{position:sticky;top:0;z-index:40;background:rgba(5,7,10,.92);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line2)}
+  .ticker .in{max-width:1240px;margin:0 auto;padding:9px 14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{font-weight:800;letter-spacing:.5px;color:var(--neon);font-size:14px;white-space:nowrap}
+  .brand .cur{display:inline-block;width:8px;height:14px;background:var(--neon);vertical-align:-2px;margin-left:3px;animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .sym{display:flex;align-items:baseline;gap:10px;margin-left:auto}
+  .sym .pair{color:var(--muted);font-size:11.5px;letter-spacing:.5px}
+  .price .p{font-size:20px;font-weight:800;letter-spacing:-.3px}
+  .price .c{font-size:12px}
+  .meta{width:100%;display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+  .meta b{color:var(--text);font-weight:500}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--dim);margin-right:6px;vertical-align:1px}
+  .dot.live{background:var(--neon);box-shadow:0 0 8px var(--neon);animation:pulse 1.6s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+
+  .wrap{max-width:1240px;margin:0 auto;padding:12px 14px 40px}
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:1px;color:var(--bg);background:var(--amber);padding:1px 6px;font-weight:800;margin-right:8px}
+
+  /* ── 레이아웃 ── */
+  .main{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:12px;align-items:start}
+  .side{display:flex;flex-direction:column;gap:12px}
+  @media (max-width:980px){.main{grid-template-columns:1fr}}
+
+  /* ── 패널 ── */
+  .card{background:var(--panel);border:1px solid var(--line);margin-bottom:12px;position:relative}
+  .side .card,.main>.card{margin-bottom:0}
+  .card::before{content:"";position:absolute;left:-1px;top:-1px;width:10px;height:10px;border-left:2px solid var(--neon);border-top:2px solid var(--neon)}
+  .card h2{margin:0;padding:8px 12px;border-bottom:1px solid var(--line);font-size:11.5px;font-weight:700;letter-spacing:1.2px;
+    color:var(--cyan);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--panel2)}
+  .card h2 .ko{color:var(--muted);letter-spacing:0;text-transform:none;font-weight:500}
+  .card>div,.card>.tbl{padding:10px 12px}
+  .card h2 + div{padding-top:10px}
+
+  .badge{display:inline-block;padding:2px 8px;font-size:12px;font-weight:800;letter-spacing:.5px;border:1px solid currentColor}
+  .b-none{color:var(--muted)}
+  .b-long{color:var(--up);background:rgba(255,61,90,.08)}
+  .b-short{color:var(--down);background:rgba(47,139,255,.08)}
+  .b-warn{color:var(--amber);background:rgba(255,176,32,.08)}
+  .pos-head{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:800;margin-bottom:10px}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .wide .grid{grid-template-columns:repeat(4,1fr)}
+  @media (max-width:640px){.wide .grid{grid-template-columns:repeat(2,1fr)}}
+  .kv{background:var(--panel);padding:8px 10px;min-width:0}
+  .kv .k{font-size:10.5px;color:var(--muted);margin-bottom:3px;letter-spacing:.3px}
+  .kv .v{font-size:15px;font-weight:700;word-break:keep-all;overflow-wrap:anywhere}
+  .kv .v small{font-size:11px;font-weight:400;color:var(--muted)}
   .up{color:var(--up)} .down{color:var(--down)} .muted{color:var(--muted)}
-  .note{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:8px}
-  .alert{border-radius:10px;padding:9px 11px;font-size:13px;margin-bottom:10px;line-height:1.5}
-  .alert.warn{background:rgba(245,165,36,.1);border:1px solid rgba(245,165,36,.35);color:#f8c873}
-  .alert.info{background:rgba(49,130,246,.1);border:1px solid rgba(49,130,246,.35);color:#9cc2ff}
-  .chart{height:330px;width:100%}
-  .chart.eq{height:200px}
-  .seg{display:flex;gap:4px}
-  .seg button{background:#10161f;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:12px;cursor:pointer}
-  .seg button.on{color:var(--text);border-color:#3a4558;background:#1b2330}
-  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:11.5px;color:var(--muted);margin-top:8px}
+  .note{font-size:11.5px;color:var(--muted);line-height:1.6;margin-top:8px}
+
+  .alert{padding:8px 11px;font-size:12.5px;margin-bottom:10px;line-height:1.5;border-left:3px solid}
+  .alert.warn{background:rgba(255,176,32,.07);border-color:var(--amber);color:#ffd27a}
+  .alert.info{background:rgba(34,211,238,.06);border-color:var(--cyan);color:#9be8f5}
+  .card .alert{margin:10px 0 0}
+
+  .chart{height:440px;width:100%}
+  @media (max-width:640px){.chart{height:330px}}
+  .chart.eq{height:210px}
+  .seg{display:flex;gap:0;border:1px solid var(--line2)}
+  .seg button{background:transparent;color:var(--muted);border:0;border-right:1px solid var(--line2);padding:3px 9px;
+    font:inherit;font-size:11px;cursor:pointer;letter-spacing:.3px}
+  .seg button:last-child{border-right:0}
+  .seg button.on{color:var(--bg);background:var(--neon);font-weight:700}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;font-size:10.5px;color:var(--muted);padding:0 12px 10px}
+
   .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table{border-collapse:collapse;width:100%;font-size:12.8px;font-variant-numeric:tabular-nums;white-space:nowrap}
-  th,td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:right}
-  th{color:var(--muted);font-weight:600;font-size:11.5px;position:sticky;top:0;background:var(--card)}
+  table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right}
+  th{color:var(--muted);font-weight:500;font-size:10.5px;letter-spacing:.5px;position:sticky;top:0;background:var(--panel2)}
   td.l,th.l{text-align:left}
   tr.trow{cursor:pointer}
-  tr.trow:hover td{background:#1a212c}
-  tr.detail td{background:#10161f;color:var(--muted);white-space:normal;text-align:left;font-size:12px;line-height:1.6}
-  .empty{color:var(--muted);text-align:center;padding:22px 0;font-size:13px}
+  tr.trow:hover td{background:#0f1620}
+  tr.trow td:first-child{color:var(--dim)}
+  tr.detail td{background:#070a0e;color:var(--muted);white-space:normal;text-align:left;font-size:11.5px;line-height:1.7;border-left:2px solid var(--cyan)}
+  .empty{color:var(--dim);text-align:center;padding:22px 0;font-size:12px}
+  .empty::before{content:"> ";color:var(--neon)}
+
   /* 쉽알남 자금 관리 */
   .mm-row{margin-top:10px}
-  .mm-top{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px;font-variant-numeric:tabular-nums}
-  .bar{height:9px;background:#10161f;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-  .bar>i{display:block;height:100%;border-radius:999px;transition:width .4s}
-  .bar.tgt>i{background:var(--ok)} .bar.loss>i{background:var(--warn)} .bar.loss.full>i{background:var(--up)}
-  footer{color:var(--muted);font-size:11.5px;line-height:1.6;margin-top:16px}
-  footer a{color:#9cc2ff}
+  .mm-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px}
+  .bar{height:8px;background:#070a0e;border:1px solid var(--line2);overflow:hidden}
+  .bar>i{display:block;height:100%;transition:width .4s;
+    background-image:repeating-linear-gradient(90deg,currentColor 0 6px,transparent 6px 8px)}
+  .bar.tgt>i{color:var(--neon)} .bar.loss>i{color:var(--amber)} .bar.loss.full>i{color:var(--up)}
+
+  footer{color:var(--dim);font-size:10.5px;line-height:1.7;margin-top:16px;border-top:1px dashed var(--line2);padding-top:10px}
+  footer a{color:var(--cyan)}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div>
-      <h1>BTC 5분봉 가상 매매 계좌</h1>
-      <div class="sub">원칙 v1.4.1 + 쉽알남 자금 관리 · <b>실제 돈을 쓰지 않는 가상 매매</b><br>
-        <span id="wsState"><span class="dot"></span>시세 연결 중…</span> · <span id="ledgerAge">장부 불러오는 중…</span></div>
-    </div>
-    <div class="price">
-      <div class="sub">업비트 KRW-BTC</div>
-      <div class="p" id="livePrice">–</div>
-      <div class="c" id="liveChg"></div>
-    </div>
-  </header>
+<div class="ticker"><div class="in">
+  <div class="brand">BTC.PAPER//TERM<span class="cur"></span></div>
+  <div class="sym">
+    <span class="pair">UPBIT · KRW-BTC</span>
+    <span class="price"><span class="p" id="livePrice">–</span></span>
+    <span class="price"><span class="c" id="liveChg"></span></span>
+  </div>
+  <div class="meta">
+    <span id="wsState"><span class="dot"></span>시세 연결 중…</span>
+    <span id="ledgerAge">장부 불러오는 중…</span>
+    <span>원칙 <b>v1.4.1 + 쉽알남 자금 관리</b></span>
+    <span><b style="color:var(--amber)">PAPER</b> 실제 돈을 쓰지 않는 가상 매매</span>
+  </div>
+</div></div>
 
+<div class="wrap">
   <div id="alerts"></div>
 
-  <section class="card" id="posCard">
-    <h2>현재 포지션 <span id="posTime" class="muted" style="font-weight:400;font-size:12px"></span></h2>
-    <div id="posBody"><div class="empty">불러오는 중…</div></div>
-  </section>
+  <div class="main">
+    <section class="card">
+      <h2><span>Chart <span class="ko">· 진입/청산 표시</span></span>
+        <span class="seg" id="rangeBtns">
+          <button data-h="6">6H</button><button data-h="24" class="on">1D</button><button data-h="72">3D</button><button data-h="0">ALL</button>
+        </span>
+      </h2>
+      <div class="chart" id="chart" style="padding:0"></div>
+      <div class="legend">
+        <span><span class="up">▲</span> 롱 진입</span><span><span class="down">▼</span> 숏 진입 (#번호 = 매매 기록 번호)</span>
+        <span>● 청산 (초록 이익 / 회색 본절 / 주황 손실)</span><span>┄ 현재 포지션 진입·손절·T1</span>
+      </div>
+    </section>
 
-  <section class="card">
-    <h2>계좌 요약</h2>
-    <div class="grid" id="kpis"></div>
-  </section>
+    <div class="side">
+      <section class="card" id="posCard">
+        <h2><span>Position <span class="ko">· 현재 포지션</span></span><span id="posTime" class="ko"></span></h2>
+        <div id="posBody"><div class="empty">불러오는 중…</div></div>
+      </section>
+      <section class="card">
+        <h2><span>Account <span class="ko">· 계좌 요약</span></span></h2>
+        <div><div class="grid" id="kpis"></div></div>
+      </section>
+    </div>
+  </div>
 
-  <section class="card" id="mmCard" hidden>
-    <h2>자금 관리 (쉽알남 · 단타 계좌) <span id="mmSub" class="muted" style="font-weight:400;font-size:12px"></span></h2>
-    <div class="grid" id="mmKpis"></div>
-    <div id="mmBars"></div>
-    <div class="note" id="mmNote"></div>
-  </section>
-
-  <section class="card">
-    <h2>차트 · 진입/청산 표시
-      <span class="seg" id="rangeBtns">
-        <button data-h="6">6시간</button><button data-h="24" class="on">1일</button><button data-h="72">3일</button><button data-h="0">전체</button>
-      </span>
-    </h2>
-    <div class="chart" id="chart"></div>
-    <div class="legend">
-      <span><span class="up">▲</span> 롱 진입</span><span><span class="down">▼</span> 숏 진입 (#번호 = 매매 기록 번호)</span>
-      <span>● 청산(초록 이익 / 회색 본절 / 주황 손실)</span><span>점선: 현재 포지션 진입·손절·T1</span>
+  <section class="card wide" id="mmCard" hidden style="margin-top:12px">
+    <h2><span>Risk <span class="ko">· 자금 관리 (쉽알남 · 단타 계좌)</span></span><span id="mmSub" class="ko"></span></h2>
+    <div>
+      <div class="grid" id="mmKpis"></div>
+      <div id="mmBars"></div>
+      <div class="note" id="mmNote"></div>
     </div>
   </section>
 
-  <section class="card">
-    <h2>자산 곡선 <span class="muted" style="font-weight:400;font-size:12px">청산 기준 + 현재 평가 (출금이 있으면 잔고+출금 합계)</span></h2>
-    <div class="chart eq" id="eqChart"></div>
+  <section class="card" style="margin-top:12px">
+    <h2><span>Equity <span class="ko">· 자산 곡선 (청산 기준 + 현재 평가, 출금 포함)</span></span></h2>
+    <div class="chart eq" id="eqChart" style="padding:0"></div>
   </section>
 
   <section class="card">
-    <h2>매매 기록 <span class="muted" style="font-weight:400;font-size:12px">행을 누르면 청산 내역</span></h2>
-    <div class="tbl" id="tradesTbl"></div>
+    <h2><span>Trades <span class="ko">· 매매 기록 (행을 누르면 청산 내역)</span></span></h2>
+    <div class="tbl" id="tradesTbl" style="padding:0"></div>
   </section>
 
   <section class="card">
-    <h2>기간별 손익</h2>
-    <div class="tbl" id="periodTbl"></div>
+    <h2><span>P&amp;L <span class="ko">· 기간별 손익</span></span></h2>
+    <div class="tbl" id="periodTbl" style="padding:0"></div>
   </section>
 
   <footer>
     <span id="rulesText">규칙: 위험 0.25%(1시간 반대·B+·C 0.15%) · 최소 손절폭 0.40%, 최대 1.5% · 레버리지 상한 10배 · 수수료 0.05%·슬리피지 1틱 ·
     T1에서 50% 익절 후 남은 물량 본절 · 하루 −2% 또는 2연속 손절이면 그날 신규 진입 금지.</span><br>
-    장부는 GitHub 봇이 5분마다 갱신해요(GitHub 사정으로 늦어질 수 있어요). 현재가·미실현 손익은 업비트 실시간 시세로 이 화면에서 계산해요.<br>
-    <a id="repoLink" href="#" target="_blank" rel="noopener">GitHub 장부 보기</a>
+    장부는 GitHub 봇이 5분봉이 닫힐 때마다 갱신해요. 현재가·미실현 손익은 실시간 시세로 이 화면에서 계산해요.<br>
+    <a id="repoLink" href="#" target="_blank" rel="noopener">GitHub 장부 보기 →</a>
   </footer>
 </div>
 
@@ -181,8 +236,8 @@
   const LC = window.LightweightCharts;
   const baseOpt = {
     autoSize: true,
-    layout: { background: { color: 'transparent' }, textColor: '#8b96a5', fontSize: 11 },
-    grid: { vertLines: { color: '#1b2230' }, horzLines: { color: '#1b2230' } },
+    layout: { background: { color: 'transparent' }, textColor: '#6b7787', fontSize: 11, fontFamily: 'JetBrains Mono, Consolas, monospace' },
+    grid: { vertLines: { color: '#10161e' }, horzLines: { color: '#10161e' } },
     rightPriceScale: { borderColor: '#232b38' },
     timeScale: { borderColor: '#232b38', timeVisible: true, secondsVisible: false },
     localization: { priceFormatter: p => Math.round(p).toLocaleString('ko-KR'), locale: 'ko-KR' },
@@ -191,11 +246,11 @@
   let chart, cs, eqChart, eqS;
   if (LC) {
     chart = LC.createChart($('chart'), baseOpt);
-    cs = chart.addCandlestickSeries({ upColor: '#f04452', downColor: '#3182f6', borderVisible: false,
-      wickUpColor: '#f04452', wickDownColor: '#3182f6', priceFormat: { type: 'price', precision: 0, minMove: 1000 } });
+    cs = chart.addCandlestickSeries({ upColor: '#ff3d5a', downColor: '#2f8bff', borderVisible: false,
+      wickUpColor: '#ff3d5a', wickDownColor: '#2f8bff', priceFormat: { type: 'price', precision: 0, minMove: 1000 } });
     eqChart = LC.createChart($('eqChart'), { ...baseOpt, timeScale: { ...baseOpt.timeScale, fixLeftEdge: true, fixRightEdge: true }, handleScroll: false, handleScale: false });
     eqS = eqChart.addBaselineSeries({ baseValue: { type: 'price', price: 1000000 },
-      topLineColor: '#f04452', topFillColor1: 'rgba(240,68,82,.25)', topFillColor2: 'rgba(240,68,82,.02)',
+      topLineColor: '#00ff9c', topFillColor1: 'rgba(0,255,156,.22)', topFillColor2: 'rgba(0,255,156,.02)',
       bottomLineColor: '#3182f6', bottomFillColor1: 'rgba(49,130,246,.02)', bottomFillColor2: 'rgba(49,130,246,.25)',
       lineWidth: 2, priceFormat: { type: 'price', precision: 0, minMove: 1 } });
   } else {
