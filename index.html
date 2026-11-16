@@ -279,7 +279,7 @@
         <div class="kv"><div class="k">다음 목표</div><div class="v">${p.next_target ? won(p.next_target) : '–'}</div></div>
         <div class="kv"><div class="k">수량 (남은/처음)</div><div class="v">${(+p.qty_open).toFixed(4)} <small>/ ${(+p.qty).toFixed(4)} BTC</small></div></div>
         <div class="kv"><div class="k">레버리지 · 위험금액</div><div class="v">${(+p.leverage).toFixed(1)}배 <small>· ${won(p.risk_money)}원</small></div></div>
-        <div class="kv"><div class="k">미실현 손익 (실시간)</div><div class="v ${cls(u)}" id="uPnl">${sWon(u)} <small>${r >= 0 ? '+' : ''}${r.toFixed(2)}R</small></div></div>
+        <div class="kv"><div class="k">미실현 손익 (실시간)</div><div class="v ${cls(u)}" id="uPnl">${sWon(u)} <small>${r >= 0 ? '+' : '−'}${Math.abs(r).toFixed(2)}R</small></div></div>
         <div class="kv"><div class="k">이 거래 실현분</div><div class="v ${cls(p.realized_part)}">${sWon(p.realized_part || 0)}</div></div></div>`;
       $('posTime').textContent = '진입 ' + p.entry_time.slice(5, 16);
     }
@@ -369,7 +369,7 @@
         <td class="l ${long ? 'up' : 'down'}">${long ? '▲ 롱' : '▼ 숏'}</td><td class="l">${esc(t['셋업'])}${esc(t['등급'] || '')}</td>
         <td>${won(+t['진입가'])}</td><td>${won(+t['최초손절'])}</td><td>${won(+t['T1'])}</td><td>${(+t['수량BTC']).toFixed(4)}</td>
         <td class="l">${esc(t['마지막청산'])}</td><td class="l">${esc(t['청산시각'].slice(5))}</td>
-        <td class="${cls(pnl)}"><b>${sWon(pnl)}</b></td><td class="${cls(R)}">${R >= 0 ? '+' : ''}${R.toFixed(2)}R</td></tr>
+        <td class="${cls(pnl)}"><b>${sWon(pnl)}</b></td><td class="${cls(R)}">${R >= 0 ? '+' : '−'}${Math.abs(R).toFixed(2)}R</td></tr>
         <tr class="detail" data-d="${i}" hidden><td colspan="12">레버리지 ${(+t['레버리지']).toFixed(2)}배 · 위험금액 ${won(+t['위험금액'])}원 · 1시간 방향 ${+t['1시간방향'] > 0 ? '상승' : +t['1시간방향'] < 0 ? '하락' : '중립'}<br>${ex}</td></tr>`;
     }).join('');
     $('tradesTbl').innerHTML = `<table><thead><tr><th>#</th><th class="l">진입</th><th class="l">방향</th><th class="l">셋업</th>
@@ -392,7 +392,7 @@
     };
     const wk = d => { const t = new Date(d + 'T00:00:00Z'); const w = (t.getUTCDay() + 6) % 7; t.setUTCDate(t.getUTCDate() - w); return t.toISOString().slice(0, 10) + ' 주'; };
     const row = ([k, o]) => `<tr><td class="l">${esc(k)}</td><td>${o.n}</td><td>${(o.w / o.n * 100).toFixed(0)}%</td>
-      <td class="${cls(o.pnl)}"><b>${sWon(o.pnl)}</b></td><td class="${cls(o.R)}">${o.R >= 0 ? '+' : ''}${o.R.toFixed(2)}R</td></tr>`;
+      <td class="${cls(o.pnl)}"><b>${sWon(o.pnl)}</b></td><td class="${cls(o.R)}">${o.R >= 0 ? '+' : '−'}${Math.abs(o.R).toFixed(2)}R</td></tr>`;
     const head = t => `<tr><th class="l">${t}</th><th>거래</th><th>승률</th><th>손익</th><th>합계 R</th></tr>`;
     $('periodTbl').innerHTML = `<table><thead>${head('주 (월요일 시작)')}</thead><tbody>${agg(wk).map(row).join('')}</tbody></table>
       <div style="height:10px"></div><table><thead>${head('날짜')}</thead><tbody>${agg(d => d).slice(0, 14).map(row).join('')}</tbody></table>`;
@@ -405,19 +405,33 @@
   }
 
   // ---------- 실시간 시세 (업비트 웹소켓) ----------
-  let ws, wsTimer;
+  // 업비트 웹소켓이 기본. 업비트가 막힌 네트워크(학교·회사 등)에서는 빗썸 시세로 2초마다 대신 갱신.
+  let ws, wsTimer, upbitAt = 0, fbTimer = null;
   function setWs(on, txt) { $('wsState').innerHTML = `<span class="dot ${on ? 'live' : ''}"></span>${txt}`; }
   function connect() {
-    try { ws = new WebSocket('wss://api.upbit.com/websocket/v1'); } catch (e) { setWs(false, '실시간 시세 연결 실패'); return; }
+    try { ws = new WebSocket('wss://api.upbit.com/websocket/v1'); } catch (e) { startFallback(); return; }
     ws.binaryType = 'arraybuffer';
-    ws.onopen = () => { setWs(true, '실시간'); ws.send(JSON.stringify([{ ticket: 'paper-' + Math.random().toString(36).slice(2) }, { type: 'ticker', codes: ['KRW-BTC'] }])); };
+    ws.onopen = () => ws.send(JSON.stringify([{ ticket: 'paper-' + Math.random().toString(36).slice(2) }, { type: 'ticker', codes: ['KRW-BTC'] }]));
     ws.onmessage = e => {
       let d; try { d = JSON.parse(typeof e.data === 'string' ? e.data : new TextDecoder().decode(e.data)); } catch (x) { return; }
-      if (d.trade_price) onPrice(d.trade_price, d.trade_timestamp || Date.now(), d.signed_change_rate);
+      if (!d.trade_price) return;
+      upbitAt = Date.now(); stopFallback(); setWs(true, '실시간 (업비트)');
+      onPrice(d.trade_price, d.trade_timestamp || Date.now(), d.signed_change_rate);
     };
-    ws.onclose = () => { setWs(false, '재연결 중…'); clearTimeout(wsTimer); wsTimer = setTimeout(connect, 3000); };
+    ws.onclose = () => { clearTimeout(wsTimer); wsTimer = setTimeout(connect, 5000); startFallback(); };
     ws.onerror = () => { try { ws.close(); } catch (x) {} };
   }
+  async function pollBithumb() {
+    if (Date.now() - upbitAt < 10000) return;
+    try {
+      const r = await fetch('https://api.bithumb.com/v1/ticker?markets=KRW-BTC', { cache: 'no-store' });
+      const d = (await r.json())[0];
+      if (d && d.trade_price) { setWs(true, '실시간 (빗썸 시세 · 업비트 연결 안 됨)'); onPrice(d.trade_price, d.trade_timestamp || Date.now(), d.signed_change_rate); }
+    } catch (e) { setWs(false, '시세 연결 안 됨 · 장부 가격 표시 중'); }
+  }
+  function startFallback() { if (!fbTimer) { pollBithumb(); fbTimer = setInterval(pollBithumb, 2000); } }
+  function stopFallback() { if (fbTimer) { clearInterval(fbTimer); fbTimer = null; } }
+  setTimeout(() => { if (Date.now() - upbitAt > 6000) startFallback(); }, 6000);
   let lastPaint = 0;
   function onPrice(px, tsMs, chg) {
     livePrice = px;
@@ -435,7 +449,7 @@
       lastPaint = now;
       if (S.position) {
         const u = liveUnreal(), r = S.position.risk_money ? u / S.position.risk_money : 0, el = $('uPnl');
-        if (el) { el.className = 'v ' + cls(u); el.innerHTML = `${sWon(u)} <small>${r >= 0 ? '+' : ''}${r.toFixed(2)}R</small>`; }
+        if (el) { el.className = 'v ' + cls(u); el.innerHTML = `${sWon(u)} <small>${r >= 0 ? '+' : '−'}${Math.abs(r).toFixed(2)}R</small>`; }
       }
       const eq = liveEquity(), k = $('kEq');
       if (k) k.innerHTML = `<span class="${cls(eq - S.initial_capital)}">${won(eq)}</span><small>원</small>`;
