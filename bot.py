@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-BTC 5분봉 가상 매매 봇 (원칙 v1.4.1) — GitHub Actions에서 5분마다 실행
+BTC 5분봉 가상 매매 봇 (원칙 v1.4.1 + 쉽알남 자금 관리 v1.4.1-mm) — GitHub Actions에서 5분마다 실행
 
 ⚠️ 실제 주문은 절대 하지 않는다. 거래소에는 '공개 시세 조회(캔들)'만 요청하고,
    매매는 봇 자체 가상 장부(ledger/)에만 기록한다. API 키도 쓰지 않는다.
@@ -13,7 +13,7 @@ BTC 5분봉 가상 매매 봇 (원칙 v1.4.1) — GitHub Actions에서 5분마�
      가상 매매는 config.json 의 start_time(비어 있으면 첫 실행 시각으로 채움) 이후 봉부터 한다.
   3) 저장된 전체 봉으로 엔진을 처음부터 다시 돌린다(결정적 재계산) → 거래 목록·현재 포지션·잔고
   4) ledger/trades.csv, ledger/status.json, ledger/ACCOUNT.md 저장
-  5) 새 이벤트(진입·T1 반익절·청산·하루 한도)를 ntfy.sh 로 푸시(환경변수 NTFY_TOPIC 이 있을 때만).
+  5) 새 이벤트(진입·T1 반익절·청산·하루 한도·하루 목표 달성·주간 출금)를 ntfy.sh 로 푸시(환경변수 NTFY_TOPIC 이 있을 때만).
      보낸 이벤트는 state/notified.json 에 기록해 두 번 보내지 않는다.
 
 사용법
@@ -244,12 +244,14 @@ def write_trades(trades):
     with open(TRADES, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f)
         w.writerow(["번호", "거래ID", "진입시각", "방향", "셋업", "등급", "진입가", "최초손절", "T1", "수량BTC",
-                    "레버리지", "위험금액", "1시간방향", "청산내역", "마지막청산", "청산시각", "손익원", "R"])
+                    "레버리지", "위험금액", "1시간방향", "청산내역", "마지막청산", "청산시각", "손익원", "R",
+                    "수량배율"])          # 수량배율: 1 / 0.5(그날 첫 매매 수익 뒤) / 목표후(목표가 남는 크기) — 기존 열 순서 유지, 끝에 추가
         for k, t in enumerate(trades, 1):
             w.writerow([k, t["id"], t["entry_time"].strftime("%Y-%m-%d %H:%M"), side_ko(t["side"]), t["tag"],
                         t["grade"], f"{t['entry']:.0f}", f"{t['stop0']:.0f}", f"{t['t1']:.0f}", f"{t['qty']:.4f}",
                         f"{t['lev']:.2f}", f"{t['rm']:.0f}", t["dir60"], " | ".join(t["exits"]), t["exit_reason"],
-                        t["exit_time"].strftime("%Y-%m-%d %H:%M"), f"{t['pnl']:.0f}", f"{t['R']:.3f}"])
+                        t["exit_time"].strftime("%Y-%m-%d %H:%M"), f"{t['pnl']:.0f}", f"{t['R']:.3f}",
+                        t.get("sizeTag", "1")])
 
 
 def position_dict(pos, last_close, fee):
@@ -273,12 +275,27 @@ def build_status(cfg, P, R, start_time, primary, used, now):
     st = engine.stats(trades, R["curve"])
     day = R["day"]
     pend = R["pending"]
+    eq0 = P["capital"]
+    wd_total = R["withdrawn"]
     return dict(
         mode="가상 매매(paper) — 실제 주문 없음",
-        rules="원칙 v1.4.1",
+        rules="원칙 v1.4.1 + 쉽알남 자금 관리(v1.4.1-mm)",
+        account_type="단타 계좌 (쉽알남 단타:스윙:장투 = 2:3:5 중 2)",
         start_time=start_time.strftime(TFMT),
-        initial_capital=P["capital"],
-        balance=round(P["capital"] + R["realized"]),
+        initial_capital=eq0,
+        balance=round(R["final"]),                       # 거래 계좌 잔고(실현 기준, 출금 뺀 값) = 거래 시드
+        trading_seed=round(R["seed"]),                   # 1R 계산 기준 금액
+        risk_per_trade_won=round(day["risk_per_trade"]), # 지금 1R(기본 셋업 1회 고정 손실) 금액
+        risk_pct=P["riskPct"], reduced_risk_pct=P["redPct"],
+        withdrawn_total=round(wd_total),
+        withdraw_pct=P["withdrawPct"],
+        first_win_half=P["firstWinHalf"],
+        withdrawals=[dict(time=w["time"].strftime(TFMT), week_start=str(w["week_start"]),
+                          week_pnl=round(w["week_pnl"]), amount=round(w["amount"]), total=round(w["total"]),
+                          seed_after=round(w["seed_after"])) for w in R["withdrawals"]],
+        total_value=round(R["final"] + wd_total),        # 거래 계좌 잔고 + 출금 누적
+        principal_recovered=wd_total >= eq0,             # 출금 누적이 원금 이상이면 '원금 회수 완료'
+        principal_recovered_pct=round(wd_total / eq0 * 100, 1) if eq0 else 0.0,
         equity=round(R["equity"]),
         realized_pnl=round(R["realized"]),
         unrealized_pnl=round(R["unrealized"]) if R["position"] else 0,
@@ -293,7 +310,17 @@ def build_status(cfg, P, R, start_time, primary, used, now):
             note="다음 봉 시가에 진입 예정"),
         pending_close=R["pending_close"],
         today=dict(date=str(day["date"]) if day["date"] else None, realized_pnl=round(day["realized"]),
-                   consecutive_losses=day["consec"], no_new_entries=bool(day["stop"]), reason=day["reason"]),
+                   consecutive_losses=day["consec"], no_new_entries=bool(day["stop"]), reason=day["reason"],
+                   start_equity=round(day["start_equity"]),
+                   target_pct=P["dayTargetP"],
+                   target_amount=round(day["target_amount"]) if day["target_amount"] is not None else None,
+                   target_reached=bool(day["target_reached"]),
+                   loss_limit_pct=P["dayLossP"],
+                   loss_limit_amount=round(day["loss_limit_amount"]),   # 양수 금액. 실현손익이 −이 값 이하면 신규 금지
+                   first_trade_result=day["first_trade_result"],         # 수익 / 손실 / 본전 / None(아직 없음)
+                   next_size_factor=round(day["next_size_factor"], 3),   # 1 / 0.5 / 목표 후 축소 비율 / 0(진입 안 함)
+                   next_size_mode=day["next_size_mode"],
+                   next_risk_won=round(day["next_risk"] or 0)),
         last_bar_time=R["last_bar_time"], last_price=round(R["last_close"]) if R["last_close"] else None,
         data_source=primary, data_source_this_run=used,
         updated_at=now.strftime(TFMT),
@@ -309,9 +336,10 @@ def write_account(status, R):
     trades = R["trades"]
     p = status["position"]
     L = []
-    L.append(f"# BTC 5분봉 가상 매매 계좌 (원칙 v1.4.1)\n")
+    L.append(f"# BTC 5분봉 가상 매매 계좌 (원칙 v1.4.1 + 쉽알남 자금 관리)\n")
     L.append(f"## 포지션: {'있음' if p else '없음'}\n")
     L.append("> ⚠️ 실제 돈을 쓰지 않는 **가상 매매** 기록입니다. 거래소에 주문하지 않습니다.\n")
+    L.append(f"> 계좌 성격: **{status['account_type']}**. 수익 일부는 매주 장투 계좌로 '출금'한 것으로 칩니다.\n")
     L.append(f"- 업데이트: {status['updated_at']} (KST) · 마지막 봉: {status['last_bar_time']} · "
              f"현재가 {status['last_price']:,}원 · 데이터: {SOURCE_KO.get(status['data_source'], status['data_source'])}"
              if status["last_price"] else f"- 업데이트: {status['updated_at']}")
@@ -321,17 +349,31 @@ def write_account(status, R):
 
     eq0 = status["initial_capital"]
     L.append("| 항목 | 값 |\n|---|---|")
-    L.append(f"| 잔고(실현 기준) | **{status['balance']:,}원** |")
+    wd = status["withdrawn_total"]
+    L.append(f"| 거래 시드(잔고, 실현 기준·출금 제외) | **{status['trading_seed']:,}원** |")
+    L.append(f"| 지금 1R(1회 고정 손실) | {status['risk_per_trade_won']:,}원 (시드의 {status['risk_pct']:g}%"
+             + (f", 1시간 반대·B+·C {status['reduced_risk_pct']:g}%" if status['reduced_risk_pct'] != status['risk_pct'] else "")
+             + ") |")
+    L.append(f"| 출금 누적(장투 계좌로) | {wd:,}원 ({len(status['withdrawals'])}회, 지난주 수익의 {status['withdraw_pct']:g}%) |")
+    L.append(f"| 잔고 + 출금 합계 | {status['total_value']:,}원 ({(status['total_value'] - eq0) / eq0 * 100:+.2f}%) |")
+    rec = "✅ 완료 (출금 누적 ≥ 원금)" if status["principal_recovered"] else f"{status['principal_recovered_pct']:.1f}% 회수"
+    L.append(f"| 원금 회수 | {rec} |")
     L.append(f"| 평가 잔고(미실현 포함) | {status['equity']:,}원 |")
     L.append(f"| 누적 실현손익 | {won(status['realized_pnl'])} ({status['realized_pnl'] / eq0 * 100:+.2f}%) |")
     L.append(f"| 미실현손익 | {won(status['unrealized_pnl'])} |")
     L.append(f"| 거래 수 / 승률 | {status['trades_count']}건 / {status['win_rate']:.1f}% |")
     L.append(f"| 평균 R | {status['avg_R']:+.3f}R |")
-    L.append(f"| 최대낙폭(MDD) | {status['max_drawdown_pct']:.2f}% |")
+    L.append(f"| 최대낙폭(MDD, 잔고+출금 기준) | {status['max_drawdown_pct']:.2f}% |")
     td = status["today"]
     L.append(f"| 오늘({td['date']}) 실현손익 | {won(td['realized_pnl'])} |")
+    if td["target_amount"] is not None:
+        L.append(f"| 오늘 목표 (+{td['target_pct']:g}%) | {td['target_amount']:,}원 → "
+                 f"{'🎯 달성' if td['target_reached'] else '진행 ' + format(td['realized_pnl'] / td['target_amount'] * 100 if td['target_amount'] else 0, '.0f') + '%'} |")
+    L.append(f"| 오늘 손실 한도 (−{td['loss_limit_pct']:g}%) | −{td['loss_limit_amount']:,}원 |")
+    L.append(f"| 오늘 첫 매매 결과 | {td['first_trade_result'] or '아직 없음'} |")
+    L.append(f"| 다음 매매 크기 | {td['next_size_mode']} (×{td['next_size_factor']:g}, 위험 {td['next_risk_won']:,}원) |")
     L.append(f"| 연속 손절 | {td['consecutive_losses']}회 |")
-    L.append(f"| 오늘 신규 진입 | {'⛔ 금지 (' + td['reason'] + ')' if td['no_new_entries'] else '✅ 가능'} |\n")
+    L.append(f"| 오늘 신규 진입 | {'⛔ 금지 (' + td['reason'] + ')' if td['no_new_entries'] else ('🎯 목표 보호로 진입 안 함' if td['next_size_factor'] == 0 else '✅ 가능')} |\n")
 
     L.append("## 현재 포지션\n")
     if p:
@@ -387,9 +429,19 @@ def write_account(status, R):
             L.append(f"| {k} | {s['N']} | {s['win']:.0f}% | {s['avgR']:+.3f} | {won(s['pnl'])} |")
     else:
         L.append("아직 청산된 거래가 없습니다.")
-    L.append("\n---\n규칙: 위험 0.25%(1시간 반대·B+·C 0.15%), 최소 손절폭 0.40%, 최대 1.5%, 레버리지 상한 10배, "
-             "수수료 0.05%·슬리피지 1틱, T1 반익절 후 본절, 하루 −2% 또는 2연속 손절 시 신규 금지. "
-             "자세한 거래 목록: [trades.csv](trades.csv), 기계용 상태: [status.json](status.json)")
+    if status["withdrawals"]:
+        L.append("\n## 출금 내역 (장투 계좌로 이동)\n")
+        L.append("| 시각 | 지난주 실현 수익 | 출금 | 출금 누적 | 출금 뒤 거래 시드 |\n|---|---|---|---|---|")
+        for w in reversed(status["withdrawals"]):
+            L.append(f"| {w['time'][:16]} | {won(w['week_pnl'])} | {w['amount']:,}원 | {w['total']:,}원 | {w['seed_after']:,}원 |")
+    td = status["today"]
+    L.append(f"\n---\n규칙: 1R = 거래 시드의 {status['risk_pct']:g}%(1시간 반대·B+·C {status['reduced_risk_pct']:g}%), "
+             f"1회 위험 상한 5%, 최소 손절폭 0.40%, 최대 1.5%, 레버리지 상한 10배, 수수료 0.05%·슬리피지 1틱, "
+             f"T1 반익절 후 본절, 하루 −{td['loss_limit_pct']:g}% 또는 2연속 손절 시 신규 금지"
+             + (f", 하루 +{td['target_pct']:g}% 달성 후엔 목표가 남는 크기만" if td["target_pct"] else "")
+             + (", 그날 첫 매매 수익이면 다음 매매 절반" if status.get("first_win_half") else "")
+             + (f", 매주 월요일 지난주 수익의 {status['withdraw_pct']:g}% 출금" if status["withdraw_pct"] else "")
+             + ". 자세한 거래 목록: [trades.csv](trades.csv), 기계용 상태: [status.json](status.json)")
     os.makedirs(LEDGER_DIR, exist_ok=True)
     with open(ACCOUNT, "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
@@ -413,6 +465,12 @@ def event_message(e):
         return f"{icon} 청산({r}) 거래 합계 {won(tot)}{part} ({e['price']:,.0f})"
     if e["type"] == "daystop":
         return f"⛔ 오늘 신규 금지({e['reason']}, 오늘 실현 {won(e['day_pnl'])})"
+    if e["type"] == "target":
+        tail = "이후엔 목표가 남는 크기로만" if e.get("after", True) else "오늘은 더 진입하지 않음"
+        return f"🎯 하루 목표 달성({won(e['day_pnl'])}) — {tail}"
+    if e["type"] == "withdraw":
+        msg = f"💸 출금 {e['amount']:,.0f}원(지난주 수익의 {e['pct']:g}%) — 출금 누적 {e['total']:,.0f}원"
+        return msg + (" · 원금 회수 완료" if e.get("principal_done") else "")
     return str(e)
 
 

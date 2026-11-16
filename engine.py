@@ -7,6 +7,9 @@ tasks\\btc-backtest-v14\\backtest_v14.py 의 run() 로직을 그대로 옮기고
   2) 데이터 끝에 남은 포지션은 청산하지 않고 '현재 포지션'으로 돌려준다(close_at_end=False).
   3) 알림용 이벤트(진입·T1 반익절·청산·하루 한도 발동)를 기록한다.
   4) 파라미터는 config.json 에서 읽는다(load_params).
+  5) [v1.4.1-mm] 쉽알남 자금 관리: 거래 시드 기준 고정 손실(1R), 하루 목표·목표 후 축소, 첫 매매 수익 시
+     절반, 주간 출금, 1회 위험 5% 절대 상한. 신호·손절·T1·반익반본·잔량 청산 로직은 손대지 않았다.
+     새 기능을 모두 끄면(dayTargetP=0, firstWinHalf=false, withdrawPct=0) 기존 v1.4.1 과 거래가 완전히 같다.
 
 체결 가정 (백테스트와 동일)
   - 봉 마감에 신호 → 다음 봉 시가 + 슬리피지로 진입
@@ -48,7 +51,16 @@ DEFAULTS = dict(
     fee=0.0005,          # 수수료(편도) 0.05%
     slip=1000.0,         # 슬리피지(원) — KRW-BTC 1틱
     capital=1_000_000.0, # 초기 자금
+    # ---- 쉽알남 자금 관리 (v1.4.1-mm) — 아래 기본값은 '모두 끔' = 기존 v1.4.1 과 완전히 같은 결과 ----
+    dayTargetP=0.0,          # 하루 목표 % (0 = 끔). 그날 실현손익 ≥ 목표면 일반 크기 신규 진입 금지
+    afterTargetSizing=True,  # 목표 달성 후: True = '손절돼도 목표가 남는 크기'로만 허용, False = 그날 진입 안 함
+    afterTargetMinFrac=0.2,  # 목표 후 허용 위험이 1R(고정 손실)의 이 비율 미만이면 진입 안 함
+    firstWinHalf=False,      # 그날 첫 매매가 수익이면 그날 남은 매매 수량 절반
+    withdrawPct=0.0,         # 매주 월요일 00:00(KST) 지난주 실현 수익의 이 % 출금 (0 = 끔)
+    maxRiskCapP=5.0,         # 1회 위험 절대 상한 % (5% 초과는 코드로 금지 — 설정해도 5로 잘림)
 )
+
+HARD_MAX_RISK_P = 5.0        # 어떤 설정으로도 넘을 수 없는 1회 위험 상한 %
 
 
 def load_params(config):
@@ -60,9 +72,17 @@ def load_params(config):
     if "initial_capital" in config:
         P["capital"] = float(config["initial_capital"])
     for k in ("riskPct", "redPct", "maxLev", "minStopP", "maxStopP", "bufP", "zoneTolP", "slopeThr",
-              "chaseP", "t1MinR", "t1MaxR", "t1FbR", "volExitX", "dayLossP", "fee", "slip", "capital"):
+              "chaseP", "t1MinR", "t1MaxR", "t1FbR", "volExitX", "dayLossP", "fee", "slip", "capital",
+              "dayTargetP", "afterTargetMinFrac", "withdrawPct", "maxRiskCapP"):
         P[k] = float(P[k])
     P["swLen"] = int(P["swLen"]); P["maxConsec"] = int(P["maxConsec"])
+    for k in ("firstWinHalf", "afterTargetSizing"):
+        P[k] = bool(P[k])
+    # 5% 초과 위험은 절대 금지: 상한 자체도 5%를 넘을 수 없고, riskPct·redPct 는 상한으로 자른다.
+    P["maxRiskCapP"] = min(max(P["maxRiskCapP"], 0.0), HARD_MAX_RISK_P)
+    P["riskPct"] = min(P["riskPct"], P["maxRiskCapP"])
+    P["redPct"] = min(P["redPct"], P["maxRiskCapP"])
+    P["withdrawPct"] = min(max(P["withdrawPct"], 0.0), 100.0)
     return P
 
 
@@ -206,17 +226,41 @@ def run(D, P, start_time=None, close_at_end=False):
       position   : 현재 보유 포지션(dict) 또는 None
       pending    : 다음 봉 시가 진입 예정 신호(dict) 또는 None
       pending_close : 다음 봉 시가 청산 예정 사유 또는 None
-      curve      : 봉별 평가 잔고 (start 이후 봉만)
+      curve      : 봉별 '총자산'(거래 계좌 평가 잔고 + 출금 누적) — 출금은 손실이 아니므로 MDD 는 이걸로 잰다
+      curve_acct : 봉별 거래 계좌 평가 잔고(출금 뺀 값)
       curve_time : curve 각 값의 봉 시각
       events     : 알림용 이벤트 목록
-      realized, final(실현 잔고), equity(평가 잔고), unrealized
-      day        : 마지막 봉 기준 하루 상태 (date, realized, start_equity, consec, stop, reason)
-      dayStopDays: 신규 금지가 발동한 날짜 집합
+      realized, final(실현 잔고 = 초기 자금 + 실현손익 − 출금), equity(평가 잔고), unrealized
+      withdrawn, withdrawals : 출금 누적액, 출금 내역
+      seed       : 거래 시드(= 초기 자금 + 실현손익 − 출금 누적) — 1R(고정 손실) 계산 기준
+      day        : 마지막 봉 기준 하루 상태 (date, realized, start_equity, consec, stop, reason, 목표·한도·다음 크기)
+      dayStopDays: 신규 금지가 발동한 날짜 집합 (lossLimitDays: 그중 손실 한도, consecDays: 연속 손절)
+      targetDays : 하루 목표를 달성한 날짜 집합
+
+    자금 관리 (쉽알남 방식, P 로 켜고 끔)
+      - 1R = 거래 시드 × riskPct%(1시간 반대·B+·C 는 redPct%). 수량 = 1R ÷ (진입가 − 손절가), 레버리지는 결과값.
+        손실 뒤에도 같은 비율(마틴게일 없음). 1회 위험은 시드의 maxRiskCapP%(≤5%)를 절대 넘지 않음.
+      - 하루 실현손익 ≤ −dayLossP% 또는 maxConsec 연속 손절 → 그날 신규 금지 (기존과 같음)
+      - 하루 실현손익 ≥ dayTargetP% → 일반 크기 금지. 이후엔 위험 ≤ (오늘 실현 − 목표)인 크기만,
+        그 값이 1R × afterTargetMinFrac 미만이면 진입 안 함
+      - firstWinHalf: 그날(진입일 기준) 첫 매매가 수익으로 끝나면 그날 남은 매매 수량 절반
+      - withdrawPct: 매주 월요일 00:00 KST 에 지난주 실현 수익(플러스일 때만)의 N% 를 출금 → 거래 시드에서 제외
+      - 하루 기준 금액(목표·손실 한도) = 그날 첫 봉의 거래 계좌 평가 잔고 (기존 v1.4.1 과 같은 정의)
     """
     T, O, H, L, C, V = D.T, D.O, D.H, D.L, D.C, D.V
     n, sw, tol = D.n, P["swLen"], P["zoneTolP"] / 100
     fee, slip, eq0 = P["fee"], P["slip"], P["capital"]
+    capP = P["maxRiskCapP"]
+    tgtP = P["dayTargetP"]
 
+    withdrawn = 0.0
+    withdrawals = []
+    weekKey = None; weekStartNP = 0.0
+    dayFirst = None              # 그날 진입한 첫 매매의 결과: "수익" / "손실" / "본전"
+    tgtReached = False
+    targetDays, lossLimitDays, consecDays = set(), set(), set()
+    nextFactor = 1.0; nextMode = "보통"; nextRisk = None; lastBaseRisk = 0.0; lastTargetAmt = 0.0
+    lastLossAmt = 0.0
     realized = 0.0
     phV, phB, phVol, plV, plB, plVol = [], [], [], [], [], []
     fBT = fBB = fST = fSB = None
@@ -228,6 +272,7 @@ def run(D, P, start_time=None, close_at_end=False):
     dayStopDays = set()
     pos = None; pending = None; pending_close = None
     trades, curve, curve_time, events = [], [], [], []
+    curve_acct = []
     equity = eq0; unreal = 0.0
 
     def close_part(qty, price, reason, i):
@@ -272,6 +317,20 @@ def run(D, P, start_time=None, close_at_end=False):
         o, h, l, c, v = O[i], H[i], L[i], C[i], V[i]
         can_trade = start_time is None or T[i] >= start_time
         closed_now = []
+        # ---------- 0) 주간 출금 (월요일 00:00 KST, 이번 봉의 체결보다 먼저) ----------
+        wk = T[i].date() - dt.timedelta(days=T[i].weekday())
+        if wk != weekKey:
+            if weekKey is not None and P["withdrawPct"] > 0:
+                wpnl = realized - weekStartNP          # 지난주 실현손익 (출금 전)
+                if wpnl > 0:
+                    amt = wpnl * P["withdrawPct"] / 100
+                    withdrawn += amt
+                    withdrawals.append(dict(time=T[i], week_start=weekKey, week_pnl=wpnl, amount=amt,
+                                            total=withdrawn, seed_after=eq0 + realized - withdrawn))
+                    events.append(dict(type="withdraw", id=f"W{wk.strftime('%Y%m%d')}", time=T[i],
+                                       amount=amt, week_pnl=wpnl, pct=P["withdrawPct"], total=withdrawn,
+                                       principal_done=withdrawn >= eq0))
+            weekKey = wk; weekStartNP = realized
         # ---------- 1) 이번 봉 안에서의 체결 ----------
         if pending is not None:
             pd = pending; pending = None
@@ -448,14 +507,19 @@ def run(D, P, start_time=None, close_at_end=False):
         unreal = 0.0
         if pos is not None:
             unreal = pos["side"] * (c - pos["entry"]) * pos["open"] - pos["entry"] * pos["open"] * fee
-        equity = eq0 + realized + unreal
+        seed = eq0 + realized - withdrawn          # 거래 시드 (출금 0 이면 eq0 + realized 와 정확히 같음)
+        equity = seed + unreal
         dk = T[i].date()
         if dk != dayKey:
             dayKey = dk; dayStartNP = realized; dayStartEq = equity; consec = 0
+            dayFirst = None; tgtReached = False
         for tr in closed_now:
             consec = consec + 1 if tr["pnl"] < 0 else 0
+            if dayFirst is None and tr["entry_time"].date() == dk:
+                dayFirst = "수익" if tr["pnl"] > 0 else ("손실" if tr["pnl"] < 0 else "본전")
         dayReal = realized - dayStartNP
-        hitLoss = dayReal <= -dayStartEq * P["dayLossP"] / 100
+        lossAmt = dayStartEq * P["dayLossP"] / 100
+        hitLoss = dayReal <= -lossAmt
         hitConsec = consec >= P["maxConsec"]
         dayStop = hitLoss or hitConsec
         if dayStop:
@@ -464,15 +528,54 @@ def run(D, P, start_time=None, close_at_end=False):
                 events.append(dict(type="daystop", id=f"D{dk.strftime('%Y%m%d')}", time=T[i], reason=why,
                                    day_pnl=dayReal))
             dayStopDays.add(dk)
-        baseRisk = equity * P["riskPct"] / 100
-        redRisk = equity * P["redPct"] / 100
-        lockCap = dayReal - baseRisk if dayReal >= 2 * baseRisk else None
+            if can_trade:
+                (consecDays if hitConsec else lossLimitDays).add(dk)
+        # 하루 목표 (dayTargetP > 0 일 때만)
+        targetAmt = dayStartEq * tgtP / 100
+        if tgtP > 0 and dayReal >= targetAmt:
+            if not tgtReached and can_trade:
+                events.append(dict(type="target", id=f"G{dk.strftime('%Y%m%d')}", time=T[i], day_pnl=dayReal,
+                                   target=targetAmt, after=P["afterTargetSizing"]))
+                targetDays.add(dk)
+            tgtReached = True
+        baseRisk = seed * P["riskPct"] / 100
+        redRisk = seed * P["redPct"] / 100
+        hardCap = seed * capP / 100                # 1회 위험 절대 상한 (≤ 시드 5%)
+        lockCap = dayReal - baseRisk if dayReal >= 2 * baseRisk else None   # v1.4.1 수익 잠금(기존 규칙)
+        halfNow = P["firstWinHalf"] and dayFirst == "수익"
+        tgtCap = None                              # 목표 후 허용 위험 = 오늘 실현 − 목표
+        tgtBlock = False
+        if tgtReached:
+            tgtCap = dayReal - targetAmt
+            if not P["afterTargetSizing"] or tgtCap < baseRisk * P["afterTargetMinFrac"]:
+                tgtBlock = True
 
         def fcap(r):
-            return r if lockCap is None else min(r, lockCap)
+            r = r if lockCap is None else min(r, lockCap)
+            if halfNow:
+                r = r * 0.5
+            if tgtCap is not None:
+                r = min(r, tgtCap)
+            return min(r, hardCap)
+
+        def size_tag():
+            if tgtCap is not None:
+                return "목표후"
+            return "0.5" if halfNow else "1"
+
+        # 상태 표시용: 다음 매매 크기 (기본 셋업 기준)
+        lastBaseRisk, lastTargetAmt, lastLossAmt = baseRisk, targetAmt, lossAmt
+        if dayStop:
+            nextMode, nextFactor, nextRisk = "진입 금지(하루 한도)", 0.0, 0.0
+        elif tgtBlock:
+            nextMode, nextFactor, nextRisk = "진입 안 함(목표 보호)", 0.0, 0.0
+        else:
+            nextRisk = fcap(baseRisk)
+            nextFactor = nextRisk / baseRisk if baseRisk > 0 else 0.0
+            nextMode = "목표 후 축소" if tgtCap is not None else ("절반(첫 매매 수익)" if halfNow else "보통")
 
         # ---------- 4) 진입 판단 (봉 마감, 다음 봉 시가 체결) ----------
-        if pos is None and pending is None and not dayStop and can_trade:
+        if pos is None and pending is None and not dayStop and not tgtBlock and can_trade:
             sig = grd = ""; stp = rm = None; side = 0
             if P["allowLong"] and P["useZone"] and dir15 == 1 and zoneL and okL and supL and noChase:
                 sig, grd = "구간", ("A" if bullEng else "B")
@@ -503,10 +606,11 @@ def run(D, P, start_time=None, close_at_end=False):
                     if P["exitMode"] == "v13":
                         t1 = c + side * 1.5 * dist
                     q = rm / dist if dist > 0 and rm > 0 else 0.0
-                    q = math.floor(min(q, equity * P["maxLev"] / c) * 10000) / 10000
+                    q = math.floor(min(q, seed * P["maxLev"] / c) * 10000) / 10000   # 레버리지 상한(안전장치)
                     if q > 0:
-                        pending = dict(side=side, tag=sig, grade=grd, stop=stp, t1=t1, qty=q, eq=equity,
-                                       sigClose=c, rm=rm, dir60=dir60, signal_time=T[i],
+                        pending = dict(side=side, tag=sig, grade=grd, stop=stp, t1=t1, qty=q, eq=seed,
+                                       sigClose=c, rm=rm, dir60=dir60, signal_time=T[i], sizeTag=size_tag(),
+                                       baseR=baseRisk,
                                        bpLine=(bpLineNextL if side == 1 else bpLineNextS) if sig == "B+" else None)
                         if sig == "B+":
                             if side == 1: bpUsedL = bpKeyL
@@ -532,25 +636,32 @@ def run(D, P, start_time=None, close_at_end=False):
                         pending_close = pending_close or ("반대 장악형" if (P["useOppEng"] and opp) else "거래량 급증")
 
         if can_trade:
-            curve.append(equity); curve_time.append(T[i])
+            curve.append(equity + withdrawn); curve_acct.append(equity); curve_time.append(T[i])
 
     # 데이터 끝에 남은 포지션: 백테스트 비교용일 때만 마지막 종가로 정리
     if pos is not None and close_at_end:
         close_part(pos["open"], C[-1], "기간 종료", n - 1)
         unreal = 0.0
-        equity = eq0 + realized
+        equity = eq0 + realized - withdrawn
     if pos is not None:
         unreal = pos["side"] * (C[-1] - pos["entry"]) * pos["open"] - pos["entry"] * pos["open"] * fee
-        equity = eq0 + realized + unreal
+        equity = eq0 + realized - withdrawn + unreal
 
     day = dict(date=dayKey, realized=realized - dayStartNP, start_equity=dayStartEq, consec=consec,
-               stop=dayStop, reason=None)
+               stop=dayStop, reason=None,
+               target_reached=tgtReached, target_amount=lastTargetAmt if tgtP > 0 else None,
+               loss_limit_amount=lastLossAmt, first_trade_result=dayFirst,
+               next_size_factor=nextFactor, next_size_mode=nextMode, next_risk=nextRisk,
+               risk_per_trade=lastBaseRisk)
     if dayStop:
         day["reason"] = (f"{consec}연속 손절" if consec >= P["maxConsec"]
                          else f"하루 손실 {P['dayLossP']:g}% 도달")
+    seed_now = eq0 + realized - withdrawn
     return dict(trades=trades, position=pos, pending=pending, pending_close=pending_close,
-                curve=curve, curve_time=curve_time, events=events, dayStopDays=dayStopDays,
-                realized=realized, final=eq0 + realized, equity=equity, unrealized=unreal, day=day,
+                curve=curve, curve_acct=curve_acct, curve_time=curve_time, events=events,
+                dayStopDays=dayStopDays, lossLimitDays=lossLimitDays, consecDays=consecDays,
+                targetDays=targetDays, withdrawn=withdrawn, withdrawals=withdrawals, seed=seed_now,
+                realized=realized, final=seed_now, equity=equity, unrealized=unreal, day=day,
                 last_close=C[-1] if n else None)
 
 
