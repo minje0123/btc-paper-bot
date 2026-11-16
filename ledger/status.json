@@ -7,8 +7,8 @@
   "balance": 999374,
   "trading_seed": 999374,
   "risk_per_trade_won": 9994,
-  "risk_pct": 1.0,
-  "reduced_risk_pct": 1.0,
+  "risk_pct": 0.5,
+  "reduced_risk_pct": 0.5,
   "withdrawn_total": 0,
   "withdraw_pct": 30.0,
   "first_win_half": true,
@@ -34,7 +34,7 @@
     "no_new_entries": false,
     "reason": null,
     "start_equity": 1000000,
-    "target_pct": 2.0,
+    "target_pct": 1.0,
     "target_amount": 20000,
     "target_reached": false,
     "loss_limit_pct": 1.0,
@@ -44,10 +44,10 @@
     "next_size_mode": "보통",
     "next_risk_won": 9994
   },
-  "last_bar_time": "2026-11-16 23:40:00",
-  "last_price": 89049000,
+  "last_bar_time": "2026-11-16 23:45:00",
+  "last_price": 89037000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-16 23:45:22",
+  "updated_at": "2026-11-16 23:50:22",
   "warnings": []
 }
