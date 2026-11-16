@@ -1,0 +1,31 @@
+{
+  "mode": "가상 매매(paper) — 실제 주문 없음",
+  "rules": "원칙 v1.4.1",
+  "start_time": "2026-11-16 13:40:00",
+  "initial_capital": 1000000.0,
+  "balance": 1000000,
+  "equity": 1000000,
+  "realized_pnl": 0,
+  "unrealized_pnl": 0,
+  "trades_count": 0,
+  "win_rate": 0.0,
+  "avg_R": 0.0,
+  "max_drawdown_pct": 0.0,
+  "has_position": false,
+  "position": null,
+  "pending_entry": null,
+  "pending_close": null,
+  "today": {
+    "date": "2026-11-16",
+    "realized_pnl": 0,
+    "consecutive_losses": 0,
+    "no_new_entries": false,
+    "reason": null
+  },
+  "last_bar_time": "2026-11-16 13:35:00",
+  "last_price": 88999000,
+  "data_source": "upbit",
+  "data_source_this_run": "upbit",
+  "updated_at": "2026-11-16 13:44:59",
+  "warnings": []
+}
