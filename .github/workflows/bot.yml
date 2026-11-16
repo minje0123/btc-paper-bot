@@ -1,22 +1,26 @@
-# BTC 5분봉 가상 매매 봇 (원칙 v1.4.1) — 실제 주문 없음, 공개 시세만 조회
+# BTC 5분봉 가상 매매 봇 — 실제 주문 없음, 공개 시세만 조회
+# GitHub의 5분 예약 실행은 자주 늦거나 시작되지 않아서, 한 번 실행되면
+# 약 5시간 40분 동안 '5분봉이 닫힐 때마다(+20초)' 봇을 돌리고,
+# 끝나기 직전에 다음 실행을 스스로 이어서 예약한다. 15분 예약은 비상용.
 name: BTC 가상 매매 봇
 
 on:
   schedule:
-    - cron: "*/5 * * * *"      # 5분마다 (GitHub 사정으로 몇 분~수십 분 늦어질 수 있음 — 늦어도 빠진 봉은 다음 실행에서 채움)
-  workflow_dispatch: {}         # Actions 탭에서 수동 실행
+    - cron: "*/15 * * * *"      # 비상용 (돌고 있는 실행이 있으면 대기했다가 이어받음)
+  workflow_dispatch: {}         # Actions 탭에서 수동 실행 / 이전 실행이 이어서 예약
 
 permissions:
-  contents: write               # data/·ledger/·state/ 커밋·푸시용
+  contents: write               # data/·ledger/·state/ 커밋·푸시
+  actions: write                # 다음 실행 이어서 예약
 
 concurrency:
-  group: btc-paper-bot          # 동시에 하나만 실행 (겹치면 앞 실행이 끝날 때까지 대기)
+  group: btc-paper-bot          # 동시에 하나만 실행
   cancel-in-progress: false
 
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 355
     steps:
       - name: 저장소 받기
         uses: actions/checkout@v4
@@ -26,27 +30,31 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: 봇 실행 (표준 라이브러리만 사용, 설치 없음)
+      - name: 5분봉 마감마다 봇 실행 (약 5시간 40분)
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           TZ: Asia/Seoul
-        run: python bot.py
-
-      - name: 변경분 커밋·푸시
-        if: always()
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for p in data ledger state config.json; do
-            if [ -e "$p" ]; then git add "$p"; fi
+          end=$(( $(date +%s) + 340*60 ))
+          while :; do
+            git pull --rebase --autostash -q || echo "pull 실패 — 이번엔 그대로 진행"
+            python bot.py || echo "봇 실행 실패 — 다음 봉에서 다시 시도"
+            for p in data ledger state config.json; do
+              if [ -e "$p" ]; then git add "$p"; fi
+            done
+            if ! git diff --cached --quiet; then
+              git commit -q -m "봇 장부 업데이트 $(date '+%Y-%m-%d %H:%M') KST [skip ci]"
+              for i in 1 2 3; do
+                if git pull --rebase --autostash -q && git push -q; then break; fi
+                sleep 5
+              done
+            fi
+            now=$(date +%s)
+            next=$(( (now / 300 + 1) * 300 + 20 ))   # 다음 5분봉 마감 + 20초
+            if [ "$next" -ge "$end" ]; then break; fi
+            sleep $(( next - now ))
           done
-          if git diff --cached --quiet; then
-            echo "변경 없음"
-            exit 0
-          fi
-          git commit -m "봇 장부 업데이트 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') KST [skip ci]"
-          for i in 1 2 3; do
-            if git pull --rebase --autostash && git push; then exit 0; fi
-            sleep 5
-          done
-          echo "푸시 실패" && exit 1
+          gh workflow run bot.yml --ref main || echo "다음 실행 예약 실패 — 15분 비상 예약이 이어받음"
