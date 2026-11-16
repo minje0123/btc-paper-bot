@@ -98,7 +98,7 @@
     </h2>
     <div class="chart" id="chart"></div>
     <div class="legend">
-      <span><span class="up">▲</span> 롱 진입</span><span><span class="down">▼</span> 숏 진입</span>
+      <span><span class="up">▲</span> 롱 진입</span><span><span class="down">▼</span> 숏 진입 (#번호 = 매매 기록 번호)</span>
       <span>● 청산(초록 이익 / 회색 본절 / 주황 손실)</span><span>점선: 현재 포지션 진입·손절·T1</span>
     </div>
   </section>
@@ -180,7 +180,7 @@
     chart = LC.createChart($('chart'), baseOpt);
     cs = chart.addCandlestickSeries({ upColor: '#f04452', downColor: '#3182f6', borderVisible: false,
       wickUpColor: '#f04452', wickDownColor: '#3182f6', priceFormat: { type: 'price', precision: 0, minMove: 1000 } });
-    eqChart = LC.createChart($('eqChart'), { ...baseOpt, timeScale: { ...baseOpt.timeScale } });
+    eqChart = LC.createChart($('eqChart'), { ...baseOpt, timeScale: { ...baseOpt.timeScale, fixLeftEdge: true, fixRightEdge: true }, handleScroll: false, handleScale: false });
     eqS = eqChart.addBaselineSeries({ baseValue: { type: 'price', price: 1000000 },
       topLineColor: '#f04452', topFillColor1: 'rgba(240,68,82,.25)', topFillColor2: 'rgba(240,68,82,.02)',
       bottomLineColor: '#3182f6', bottomFillColor1: 'rgba(49,130,246,.02)', bottomFillColor2: 'rgba(49,130,246,.25)',
@@ -324,23 +324,22 @@
     trades.forEach(t => {
       const long = t['방향'] === '롱', pnl = +t['손익원'];
       add({ time: kstTs(t['진입시각']), position: long ? 'belowBar' : 'aboveBar', color: long ? '#f04452' : '#3182f6',
-            shape: long ? 'arrowUp' : 'arrowDown', text: `${t['방향']} ${t['셋업']}${t['등급'] || ''}` });
+            shape: long ? 'arrowUp' : 'arrowDown', text: `#${t['번호']}` });
       parseExits(t).forEach(x => x.time && add({ time: x.time, position: long ? 'aboveBar' : 'belowBar',
-        color: x.reason.startsWith('T1') || pnl > 0 ? '#2fbf71' : pnl === 0 ? '#8b96a5' : '#f5a524', shape: 'circle',
-        text: x.reason.replace('반익절', '').trim() }));
+        color: x.reason.startsWith('T1') || pnl > 0 ? '#2fbf71' : pnl === 0 ? '#8b96a5' : '#f5a524', shape: 'circle', size: 0.8, text: '' }));
     });
     const p = S.position;
     if (p) add({ time: kstTs(p.entry_time), position: p.side === '롱' ? 'belowBar' : 'aboveBar',
       color: p.side === '롱' ? '#f04452' : '#3182f6', shape: p.side === '롱' ? 'arrowUp' : 'arrowDown', text: `${p.side} ${p.setup}${p.grade || ''} (보유)` });
     mk.sort((a, b) => a.time - b.time);
-    cs.setMarkers(mk);
+    cs.setMarkers(mk); window.__mk = mk.length;
     posLines.forEach(l => cs.removePriceLine(l)); posLines = [];
     if (p) {
       const L = (price, color, title) => posLines.push(cs.createPriceLine({ price, color, lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title }));
       L(p.entry, '#e6edf3', '진입'); L(p.stop, '#3182f6', p.t1_done ? '본절' : '손절'); if (!p.t1_done) L(p.t1, '#f04452', 'T1');
       if (p.next_target) L(p.next_target, '#f5a524', '다음 목표');
     }
-    applyRange();
+    requestAnimationFrame(applyRange);
   }
 
   function renderEquity() {
@@ -355,8 +354,8 @@
     let arr = [...pts].sort((a, b) => a[0] - b[0]).map(([time, value]) => ({ time, value: Math.round(value) }));
     const lastT = arr[arr.length - 1].time, now = Math.max(nowKst(), lastT + 60);
     arr.push({ time: now, value: Math.round(liveEquity()) });
-    eqS.setData(arr);
-    eqChart.timeScale().fitContent();
+    eqS.setData(arr); window.__eq = arr;
+    requestAnimationFrame(() => eqChart.timeScale().fitContent());
   }
 
   function renderTrades() {
