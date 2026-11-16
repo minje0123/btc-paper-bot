@@ -543,7 +543,7 @@
     try {
       const r = await fetch('https://api.bithumb.com/v1/ticker?markets=KRW-BTC', { cache: 'no-store' });
       const d = (await r.json())[0];
-      if (d && d.trade_price) { setWs(true, '실시간 (빗썸 시세 · 업비트 연결 안 됨)'); onPrice(d.trade_price, d.trade_timestamp || Date.now(), d.signed_change_rate); }
+      if (d && d.trade_price) { setWs(true, '실시간 (빗썸 시세 · 업비트 연결 안 됨)'); onPrice(d.trade_price, Date.now(), d.signed_change_rate); }   // 빗썸 trade_timestamp는 KST가 더해진 값이라 쓰지 않음
     } catch (e) { setWs(false, '시세 연결 안 됨 · 장부 가격 표시 중'); }
   }
   function startFallback() { if (!fbTimer) { pollBithumb(); fbTimer = setInterval(pollBithumb, 2000); } }
