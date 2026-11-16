@@ -22,10 +22,10 @@
     "no_new_entries": false,
     "reason": null
   },
-  "last_bar_time": "2026-11-16 16:00:00",
-  "last_price": 88649000,
+  "last_bar_time": "2026-11-16 16:05:00",
+  "last_price": 88501000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-16 16:05:21",
+  "updated_at": "2026-11-16 16:10:21",
   "warnings": []
 }
