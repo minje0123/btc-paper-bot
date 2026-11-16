@@ -16,9 +16,9 @@
   "total_value": 999374,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 997647,
+  "equity": 998258,
   "realized_pnl": -626,
-  "unrealized_pnl": -1726,
+  "unrealized_pnl": -1116,
   "trades_count": 2,
   "win_rate": 50.0,
   "avg_R": -0.143,
@@ -41,8 +41,8 @@
     "risk_money": 4997,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 88959000,
-    "unrealized_pnl": -1726,
+    "last_price": 89014000,
+    "unrealized_pnl": -1116,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -64,10 +64,10 @@
     "next_size_mode": "보통",
     "next_risk_won": 4997
   },
-  "last_bar_time": "2026-11-17 08:00:00",
-  "last_price": 88959000,
+  "last_bar_time": "2026-11-17 08:05:00",
+  "last_price": 89014000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 08:05:21",
+  "updated_at": "2026-11-17 08:10:21",
   "warnings": []
 }
