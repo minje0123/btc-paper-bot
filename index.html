@@ -113,6 +113,14 @@
     background-image:repeating-linear-gradient(90deg,currentColor 0 6px,transparent 6px 8px)}
   .bar.tgt>i{color:var(--neon)} .bar.loss>i{color:var(--amber)} .bar.loss.full>i{color:var(--up)}
 
+  /* 시간봉별 방향 표시판 */
+  .mtf{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--line);padding:0 !important}
+  .mtf .c{padding:6px 8px;border-right:1px solid var(--line);font-size:11px;line-height:1.35}
+  .mtf .c:last-child{border-right:0}
+  .mtf .c b{display:block;font-size:13px}
+  .mtf .c.on{background:rgba(0,255,156,.06)}
+  .mtf .tfl{color:var(--muted);letter-spacing:.5px}
+
   footer{color:var(--dim);font-size:10.5px;line-height:1.7;margin-top:16px;border-top:1px dashed var(--line2);padding-top:10px}
   footer a{color:var(--cyan)}
 </style>
@@ -139,10 +147,16 @@
   <div class="main">
     <section class="card">
       <h2><span>Chart <span class="ko">· 진입/청산 표시</span></span>
-        <span class="seg" id="rangeBtns">
-          <button data-h="6">6H</button><button data-h="24" class="on">1D</button><button data-h="72">3D</button><button data-h="0">ALL</button>
+        <span style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="seg" id="tfBtns">
+            <button data-tf="5" class="on">5m</button><button data-tf="15">15m</button><button data-tf="30">30m</button><button data-tf="60">1H</button><button data-tf="240">4H</button>
+          </span>
+          <span class="seg" id="rangeBtns">
+            <button data-h="6">6H</button><button data-h="24" class="on">1D</button><button data-h="72">3D</button><button data-h="0">ALL</button>
+          </span>
         </span>
       </h2>
+      <div class="mtf" id="mtf"><div class="c muted">시간봉별 방향 불러오는 중…</div></div>
       <div class="chart" id="chart" style="padding:0"></div>
       <div class="legend">
         <span><span class="up">▲</span> 롱 진입</span><span><span class="down">▼</span> 숏 진입 (#번호 = 매매 기록 번호)</span>
@@ -231,6 +245,46 @@
   // ---------- 상태 ----------
   let S = null, trades = [], candles = [], lastSha = null;
   let livePrice = null, liveBar = null, posLines = [];
+  // ---------- 시간봉 전환 (5m = 봇 장부 캔들, 그 외 = 업비트/빗썸 캔들 API) ----------
+  let tf = 5; const tfData = {};
+  const curCandles = () => tf === 5 ? candles : (tfData[tf] || []);
+  async function fetchJSON(url, ms = 4000) {
+    const ac = new AbortController(); const to = setTimeout(() => ac.abort(), ms);
+    try { const r = await fetch(url, { cache: 'no-store', signal: ac.signal }); if (!r.ok) throw new Error(r.status); return await r.json(); }
+    finally { clearTimeout(to); }
+  }
+  async function fetchTF(unit) {
+    const q = `candles/minutes/${unit}?market=KRW-BTC&count=200`;
+    let arr = null;
+    for (const base of ['https://api.upbit.com/v1/', 'https://api.bithumb.com/v1/']) {
+      try { arr = await fetchJSON(base + q); if (Array.isArray(arr) && arr.length) break; } catch (e) { arr = null; }
+    }
+    if (!arr) return false;
+    tfData[unit] = arr.map(c => ({ time: kstTs(c.candle_date_time_kst), open: +c.opening_price, high: +c.high_price, low: +c.low_price, close: +c.trade_price }))
+      .filter(c => c.time).sort((a, b) => a.time - b.time);
+    return true;
+  }
+  // 20SMA 기울기(5봉, %) — 엔진의 slopeThr 0.02%와 같은 기준
+  function trendOf(cs_) {
+    if (!cs_ || cs_.length < 26) return null;
+    const sma = k => { let s = 0; for (let j = k - 19; j <= k; j++) s += cs_[j].close; return s / 20; };
+    const n = cs_.length - 1, a = sma(n), b = sma(n - 5), sl = (a - b) / b * 100;
+    return { dir: sl > 0.02 ? 1 : sl < -0.02 ? -1 : 0, sl, above: cs_[n].close > a };
+  }
+  function renderMTF() {
+    const L = [[5, '5m'], [15, '15m'], [30, '30m'], [60, '1H'], [240, '4H']];
+    $('mtf').innerHTML = L.map(([u, nm]) => {
+      const t = trendOf(u === 5 ? candles : tfData[u]);
+      const v = !t ? '<b class="muted">…</b>' : t.dir > 0 ? '<b class="up">▲ 상승</b>' : t.dir < 0 ? '<b class="down">▼ 하락</b>' : '<b class="muted">– 횡보</b>';
+      const s = t ? `<span class="muted">기울기 ${t.sl >= 0 ? '+' : ''}${t.sl.toFixed(2)}% · 가격 ${t.above ? '위' : '아래'}</span>` : '';
+      return `<div class="c${u === tf ? ' on' : ''}"><span class="tfl">${nm}</span>${v}${s}</div>`;
+    }).join('');
+  }
+  async function refreshTFs() {
+    await Promise.all([15, 30, 60, 240].map(fetchTF));
+    renderMTF();
+    if (tf !== 5) { liveBar = null; renderChart(); }
+  }
 
   // ---------- 차트 ----------
   const LC = window.LightweightCharts;
@@ -262,9 +316,20 @@
     [...$('rangeBtns').children].forEach(x => x.classList.toggle('on', x === b));
     rangeH = +b.dataset.h; applyRange();
   });
+  $('tfBtns').addEventListener('click', async e => {
+    const b = e.target.closest('button'); if (!b) return;
+    [...$('tfBtns').children].forEach(x => x.classList.toggle('on', x === b));
+    tf = +b.dataset.tf; liveBar = null;
+    $('rangeBtns').style.display = tf === 5 ? '' : 'none';
+    renderMTF();
+    if (tf !== 5 && !tfData[tf]) await fetchTF(tf);
+    renderChart();
+  });
   function applyRange() {
-    if (!chart || !candles.length) return;
-    const last = liveBar ? liveBar.time : candles[candles.length - 1].time;
+    const cc = curCandles();
+    if (!chart || !cc.length) return;
+    if (tf !== 5) { const n = cc.length + (liveBar ? 1 : 0); chart.timeScale().setVisibleLogicalRange({ from: Math.max(0, n - 120), to: n + 3 }); return; }
+    const last = liveBar ? liveBar.time : cc[cc.length - 1].time;
     if (!rangeH) chart.timeScale().fitContent();
     else chart.timeScale().setVisibleRange({ from: last - rangeH * 3600, to: last + 600 });
   }
@@ -429,13 +494,21 @@
   }
 
   function renderChart() {
-    if (!cs || !candles.length) return;
-    const data = candles.slice();
+    const cc = curCandles();
+    if (!cs || !cc.length) { if (cs) cs.setData([]); return; }
+    const data = cc.slice();
     if (liveBar && liveBar.time > data[data.length - 1].time) data.push({ ...liveBar });
     cs.setData(data);
-    const have = new Set(data.map(c => c.time));
+    const times = data.map(c => c.time);
     const mk = [];
-    const add = m => { m.time = bar5(m.time); if (have.has(m.time)) mk.push(m); };
+    // 표시 중인 시간봉에서 그 시각을 포함하는 봉(시각 ≤ t 인 마지막 봉)에 표시
+    const add = m => {
+      const t = m.time; if (t == null || t < times[0]) return;
+      let lo = 0, hi = times.length - 1;
+      while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (times[mid] <= t) lo = mid; else hi = mid - 1; }
+      if (t - times[lo] >= tf * 60 * 2) return;
+      m.time = times[lo]; mk.push(m);
+    };
     trades.forEach(t => {
       const long = t['방향'] === '롱', pnl = +t['손익원'];
       add({ time: kstTs(t['진입시각']), position: long ? 'belowBar' : 'aboveBar', color: long ? '#f04452' : '#3182f6',
@@ -554,12 +627,22 @@
     livePrice = px;
     $('livePrice').textContent = won(px);
     if (chg != null) { $('liveChg').innerHTML = `<span class="${cls(chg)}">${chg >= 0 ? '+' : ''}${(chg * 100).toFixed(2)}%</span> <span class="muted">전일 대비</span>`; }
-    const t = bar5(Math.floor((tsMs + 9 * 3600e3) / 1000));
-    const lastC = candles.length ? candles[candles.length - 1] : null;
-    if (cs && lastC && t > lastC.time) {
-      if (!liveBar || liveBar.time !== t) liveBar = { time: t, open: liveBar && liveBar.time < t ? liveBar.close : lastC.close, high: px, low: px, close: px };
-      liveBar.high = Math.max(liveBar.high, px); liveBar.low = Math.min(liveBar.low, px); liveBar.close = px;
-      try { cs.update({ ...liveBar }); } catch (x) {}
+    const step = tf * 60, cc = curCandles();
+    const nowS = Math.floor((tsMs + 9 * 3600e3) / 1000);
+    const lastC = cc.length ? cc[cc.length - 1] : null;
+    if (cs && lastC) {
+      if (nowS < lastC.time + step) {
+        // 아직 진행 중인 마지막 봉(상위 시간봉 API는 진행 중인 봉을 포함) → 그 봉을 갱신
+        if (tf !== 5 && nowS >= lastC.time) {
+          lastC.high = Math.max(lastC.high, px); lastC.low = Math.min(lastC.low, px); lastC.close = px;
+          try { cs.update({ ...lastC }); } catch (x) {}
+        }
+      } else {
+        const t = lastC.time + Math.floor((nowS - lastC.time) / step) * step;
+        if (!liveBar || liveBar.time !== t) liveBar = { time: t, open: liveBar && liveBar.time < t ? liveBar.close : lastC.close, high: px, low: px, close: px };
+        liveBar.high = Math.max(liveBar.high, px); liveBar.low = Math.min(liveBar.low, px); liveBar.close = px;
+        try { cs.update({ ...liveBar }); } catch (x) {}
+      }
     }
     const now = Date.now();
     if (S && now - lastPaint > 1000) {
@@ -574,6 +657,7 @@
   }
 
   load(true);
+  refreshTFs(); setInterval(refreshTFs, 60e3);
   setInterval(() => load(false), DEMO ? 3600e3 : 90e3);
   setInterval(renderAge, 30e3);
   setInterval(() => { if (S && S.position) renderEquity(); }, 60e3);
