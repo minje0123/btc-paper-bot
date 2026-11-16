@@ -1,0 +1,2 @@
+2026-11-17 08:22:02 KST	experiment=guard-selftest	file=holdout\a\data_btc_5m.csv	DENIED (FINAL=1 없음)
+2026-11-17 08:22:02 KST	experiment=-	file=holdout\b\data_wld_5m.csv	DENIED (FINAL=1 없음)

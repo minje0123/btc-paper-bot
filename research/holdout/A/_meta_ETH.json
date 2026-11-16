@@ -1,0 +1,20 @@
+{
+  "set": "A",
+  "coin": "ETH",
+  "market": "KRW-ETH",
+  "file": "holdout/A/data_ETH_5m.csv",
+  "requested_range_kst": [
+    "2024-05-18 00:00",
+    "2025-05-18 13:00"
+  ],
+  "first_bar_kst": "2024-05-18 00:00",
+  "last_bar_kst": "2025-05-18 13:00",
+  "rows": 104827,
+  "expected_5m_slots": 105277,
+  "missing_slots": 450,
+  "sha256": "98c3d25b477c728cf9f4ae9cb2d1a41ea0f5eb657f77466459d9c9921d492b87",
+  "bytes": 7242468,
+  "api_pages": 525,
+  "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+  "fetched_at_kst": "2026-11-17 08:16:09"
+}

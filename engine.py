@@ -58,7 +58,45 @@ DEFAULTS = dict(
     firstWinHalf=False,      # 그날 첫 매매가 수익이면 그날 남은 매매 수량 절반
     withdrawPct=0.0,         # 매주 월요일 00:00(KST) 지난주 실현 수익의 이 % 출금 (0 = 끔)
     maxRiskCapP=5.0,         # 1회 위험 절대 상한 % (5% 초과는 코드로 금지 — 설정해도 5로 잘림)
+    # ---- v2.0 기반 시설 이식(2026-11-17) — 아래 기본값이면 기존과 완전히 같은 결과 ----
+    slipMode="fixed",        # "fixed" = slip 원(기존) / "tick" = 체결가의 호가 단위 × slipTicks (여러 코인용)
+    slipTicks=1.0,           # slipMode "tick" 일 때 틱 수
+    eventBlock=False,        # True 면 경제 일정(events) 발표 eventBeforeMin 전 ~ eventAfterMin 뒤 신규 진입 금지
+    eventBeforeMin=30,
+    eventAfterMin=15,
 )
+
+
+def tick_size(price):
+    """원화 마켓 호가 단위(업비트 기준표). BTC(200만 원 이상)는 항상 1,000원 = 기존 slip 기본값과 같음"""
+    p = abs(price)
+    for lo, t in ((2_000_000, 1000.0), (1_000_000, 500.0), (500_000, 100.0), (100_000, 50.0), (10_000, 10.0),
+                  (1_000, 1.0), (100, 0.1), (10, 0.01), (1, 0.001), (0.1, 0.0001)):
+        if p >= lo:
+            return t
+    return 0.00001
+
+
+def _pxs(x):
+    """일지용 가격 문자열: 1,000 이상은 정수(천 단위 쉼표), 그 아래는 유효숫자 8자리"""
+    return f"{x:,.0f}" if abs(x) >= 1000 else f"{x:.8g}"
+
+
+def load_events(path):
+    """경제 일정 CSV(time_kst,name[,importance]) → [(KST 시각, 이름, 중요도)]. 빈 줄·'#' 줄 무시. 파일 없으면 []"""
+    out = []
+    try:
+        f = open(path, encoding="utf-8-sig")
+    except FileNotFoundError:
+        return out
+    with f:
+        lines = [ln for ln in f if ln.strip() and not ln.lstrip().startswith("#")]
+    for r in csv.DictReader(lines):
+        t = (r.get("time_kst") or "").strip()
+        if not t:
+            continue
+        out.append((parse_kst(t), (r.get("name") or "").strip(), (r.get("importance") or "").strip()))
+    return sorted(out, key=lambda x: x[0])
 
 HARD_MAX_RISK_P = 5.0        # 어떤 설정으로도 넘을 수 없는 1회 위험 상한 %
 
@@ -73,8 +111,10 @@ def load_params(config):
         P["capital"] = float(config["initial_capital"])
     for k in ("riskPct", "redPct", "maxLev", "minStopP", "maxStopP", "bufP", "zoneTolP", "slopeThr",
               "chaseP", "t1MinR", "t1MaxR", "t1FbR", "volExitX", "dayLossP", "fee", "slip", "capital",
-              "dayTargetP", "afterTargetMinFrac", "withdrawPct", "maxRiskCapP"):
+              "dayTargetP", "afterTargetMinFrac", "withdrawPct", "maxRiskCapP", "slipTicks", "eventBeforeMin",
+              "eventAfterMin"):
         P[k] = float(P[k])
+    P["eventBlock"] = bool(P["eventBlock"])
     P["swLen"] = int(P["swLen"]); P["maxConsec"] = int(P["maxConsec"])
     for k in ("firstWinHalf", "afterTargetSizing"):
         P[k] = bool(P[k])
@@ -151,13 +191,18 @@ def rsi_pine(c, n=14):
     return out
 
 
+KST_OFFSET_SEC = 9 * 3600
+
+
 def htf(T, O, H, L, C, V, minutes):
-    """5분봉 → 상위봉(KST 정시 기준). 각 5분봉이 속한 상위봉 번호도 반환"""
+    """실행봉 → 상위봉(KST 00:00 기준 정렬). 각 실행봉이 속한 상위봉 번호도 반환.
+    15분·1시간처럼 9시간을 나누어떨어지게 하는 길이는 UTC 기준 정렬(이전 코드)과 결과가 완전히 같다.
+    4시간·12시간 등은 거래소(빗썸·업비트) 봉처럼 KST 자정 기준으로 묶인다."""
     sec = minutes * 60
     bars, idx = [], []
     cur = None
     for i, t in enumerate(T):
-        b = int(t.timestamp()) // sec
+        b = (int(t.timestamp()) + KST_OFFSET_SEC) // sec
         if cur is None or b != cur:
             cur = b
             bars.append([O[i], H[i], L[i], C[i], V[i]])
@@ -200,19 +245,23 @@ def htf_fvg_prev(bars, idx):
 class Data:
     """봉 배열 + 미리 계산한 지표"""
 
-    def __init__(self, T, O, H, L, C, V):
+    def __init__(self, T, O, H, L, C, V, dir_min=15, aux_min=60, bar_min=5):
+        """dir_min: 방향 상위봉(분, 기본 15), aux_min: 보조 상위봉(분, 기본 60), bar_min: 실행봉 길이(분).
+        기본값(5분 실행, 15분 방향, 1시간 보조)이면 기존과 완전히 같다. 속성 이름 slope15/slope60/fvg15 는
+        '방향/보조 상위봉' 뜻으로 그대로 쓴다(다른 시간봉 실행 연구용, 사전 등록서 v3 E1)."""
         self.T, self.O, self.H, self.L, self.C, self.V = T, O, H, L, C, V
         self.n = len(T)
+        self.dir_min, self.aux_min, self.bar_min = dir_min, aux_min, bar_min
         self.sma20 = sma(C, 20)
         self.rsi = rsi_pine(C, 14)
         self.volAvg = sma(V, 20)
         self.vol3 = sma(V, 3)
-        b15, i15 = htf(T, O, H, L, C, V, 15)
-        b60, i60 = htf(T, O, H, L, C, V, 60)
+        b15, i15 = htf(T, O, H, L, C, V, dir_min)
+        b60, i60 = htf(T, O, H, L, C, V, aux_min)
         self.slope15 = htf_slope_prev(b15, i15)
         self.slope60 = htf_slope_prev(b60, i60)
         self.fvg15 = htf_fvg_prev(b15, i15)
-        self.gaps = sum(1 for i in range(1, self.n) if (T[i] - T[i - 1]).total_seconds() != 300)
+        self.gaps = sum(1 for i in range(1, self.n) if (T[i] - T[i - 1]).total_seconds() != bar_min * 60)
 
     @classmethod
     def from_csv(cls, path):
@@ -225,8 +274,10 @@ def trade_id(t_entry, side):
     return f"{t_entry.strftime('%Y%m%d%H%M')}{'L' if side == 1 else 'S'}"
 
 
-def run(D, P, start_time=None, close_at_end=False):
+def run(D, P, start_time=None, close_at_end=False, events=None):
     """
+    events: [(KST 시각, 이름, ...)] 경제 일정(load_events). P["eventBlock"] 이 True 일 때만 쓰인다(기본 꺼짐).
+            진입 체결 시각(다음 봉 시가)이 [발표 − eventBeforeMin, 발표 + eventAfterMin) 안이면 신호를 내지 않는다.
     D: Data, P: 파라미터(dict), start_time: 이 시각 이후 봉부터 진입 허용(None이면 처음부터)
     close_at_end: True면 백테스트처럼 마지막 종가로 남은 포지션 정리('기간 종료')
 
@@ -265,6 +316,25 @@ def run(D, P, start_time=None, close_at_end=False):
     fee, slip, eq0 = P["fee"], P["slip"], P["capital"]
     capP = P["maxRiskCapP"]
     tgtP = P["dayTargetP"]
+    if P.get("slipMode", "fixed") == "tick":
+        _ticks = P.get("slipTicks", 1.0)
+
+        def sl(px):
+            return tick_size(px) * _ticks
+    else:
+        def sl(px):
+            return slip
+    bar_td = dt.timedelta(minutes=getattr(D, "bar_min", 5))
+    ev_win = []
+    if P.get("eventBlock") and events:
+        b4, af = dt.timedelta(minutes=P["eventBeforeMin"]), dt.timedelta(minutes=P["eventAfterMin"])
+        ev_win = [(e[0] - b4, e[0] + af, e[1]) for e in events]
+
+    def event_blocked(t_fill):
+        for a, b, _nm in ev_win:
+            if a <= t_fill < b:
+                return True
+        return False
 
     withdrawn = 0.0
     withdrawals = []
@@ -352,7 +422,7 @@ def run(D, P, start_time=None, close_at_end=False):
         # ---------- 1) 이번 봉 안에서의 체결 ----------
         if pending is not None:
             pd = pending; pending = None
-            fill = o + pd["side"] * slip
+            fill = o + pd["side"] * sl(o)
             pos = dict(pd, entry=fill, open=pd["qty"], pnl=0.0, exits=[], fills=[], entry_bar=i,
                        entry_time=T[i], t1Done=False, t1Hit=False, nxt=None, stop0=pd["stop"],
                        lev=pd["qty"] * fill / pd["eq"], id=trade_id(T[i], pd["side"]))
@@ -362,7 +432,7 @@ def run(D, P, start_time=None, close_at_end=False):
         if pos is not None and pending_close is not None:
             s = pos["side"]
             tr = pos
-            if close_part(pos["open"], o - s * slip, pending_close, i):
+            if close_part(pos["open"], o - s * sl(o), pending_close, i):
                 closed_now.append(tr)
         pending_close = None
         if pos is not None:
@@ -377,7 +447,7 @@ def run(D, P, start_time=None, close_at_end=False):
             lim_hit = tgt is not None and ((h >= tgt) if s == 1 else (l <= tgt))
             tr = pos
             if stop_hit:                       # 같은 봉에서 둘 다 닿으면 손절 먼저 (보수적)
-                px = (min(o, stp) - slip) if s == 1 else (max(o, stp) + slip)
+                px = (min(o, stp) - sl(min(o, stp))) if s == 1 else (max(o, stp) + sl(max(o, stp)))
                 reason = "본절" if pos["t1Hit"] else "손절"
                 if close_part(pos["open"], px, reason, i):
                     closed_now.append(tr)
@@ -593,7 +663,8 @@ def run(D, P, start_time=None, close_at_end=False):
             nextMode = "목표 후 축소" if tgtCap is not None else ("절반(첫 매매 수익)" if halfNow else "보통")
 
         # ---------- 4) 진입 판단 (봉 마감, 다음 봉 시가 체결) ----------
-        if pos is None and pending is None and not dayStop and not tgtBlock and can_trade:
+        if (pos is None and pending is None and not dayStop and not tgtBlock and can_trade
+                and not (ev_win and event_blocked(T[i] + bar_td))):
             sig = grd = ""; stp = rm = None; side = 0
             if P["allowLong"] and P["useZone"] and dir15 == 1 and zoneL and okL and supL and noChase:
                 sig, grd = "구간", ("A" if bullEng else "B")
@@ -630,6 +701,18 @@ def run(D, P, start_time=None, close_at_end=False):
                                        sigClose=c, rm=rm, dir60=dir60, signal_time=T[i], sizeTag=size_tag(),
                                        baseR=baseRisk,
                                        bpLine=(bpLineNextL if side == 1 else bpLineNextS) if sig == "B+" else None)
+                        # 매매 일지용 진입 근거(계산에는 쓰지 않음)
+                        if sig == "구간":
+                            zparts = ([f"스윙레벨 {_pxs(lvlL)}"] if lvlL is not None else []) + (["5분 FVG"] if fvgTL else []) + (["OB"] if obTL else []) \
+                                if side == 1 else ([f"스윙레벨 {_pxs(lvlS)}"] if lvlS is not None else []) + (["5분 FVG"] if fvgTS else []) + (["OB"] if obTS else [])
+                            sparts = ((["거래량"] if volSup else []) + (["RSI"] if (rsiSupL if side == 1 else rsiSupS) else [])
+                                      + (["1시간 방향"] if dir60 == side else []) + (["15분 FVG"] if (htfL if side == 1 else htfS) else []))
+                        elif sig == "B+":
+                            zparts, sparts = ["거래량 단계 돌파선"], ["거래량 ≥ 20봉 평균 2배"]
+                        else:
+                            zparts, sparts = ["직전 스윙 가짜 이탈"], []
+                        pending["why"] = dict(dir15=dir15, dir60=dir60, zone=zparts, support=sparts,
+                                              stop_pct=round(dp, 4), t1_R=round(abs(t1 - c) / dist, 3) if dist > 0 else None)
                         if sig == "B+":
                             if side == 1: bpUsedL = bpKeyL
                             else: bpUsedS = bpKeyS

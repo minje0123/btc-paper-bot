@@ -1,0 +1,20 @@
+{
+  "set": "B",
+  "coin": "SHELL",
+  "market": "KRW-SHELL",
+  "file": "holdout/B/data_SHELL_5m.csv",
+  "requested_range_kst": [
+    "2025-05-18 13:05",
+    "2026-11-16 13:00"
+  ],
+  "first_bar_kst": "2025-05-18 13:05",
+  "last_bar_kst": "2026-11-16 13:00",
+  "rows": 92640,
+  "expected_5m_slots": 157536,
+  "missing_slots": 64896,
+  "sha256": "53847a9a7e3425a6daf7818112b11e4995979ade8fc2981aa00e0b9130407f86",
+  "bytes": 4960819,
+  "api_pages": 464,
+  "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+  "fetched_at_kst": "2026-11-17 08:15:09"
+}

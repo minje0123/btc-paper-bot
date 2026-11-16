@@ -1,0 +1,20 @@
+{
+  "set": "B",
+  "coin": "ENA",
+  "market": "KRW-ENA",
+  "file": "holdout/B/data_ENA_5m.csv",
+  "requested_range_kst": [
+    "2025-05-18 13:05",
+    "2026-11-16 13:00"
+  ],
+  "first_bar_kst": "2025-05-18 13:05",
+  "last_bar_kst": "2026-11-16 13:00",
+  "rows": 146526,
+  "expected_5m_slots": 157536,
+  "missing_slots": 11010,
+  "sha256": "b169c8e471ee7493de9b91e4897e77af7c71fc6dadb938ea628b2e8a6068c809",
+  "bytes": 7588972,
+  "api_pages": 733,
+  "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+  "fetched_at_kst": "2026-11-17 08:17:34"
+}

@@ -1,0 +1,20 @@
+{
+  "set": "B",
+  "coin": "WLD",
+  "market": "KRW-WLD",
+  "file": "holdout/B/data_WLD_5m.csv",
+  "requested_range_kst": [
+    "2025-05-18 13:05",
+    "2026-11-16 13:00"
+  ],
+  "first_bar_kst": "2025-05-18 13:05",
+  "last_bar_kst": "2026-11-16 13:00",
+  "rows": 157027,
+  "expected_5m_slots": 157536,
+  "missing_slots": 509,
+  "sha256": "0c7d01f7b7956d973c1fe971602192bc054fb5e4e4cdb40dcfcc5e7acaa83d89",
+  "bytes": 8509303,
+  "api_pages": 786,
+  "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+  "fetched_at_kst": "2026-11-17 08:17:59"
+}

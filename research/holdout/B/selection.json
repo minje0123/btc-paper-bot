@@ -1,0 +1,207 @@
+{
+  "selected_at_kst": "2026-11-17 08:09:45",
+  "source": "빗썸 공개 API /v1/market/all + /v1/ticker (KRW 마켓 전체), acc_trade_price_24h",
+  "criteria": "24시간 거래대금(acc_trade_price_24h) 내림차순. BTC·ETH·XRP·SOL 제외, 스테이블코인 제외, 18개월 데이터 시작 시점에 5분봉이 있는(이미 상장된) 코인만. 위에서부터 3개.",
+  "stablecoin_list": [
+    "BUSD",
+    "DAI",
+    "FDUSD",
+    "PYUSD",
+    "RLUSD",
+    "TUSD",
+    "USD0",
+    "USD1",
+    "USDC",
+    "USDE",
+    "USDP",
+    "USDS",
+    "USDT"
+  ],
+  "selected": [
+    "WLD",
+    "ENA",
+    "SHELL"
+  ],
+  "top30": [
+    {
+      "rank": 1,
+      "market": "KRW-PHA",
+      "acc_trade_price_24h": 209800574771.24597,
+      "note": "제외: 18개월 기간 시작(2025-05-18 13:05) 시점 5분봉 없음(상장 전 또는 공백, 직전 봉=None)"
+    },
+    {
+      "rank": 2,
+      "market": "KRW-SPACE",
+      "acc_trade_price_24h": 196649526763.2799,
+      "note": "제외: 18개월 기간 시작(2025-05-18 13:05) 시점 5분봉 없음(상장 전 또는 공백, 직전 봉=None)"
+    },
+    {
+      "rank": 3,
+      "market": "KRW-USDT",
+      "acc_trade_price_24h": 71368512553.68958,
+      "note": "제외: 스테이블코인(가격 고정, 방향 매매 대상 아님)"
+    },
+    {
+      "rank": 4,
+      "market": "KRW-XRP",
+      "acc_trade_price_24h": 60264237965.269714,
+      "note": "제외: 18개월 연구 코인"
+    },
+    {
+      "rank": 5,
+      "market": "KRW-BTC",
+      "acc_trade_price_24h": 50592488870.41437,
+      "note": "제외: 18개월 연구 코인"
+    },
+    {
+      "rank": 6,
+      "market": "KRW-ETH",
+      "acc_trade_price_24h": 23890993906.899147,
+      "note": "제외: 18개월 연구 코인"
+    },
+    {
+      "rank": 7,
+      "market": "KRW-WLD",
+      "acc_trade_price_24h": 14212179667.441376,
+      "note": "선정"
+    },
+    {
+      "rank": 8,
+      "market": "KRW-SOL",
+      "acc_trade_price_24h": 9480025592.797832,
+      "note": "제외: 18개월 연구 코인"
+    },
+    {
+      "rank": 9,
+      "market": "KRW-HUMA",
+      "acc_trade_price_24h": 7641471236.309167,
+      "note": "제외: 18개월 기간 시작(2025-05-18 13:05) 시점 5분봉 없음(상장 전 또는 공백, 직전 봉=None)"
+    },
+    {
+      "rank": 10,
+      "market": "KRW-ENA",
+      "acc_trade_price_24h": 6884629165.391357,
+      "note": "선정"
+    },
+    {
+      "rank": 11,
+      "market": "KRW-SKR",
+      "acc_trade_price_24h": 6789529309.191812,
+      "note": "제외: 18개월 기간 시작(2025-05-18 13:05) 시점 5분봉 없음(상장 전 또는 공백, 직전 봉=None)"
+    },
+    {
+      "rank": 12,
+      "market": "KRW-SHELL",
+      "acc_trade_price_24h": 5803999703.501974,
+      "note": "선정"
+    },
+    {
+      "rank": 13,
+      "market": "KRW-CAMP",
+      "acc_trade_price_24h": 5556642345.154129,
+      "note": ""
+    },
+    {
+      "rank": 14,
+      "market": "KRW-CASHCAT",
+      "acc_trade_price_24h": 4010601335.0734053,
+      "note": ""
+    },
+    {
+      "rank": 15,
+      "market": "KRW-REQ",
+      "acc_trade_price_24h": 3627752516.517363,
+      "note": ""
+    },
+    {
+      "rank": 16,
+      "market": "KRW-AXIS",
+      "acc_trade_price_24h": 3593962742.2486424,
+      "note": ""
+    },
+    {
+      "rank": 17,
+      "market": "KRW-Q",
+      "acc_trade_price_24h": 3306870932.6982355,
+      "note": ""
+    },
+    {
+      "rank": 18,
+      "market": "KRW-NEAR",
+      "acc_trade_price_24h": 3249282569.8493247,
+      "note": ""
+    },
+    {
+      "rank": 19,
+      "market": "KRW-SUI",
+      "acc_trade_price_24h": 3248874659.4635725,
+      "note": ""
+    },
+    {
+      "rank": 20,
+      "market": "KRW-GRND",
+      "acc_trade_price_24h": 2821434869.6432414,
+      "note": ""
+    },
+    {
+      "rank": 21,
+      "market": "KRW-DOGE",
+      "acc_trade_price_24h": 2638281708.3751884,
+      "note": ""
+    },
+    {
+      "rank": 22,
+      "market": "KRW-LIT",
+      "acc_trade_price_24h": 2563951478.036905,
+      "note": ""
+    },
+    {
+      "rank": 23,
+      "market": "KRW-BIRB",
+      "acc_trade_price_24h": 2453911962.8040695,
+      "note": ""
+    },
+    {
+      "rank": 24,
+      "market": "KRW-ONDO",
+      "acc_trade_price_24h": 2124390090.6473885,
+      "note": ""
+    },
+    {
+      "rank": 25,
+      "market": "KRW-AL",
+      "acc_trade_price_24h": 2079475544.9574602,
+      "note": ""
+    },
+    {
+      "rank": 26,
+      "market": "KRW-ADA",
+      "acc_trade_price_24h": 1978078331.3396127,
+      "note": ""
+    },
+    {
+      "rank": 27,
+      "market": "KRW-PEPE",
+      "acc_trade_price_24h": 1895609534.8800309,
+      "note": ""
+    },
+    {
+      "rank": 28,
+      "market": "KRW-XLM",
+      "acc_trade_price_24h": 1849380723.0870783,
+      "note": ""
+    },
+    {
+      "rank": 29,
+      "market": "KRW-OSMO",
+      "acc_trade_price_24h": 1839526453.1509576,
+      "note": ""
+    },
+    {
+      "rank": 30,
+      "market": "KRW-HFT",
+      "acc_trade_price_24h": 1633414357.5908391,
+      "note": ""
+    }
+  ]
+}

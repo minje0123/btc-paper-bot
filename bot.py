@@ -19,6 +19,11 @@ BTC 5분봉 가상 매매 봇 (원칙 v1.4.1 + 쉽알남 자금 관리 v1.4.1-mm
 사용법
   python bot.py              # 실제 실행 (알림 전송)
   python bot.py --dry-run    # 알림을 보내지 않고 화면에만 출력 (notified.json 도 바꾸지 않음)
+v2.0 기반 시설 이식 (2026-11-17, 사전 등록서 v3 전진 시험용) — 기본 설정이면 기존과 완전히 같은 장부
+  - 여러 코인: 코인별 5분봉 data/candles_{코인}_5m.csv (BTC 는 기존 data/candles_5m.csv 그대로)
+  - 그림자 장부: config.json "shadow_ledgers" (기본 없음/꺼짐). 본 장부와 별도 규칙·별도 파일 ledger/shadow/{이름}/
+  - 매매 일지: ledger/journal.csv (본 장부), ledger/shadow/{이름}/journal.csv — 거래마다 진입 근거·결과
+  - 경제 일정: data/events.csv 읽기. 진입 금지 규칙은 eventBlock=true 일 때만(기본 꺼짐)
 표준 라이브러리만 사용.
 """
 import argparse
@@ -48,6 +53,9 @@ ACCOUNT = os.path.join(LEDGER_DIR, "ACCOUNT.md")
 SOURCE_STATE = os.path.join(STATE_DIR, "source.json")
 NOTIFIED = os.path.join(STATE_DIR, "notified.json")
 BOT_LOG = os.path.join(STATE_DIR, "bot.log")
+JOURNAL = os.path.join(LEDGER_DIR, "journal.csv")
+SHADOW_DIR = os.path.join(LEDGER_DIR, "shadow")
+EVENTS_DEFAULT = os.path.join(DATA_DIR, "events.csv")
 
 BAR = dt.timedelta(minutes=5)
 TFMT = "%Y-%m-%d %H:%M:%S"
@@ -140,12 +148,19 @@ def fetch_range(source, start, end, market="KRW-BTC"):
     return rows
 
 
-def load_candles():
+def candle_path(market):
+    """코인별 5분봉 파일. KRW-BTC 는 기존 data/candles_5m.csv (결정적 재계산 유지)"""
+    coin = market.split("-")[-1]
+    return CANDLES if coin == "BTC" else os.path.join(DATA_DIR, f"candles_{coin}_5m.csv")
+
+
+def load_candles(path=None):
     """기존 CSV → {시각: [o,h,l,c,v,source]}"""
+    path = path or CANDLES
     out = {}
-    if not os.path.exists(CANDLES):
+    if not os.path.exists(path):
         return out
-    with open(CANDLES, encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         for r in csv.DictReader(f):
             t = engine.parse_kst(r["time_kst"])
             out[t] = [float(r["open"]), float(r["high"]), float(r["low"]), float(r["close"]),
@@ -158,24 +173,26 @@ def _num(x):
     return str(int(x)) if x == int(x) else repr(x)
 
 
-def save_candles(c):
+def save_candles(c, path=None):
+    path = path or CANDLES
     os.makedirs(DATA_DIR, exist_ok=True)
-    tmp = CANDLES + ".tmp"
+    tmp = path + ".tmp"
     with open(tmp, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["time_kst", "open", "high", "low", "close", "volume", "source"])
         for t in sorted(c):
             o, h, l, cl, v, s = c[t]
             w.writerow([t.strftime(TFMT), _num(o), _num(h), _num(l), _num(cl), repr(v), s])
-    os.replace(tmp, CANDLES)
+    os.replace(tmp, path)
 
 
-def update_candles(cfg, start_time, end):
-    """새로 닫힌 봉을 받아 붙인다. 반환: (candles dict, 이번에 쓴 출처, 주 출처)"""
-    candles = load_candles()
+def update_candles(cfg, start_time, end, market=None, path=None):
+    """새로 닫힌 봉을 받아 붙인다. 반환: (candles dict, 이번에 쓴 출처, 주 출처)
+    market·path 를 주면 그 코인 파일을 갱신(그림자 장부용). 기본은 본 장부(cfg market, data/candles_5m.csv)."""
+    candles = load_candles(path)
     src_state = read_json(SOURCE_STATE, {}) or {}
     primary = src_state.get("primary")
-    market = cfg.get("market", "KRW-BTC")
+    market = market or cfg.get("market", "KRW-BTC")
     warm = dt.timedelta(days=float(cfg.get("warmup_days", 3)))
     max_back = dt.timedelta(days=float(cfg.get("max_backfill_days", 30)))
 
@@ -252,6 +269,49 @@ def write_trades(trades):
                         f"{t['lev']:.2f}", f"{t['rm']:.0f}", t["dir60"], " | ".join(t["exits"]), t["exit_reason"],
                         t["exit_time"].strftime("%Y-%m-%d %H:%M"), f"{t['pnl']:.0f}", f"{t['R']:.3f}",
                         t.get("sizeTag", "1")])
+
+
+DIR_KO = {1: "상승", -1: "하락", 0: "중립", None: "-"}
+
+
+def _fp(x):
+    """가격 표시: 큰 값은 정수, 작은 값(알트코인)은 유효숫자 8자리"""
+    if x is None:
+        return ""
+    return f"{x:.0f}" if abs(x) >= 1000 else f"{x:.8g}"
+
+
+def result_ko(t):
+    if t["pnl"] > 0:
+        return "익절"
+    return "본절" if t.get("t1Hit") else "손절"
+
+
+def near_events(t, events, hours=2):
+    """진입 시각 앞뒤 hours 시간 안의 경제 일정 이름 (일지 참고용)"""
+    if not events:
+        return ""
+    a, b = t["entry_time"] - dt.timedelta(hours=hours), t["entry_time"] + dt.timedelta(hours=hours)
+    return " / ".join(f"{e[0]:%m-%d %H:%M} {e[1]}" for e in events if a <= e[0] <= b)
+
+
+def write_journal(trades, path, coin_of=None, events=None):
+    """매매 일지: 거래마다 진입 근거(셋업·구간·보조 근거·상위봉 방향·손절폭·T1 배수)와 결과"""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", newline="", encoding="utf-8-sig") as f:
+        w = csv.writer(f)
+        w.writerow(["번호", "코인", "거래ID", "진입시각", "청산시각", "방향", "셋업", "등급", "진입 구간 근거", "보조 근거",
+                    "15분 방향", "1시간 방향", "손절폭%", "T1까지(R)", "진입가", "최초손절", "T1", "결과", "마지막청산",
+                    "청산내역", "손익원", "R", "진입 앞뒤 2시간 경제 일정"])
+        for k, t in enumerate(trades, 1):
+            why = t.get("why") or {}
+            w.writerow([k, coin_of(t) if coin_of else "BTC", t["id"], t["entry_time"].strftime("%Y-%m-%d %H:%M"),
+                        t["exit_time"].strftime("%Y-%m-%d %H:%M"), side_ko(t["side"]), t["tag"], t["grade"],
+                        " + ".join(why.get("zone", [])), " + ".join(why.get("support", [])),
+                        DIR_KO.get(why.get("dir15")), DIR_KO.get(why.get("dir60", t.get("dir60"))),
+                        why.get("stop_pct", ""), why.get("t1_R", ""), _fp(t["entry"]), _fp(t["stop0"]), _fp(t["t1"]),
+                        result_ko(t), t["exit_reason"], " | ".join(t["exits"]), f"{t['pnl']:.0f}", f"{t['R']:.3f}",
+                        near_events(t, events)])
 
 
 def position_dict(pos, last_close, fee):
@@ -446,6 +506,112 @@ def write_account(status, R):
     with open(ACCOUNT, "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
 
+# ============================== 2-1) 그림자 장부 ==============================
+# config.json 예:
+#   "shadow_ledgers": [{"name": "v141_4coin", "enabled": true, "markets": ["KRW-BTC", "KRW-ETH"],
+#                        "start_time": null, "initial_capital": 1000000,
+#                        "params": {"slipMode": "tick", "dayTargetP": 0, "firstWinHalf": false, "withdrawPct": 0}}]
+# - 본 장부와 완전히 별도: 별도 규칙(params 로 본 설정을 덮어씀), 별도 파일(ledger/shadow/{name}/), 알림 없음.
+# - 코인마다 독립 계좌(코인당 포지션 1개, initial_capital 각각). rule_history 는 쓰지 않음.
+# - start_time 이 비어 있으면 첫 실행 시각으로 채워 config.json 에 기록(이후 고정).
+SHADOW_SKIP_KEYS = ("rule_history", "shadow_ledgers", "start_time")
+
+
+def shadow_params(cfg, sh):
+    base = {k: v for k, v in cfg.items() if k not in SHADOW_SKIP_KEYS}
+    base.update(sh.get("params") or {})
+    if sh.get("initial_capital") is not None:
+        base["initial_capital"] = sh["initial_capital"]
+    return engine.load_params(base)
+
+
+def write_trades_coin(trades, path, coin_of):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", newline="", encoding="utf-8-sig") as f:
+        w = csv.writer(f)
+        w.writerow(["번호", "코인", "거래ID", "진입시각", "방향", "셋업", "등급", "진입가", "최초손절", "T1", "수량",
+                    "레버리지", "위험금액", "1시간방향", "청산내역", "마지막청산", "청산시각", "손익원", "R", "수량배율"])
+        for k, t in enumerate(trades, 1):
+            w.writerow([k, coin_of(t), t["id"], t["entry_time"].strftime("%Y-%m-%d %H:%M"), side_ko(t["side"]), t["tag"],
+                        t["grade"], _fp(t["entry"]), _fp(t["stop0"]), _fp(t["t1"]), f"{t['qty']:.4f}", f"{t['lev']:.2f}",
+                        f"{t['rm']:.0f}", t["dir60"], " | ".join(t["exits"]), t["exit_reason"],
+                        t["exit_time"].strftime("%Y-%m-%d %H:%M"), f"{t['pnl']:.0f}", f"{t['R']:.3f}",
+                        t.get("sizeTag", "1")])
+
+
+def run_shadows(cfg, end, main_candles, events, offline=False):
+    """활성 그림자 장부를 모두 계산·저장. 실패해도 본 장부에는 영향 없음."""
+    shs = [s for s in (cfg.get("shadow_ledgers") or []) if s.get("enabled")]
+    if not shs:
+        return
+    cfg_changed = False
+    for sh in shs:
+        name = sh["name"]
+        try:
+            if not sh.get("start_time"):
+                sh["start_time"] = end.strftime("%Y-%m-%d %H:%M")
+                cfg_changed = True
+                log(f"그림자 장부 '{name}' 시작 시각 = {sh['start_time']}")
+            st = engine.parse_kst(sh["start_time"])
+            P = shadow_params(cfg, sh)
+            out_dir = os.path.join(SHADOW_DIR, name)
+            all_trades, per = [], {}
+            for market in sh.get("markets") or [cfg.get("market", "KRW-BTC")]:
+                coin = market.split("-")[-1]
+                path = candle_path(market)
+                if path == CANDLES:
+                    c = main_candles
+                elif offline:
+                    c = load_candles(path)
+                else:
+                    c, used, _ = update_candles(cfg, st, end, market=market, path=path)
+                    if used:
+                        save_candles(c, path)
+                if not c:
+                    log(f"그림자 '{name}' {coin}: 봉 없음 — 건너뜀", warn=True)
+                    continue
+                ts = sorted(c)
+                D = engine.Data(ts, [c[t][0] for t in ts], [c[t][1] for t in ts], [c[t][2] for t in ts],
+                                [c[t][3] for t in ts], [c[t][4] for t in ts])
+                R = engine.run(D, P, start_time=st, close_at_end=False, events=events)
+                for t in R["trades"]:
+                    t["coin"] = coin
+                all_trades += R["trades"]
+                s = engine.stats(R["trades"], R["curve"])
+                pend = R["pending"]
+                per[coin] = dict(
+                    market=market, initial_capital=P["capital"], balance=round(R["final"]), equity=round(R["equity"]),
+                    realized_pnl=round(R["realized"]), withdrawn_total=round(R["withdrawn"]),
+                    trades_count=s["N"], win_rate=round(s["win"], 1), avg_R=round(s["avgR"], 3), sum_R=round(s["sumR"], 3),
+                    max_drawdown_pct=round(s["mdd"], 2), has_position=R["position"] is not None,
+                    position=position_dict(R["position"], R["last_close"], P["fee"]),
+                    pending_entry=None if pend is None else dict(side=side_ko(pend["side"]), setup=pend["tag"],
+                                                                 grade=pend["grade"], signal_time=pend["signal_time"].strftime(TFMT),
+                                                                 stop=pend["stop"], t1=pend["t1"]),
+                    pending_close=R["pending_close"], last_bar_time=ts[-1].strftime(TFMT),
+                    today=dict(date=str(R["day"]["date"]), realized_pnl=round(R["day"]["realized"]),
+                               no_new_entries=bool(R["day"]["stop"]), reason=R["day"]["reason"]))
+            all_trades.sort(key=lambda t: (t["exit_time"], t["coin"]))
+            coin_of = lambda t: t.get("coin", "")   # noqa: E731
+            write_trades_coin(all_trades, os.path.join(out_dir, "trades.csv"), coin_of)
+            write_journal(all_trades, os.path.join(out_dir, "journal.csv"), coin_of, events)
+            tot = engine.stats(all_trades)
+            write_json(os.path.join(out_dir, "status.json"), dict(
+                mode="그림자 장부(가상 매매, 본 장부와 별도·알림 없음)", name=name, description=sh.get("description", ""),
+                start_time=sh["start_time"], markets=sh.get("markets"), params_override=sh.get("params") or {},
+                trades_count=tot["N"], win_rate=round(tot["win"], 1), avg_R=round(tot["avgR"], 3),
+                sum_R=round(tot["sumR"], 3), coins=per, updated_at=dt.datetime.now(KST).strftime(TFMT)))
+            log(f"그림자 장부 '{name}': 거래 {tot['N']}건, 평균 {tot['avgR']:+.3f}R → ledger/shadow/{name}/")
+        except Exception as e:
+            log(f"그림자 장부 '{name}' 계산 실패(본 장부는 정상): {e!r}", warn=True)
+    if cfg_changed:
+        disk = read_json(CONFIG, {})
+        for s in disk.get("shadow_ledgers") or []:
+            for sh in shs:
+                if s.get("name") == sh["name"] and not s.get("start_time"):
+                    s["start_time"] = sh["start_time"]
+        write_json(CONFIG, disk)
+
 # ============================== 3) 알림 ==============================
 
 def event_message(e):
@@ -564,7 +730,8 @@ def main():
                     [candles[t][3] for t in ts], [candles[t][4] for t in ts])
     if D.gaps:
         log(f"5분 간격이 아닌 곳 {D.gaps}개(거래소 데이터 공백). 그대로 계산합니다.")
-    R = engine.run(D, P, start_time=start_time, close_at_end=False)
+    events = engine.load_events(os.path.join(HERE, cfg["events_file"]) if cfg.get("events_file") else EVENTS_DEFAULT)
+    R = engine.run(D, P, start_time=start_time, close_at_end=False, events=events)
     R["last_bar_time"] = ts[-1].strftime(TFMT)
     log(f"재계산: 봉 {D.n}개(매매 대상 {len(R['curve'])}개), 거래 {len(R['trades'])}건, "
         f"포지션 {'있음' if R['position'] else '없음'}, 실현 {won(R['realized'])}")
@@ -574,7 +741,9 @@ def main():
     write_trades(R["trades"])
     write_json(STATUS, status)
     write_account(status, R)
-    log("장부 저장: ledger/trades.csv, ledger/status.json, ledger/ACCOUNT.md")
+    write_journal(R["trades"], JOURNAL, events=events)
+    log("장부 저장: ledger/trades.csv, ledger/status.json, ledger/ACCOUNT.md, ledger/journal.csv")
+    run_shadows(cfg, end, candles, events)
 
     if prev and prev.get("has_position") != status["has_position"]:
         log(f"포지션 변화: {'없음 → 있음' if status['has_position'] else '있음 → 없음'}")

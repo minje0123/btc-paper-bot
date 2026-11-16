@@ -1,0 +1,173 @@
+{
+  "note": "최종 시험 데이터. 사전 등록서 v3 2장. 받은 즉시 해시를 기록했으며, FINAL=1 없이 읽지 않는다(research/holdout_guard.py). 접근은 4장 선택 절차로 정한 최종 후보 1개(+기준선 v1.4.1 5m)에 대해 1회만.",
+  "created_at_kst": "2026-11-17 08:17:59",
+  "sets": {
+    "A": {
+      "desc": "18개월 데이터(BTC·ETH·XRP·SOL) 시작 이전 12개월, 같은 4코인",
+      "range_kst": [
+        "2024-05-18 00:00",
+        "2025-05-18 13:00"
+      ]
+    },
+    "B": {
+      "desc": "미사용 거래대금 상위 3코인, 18개월 데이터와 같은 기간",
+      "range_kst": [
+        "2025-05-18 13:05",
+        "2026-11-16 13:00"
+      ],
+      "selection": {
+        "selected": [
+          "WLD",
+          "ENA",
+          "SHELL"
+        ],
+        "selected_at_kst": "2026-11-17 08:09:45",
+        "criteria": "24시간 거래대금(acc_trade_price_24h) 내림차순. BTC·ETH·XRP·SOL 제외, 스테이블코인 제외, 18개월 데이터 시작 시점에 5분봉이 있는(이미 상장된) 코인만. 위에서부터 3개.",
+        "file": "holdout/B/selection.json",
+        "sha256": "7ac36a63f1dd2dce6fe26b1af2372aa90181397d8c032928188c7e47a5eef9b4"
+      }
+    }
+  },
+  "files": [
+    {
+      "set": "A",
+      "coin": "BTC",
+      "market": "KRW-BTC",
+      "file": "holdout/A/data_BTC_5m.csv",
+      "requested_range_kst": [
+        "2024-05-18 00:00",
+        "2025-05-18 13:00"
+      ],
+      "first_bar_kst": "2024-05-18 00:00",
+      "last_bar_kst": "2025-05-18 13:00",
+      "rows": 104831,
+      "expected_5m_slots": 105277,
+      "missing_slots": 446,
+      "sha256": "c4d96cbbb3e4a2b4518d21102b0e0d2fd4ae00a240b3deac071ad4d2a869c09b",
+      "bytes": 7247770,
+      "api_pages": 525,
+      "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+      "fetched_at_kst": "2026-11-17 08:16:10"
+    },
+    {
+      "set": "A",
+      "coin": "ETH",
+      "market": "KRW-ETH",
+      "file": "holdout/A/data_ETH_5m.csv",
+      "requested_range_kst": [
+        "2024-05-18 00:00",
+        "2025-05-18 13:00"
+      ],
+      "first_bar_kst": "2024-05-18 00:00",
+      "last_bar_kst": "2025-05-18 13:00",
+      "rows": 104827,
+      "expected_5m_slots": 105277,
+      "missing_slots": 450,
+      "sha256": "98c3d25b477c728cf9f4ae9cb2d1a41ea0f5eb657f77466459d9c9921d492b87",
+      "bytes": 7242468,
+      "api_pages": 525,
+      "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+      "fetched_at_kst": "2026-11-17 08:16:09"
+    },
+    {
+      "set": "A",
+      "coin": "SOL",
+      "market": "KRW-SOL",
+      "file": "holdout/A/data_SOL_5m.csv",
+      "requested_range_kst": [
+        "2024-05-18 00:00",
+        "2025-05-18 13:00"
+      ],
+      "first_bar_kst": "2024-05-18 00:00",
+      "last_bar_kst": "2025-05-18 13:00",
+      "rows": 104806,
+      "expected_5m_slots": 105277,
+      "missing_slots": 471,
+      "sha256": "37f3b26f9e0e88e61a8e03ce17e9c1f0488ebad6003bf93f1e4112c58309f5e4",
+      "bytes": 6455445,
+      "api_pages": 525,
+      "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+      "fetched_at_kst": "2026-11-17 08:16:09"
+    },
+    {
+      "set": "A",
+      "coin": "XRP",
+      "market": "KRW-XRP",
+      "file": "holdout/A/data_XRP_5m.csv",
+      "requested_range_kst": [
+        "2024-05-18 00:00",
+        "2025-05-18 13:00"
+      ],
+      "first_bar_kst": "2024-05-18 00:00",
+      "last_bar_kst": "2025-05-18 13:00",
+      "rows": 104817,
+      "expected_5m_slots": 105277,
+      "missing_slots": 460,
+      "sha256": "09b26d6938e65a1989771792bdbc1d79336a3da35971f62ef73c0f47043c4115",
+      "bytes": 5620934,
+      "api_pages": 525,
+      "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+      "fetched_at_kst": "2026-11-17 08:16:09"
+    },
+    {
+      "set": "B",
+      "coin": "ENA",
+      "market": "KRW-ENA",
+      "file": "holdout/B/data_ENA_5m.csv",
+      "requested_range_kst": [
+        "2025-05-18 13:05",
+        "2026-11-16 13:00"
+      ],
+      "first_bar_kst": "2025-05-18 13:05",
+      "last_bar_kst": "2026-11-16 13:00",
+      "rows": 146526,
+      "expected_5m_slots": 157536,
+      "missing_slots": 11010,
+      "sha256": "b169c8e471ee7493de9b91e4897e77af7c71fc6dadb938ea628b2e8a6068c809",
+      "bytes": 7588972,
+      "api_pages": 733,
+      "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+      "fetched_at_kst": "2026-11-17 08:17:34"
+    },
+    {
+      "set": "B",
+      "coin": "SHELL",
+      "market": "KRW-SHELL",
+      "file": "holdout/B/data_SHELL_5m.csv",
+      "requested_range_kst": [
+        "2025-05-18 13:05",
+        "2026-11-16 13:00"
+      ],
+      "first_bar_kst": "2025-05-18 13:05",
+      "last_bar_kst": "2026-11-16 13:00",
+      "rows": 92640,
+      "expected_5m_slots": 157536,
+      "missing_slots": 64896,
+      "sha256": "53847a9a7e3425a6daf7818112b11e4995979ade8fc2981aa00e0b9130407f86",
+      "bytes": 4960819,
+      "api_pages": 464,
+      "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+      "fetched_at_kst": "2026-11-17 08:15:09"
+    },
+    {
+      "set": "B",
+      "coin": "WLD",
+      "market": "KRW-WLD",
+      "file": "holdout/B/data_WLD_5m.csv",
+      "requested_range_kst": [
+        "2025-05-18 13:05",
+        "2026-11-16 13:00"
+      ],
+      "first_bar_kst": "2025-05-18 13:05",
+      "last_bar_kst": "2026-11-16 13:00",
+      "rows": 157027,
+      "expected_5m_slots": 157536,
+      "missing_slots": 509,
+      "sha256": "0c7d01f7b7956d973c1fe971602192bc054fb5e4e4cdb40dcfcc5e7acaa83d89",
+      "bytes": 8509303,
+      "api_pages": 786,
+      "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+      "fetched_at_kst": "2026-11-17 08:17:59"
+    }
+  ]
+}

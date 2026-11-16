@@ -1,0 +1,20 @@
+{
+  "set": "A",
+  "coin": "SOL",
+  "market": "KRW-SOL",
+  "file": "holdout/A/data_SOL_5m.csv",
+  "requested_range_kst": [
+    "2024-05-18 00:00",
+    "2025-05-18 13:00"
+  ],
+  "first_bar_kst": "2024-05-18 00:00",
+  "last_bar_kst": "2025-05-18 13:00",
+  "rows": 104806,
+  "expected_5m_slots": 105277,
+  "missing_slots": 471,
+  "sha256": "37f3b26f9e0e88e61a8e03ce17e9c1f0488ebad6003bf93f1e4112c58309f5e4",
+  "bytes": 6455445,
+  "api_pages": 525,
+  "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+  "fetched_at_kst": "2026-11-17 08:16:09"
+}

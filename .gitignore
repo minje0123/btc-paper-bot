@@ -16,3 +16,7 @@ dryrun/
 Thumbs.db
 .vscode/
 .idea/
+
+# 최종 시험(holdout) 원본 CSV는 저장소에 올리지 않음 (해시는 research/holdout_manifest.json에 커밋)
+research/holdout/**/*.csv
+
