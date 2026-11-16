@@ -13,7 +13,17 @@
   "max_drawdown_pct": 0.3,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "side": "숏",
+    "setup": "구간",
+    "grade": "B",
+    "signal_time": "2026-11-16 17:00:00",
+    "signal_close": 88599000,
+    "stop": 88971464,
+    "t1": 88200000,
+    "qty": 0.0066,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-16",
@@ -22,10 +32,10 @@
     "no_new_entries": false,
     "reason": null
   },
-  "last_bar_time": "2026-11-16 16:55:00",
-  "last_price": 88901000,
+  "last_bar_time": "2026-11-16 17:00:00",
+  "last_price": 88599000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-16 17:00:21",
+  "updated_at": "2026-11-16 17:05:21",
   "warnings": []
 }
