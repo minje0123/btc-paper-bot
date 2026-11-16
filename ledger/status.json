@@ -44,10 +44,10 @@
     "next_size_mode": "보통",
     "next_risk_won": 10000
   },
-  "last_bar_time": "2026-11-16 17:55:00",
-  "last_price": 88188000,
+  "last_bar_time": "2026-11-16 18:00:00",
+  "last_price": 88262000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-16 18:00:22",
+  "updated_at": "2026-11-16 18:05:21",
   "warnings": []
 }
