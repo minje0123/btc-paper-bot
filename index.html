@@ -590,7 +590,7 @@
     if (!S) return;
     renderAge(); renderPosition(); renderKpis();
     try { renderMM(); } catch (e) { $('mmCard').hidden = true; }   // 새 항목 표시가 실패해도 나머지 화면은 그대로
-    renderChart(); renderEquity(); renderTrades(); renderPeriods();
+    renderChart(); renderEquity(); renderTrades(); renderPeriods(); renderMTF();
     if (livePrice == null && S.last_price) $('livePrice').textContent = won(S.last_price);
   }
 
