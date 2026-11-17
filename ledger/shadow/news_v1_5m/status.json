@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 04:15:00",
+      "last_bar_time": "2026-11-18 04:20:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": 0,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 04:15:00",
+      "last_bar_time": "2026-11-18 04:20:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -5433,
@@ -77,26 +77,39 @@
       "market": "KRW-XRP",
       "initial_capital": 1000000.0,
       "balance": 997402,
-      "equity": 997402,
+      "equity": 994349,
       "realized_pnl": -2598,
       "withdrawn_total": 0,
       "trades_count": 2,
       "win_rate": 50.0,
       "avg_R": -0.303,
       "sum_R": -0.607,
-      "max_drawdown_pct": 0.78,
-      "has_position": false,
-      "position": null,
-      "pending_entry": {
+      "max_drawdown_pct": 1.08,
+      "has_position": true,
+      "position": {
+        "id": "202611180420S",
         "side": "숏",
         "setup": "구간",
         "grade": "B",
-        "signal_time": "2026-11-18 04:15:00",
-        "stop": 1314.9701564999998,
-        "t1": 1304.0
+        "entry_time": "2026-11-18 04:20:00",
+        "entry": 1308,
+        "stop": 1315,
+        "stop0": 1315,
+        "t1": 1304,
+        "next_target": null,
+        "qty": 835.3228,
+        "qty_open": 835.3228,
+        "leverage": 1.1,
+        "risk_money": 4987,
+        "t1_done": false,
+        "realized_part": 0,
+        "last_price": 1311,
+        "unrealized_pnl": -3052,
+        "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
+      "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 04:15:00",
+      "last_bar_time": "2026-11-18 04:20:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -6104,
@@ -118,9 +131,16 @@
       "max_drawdown_pct": 0.9,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-18 04:20:00",
+        "stop": 99348.84959999997,
+        "t1": 98500.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-18 04:15:00",
+      "last_bar_time": "2026-11-18 04:20:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -5786,
@@ -129,7 +149,7 @@
       }
     }
   },
-  "updated_at": "2026-11-18 04:20:25",
+  "updated_at": "2026-11-18 04:25:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 10,
@@ -153,7 +173,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-18 03:55:20",
+      "last_success": "2026-11-18 04:25:21",
       "error": null
     },
     "extractor": {
@@ -255,7 +275,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 12,
+    "signals": 13,
     "blocked": 1,
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,
