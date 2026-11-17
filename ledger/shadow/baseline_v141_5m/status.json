@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 19:00:00",
+      "last_bar_time": "2026-11-17 19:05:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": -6133,
@@ -63,9 +63,16 @@
       "max_drawdown_pct": 0.0,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "B+",
+        "grade": "",
+        "signal_time": "2026-11-17 19:05:00",
+        "stop": 2463231.0,
+        "t1": 2430153.5
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-17 19:00:00",
+      "last_bar_time": "2026-11-17 19:05:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 0,
@@ -89,7 +96,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 19:00:00",
+      "last_bar_time": "2026-11-17 19:05:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 0,
@@ -113,7 +120,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 19:00:00",
+      "last_bar_time": "2026-11-17 19:05:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": -3581,
@@ -122,7 +129,7 @@
       }
     }
   },
-  "updated_at": "2026-11-17 19:05:26",
+  "updated_at": "2026-11-17 19:10:26",
   "independent_clusters": 3,
   "stop_decomp": {
     "plan_R": -1.0,

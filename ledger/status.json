@@ -45,11 +45,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4921
   },
-  "last_bar_time": "2026-11-17 19:00:00",
-  "last_price": 87687000,
+  "last_bar_time": "2026-11-17 19:05:00",
+  "last_price": 87590000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 19:05:25",
+  "updated_at": "2026-11-17 19:10:26",
   "warnings": [],
   "markets": [
     "BTC",
@@ -65,16 +65,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 87687000,
-    "ETH": 2462000,
-    "SOL": 98900.0,
-    "XRP": 1307.0
+    "BTC": 87590000,
+    "ETH": 2450000,
+    "SOL": 98700.0,
+    "XRP": 1303.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 19:00:00",
-    "ETH": "2026-11-17 19:00:00",
-    "SOL": "2026-11-17 19:00:00",
-    "XRP": "2026-11-17 19:00:00"
+    "BTC": "2026-11-17 19:05:00",
+    "ETH": "2026-11-17 19:05:00",
+    "SOL": "2026-11-17 19:05:00",
+    "XRP": "2026-11-17 19:05:00"
   },
   "independent_clusters": 6,
   "stop_decomp": {
@@ -128,7 +128,15 @@
       "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
     }
   ],
-  "event_blocked_signals": [],
+  "event_blocked_signals": [
+    {
+      "time": "2026-11-17 19:05:00",
+      "coin": "ETH",
+      "side": "숏",
+      "setup": "B+",
+      "reason": "이벤트 회피([돌발] 해킹/익스플로잇 (ETH): Binance hacker moves $63 million in stolen ether a)"
+    }
+  ],
   "event_data": {
     "source": "feeds",
     "schedule": "OK",
