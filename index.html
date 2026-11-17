@@ -191,7 +191,7 @@
 
   <section class="card" id="shadowCard" style="margin-top:12px">
     <h2><span>Shadow <span class="ko">· 4코인 그림자 장부 (BTC·ETH·XRP·SOL · 본 장부와 별도 · 알림 없음)</span></span>
-      <span class="seg" id="coinBtns"></span>
+      <span style="display:flex;gap:6px;flex-wrap:wrap"><span class="seg" id="shBtns"></span><span class="seg" id="coinBtns"></span></span>
     </h2>
     <div id="shadowBody"><div class="empty">그림자 장부를 불러오는 중…</div></div>
   </section>
@@ -433,6 +433,7 @@
   const tryText = async (p, sha) => { try { return await getText(p, sha); } catch (e) { return null; } };
   const dirCell = v => v === '상승' ? '<span class="up">▲상승</span>' : v === '하락' ? '<span class="down">▼하락</span>' : `<span class="muted">${esc(v || '–')}</span>`;
   const rCell = v => { const r = +v; return isNaN(r) || v === '' ? '–' : `<span class="${cls(r)}">${r >= 0 ? '+' : '−'}${Math.abs(r).toFixed(2)}R</span>`; };
+  const f3 = (v, d = 3) => (v === null || v === undefined || v === '' || isNaN(+v)) ? '–' : `${+v >= 0 ? '+' : '−'}${Math.abs(+v).toFixed(d)}`;
   async function loadExtras(sha) {
     const jt = await tryText('ledger/journal.csv', sha);
     journal = jt ? parseCSV(jt) : [];
@@ -464,20 +465,59 @@
       <td class="${cls(+j['손익원'])}">${sWon(+j['손익원'])}</td><td>${rCell(j['R'])}</td>
       <td class="l muted" style="white-space:normal">${esc(j['진입 앞뒤 2시간 경제 일정'] || '')}</td>
       <td class="l" style="white-space:normal;min-width:120px">${esc(j['원인태그'] || '–')}${j['MFE_R'] ? `<br><span class="muted">${esc(j['보유봉수'] || '')}봉 · MFE ${esc(j['MFE_R'])}R · MAE ${esc(j['MAE_R'] || '')}R</span>` : ''}</td>
-      <td class="l muted" style="white-space:normal;min-width:220px;max-width:360px">${esc(j['복기해설'] || '–')}</td></tr>`).join('');
+      <td class="l muted" style="white-space:normal;min-width:220px;max-width:360px">${esc(j['복기해설'] || '–')}</td>
+      <td class="l" style="white-space:nowrap">${clusterCell(j)}</td>
+      <td class="l" style="white-space:normal;min-width:150px">${decompCell(j)}</td></tr>`).join('');
     $('journalTbl').innerHTML = `<table><thead><tr><th>#</th><th class="l">진입</th><th class="l">방향</th><th class="l">셋업</th>
       <th class="l">진입 구간 근거</th><th class="l">보조 근거</th><th class="l">15분</th><th class="l">1시간</th><th>손절폭</th><th>T1까지</th>
-      <th class="l">결과</th><th>손익</th><th>R</th><th class="l">경제 일정</th><th class="l">원인 태그</th><th class="l">복기 해설 (Gemini · 공부용)</th></tr></thead><tbody>${rows}</tbody></table>`;
+      <th class="l">결과</th><th>손익</th><th>R</th><th class="l">경제 일정</th><th class="l">원인 태그</th><th class="l">복기 해설 (Gemini · 공부용)</th>
+      <th class="l">묶음</th><th class="l">손익 분해 (R)</th></tr></thead><tbody>${rows}</tbody></table>`;
     const n = journal.length, stops = journal.filter(j => j['마지막청산'] === '손절').length;
-    $('jrnSub').textContent = `${n}건 · 손절 ${stops}건 (${(stops / n * 100).toFixed(0)}%)`;
+    const ids = new Set(journal.map((j, i) => j['묶음ID'] || `_${i}`));
+    const indep = journal.some(j => j['묶음ID']) ? ` · 독립 묶음 ${ids.size}개` : '';
+    $('jrnSub').textContent = `${n}건${indep} · 손절 ${stops}건 (${(stops / n * 100).toFixed(0)}%)`;
+  }
+  // 상관 신호 묶음: 같은 방향 신호가 여러 코인에서 ±1봉 안에 나면 한 묶음 (열이 없으면 –)
+  function clusterCell(j) {
+    const id = j['묶음ID'], n = +j['묶음크기'] || 0;
+    if (!id) return '<span class="muted">–</span>';
+    return n > 1 ? `<span class="badge b-warn" title="${esc(id)}">${n}코인 동시</span><br><span class="muted">${esc(id.slice(5, 13))}</span>`
+                 : `<span class="muted" title="${esc(id)}">단독</span>`;
+  }
+  // 손익 분해: 계획(손절가까지) + 갭 + 슬리피지 + 수수료 = R (열이 없으면 –)
+  function decompCell(j) {
+    if (j['분해_계획R'] === undefined || j['분해_계획R'] === '') return '<span class="muted">–</span>';
+    const fee = (+j['분해_진입수수료R'] || 0) + (+j['분해_청산수수료R'] || 0);
+    const rr = j['실제위험/계획위험'];
+    return `계획 ${f3(j['분해_계획R'], 2)} · 갭 ${f3(j['분해_갭R'], 2)}<br>슬리피지 ${f3(j['분해_슬리피지R'], 2)} · 수수료 ${f3(fee, 2)}`
+      + (rr ? `<br><span class="muted">실제/계획 위험 ×${(+rr).toFixed(2)}</span>` : '');
   }
   $('coinBtns').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
     shCoin = b.dataset.c; renderShadow();
   });
+  let shIdx = 0;
+  $('shBtns').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    shIdx = +b.dataset.i || 0; renderShadow();
+  });
+  // v4 짝 비교 요약 (status.json pair_summary — 없으면 빈칸)
+  function pairHtml(ps) {
+    if (!ps) return '';
+    const need = ps.n_required || ps.n_required_prior;
+    const prog = need ? Math.min(100, (ps.n_signals || 0) / need * 100) : null;
+    return `<div class="kv" style="margin:8px 0;grid-column:1/-1"><div class="k">짝 비교 ${esc(ps.A || 'A')} vs ${esc(ps.B || 'B')} · 같은 신호 ID 기준 · d = R(B) − R(A), 진입 안 한 쪽 0R</div>
+      <div class="v" style="font-size:14px">쌍 ${ps.n_signals ?? 0}개 <small>(둘 다 ${ps.n_both ?? 0} · A만 ${ps.n_only_A ?? 0} · B만 ${ps.n_only_B ?? 0} · 진행 중 ${ps.n_open ?? 0})</small>
+      · 평균 차이 <span class="${cls(ps.mean_d || 0)}">${f3(ps.mean_d)}R</span> <small>σ ${ps.sd_d == null ? '–' : (+ps.sd_d).toFixed(2)} · ρ ${ps.rho == null ? '–' : (+ps.rho).toFixed(2)}</small></div>
+      <div class="note" style="margin-top:4px">필요 쌍 수 ${need ? need.toLocaleString() : '–'}${ps.n_required ? ' (현재 σ 기준)' : (ps.n_required_prior ? ' (개발 구간 사전 추정)' : '')} · 진행률 ${prog === null ? '–' : prog.toFixed(1) + '%'}
+      · 최소 효과 +${ps.delta_R ?? 0.1}R · 양측 α 0.05 · 검정력 80%${(() => { const p = ps.pairs_csv_ledger || ps.pairs_csv || ''; return /^[\w\/.-]+$/.test(p) ? ` · <a href="https://github.com/${OWNER}/${REPO}/blob/main/${esc(p)}" target="_blank" rel="noopener" style="color:var(--cyan)">짝 목록 CSV</a>` : ''; })()}</div>
+      ${prog === null ? '' : `<div style="height:6px;border:1px solid var(--line2);margin-top:4px"><div style="height:100%;width:${prog.toFixed(1)}%;background:var(--neon)"></div></div>`}</div>`;
+  }
   function renderShadow() {
-    if (!shadows.length) { $('shadowBody').innerHTML = '<div class="empty">켜진 그림자 장부가 없어요.</div>'; $('coinBtns').innerHTML = ''; return; }
-    const sh = shadows[0], s = sh.status;   // 지금은 첫 번째(기준선) 장부를 표시
+    if (!shadows.length) { $('shadowBody').innerHTML = '<div class="empty">켜진 그림자 장부가 없어요.</div>'; $('coinBtns').innerHTML = ''; $('shBtns').innerHTML = ''; return; }
+    if (shIdx >= shadows.length) shIdx = 0;
+    $('shBtns').innerHTML = shadows.length > 1 ? shadows.map((x, i) => `<button data-i="${i}" class="${i === shIdx ? 'on' : ''}">${esc(x.cfg.name)}</button>`).join('') : '';
+    const sh = shadows[shIdx], s = sh.status;   // 기본: 첫 번째(기준선) 장부
     if (!s) { $('shadowBody').innerHTML = `<div class="empty">'${esc(sh.cfg.name)}' 첫 실행을 기다리는 중이에요. 다음 5분봉 실행 뒤에 나타나요.</div>`; $('coinBtns').innerHTML = ''; return; }
     const coins = Object.keys(s.coins || {});
     $('coinBtns').innerHTML = ['ALL', ...coins].map(c => `<button data-c="${c}" class="${c === shCoin ? 'on' : ''}">${c === 'ALL' ? '전체' : c}</button>`).join('');
@@ -489,9 +529,11 @@
     const rows = tr.map(t => `<tr><td class="l">${esc(t['코인'])}</td><td class="l">${esc((t['진입시각'] || '').slice(5, 16))}</td>
       <td class="l ${t['방향'] === '롱' ? 'up' : 'down'}">${t['방향'] === '롱' ? '▲ 롱' : '▼ 숏'}</td><td class="l">${esc(t['셋업'])}${esc(t['등급'] || '')}</td>
       <td class="l">${esc(t['마지막청산'])}</td><td class="l">${esc((t['청산시각'] || '').slice(5, 16))}</td><td>${rCell(t['R'])}</td></tr>`).join('');
-    $('shadowBody').innerHTML = `<div class="note" style="margin:0 0 8px">${esc(s.name)} · 시작 ${esc(s.start_time)} · ${esc(s.description || '')}</div>
+    const notStarted = s.start_time && kstTs(s.start_time) > nowKst();
+    $('shadowBody').innerHTML = `<div class="note" style="margin:0 0 8px">${esc(s.name)}${s.timeframe ? ` · <b>${esc(s.timeframe)}분봉 실행</b>` : ''} · 시작 ${esc(s.start_time)}${notStarted ? ' <span class="badge b-warn">시작 전(지표 준비 중)</span>' : ''} · ${esc(s.description || '')}</div>
+      ${pairHtml(s.pair_summary)}
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">${cards}</div>
-      <div class="note">전체 ${s.trades_count}건 · 평균 ${s.trades_count ? (s.avg_R >= 0 ? '+' : '') + (+s.avg_R).toFixed(3) + 'R' : '–'} · 갱신 ${esc((s.updated_at || '').slice(5, 16))} · 자금 관리 없이 거래당 R로 기록(본 장부와 비교용)</div>
+      <div class="note">전체 ${s.trades_count}건${s.independent_clusters != null ? ` (독립 묶음 ${s.independent_clusters}개)` : ''} · 평균 ${s.trades_count ? (s.avg_R >= 0 ? '+' : '') + (+s.avg_R).toFixed(3) + 'R' : '–'} · 갱신 ${esc((s.updated_at || '').slice(5, 16))} · 자금 관리 없이 거래당 R로 기록(본 장부와 비교용)</div>
       <div class="tbl" style="padding:0;margin-top:8px">${tr.length ? `<table><thead><tr><th class="l">코인</th><th class="l">진입</th><th class="l">방향</th><th class="l">셋업</th><th class="l">청산</th><th class="l">청산 시각</th><th>R</th></tr></thead><tbody>${rows}</tbody></table>` : '<div class="empty">아직 청산된 그림자 거래가 없어요.</div>'}</div>`;
   }
 
@@ -590,7 +632,7 @@
     const k = [
       ['평가 잔고 (실시간)', `<span class="${cls(eq - cap)}">${won(eq)}</span><small>원</small>`, 'kEq'],
       ['누적 실현손익', `<span class="${cls(S.realized_pnl)}">${sWon(S.realized_pnl)}</span> <small>${(S.realized_pnl / cap * 100).toFixed(2)}%</small>`],
-      ['거래 · 승률', `${S.trades_count}건 <small>· ${S.trades_count ? S.win_rate.toFixed(1) + '%' : '–'}</small>`],
+      ['거래 · 승률', `${S.trades_count}건 <small>· ${S.trades_count ? S.win_rate.toFixed(1) + '%' : '–'}${S.independent_clusters != null ? ` · 독립 묶음 ${S.independent_clusters}` : ''}</small>`],
       ['평균 R', `<span class="${cls(S.avg_R)}">${S.avg_R >= 0 ? '+' : ''}${(+S.avg_R).toFixed(2)}R</span>`],
       ['최대 낙폭', `${(+S.max_drawdown_pct).toFixed(2)}%`],
       ['오늘 실현손익', `<span class="${cls(td.realized_pnl)}">${sWon(td.realized_pnl || 0)}</span>`],
@@ -760,10 +802,22 @@
   function renderEvents() {
     const eb = S && S.event_block, up = (S && Array.isArray(S.upcoming_events)) ? S.upcoming_events : [];
     const bl = (S && Array.isArray(S.event_blocked_signals)) ? S.event_blocked_signals : [];
-    if (!eb && !up.length) { $('evCard').hidden = true; return; }
+    const ed = S && S.event_data && typeof S.event_data === 'object' ? S.event_data : null;
+    if (!eb && !up.length && !ed) { $('evCard').hidden = true; return; }
     $('evCard').hidden = false;
     const left = s => { const m = Math.max(0, Math.round((kstTs(s) - nowKst()) / 60)); return m >= 60 ? `${Math.floor(m / 60)}시간 ${m % 60}분` : `${m}분`; };
     let h = '';
+    // 이벤트 데이터 수집 상태 — 일정 0건이 '이벤트 없음'인지 '데이터 없음'인지 구분해서 보여 줌
+    const stBadge = (lbl, v, last) => {
+      const c = v === 'OK' ? 'b-ok' : v === 'STALE' ? 'b-warn' : 'b-none';
+      return `<span class="badge ${c}" title="마지막 성공 ${esc(last || '없음')}">${lbl} ${esc(v || 'UNKNOWN')}</span>
+        <span class="muted" style="font-size:11px">${last ? esc(String(last).slice(5, 16)) : '성공 기록 없음'}</span>`;
+    };
+    if (ed) {
+      h += `<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px">
+        ${stBadge('정기 일정', ed.schedule, ed.last_success_schedule)} ${stBadge('돌발 뉴스', ed.breaking, ed.last_success_breaking)}
+        <span class="muted" style="font-size:11px">출처 ${esc(ed.source === 'gemini' ? 'Gemini 검색' : '경제 캘린더·코인 뉴스 RSS')}</span></div>`;
+    }
     if (eb && eb.active) {
       h += `<div class="pos-head" style="font-size:14px"><span class="badge b-red">⛔ 신규 진입 금지</span>
         <span>${esc((eb.coins || []).join('·'))}</span></div>
@@ -774,13 +828,21 @@
     } else {
       h += `<div class="pos-head" style="font-size:14px"><span class="badge b-none">이벤트 회피 꺼짐</span><span class="muted" style="font-size:12px;font-weight:500">일정 기록만</span></div>`;
     }
-    h += up.length ? `<ul class="evlist">${up.slice(0, 5).map(u => `<li><span class="t">${esc(String(u.time || '').slice(5, 16))}</span>
-        <span style="flex:1">${esc(u.name)} <span class="muted">· ${esc(u.coins || 'ALL')} · 창 ${esc(String(u.window_start || '').slice(11, 16))}~${esc(String(u.window_end || '').slice(11, 16))}</span>
+    // 다가오는 일정: event_data.upcoming(high·medium) 이 있으면 그것을, 없으면 예전 upcoming_events(high)
+    const up2 = ed && Array.isArray(ed.upcoming) && ed.upcoming.length ? ed.upcoming : up;
+    const win = u => u.window_start ? ` · 창 ${esc(String(u.window_start).slice(11, 16))}~${esc(String(u.window_end || '').slice(11, 16))}` : '';
+    const winOf = u => { const w = up.find(x => x.time === u.time && x.name === u.name); return w ? win(w) : win(u); };
+    const impB = u => u.importance ? `<span class="badge ${u.importance === 'high' ? 'b-red' : 'b-none'}" style="animation:none;font-size:10px;padding:0 4px">${u.importance === 'high' ? '높음' : '보통'}</span> ` : '';
+    const schedOk = !ed || ed.schedule === 'OK';
+    h += up2.length ? `<ul class="evlist">${up2.slice(0, 6).map(u => `<li><span class="t">${esc(String(u.time || '').slice(5, 16))}</span>
+        <span style="flex:1">${impB(u)}${esc(u.name)} <span class="muted">· ${esc(u.coins || 'ALL')}${winOf(u)}</span>
         ${/^https?:\/\//.test(u.source || '') ? ` <a href="${esc(u.source)}" target="_blank" rel="noopener">근거</a>` : ''}</span></li>`).join('')}</ul>`
-      : '<div class="note">다가오는 고영향(high) 일정 없음</div>';
-    if (bl.length) h += `<div class="note">최근 막힌 신호: ${bl.slice(-3).reverse().map(b => `${esc(String(b.time || '').slice(5, 16))} ${esc(b.coin)} ${esc(b.side)} ${esc(b.setup)}`).join(' / ')}</div>`;
+      : (schedOk ? '<div class="note">일정 데이터 정상 · 7일 안 고영향·중간 일정 없음</div>'
+                 : `<div class="note" style="color:var(--amber)">⚠️ 일정 데이터 ${esc(ed.schedule)} — 일정이 비어 보여도 '이벤트 없음'이 아닐 수 있어요${ed.schedule_error ? ` (${esc(String(ed.schedule_error).slice(0, 80))})` : ''}</div>`);
+    if (bl.length) h += `<div class="note"><b>막힌 신호</b> ${bl.length}건 (최근 5): ${bl.slice(-5).reverse().map(b => `${esc(String(b.time || '').slice(5, 16))} ${esc(b.coin)} ${esc(b.side)} ${esc(b.setup)} <span class="muted">${esc(b.reason || '')}</span>`).join(' / ')}</div>`;
+    else if (eb && eb.enabled) h += '<div class="note muted">막힌 신호 없음</div>';
     $('evBody').innerHTML = h;
-    $('evSub').textContent = eb && eb.active ? '진행 중' : `다가오는 일정 ${up.length}건`;
+    $('evSub').textContent = eb && eb.active ? '진행 중' : `다가오는 일정 ${up2.length}건`;
   }
   setInterval(() => { try { if (S) renderEvents(); } catch (e) {} }, 30000);
 
