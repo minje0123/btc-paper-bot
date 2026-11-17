@@ -436,7 +436,8 @@ def e9():
     P = engine.load_params(cfg)
     out = dict(current=P["eventBlock"], history=[hp["eventBlock"] for _u, hp in P["rule_history"]],
                config_eventBlock=json.load(open(os.path.join(REPO, "config.json"), encoding="utf-8-sig"))["eventBlock"])
-    return P["eventBlock"] and not any(out["history"]) and out["config_eventBlock"] is False, out
+    # (11/17 15:50 이벤트 회피를 켠 뒤로 config 의 eventBlock 은 true — 과거 단계가 물려받지 않는지만 확인)
+    return P["eventBlock"] and not any(out["history"]), out
 
 
 def main():
