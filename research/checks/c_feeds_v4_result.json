@@ -456,11 +456,11 @@
     "F7_decomp_sum": {
       "pass_": true,
       "main": {
-        "trades": 4,
-        "decomposed": 4,
+        "trades": 6,
+        "decomposed": 6,
         "missing": 0,
         "max_abs_err": 2.220446049250313e-16,
-        "stops": 3,
+        "stops": 4,
         "stop_plan_is_minus1": true,
         "exit_reasons": [
           "다음 스윙",
@@ -469,35 +469,36 @@
         "stop_avg": {
           "plan_R": -1.0,
           "gap_R": 0.0,
-          "slip_R": -0.008899528623187056,
-          "fee_entry_R": -0.10893848848425713,
-          "fee_exit_R": -0.10876822620550503,
-          "sum_R": -1.2266062433129494,
-          "R": -1.226606243312949,
-          "risk_ratio": 1.017992162120424,
-          "n": 3
+          "slip_R": -0.007327422069249397,
+          "fee_entry_R": -0.11030229186844116,
+          "fee_exit_R": -0.110299921547178,
+          "sum_R": -1.2279296354848686,
+          "R": -1.2279296354848686,
+          "risk_ratio": 1.0119236201492183,
+          "n": 4
         }
       },
       "baseline": {
-        "trades": 1,
-        "decomposed": 1,
+        "trades": 3,
+        "decomposed": 3,
         "missing": 0,
         "max_abs_err": 2.220446049250313e-16,
-        "stops": 1,
+        "stops": 2,
         "stop_plan_is_minus1": true,
         "exit_reasons": [
+          "다음 스윙",
           "손절"
         ],
         "stop_avg": {
           "plan_R": -1.0,
           "gap_R": 0.0,
-          "slip_R": -0.021762785636561477,
-          "fee_entry_R": -0.10817192600652883,
-          "fee_exit_R": -0.10766104461371055,
-          "sum_R": -1.237595756256801,
-          "R": -1.2375957562568007,
-          "risk_ratio": 1.15018364,
-          "n": 1
+          "slip_R": -0.012186944021998948,
+          "fee_entry_R": -0.11128281401376106,
+          "fee_exit_R": -0.11127802609295377,
+          "sum_R": -1.2347477841287138,
+          "R": -1.2347477841287136,
+          "risk_ratio": 1.07296582,
+          "n": 2
         }
       },
       "v4_30m_fixed(18개월 30m)": {
@@ -631,6 +632,44 @@
           "risk_ratio": 1.1502,
           "entry_slip_won": 124.367,
           "pre_cost_R": -1.0
+        },
+        {
+          "id": "202611171535S",
+          "coin": "BTC",
+          "R": -1.2319,
+          "stop_pct": 0.4371,
+          "rm": 4933,
+          "rw": 4902,
+          "pnl": -6039,
+          "pnl_over_rm": -1.2242,
+          "plan_R": -1.0,
+          "gap_R": 0.0,
+          "slip_R": -0.0026,
+          "fee_entry_R": -0.1144,
+          "fee_exit_R": -0.1149,
+          "sum_R": -1.2319,
+          "risk_ratio": 0.9937,
+          "entry_slip_won": 12.8,
+          "pre_cost_R": -1.0
+        },
+        {
+          "id": "SOL-202611171545L",
+          "coin": "SOL",
+          "R": 0.6995,
+          "stop_pct": 0.5566,
+          "rm": 4933,
+          "rw": 5023,
+          "pnl": 3514,
+          "pnl_over_rm": 0.7123,
+          "plan_R": 0.8764,
+          "gap_R": 0.0,
+          "slip_R": 0.0,
+          "fee_entry_R": -0.0882,
+          "fee_exit_R": -0.0887,
+          "sum_R": 0.6995,
+          "risk_ratio": 1.0182,
+          "entry_slip_won": 89.844,
+          "pre_cost_R": 0.9106
         }
       ]
     },
@@ -669,11 +708,12 @@
     },
     "F10_bot_wiring": {
       "pass_": true,
-      "run_shadows_s": 0.27,
+      "run_shadows_s": 0.146,
       "start_times": {
         "baseline_v141_5m": "2026-11-17 09:10",
         "v4_30m_fixed": "2026-11-21 09:30",
-        "v4_30m_cost": "2026-11-21 09:30"
+        "v4_30m_cost": "2026-11-21 09:30",
+        "news_v1_5m": "2026-11-17 09:10"
       },
       "first_5m": "2026-11-13 13:40:00+09:00",
       "pair_summary": {
@@ -693,10 +733,10 @@
         "n_required_prior": 1004,
         "delta_R": 0.1,
         "definition": "d = R_B − R_A (신호마다, 진입 안 한 쪽 0R). 필요 쌍 수 = ((1.96+0.84)·σ_d/0.10)²",
-        "pairs_csv": "../../../AppData/Local/Temp/feedsv4_8ax_5p2b/v4/pairs.csv",
-        "pairs_csv_ledger": "../../../AppData/Local/Temp/feedsv4_8ax_5p2b/shadow/v4_pairs.csv"
+        "pairs_csv": "../../../AppData/Local/Temp/feedsv4_zc6ryeq6/v4/pairs.csv",
+        "pairs_csv_ledger": "../../../AppData/Local/Temp/feedsv4_zc6ryeq6/shadow/v4_pairs.csv"
       },
-      "pairs_rows_from_11_15": 24,
+      "pairs_rows_from_11_15": 26,
       "pairs_example": [
         {
           "signal_id": "BTC-202611151000S",
@@ -784,13 +824,13 @@
         }
       ],
       "v4_fixed_status": {
-        "trades_count": 23,
-        "avg_R": 0.088,
-        "independent_clusters": 15,
+        "trades_count": 24,
+        "avg_R": 0.1,
+        "independent_clusters": 16,
         "start_time": "2026-11-15 09:00"
       },
       "tf_data": {
-        "bars": 196,
+        "bars": 202,
         "same_as_research_aggregate": true,
         "incomplete_dropped": true,
         "dir_aux": [
@@ -815,7 +855,7 @@
       ]
     }
   },
-  "v4_runs_s": 22.1,
-  "total_s": 29.6,
+  "v4_runs_s": 14.5,
+  "total_s": 18.9,
   "pass": true
 }

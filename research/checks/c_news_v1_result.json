@@ -1,0 +1,363 @@
+{
+  "method": "검증 5 — 뉴스 판정 v1 (tools/news_rules.py · tools/news_v1.py · bot 연결). 오프라인(가짜 RSS·가짜 Gemini), 임시 폴더만 씀.\nledger/·state/·data/ 는 읽기만(data/ 5분봉). research/holdout 사용 안 함.\n\nN1  스키마 검증: 허용값·형식·근거 문장 대조(원문에 없으면 null), 등급 제안 키 무시, 객체 아님 → ok=False\nN2  결정 결정성: 같은 입력 → 같은 결정·창·묶음 상태(2회·순서 바꿔도), 표 지문 고정\nN3  unmapped: 신규 여부 UNKNOWN 인 신규 침해 → UNMAPPED(임의 판정 없음), 파이프라인 unmapped_count 증가\nN4  재배포 2건 = 독립 1건(같은 제목·원출처 표기·같은 온체인 분석사 인용), 진짜 독립 2건 = INDEPENDENT\nN5  공식 공지만 1건 → OFFICIAL 유지(교차 보도 없음으로 낮추지 않음)\nN6  소급 없음: 시작 = ceil5(decided_at) ≥ decided_at, engine 은 결정 전 체결 신호를 막지 않음\nN7  재배포로 연장 없음 · 사전 정의된 새 사실로만 연장\nN8  진행 중 장애: 고정 시간 끝나도 해제 안 함(재확인 창 추가), 복구 확인 → 해제, 12시간 상한 → 수동 확인\nN9  실패 구분: 수집 실패(collector FAIL, extractor 그대로) / Gemini 503(extractor FAIL, collector OK) / 429(BACKOFF·\n    reviews.json 백오프·다음 실행 호출 0) / 키 없음(NO_KEY) / 대기 만료 → NOT_EXTRACTED 기록(이벤트 없음으로 안 바꿈),\n    실행당 Gemini 최대 3건\nN10 ETH 사례 재판정 재현: 저장된 기사·추출로 두 번(다른 폴더) 돌려 같은 decisions.csv, 결과 RECORD(D20),\n    목적지 unknown 이어도 RECORD, 기존 판정(high ETH 18:35~20:35)과 차이 '기존만 차단'\nN11 bot 연결: news_v1_5m 을 켜도 baseline·v4 거래 동일, news 창이 baseline 거래의 체결 시각을 덮으면 그 신호만 막히고\n    filter_pairs.csv(같은 신호 ID, 차단 1, 필터 R 0)·status news_v1·filter_summary 생성, 활성 전 캘린더 창 소급 없음\n결과: research/checks/c_news_v1_result.json",
+  "rules_version": "news_rules_v1.0",
+  "table_hash": "59c0f957d0f6",
+  "tests": {
+    "N1_schema": {
+      "pass_": true,
+      "rep": {
+        "ok": true,
+        "dropped": [
+          "destination"
+        ],
+        "ignored": [
+          "suggested_tier"
+        ],
+        "errors": []
+      },
+      "facts": {
+        "event_type": "new_breach",
+        "damage_usd": 150000000.0,
+        "destination": null,
+        "status": "ongoing"
+      },
+      "assets_without_quote_dropped": true
+    },
+    "N2_determinism": {
+      "pass_": true,
+      "row": "BLOCK",
+      "rows": "D12",
+      "window": [
+        "2026-11-18 10:05:00+09:00",
+        "2026-11-18 11:05:00+09:00"
+      ],
+      "combos": 480,
+      "table_hash": "59c0f957d0f6",
+      "official_link": [
+        "D10",
+        "OFFICIAL",
+        "복구 확인까지 보류(재확인 30분, 상한 12시간)"
+      ]
+    },
+    "N3_unmapped": {
+      "pass_": true,
+      "decision": "UNMAPPED",
+      "sol": "결정표에 없는 조합",
+      "no_type": "UNMAPPED",
+      "unmapped_count": 1
+    },
+    "N4_repost_independence": {
+      "pass_": true,
+      "reposts": 1,
+      "credited": 1,
+      "same_onchain_source": 1,
+      "independent": [
+        "INDEPENDENT",
+        2
+      ],
+      "reposts_conf": [
+        "SINGLE_CLAIM",
+        1
+      ]
+    },
+    "N5_official_only": {
+      "pass_": true,
+      "official_notice_only": [
+        "OFFICIAL",
+        1
+      ],
+      "relayed_official": [
+        "OFFICIAL",
+        1
+      ],
+      "unknown_official_name": [
+        "SINGLE_CLAIM",
+        1
+      ]
+    },
+    "N6_no_retro": {
+      "pass_": true,
+      "starts": [
+        [
+          "2026-11-17 18:30:20",
+          "2026-11-17 18:35:00+09:00",
+          true
+        ],
+        [
+          "2026-11-17 18:30:00",
+          "2026-11-17 18:30:00+09:00",
+          true
+        ],
+        [
+          "2026-11-17 18:34:59",
+          "2026-11-17 18:35:00+09:00",
+          true
+        ],
+        [
+          "2026-11-17 18:35:00",
+          "2026-11-17 18:35:00+09:00",
+          true
+        ]
+      ],
+      "engine_before": null,
+      "engine_after": "n"
+    },
+    "N7_extension": {
+      "pass_": true,
+      "first": [
+        "BLOCK",
+        "new",
+        "2026-11-18 11:00:00"
+      ],
+      "repost": [
+        "BLOCK",
+        "no_extend(새 사실 없음)"
+      ],
+      "repeat": [
+        "D03",
+        "-"
+      ],
+      "new_fact": [
+        "extend:확인 수준 상승",
+        "2026-11-18 10:50:00",
+        "2026-11-18 13:50:00"
+      ]
+    },
+    "N8_ongoing_hold": {
+      "pass_": true,
+      "first_window": [
+        "2026-11-18 10:00:00",
+        "2026-11-18 13:00:00",
+        "복구 확인까지 보류(재확인 30분, 상한 12시간)"
+      ],
+      "steps": [
+        [
+          "10:30",
+          [],
+          []
+        ],
+        [
+          "11:00",
+          [],
+          []
+        ],
+        [
+          "11:30",
+          [],
+          []
+        ],
+        [
+          "12:00",
+          [],
+          []
+        ],
+        [
+          "12:30",
+          [
+            "HOLD_CONTINUE"
+          ],
+          [
+            "13:00+30"
+          ]
+        ],
+        [
+          "13:00",
+          [
+            "HOLD_CONTINUE"
+          ],
+          [
+            "13:30+30"
+          ]
+        ],
+        [
+          "13:30",
+          [
+            "HOLD_CONTINUE"
+          ],
+          [
+            "14:00+30"
+          ]
+        ],
+        [
+          "14:00",
+          [
+            "HOLD_CONTINUE"
+          ],
+          [
+            "14:30+30"
+          ]
+        ],
+        [
+          "14:30",
+          [
+            "HOLD_CONTINUE"
+          ],
+          [
+            "15:00+30"
+          ]
+        ],
+        [
+          "15:00",
+          [
+            "HOLD_CONTINUE"
+          ],
+          [
+            "15:30+30"
+          ]
+        ],
+        [
+          "15:30",
+          [
+            "HOLD_CONTINUE"
+          ],
+          [
+            "16:00+30"
+          ]
+        ],
+        [
+          "16:00",
+          [
+            "HOLD_CONTINUE"
+          ],
+          [
+            "16:30+30"
+          ]
+        ]
+      ],
+      "still_active": true,
+      "covered_until": "2026-11-18 17:00:00",
+      "release_rows": [
+        "HOLD_RELEASE"
+      ],
+      "cap_at": "2026-11-18 22:00:00+09:00"
+    },
+    "N9_failures": {
+      "pass_": true,
+      "collector_fail": [
+        "FAIL",
+        "IDLE",
+        0
+      ],
+      "gemini_503": [
+        "OK",
+        "FAIL",
+        3,
+        15.0
+      ],
+      "gemini_429": [
+        "BACKOFF",
+        1,
+        0,
+        "2026-11-19 11:00:00",
+        "BACKOFF"
+      ],
+      "no_key": [
+        "NO_KEY",
+        5,
+        [
+          "NOT_EXTRACTED",
+          "NOT_EXTRACTED",
+          "NOT_EXTRACTED",
+          "NOT_EXTRACTED",
+          "NOT_EXTRACTED"
+        ],
+        "FAIL"
+      ],
+      "budget_3s_calls": 0
+    },
+    "N10_eth_rejudge": {
+      "pass_": true,
+      "decision": "RECORD",
+      "rows": "D04|D20",
+      "relations": "BTC:NONE|ETH:MOVED_ASSET|XRP:NONE|SOL:NONE",
+      "scale": "moved_usd:63000000:MID",
+      "confirmation": "SINGLE_CLAIM",
+      "destination": "own_wallets",
+      "legacy": "high ETH 11-17 18:35~20:35 (규칙 high:ETH:hack)",
+      "diff": "기존만 차단",
+      "ignored": "suggested_tier",
+      "reaction": "NORMAL range×1.50 vol×1.50",
+      "times": [
+        "2026-11-17 18:21:19",
+        "2026-11-17 18:30:20",
+        "2026-11-17 18:30:20",
+        ""
+      ],
+      "unknown_dest": [
+        "RECORD",
+        "D04|D20"
+      ],
+      "status": "OK"
+    },
+    "N11_bot_wiring": {
+      "pass_": true,
+      "window_over": [
+        "SOL",
+        "2026-11-17 14:25",
+        "-1.238"
+      ],
+      "baseline_v4_identical": true,
+      "filter_rows": 3,
+      "blocked": [
+        {
+          "signal_id": "SOL-202611171420L",
+          "coin": "SOL",
+          "signal_time": "2026-11-17 14:20",
+          "side": "L",
+          "blocked": "1",
+          "block_reason": "[news_v1 D10] SOL: test",
+          "R_nofilter": "-1.2376",
+          "R_filter": "0.0000",
+          "base_status": "closed",
+          "filter_status": "blocked",
+          "base_entry_time": "2026-11-17 14:25",
+          "filter_entry_time": ""
+        }
+      ],
+      "news_trades": 2,
+      "filter_summary": {
+        "signals": 3,
+        "blocked": 1,
+        "blocked_base_closed": 1,
+        "blocked_base_sumR": -1.238,
+        "sum_d": 1.238,
+        "n_d": 3,
+        "definition": "d = 필터 R − 무필터 R (같은 신호 ID, 막힌 신호 필터 R = 0). 계좌 경로 차이는 두 장부 status 로 비교",
+        "baseline": "baseline_v141_5m",
+        "filter_pairs_csv": "../../../AppData/Local/Temp/newsv1_2jg23nu5/news/filter_pairs.csv",
+        "filter_pairs_csv_ledger": "../../../AppData/Local/Temp/newsv1_2jg23nu5/shadow_on/news_v1_5m/filter_pairs.csv"
+      },
+      "news_v1_keys": [
+        "active_from",
+        "candidate_note",
+        "collector",
+        "extractor",
+        "holds_active",
+        "last_decision",
+        "recent",
+        "rules_version",
+        "table_hash",
+        "unmapped_count"
+      ],
+      "cols_ok": true,
+      "calendar_rows": [
+        [
+          "2026-11-17 22:30:00+09:00",
+          "[news_v1 MACRO_IND] [일정] Core Retail Sal",
+          30.0,
+          30.0,
+          "2026-11-17 18:30:20+09:00"
+        ],
+        [
+          "2026-11-19 04:00:00+09:00",
+          "[news_v1 MACRO_IND] [일정] FOMC Meeting Mi",
+          30.0,
+          30.0,
+          "2026-11-17 18:30:20+09:00"
+        ]
+      ]
+    }
+  },
+  "total_s": 0.6,
+  "pass": true
+}

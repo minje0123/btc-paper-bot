@@ -83,6 +83,17 @@ EVENT_FEED_STATE = os.path.join(STATE_DIR, "event_feed.json")     # 이벤트 �
 PAIRS_CSV = os.path.join(HERE, "research", "v4", "pairs.csv")      # v4 30m 짝 비교(봇이 매 실행 다시 씀)
 DAILY_CSV = os.path.join(DATA_DIR, "btc_daily.csv")                # 국면 라벨용 BTC 일봉(업비트 공개 API)
 POWER_PRIOR = os.path.join(HERE, "research", "v4", "power_prior.json")   # 개발 구간 사전 검정력(필요 쌍 수)
+NEWS_FILTER_PAIRS = os.path.join(HERE, "research", "news", "filter_pairs.csv")   # news_v1 vs baseline 같은 신호 ID 비교
+NEWS_BUDGET_SEC = 30.0       # 실행당 뉴스 관련(event_feeds + news_v1) 총 시간 상한
+
+
+def news_paths():
+    from tools import news_v1 as NV
+    return NV.paths_for(HERE)
+
+
+def news_v1_enabled(cfg):
+    return bool((cfg.get("newsV1") or {}).get("enabled"))
 
 BAR = dt.timedelta(minutes=5)
 TFMT = "%Y-%m-%d %H:%M:%S"
@@ -958,6 +969,33 @@ def write_pairs_all(results, btc_candles, end, offline):
             f"열림 {ps['n_open']} → {summ['pairs_csv']}")
 
 
+def write_news_pairs(results, blocked_by, end):
+    """events_source=news_v1 이고 filter_baseline 이 있는 그림자 장부 → research/news/filter_pairs.csv(+ ledger 사본),
+    그 장부 status.json 에 news_v1 상태·최근 판정 10건·필터 요약."""
+    from tools import news_v1 as NV
+    for name, (trades, opened, _datas, tf, sh) in results.items():
+        if sh.get("events_source") != "news_v1":
+            continue
+        base = sh.get("filter_baseline")
+        if base not in results:
+            log(f"news_v1 필터 비교: 기준 장부 '{base}' 결과 없음 — 건너뜀", warn=True)
+            continue
+        bt, bo = results[base][0], results[base][1]
+        rows = NV.filter_pairs((bt, bo), (trades, opened), blocked_by.get(name) or [], tf)
+        NV.write_filter_pairs(NEWS_FILTER_PAIRS, rows)
+        mirror = os.path.join(SHADOW_DIR, name, "filter_pairs.csv")     # 워크플로가 research/news 를 커밋하지 않아도 남게
+        NV.write_filter_pairs(mirror, rows)
+        p = os.path.join(SHADOW_DIR, name, "status.json")
+        sj = read_json(p, None)
+        if sj is not None:
+            np_ = news_paths()
+            sj["news_v1"] = NV.status_of(NV.load_state(np_), end, np_)
+            sj["filter_summary"] = dict(NV.filter_summary(rows), baseline=base,
+                                        filter_pairs_csv=os.path.relpath(NEWS_FILTER_PAIRS, HERE).replace("\\", "/"),
+                                        filter_pairs_csv_ledger=os.path.relpath(mirror, HERE).replace("\\", "/"))
+            write_json(p, sj)
+
+
 def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None, review=False):
     """활성 그림자 장부를 모두 계산·저장. 실패해도 본 장부에는 영향 없음.
     preloaded: {market: candles} 이번 실행에서 본 장부가 이미 받아 저장한 코인 봉(같은 데이터, 중복 요청 방지)
@@ -969,6 +1007,7 @@ def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None, r
     cfg_changed = False
     cache = {}
     results = {}                      # 이름 → (청산 거래, 열린 포지션·대기, datas, timeframe) — v4 짝 비교용
+    blocked_by = {}                   # 이름 → engine 이 막은 신호 목록(news_v1 필터 비교용)
 
     def candles_of(market, st):
         if market in cache:
@@ -1016,6 +1055,11 @@ def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None, r
             P = shadow_params(cfg, sh)
             out_dir = os.path.join(SHADOW_DIR, name)
             all_trades, per, datas, opened = [], {}, {}, []
+            sh_events = events
+            if sh.get("events_source") == "news_v1":     # news_v1 전용 창만 읽음(data/events.csv 의 돌발 판정은 안 씀)
+                from tools import news_v1 as NV
+                sh_events = NV.ledger_events(news_paths())
+            sh_blocked = blocked_by.setdefault(name, [])
             for market in sh.get("markets") or [cfg.get("market", "KRW-BTC")]:
                 coin = market.split("-")[-1]
                 c = candles_of(market, st)
@@ -1032,7 +1076,8 @@ def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None, r
                         log(f"그림자 '{name}' {coin}: 완성된 {tf}분봉 없음 — 건너뜀", warn=True)
                         continue
                     ts = D.T
-                R = engine.run(D, P, start_time=st, close_at_end=False, events=events, coin=coin)
+                R = engine.run(D, P, start_time=st, close_at_end=False, events=sh_events, coin=coin)
+                sh_blocked.extend(R.get("blocked") or [])
                 datas[coin] = D
                 for t in R["trades"]:
                     t["coin"] = coin
@@ -1076,6 +1121,9 @@ def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None, r
                 stj["timeframe"] = tf
             if sh.get("pair_group"):
                 stj.update(pair_group=sh["pair_group"], pair_role=sh.get("pair_role"))
+            if sh.get("events_source") == "news_v1":
+                stj["events_source"] = "news_v1"
+                stj["blocked_signals"] = len(sh_blocked)
             stj.update(extras_fields(all_trades))
             write_json(os.path.join(out_dir, "status.json"), stj)
             results[name] = (all_trades, opened, datas, tf, sh)
@@ -1086,6 +1134,10 @@ def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None, r
         write_pairs_all(results, cache.get("KRW-BTC") or main_candles, end, offline)
     except Exception as e:
         log(f"v4 짝 비교 기록 실패(장부는 정상): {e!r}", warn=True)
+    try:
+        write_news_pairs(results, blocked_by, end)
+    except Exception as e:
+        log(f"news_v1 필터 비교 기록 실패(장부는 정상): {e!r}", warn=True)
     if cfg_changed:
         disk = read_json(CONFIG, {})
         for s in disk.get("shadow_ledgers") or []:
@@ -1284,6 +1336,7 @@ def main():
     # (B) 이벤트 수집 — eventSource "feeds"(기본: 경제 캘린더 JSON + 코인 뉴스 RSS) 또는 "gemini"(예전 방식).
     #     시간 조건(정기 6시간·돌발 30분)은 모듈이 판단. 실패는 경고만, 봇은 계속. 수집 전체 eventFetchBudgetSec(30초) 이하.
     ev_src = str(cfg.get("eventSource", "feeds")).lower()
+    t_news0 = time.monotonic()
     if a.dry_run:
         log("dry-run: 이벤트 수집은 건너뜁니다.")
     elif ev_src == "gemini":
@@ -1298,6 +1351,7 @@ def main():
             event_feeds.maybe_update(now, cfg, events_path, EVENT_FEED_STATE, log)
         except Exception as e:
             log(f"이벤트 피드 수집 건너뜀(오류): {e!r}", warn=True)
+    news_left = max(0.0, NEWS_BUDGET_SEC - (time.monotonic() - t_news0))
 
     candles, used, primary = update_candles(cfg, start_time, end)
     if not candles:
@@ -1329,6 +1383,15 @@ def main():
     except Exception as e:                      # 일정 파일이 깨져도 장부 계산은 계속(일정 없이)
         log(f"일정 파일 읽기 실패 — 일정 없이 계산합니다: {e!r}", warn=True)
         events = []
+    # (C) news_v1 기록 전용 파이프라인(newsV1.enabled 일 때만). 본 장부·baseline·v4 의 events 는 그대로(이 결과를 안 읽음).
+    news_st = None
+    if news_v1_enabled(cfg) and not a.dry_run:
+        try:
+            from tools import event_feeds as _ef
+            from tools import news_v1 as NV
+            news_st = NV.run(now, cfg, news_paths(), candles=cands, budget_s=news_left, shared=_ef.LAST_FETCH, log=log)
+        except Exception as e:
+            log(f"news_v1 건너뜀(오류, 봇 계속): {e!r}", warn=True)
     R = compute_main(P, cands, start_time, events)
     log(f"재계산: 코인 {', '.join(engine.coin_of(m) for m in cands)}, 거래 {len(R['trades'])}건 "
         f"(매매 대상 봉 {len(R['curve'])}개), 포지션 {len(R['positions'])}개, 진입 대기 {len(R['pendings'])}개, "
@@ -1349,6 +1412,8 @@ def main():
     status = build_status(cfg, P, R, start_time, primary, used, dt.datetime.now(KST))
     status.update(event_fields(P, R, events, now))
     status.update(event_data_fields(cfg, now, R, events))
+    if news_st is not None:
+        status["news_v1"] = {k: v for k, v in news_st.items() if k != "recent"}   # 상태만(본 장부 계산과 무관)
     write_trades(R["trades"])
     write_json(STATUS, status)
     write_account(status, R)

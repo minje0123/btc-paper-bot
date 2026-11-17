@@ -109,6 +109,7 @@ COIN_PATTERNS = {
     "SOL": [r"\bsol\b", r"\bsolana\b", r"솔라나"],
 }
 SCHEDULE_PREFIX = "[일정] "
+LAST_FETCH = {}       # 이번 실행 돌발 RSS 결과(news_v1 재사용용): at, articles, sources_ok, error
 
 
 # ============================== 네트워크 ==============================
@@ -429,10 +430,16 @@ def run_breaking(now, cfg, events_path, st, deadline, get, log=None):
         try:
             got = parse_rss(b)
             srec.update(ok=True, last_success=_ts(now), error=None, count=len(got))
+            for g in got:
+                g["outlet"] = name          # news_v1(기록 전용)이 매체 구분에 씀 — 이 모듈 판정에는 안 쓰임
             arts += got
             n_ok += 1
         except Exception as e:
             srec.update(ok=False, error=f"파싱 실패: {str(e)[:120]}")
+    # news_v1 기록 전용 파이프라인이 같은 실행에서 추가 요청 없이 재사용(판정·events.csv 에는 영향 없음)
+    LAST_FETCH.clear()
+    LAST_FETCH.update(at=now, articles=list(arts), sources_ok=n_ok,
+                      error=None if n_ok else "모든 RSS 실패")
     if n_ok == 0:
         rec.update(ok=False, error="모든 RSS 실패")
         if log:

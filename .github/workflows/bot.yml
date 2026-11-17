@@ -43,7 +43,7 @@ jobs:
           while :; do
             git pull --rebase --autostash -q || echo "pull 실패 — 이번엔 그대로 진행"
             python bot.py || echo "봇 실행 실패 — 다음 봉에서 다시 시도"
-            for p in data ledger state config.json research/v4; do
+            for p in data ledger state config.json research/v4 research/news; do
               if [ -e "$p" ]; then git add "$p"; fi
             done
             if ! git diff --cached --quiet; then
