@@ -26,12 +26,12 @@
  ],
  "queue": {
   "7abecec3449e": {
-   "status": "queued",
-   "fails": 2
+   "status": "failed",
+   "fails": 3
   },
   "64e1acdfe314": {
-   "status": "queued",
-   "fails": 2
+   "status": "failed",
+   "fails": 3
   },
   "cada900cbfdb": {
    "status": "old_at_receipt",
@@ -50,8 +50,8 @@
    "fails": 0
   },
   "2b827bd4ca57": {
-   "status": "queued",
-   "fails": 2
+   "status": "failed",
+   "fails": 3
   },
   "2ea3d3526dd4": {
    "status": "old_at_receipt",
@@ -83,13 +83,24 @@
   }
  },
  "extractor": {
-  "queue": 3,
-  "last_attempt": "2026-11-17 19:55:20",
+  "queue": 0,
+  "last_attempt": "2026-11-17 20:00:21",
   "state": "FAIL",
-  "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  "last_error": "TimeoutError: The read operation timed out"
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 28.35,
- "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록."
+ "elapsed_s": 20.61,
+ "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
+ "last_decision": {
+  "decided_at": "2026-11-17 20:00:21",
+  "title": "Binance hacker moves $63 million in stolen ether after 2 weeks of silence",
+  "decision": "EXTRACTOR_FAILED",
+  "rows": null,
+  "targets": null,
+  "effective_at": null,
+  "window_end": null,
+  "rules_version": "news_rules_v1.0",
+  "diff": "기존만 차단"
+ }
 }
