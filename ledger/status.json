@@ -16,28 +16,38 @@
   "total_value": 986627,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 986627,
+  "equity": 986335,
   "realized_pnl": -13373,
-  "unrealized_pnl": 0,
+  "unrealized_pnl": -292,
   "trades_count": 4,
   "win_rate": 25.0,
   "avg_R": -0.684,
-  "max_drawdown_pct": 1.57,
-  "has_position": false,
-  "position": null,
-  "pending_entry": {
+  "max_drawdown_pct": 1.59,
+  "has_position": true,
+  "position": {
     "market": "KRW-BTC",
     "coin": "BTC",
+    "id": "202611171535S",
     "side": "숏",
     "setup": "B+",
     "grade": "",
-    "signal_time": "2026-11-17 15:30:00",
-    "signal_close": 87621000,
+    "entry_time": "2026-11-17 15:35:00",
+    "entry": 87621000,
     "stop": 88003980,
+    "stop0": 88003980,
     "t1": 87046530,
+    "next_target": null,
     "qty": 0.0128,
-    "note": "다음 봉 시가에 진입 예정"
+    "qty_open": 0.0128,
+    "leverage": 1.14,
+    "risk_money": 4933,
+    "t1_done": false,
+    "realized_part": 0,
+    "last_price": 87600000,
+    "unrealized_pnl": -292,
+    "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
+  "pending_entry": null,
   "pending_close": null,
   "today": {
     "date": "2026-11-17",
@@ -57,15 +67,13 @@
     "next_size_mode": "보통",
     "next_risk_won": 4933
   },
-  "last_bar_time": "2026-11-17 15:30:00",
-  "last_price": 87621000,
+  "last_bar_time": "2026-11-17 15:35:00",
+  "last_price": 87600000,
   "data_source": "upbit",
-  "data_source_this_run": null,
-  "updated_at": "2026-11-17 15:39:03",
+  "data_source_this_run": "upbit",
+  "updated_at": "2026-11-17 15:41:15",
   "warnings": [
-    "Gemini 정기 일정 확인 실패(진입 판단은 기존 일정으로 계속): gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest / gemini-3.8-flash: H",
-    "Gemini 돌발 확인 실패(진입 판단은 기존 일정으로 계속): gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest / gemini-3.8-flash: H",
-    "Gemini 복기 해설 실패(SOL-202611171425L): gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-fl"
+    "Gemini 복기 해설 실패(202611161510S): gemini-3.8-flash: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemin"
   ],
   "markets": [
     "BTC",
@@ -78,35 +86,44 @@
   "open_positions_count": 1,
   "open_risk_won": 4933,
   "open_risk_pct": 0.5,
-  "positions": [],
-  "pending_entries": [
+  "positions": [
     {
       "market": "KRW-BTC",
       "coin": "BTC",
+      "id": "202611171535S",
       "side": "숏",
       "setup": "B+",
       "grade": "",
-      "signal_time": "2026-11-17 15:30:00",
-      "signal_close": 87621000,
+      "entry_time": "2026-11-17 15:35:00",
+      "entry": 87621000,
       "stop": 88003980,
+      "stop0": 88003980,
       "t1": 87046530,
+      "next_target": null,
       "qty": 0.0128,
-      "note": "다음 봉 시가에 진입 예정",
+      "qty_open": 0.0128,
+      "leverage": 1.14,
       "risk_money": 4933,
-      "risk_cut": false
+      "t1_done": false,
+      "realized_part": 0,
+      "last_price": 87600000,
+      "unrealized_pnl": -292,
+      "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
+      "pending_close": null
     }
   ],
+  "pending_entries": [],
   "last_prices": {
-    "BTC": 87621000,
-    "ETH": 2477000,
-    "SOL": 98300.0,
-    "XRP": 1301.0
+    "BTC": 87600000,
+    "ETH": 2476000,
+    "SOL": 98250.0,
+    "XRP": 1300.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 15:30:00",
-    "ETH": "2026-11-17 15:30:00",
-    "SOL": "2026-11-17 15:30:00",
-    "XRP": "2026-11-17 15:30:00"
+    "BTC": "2026-11-17 15:35:00",
+    "ETH": "2026-11-17 15:35:00",
+    "SOL": "2026-11-17 15:35:00",
+    "XRP": "2026-11-17 15:35:00"
   },
   "event_block": {
     "enabled": false,

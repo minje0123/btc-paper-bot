@@ -1,15 +1,15 @@
 # BTC·ETH·SOL·XRP 5분봉 가상 매매 계좌 (원칙 v1.4.1 + 쉽알남 자금 관리)
 
-## 포지션: 없음
+## 포지션: 있음
 
 > ⚠️ 실제 돈을 쓰지 않는 **가상 매매** 기록입니다. 거래소에 주문하지 않습니다.
 
 > 계좌 성격: **단타 계좌 (쉽알남 단타:스윙:장투 = 2:3:5 중 2)**. 수익 일부는 매주 장투 계좌로 '출금'한 것으로 칩니다.
 
-- 업데이트: 2026-11-17 15:39:03 (KST) · 마지막 봉: 2026-11-17 15:30:00 · 현재가 87,621,000원 · 데이터: 업비트
+- 업데이트: 2026-11-17 15:41:15 (KST) · 마지막 봉: 2026-11-17 15:35:00 · 현재가 87,600,000원 · 데이터: 업비트
 - 시작: 2026-11-16 13:40:00 · 초기 자금 1,000,000원
 
-> ⚠️ 이번 실행 경고: Gemini 정기 일정 확인 실패(진입 판단은 기존 일정으로 계속): gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest / gemini-3.8-flash: H / Gemini 돌발 확인 실패(진입 판단은 기존 일정으로 계속): gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest / gemini-3.8-flash: H / Gemini 복기 해설 실패(SOL-202611171425L): gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-fl
+> ⚠️ 이번 실행 경고: Gemini 복기 해설 실패(202611161510S): gemini-3.8-flash: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemin
 
 | 항목 | 값 |
 |---|---|
@@ -18,12 +18,12 @@
 | 출금 누적(장투 계좌로) | 0원 (0회, 지난주 수익의 30%) |
 | 잔고 + 출금 합계 | 986,627원 (-1.34%) |
 | 원금 회수 | 0.0% 회수 |
-| 평가 잔고(미실현 포함) | 986,627원 |
+| 평가 잔고(미실현 포함) | 986,335원 |
 | 누적 실현손익 | −13,373원 (-1.34%) |
-| 미실현손익 | 0원 |
+| 미실현손익 | −292원 |
 | 거래 수 / 승률 | 4건 / 25.0% |
 | 평균 R | -0.684R |
-| 최대낙폭(MDD, 잔고+출금 기준) | 1.57% |
+| 최대낙폭(MDD, 잔고+출금 기준) | 1.59% |
 | 오늘(2026-11-17) 실현손익 | −12,747원 |
 | 오늘 목표 (+1%) | 9,994원 → 진행 -128% |
 | 오늘 손실 한도 (−2%) | −19,987원 |
@@ -32,11 +32,11 @@
 | 연속 손절 | 2회 |
 | 오늘 신규 진입 | ✅ 가능 |
 
-## 현재 포지션 (0개 보유 · 대기 1개 / 동시 최대 4개, 열린 위험 4,933원 = 시드의 0.50% / 상한 2% · 대상 코인 BTC, ETH, SOL, XRP)
+## 현재 포지션 (1개 보유 · 대기 0개 / 동시 최대 4개, 열린 위험 4,933원 = 시드의 0.50% / 상한 2% · 대상 코인 BTC, ETH, SOL, XRP)
 
-보유 포지션 없음.
-
-⏳ [BTC] 진입 대기: 11-17 15:30 봉 마감 신호 → 다음 봉 시가에 **숏 [B+]** 진입 예정 (손절 88,003,980 / T1 87,046,530 / 0.0128 BTC)
+| 코인 | 방향 | 셋업 | 등급 | 진입 시각 | 진입가 | 손절 | T1 | 수량(남은/처음) | 레버리지 | 위험 | 미실현손익 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| BTC | 숏 | B+ | - | 11-17 15:35 | 87,621,000 | 88,003,980 | 87,046,530 | 0.0128 / 0.0128 BTC | 1.1배 | 4,933원 | −292원 |
 
 ## 최근 거래 20건 (최신순)
 
