@@ -27,11 +27,11 @@
  "queue": {
   "7abecec3449e": {
    "status": "queued",
-   "fails": 1
+   "fails": 2
   },
   "64e1acdfe314": {
    "status": "queued",
-   "fails": 1
+   "fails": 2
   },
   "cada900cbfdb": {
    "status": "old_at_receipt",
@@ -51,7 +51,7 @@
   },
   "2b827bd4ca57": {
    "status": "queued",
-   "fails": 1
+   "fails": 2
   },
   "2ea3d3526dd4": {
    "status": "old_at_receipt",
@@ -84,12 +84,12 @@
  },
  "extractor": {
   "queue": 3,
-  "last_attempt": "2026-11-17 19:50:21",
+  "last_attempt": "2026-11-17 19:55:20",
   "state": "FAIL",
-  "last_error": "TimeoutError: The read operation timed out"
+  "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 30.01,
+ "elapsed_s": 28.35,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록."
 }
