@@ -45,11 +45,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4921
   },
-  "last_bar_time": "2026-11-17 18:25:00",
+  "last_bar_time": "2026-11-17 18:30:00",
   "last_price": 87688000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 18:30:26",
+  "updated_at": "2026-11-17 18:35:26",
   "warnings": [],
   "markets": [
     "BTC",
@@ -66,15 +66,15 @@
   "pending_entries": [],
   "last_prices": {
     "BTC": 87688000,
-    "ETH": 2465000,
-    "SOL": 98500.0,
-    "XRP": 1299.0
+    "ETH": 2470000,
+    "SOL": 98700.0,
+    "XRP": 1302.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 18:25:00",
-    "ETH": "2026-11-17 18:25:00",
-    "SOL": "2026-11-17 18:25:00",
-    "XRP": "2026-11-17 18:25:00"
+    "BTC": "2026-11-17 18:30:00",
+    "ETH": "2026-11-17 18:30:00",
+    "SOL": "2026-11-17 18:30:00",
+    "XRP": "2026-11-17 18:30:00"
   },
   "independent_clusters": 6,
   "stop_decomp": {
@@ -91,11 +91,13 @@
   "r_definition": "R = 거래 손익(수수료 포함) ÷ (수량 × |진입 체결가 − 최초 손절가|)",
   "event_block": {
     "enabled": true,
-    "active": false,
-    "name": null,
-    "coins": [],
-    "start": null,
-    "until": null
+    "active": true,
+    "name": "[돌발] 해킹/익스플로잇 (ETH): Binance hacker moves $63 million in stolen ether a",
+    "coins": [
+      "ETH"
+    ],
+    "start": "2026-11-17 18:35:00",
+    "until": "2026-11-17 20:35:00"
   },
   "upcoming_events": [
     {
