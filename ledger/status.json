@@ -38,17 +38,18 @@
     "target_amount": 9994,
     "target_reached": false,
     "loss_limit_pct": 2.0,
-    "loss_limit_amount": 9994,
+    "max_consec": 3,
+    "loss_limit_amount": 19987,
     "first_trade_result": "손실",
     "next_size_factor": 1.0,
     "next_size_mode": "보통",
     "next_risk_won": 4968
   },
-  "last_bar_time": "2026-11-17 13:50:00",
-  "last_price": 88420000,
+  "last_bar_time": "2026-11-17 13:55:00",
+  "last_price": 88462000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 13:55:25",
+  "updated_at": "2026-11-17 14:00:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -56,23 +57,23 @@
     "SOL",
     "XRP"
   ],
-  "max_open_positions": 2,
-  "max_open_risk_pct": 1.0,
+  "max_open_positions": 4,
+  "max_open_risk_pct": 2.0,
   "open_positions_count": 0,
   "open_risk_won": 0,
   "open_risk_pct": 0.0,
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 88420000,
-    "ETH": 2494000,
-    "SOL": 99000.0,
-    "XRP": 1311.0
+    "BTC": 88462000,
+    "ETH": 2496000,
+    "SOL": 99300.0,
+    "XRP": 1315.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 13:50:00",
-    "ETH": "2026-11-17 13:50:00",
-    "SOL": "2026-11-17 13:50:00",
-    "XRP": "2026-11-17 13:50:00"
+    "BTC": "2026-11-17 13:55:00",
+    "ETH": "2026-11-17 13:55:00",
+    "SOL": "2026-11-17 13:55:00",
+    "XRP": "2026-11-17 13:55:00"
   }
 }
