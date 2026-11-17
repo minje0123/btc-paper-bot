@@ -45,11 +45,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4938
   },
-  "last_bar_time": "2026-11-17 22:45:00",
-  "last_price": 88350000,
+  "last_bar_time": "2026-11-17 22:50:00",
+  "last_price": 88315000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 22:50:24",
+  "updated_at": "2026-11-17 22:55:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -65,16 +65,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 88350000,
-    "ETH": 2480000,
-    "SOL": 99950.0,
-    "XRP": 1322.0
+    "BTC": 88315000,
+    "ETH": 2482000,
+    "SOL": 100000,
+    "XRP": 1325.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 22:45:00",
-    "ETH": "2026-11-17 22:45:00",
-    "SOL": "2026-11-17 22:45:00",
-    "XRP": "2026-11-17 22:45:00"
+    "BTC": "2026-11-17 22:50:00",
+    "ETH": "2026-11-17 22:50:00",
+    "SOL": "2026-11-17 22:50:00",
+    "XRP": "2026-11-17 22:50:00"
   },
   "independent_clusters": 7,
   "stop_decomp": {
@@ -129,6 +129,13 @@
       "side": "숏",
       "setup": "B+",
       "reason": "이벤트 회피([돌발] 해킹/익스플로잇 (ETH): Binance hacker moves $63 million in stolen ether a)"
+    },
+    {
+      "time": "2026-11-17 22:50:00",
+      "coin": "XRP",
+      "side": "롱",
+      "setup": "구간B",
+      "reason": "이벤트 회피([일정] Core Retail Sales m/m · Retail Sales m/m (USD))"
     }
   ],
   "event_data": {
