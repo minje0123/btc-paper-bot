@@ -27,34 +27,34 @@
       "optional": true
     },
     "coindesk": {
-      "last_attempt": "2026-11-18 07:35:21",
+      "last_attempt": "2026-11-18 08:10:20",
       "ok": true,
-      "last_success": "2026-11-18 07:35:21",
+      "last_success": "2026-11-18 08:10:20",
       "error": null,
       "count": 25
     },
     "cointelegraph": {
-      "last_attempt": "2026-11-18 07:35:21",
+      "last_attempt": "2026-11-18 08:10:20",
       "ok": true,
-      "last_success": "2026-11-18 07:35:21",
+      "last_success": "2026-11-18 08:10:20",
       "error": null,
       "count": 30
     },
     "theblock": {
-      "last_attempt": "2026-11-18 07:35:21",
+      "last_attempt": "2026-11-18 08:10:20",
       "ok": true,
-      "last_success": "2026-11-18 07:35:21",
+      "last_success": "2026-11-18 08:10:20",
       "error": null,
       "count": 20
     }
   },
   "breaking": {
-    "last_attempt": "2026-11-18 07:35:21",
+    "last_attempt": "2026-11-18 08:10:20",
     "ok": true,
-    "last_success": "2026-11-18 07:35:21",
+    "last_success": "2026-11-18 08:10:20",
     "error": null,
     "received": 75,
-    "recent": 4,
+    "recent": 5,
     "matched": 0,
     "added": 0,
     "sources_ok": 3,
