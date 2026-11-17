@@ -45,11 +45,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4921
   },
-  "last_bar_time": "2026-11-17 19:25:00",
-  "last_price": 87546000,
+  "last_bar_time": "2026-11-17 19:30:00",
+  "last_price": 87579000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 19:30:25",
+  "updated_at": "2026-11-17 19:35:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -65,16 +65,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 87546000,
-    "ETH": 2448000,
-    "SOL": 98650.0,
-    "XRP": 1303.0
+    "BTC": 87579000,
+    "ETH": 2449000,
+    "SOL": 98900.0,
+    "XRP": 1305.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 19:25:00",
-    "ETH": "2026-11-17 19:25:00",
-    "SOL": "2026-11-17 19:25:00",
-    "XRP": "2026-11-17 19:25:00"
+    "BTC": "2026-11-17 19:30:00",
+    "ETH": "2026-11-17 19:30:00",
+    "SOL": "2026-11-17 19:30:00",
+    "XRP": "2026-11-17 19:30:00"
   },
   "independent_clusters": 6,
   "stop_decomp": {
@@ -142,15 +142,8 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-17 18:30:20",
-    "last_success_breaking": "2026-11-17 19:00:21",
+    "last_success_breaking": "2026-11-17 19:35:20",
     "upcoming": [
-      {
-        "time": "2026-11-17 18:35:00",
-        "name": "[돌발] 해킹/익스플로잇 (ETH): Binance hacker moves $63 million in stolen ether a",
-        "importance": "high",
-        "coins": "ETH",
-        "source": "https://www.coindesk.com/business/2026/11/17/binance-hacker-moves-usd63-million-in-stolen-ether-after-two-weeks-of-silence"
-      },
       {
         "time": "2026-11-17 22:30:00",
         "name": "[일정] Core Retail Sales m/m · Retail Sales m/m (USD)",
@@ -181,7 +174,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-17 18:30:20",
-    "last_attempt_breaking": "2026-11-17 19:00:21",
+    "last_attempt_breaking": "2026-11-17 19:35:20",
     "schedule_items_last": 8,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -204,21 +197,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-17 19:00:21",
+        "last_success": "2026-11-17 19:35:20",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-17 19:00:21",
+        "last_success": "2026-11-17 19:35:20",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-17 19:00:21",
+        "last_success": "2026-11-17 19:35:20",
         "count": 20,
         "error": null,
         "optional": false
