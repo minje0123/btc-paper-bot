@@ -41,10 +41,41 @@
   "firstWinHalf": true,
   "_출금": "매주 월요일 00:00(KST) 지난주 실현 수익이 플러스면 그 30%를 출금(장투 계좌로 이동)해 거래 시드에서 뺌. 손실 주에는 출금 없음. 0이면 끔.",
   "withdrawPct": 30,
-  "_비용": "수수료 편도 0.05%, 슬리피지 1틱(1,000원)",
+  "_비용": "수수료 편도 0.05%, 슬리피지 1틱 = 코인별 호가 단위(slipMode tick, BTC 1,000원). 2026-11-17 15:00 전에는 고정 1,000원(slip)이었고 BTC 에선 같은 값.",
   "fee": 0.0005,
   "slip": 1000,
+  "slipMode": "tick",
+  "slipTicks": 1,
+  "_여러 코인·동시 포지션": "2026-11-17 15:00(KST)부터 1계좌로 BTC·ETH·XRP·SOL 을 각 코인 자기 차트의 v1.4.1 신호로 매매. 한 코인엔 포지션 1개, 동시 보유(진입 대기 포함) 최대 maxOpenPositions 개, 열린 포지션 최초 위험 합계 ≤ 거래 시드의 maxOpenRiskPct %(넘으면 여유만큼 줄여 진입, 여유가 1R × minRoomFrac 미만이면 진입 안 함). 명목가 합계 ≤ 평가 잔고 × maxLev. 같은 봉 신호 우선순위: 등급 A > B+ > B > C, 같으면 BTC > ETH > SOL > XRP. 자금 관리(하루 목표·한도·2연패·첫 승 절반·주간 출금)는 계좌 단위, 청산 순서대로. 하루 실현 − 열린 포지션 최초 위험 합계 ≤ −하루 한도면 신규 진입 안 함. 활성화 전 장부는 rule_history 로 그대로 유지.",
+  "markets": [
+    "KRW-BTC",
+    "KRW-ETH",
+    "KRW-XRP",
+    "KRW-SOL"
+  ],
+  "maxOpenPositions": 2,
+  "maxOpenRiskPct": 1.0,
+  "minRoomFrac": 0.25,
   "rule_history": [
+    {
+      "until": "2026-11-17 15:00",
+      "rules": "쉽알남 자금 관리 2차, BTC 1개·포지션 1개 (1회 위험 0.5%, 하루 −1%·2연패 종료, 하루 목표 +1%, 첫 승 후 절반, 주간 30% 출금, 슬리피지 고정 1,000원)",
+      "params": {
+        "riskPct": 0.5,
+        "redPct": 0.5,
+        "dayLossP": 1.0,
+        "maxConsec": 2,
+        "dayTargetP": 1.0,
+        "firstWinHalf": true,
+        "withdrawPct": 30,
+        "markets": [
+          "KRW-BTC"
+        ],
+        "maxOpenPositions": 1,
+        "maxOpenRiskPct": 0,
+        "slipMode": "fixed"
+      }
+    },
     {
       "until": "2026-11-16 23:50",
       "rules": "쉽알남 자금 관리 1차 (1회 위험 1%·축소 1%, 하루 −1%·2연패 종료, 하루 목표 +2%, 첫 승 후 절반, 주간 30% 출금)",

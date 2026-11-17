@@ -1,0 +1,196 @@
+{
+  "method": "C 검증 1 — 다중 코인·다중 포지션(engine.run_multi + 새 bot.py 출력)이 기존 장부를 1원도 바꾸지 않는지.\n\n  사례 1) config.json 에서 markets=[KRW-BTC], maxOpenPositions=1, maxOpenRiskPct=0, slipMode=fixed 로 바꿔 계산\n  사례 2) 실제 config.json 그대로(15:00 부터 4코인 단계 포함, 4코인 봉 모두 넣음)\n     → 새 코드로 trades.csv·status.json·journal.csv 를 임시 폴더에 써서 현재 ledger/ 파일과 비교\n       - trades.csv: 새 '코인' 열을 뺀 나머지가 글자까지 같고, '코인' 은 모두 BTC\n       - status.json: 현재 ledger/status.json 의 모든 키(updated_at 제외)가 값까지 같음 (새 키는 추가만)\n       - journal.csv: 글자까지 같음\n  사례 3) 엔진 원시 결과: engine.run(BTC) vs engine.run_multi({BTC}) — 거래(모든 필드)·이벤트·곡선·하루 상태·잔고\n  사례 4) 코인 하나씩(ETH·XRP·SOL, slipMode tick): run() vs run_multi(markets=[그 코인]) 원시 결과 비교\n  사례 5) 그림자 장부: 새 bot.run_shadows(오프라인)를 임시 폴더에 써서 ledger/shadow/ 와 비교(updated_at 제외)\n\n  ledger/·data/ 는 읽기만 한다. 결과: research/checks/c_equiv_result.json\n  python research/checks/c_multipos_equivalence.py",
+  "cases": {
+    "1_single_BTC_config": {
+      "trades_csv": {
+        "same_without_coin_col": true,
+        "coin_col_all_BTC": true,
+        "header_coin_after_번호": true,
+        "rows": 3
+      },
+      "status_json": {
+        "same_on_old_keys": true,
+        "diff": {},
+        "added_keys": [
+          "last_bar_times",
+          "last_prices",
+          "markets",
+          "max_open_positions",
+          "max_open_risk_pct",
+          "open_positions_count",
+          "open_risk_pct",
+          "open_risk_won",
+          "pending_entries",
+          "positions"
+        ]
+      },
+      "journal_csv_same": true,
+      "n_trades": 3,
+      "last_bar_time": "2026-11-17 09:35:00",
+      "positions": 0,
+      "pendings": 0,
+      "pass": true
+    },
+    "2_actual_config_4coins": {
+      "trades_csv": {
+        "same_without_coin_col": true,
+        "coin_col_all_BTC": true,
+        "header_coin_after_번호": true,
+        "rows": 3
+      },
+      "status_json": {
+        "same_on_old_keys": true,
+        "diff": {},
+        "added_keys": [
+          "last_bar_times",
+          "last_prices",
+          "markets",
+          "max_open_positions",
+          "max_open_risk_pct",
+          "open_positions_count",
+          "open_risk_pct",
+          "open_risk_won",
+          "pending_entries",
+          "positions"
+        ]
+      },
+      "journal_csv_same": true,
+      "n_trades": 3,
+      "last_bar_time": "2026-11-17 09:35:00",
+      "positions": 0,
+      "pendings": 0,
+      "pass": true
+    },
+    "3_raw_run_vs_run_multi_BTC": {
+      "all_same": true,
+      "detail": {
+        "trades": true,
+        "position": true,
+        "pending": true,
+        "pending_close": true,
+        "day": true,
+        "realized": true,
+        "final": true,
+        "equity": true,
+        "unrealized": true,
+        "seed": true,
+        "withdrawn": true,
+        "withdrawals": true,
+        "events": true,
+        "curve": true,
+        "curve_acct": true,
+        "curve_time": true,
+        "dayStopDays": true,
+        "lossLimitDays": true,
+        "consecDays": true,
+        "targetDays": true,
+        "last_close": true
+      },
+      "n_trades": 3,
+      "n_events": 7,
+      "pass": true
+    },
+    "4_raw_single_ETH": {
+      "all_same": true,
+      "detail": {
+        "trades": true,
+        "position": true,
+        "pending": true,
+        "pending_close": true,
+        "day": true,
+        "realized": true,
+        "final": true,
+        "equity": true,
+        "unrealized": true,
+        "seed": true,
+        "withdrawn": true,
+        "withdrawals": true,
+        "events": true,
+        "curve": true,
+        "curve_acct": true,
+        "curve_time": true,
+        "dayStopDays": true,
+        "lossLimitDays": true,
+        "consecDays": true,
+        "targetDays": true,
+        "last_close": true
+      },
+      "n_trades": 9,
+      "n_events": 25,
+      "pass": true,
+      "note": "거래ID 앞 코인 접두어·청산내역 문자열(가격 소수 표기)만 정규화, 나머지 모든 필드 비교"
+    },
+    "4_raw_single_XRP": {
+      "all_same": true,
+      "detail": {
+        "trades": true,
+        "position": true,
+        "pending": true,
+        "pending_close": true,
+        "day": true,
+        "realized": true,
+        "final": true,
+        "equity": true,
+        "unrealized": true,
+        "seed": true,
+        "withdrawn": true,
+        "withdrawals": true,
+        "events": true,
+        "curve": true,
+        "curve_acct": true,
+        "curve_time": true,
+        "dayStopDays": true,
+        "lossLimitDays": true,
+        "consecDays": true,
+        "targetDays": true,
+        "last_close": true
+      },
+      "n_trades": 14,
+      "n_events": 39,
+      "pass": true,
+      "note": "거래ID 앞 코인 접두어·청산내역 문자열(가격 소수 표기)만 정규화, 나머지 모든 필드 비교"
+    },
+    "4_raw_single_SOL": {
+      "all_same": true,
+      "detail": {
+        "trades": true,
+        "position": true,
+        "pending": true,
+        "pending_close": true,
+        "day": true,
+        "realized": true,
+        "final": true,
+        "equity": true,
+        "unrealized": true,
+        "seed": true,
+        "withdrawn": true,
+        "withdrawals": true,
+        "events": true,
+        "curve": true,
+        "curve_acct": true,
+        "curve_time": true,
+        "dayStopDays": true,
+        "lossLimitDays": true,
+        "consecDays": true,
+        "targetDays": true,
+        "last_close": true
+      },
+      "n_trades": 10,
+      "n_events": 27,
+      "pass": true,
+      "note": "거래ID 앞 코인 접두어·청산내역 문자열(가격 소수 표기)만 정규화, 나머지 모든 필드 비교"
+    },
+    "5_shadow_ledgers": {
+      "detail": {
+        "baseline_v141_5m": {
+          "trades.csv": true,
+          "journal.csv": true,
+          "status.json": true
+        }
+      },
+      "warnings": [],
+      "pass": true
+    }
+  },
+  "pass": true
+}

@@ -64,7 +64,28 @@ DEFAULTS = dict(
     eventBlock=False,        # True 면 경제 일정(events) 발표 eventBeforeMin 전 ~ eventAfterMin 뒤 신규 진입 금지
     eventBeforeMin=30,
     eventAfterMin=15,
+    # ---- 1계좌 · 여러 코인 · 동시 여러 포지션 (run_multi 전용, 2026-11-17) — 아래 기본값이면 기존 BTC 1포지션과 같음 ----
+    markets=None,            # 매매 대상 코인 목록. None = config "market" 하나(기본 KRW-BTC)
+    maxOpenPositions=1,      # 동시 보유(진입 대기 포함) 상한 개수. 한 코인에는 항상 1개
+    maxOpenRiskPct=0.0,      # 열린 포지션(진입 대기 포함) 최초 위험금액 합계 상한, 거래 시드 % (0 = 끔)
+    minRoomFrac=0.25,        # 위험 여유가 1R × 이 값 미만이면 진입 안 함(여유만큼 줄여 진입할 때의 하한)
 )
+
+# run_multi: 같은 봉에서 신호가 여러 개일 때 우선순위 (결과 보기 전 고정, 2026-11-17)
+COIN_PRIORITY = ("BTC", "ETH", "SOL", "XRP")
+SETUP_RANK = {("구간", "A"): 0, ("B+", ""): 1, ("구간", "B"): 2, ("C", ""): 3}
+
+
+def coin_of(market):
+    return market.split("-")[-1]
+
+
+def market_order(markets):
+    """코인 우선순위 순서(BTC > ETH > SOL > XRP > 그 밖은 이름순)"""
+    def k(m):
+        c = coin_of(m)
+        return (COIN_PRIORITY.index(c) if c in COIN_PRIORITY else len(COIN_PRIORITY), c)
+    return sorted(dict.fromkeys(markets), key=k)
 
 
 def tick_size(price):
@@ -99,6 +120,7 @@ def load_events(path):
     return sorted(out, key=lambda x: x[0])
 
 HARD_MAX_RISK_P = 5.0        # 어떤 설정으로도 넘을 수 없는 1회 위험 상한 %
+HIST_NO_INHERIT = ("markets", "maxOpenPositions", "maxOpenRiskPct", "minRoomFrac", "slipMode", "slipTicks")
 
 
 def load_params(config):
@@ -123,16 +145,41 @@ def load_params(config):
     P["riskPct"] = min(P["riskPct"], P["maxRiskCapP"])
     P["redPct"] = min(P["redPct"], P["maxRiskCapP"])
     P["withdrawPct"] = min(max(P["withdrawPct"], 0.0), 100.0)
+    P["markets"] = market_order(list(P["markets"]) if P.get("markets") else [config.get("market", "KRW-BTC")])
+    P["maxOpenPositions"] = max(int(P["maxOpenPositions"]), 1)
+    P["maxOpenRiskPct"] = max(float(P["maxOpenRiskPct"]), 0.0)
+    P["minRoomFrac"] = float(P["minRoomFrac"])
     # 규칙 변경 이력: [{"until": "YYYY-MM-DD HH:MM", "rules": 설명, "params": {...}}, ...] (시간순)
     # 각 항목의 params 는 'until 이전' 봉에 적용, 마지막 until 이후엔 위의 현재 설정을 적용.
     # 이미 지나간 거래는 그때 규칙으로 기록되고, 보유 중이던 포지션은 그대로 이어진다.
+    # 다중 포지션·슬리피지 방식 키는 과거 단계가 현재 설정을 물려받지 않는다(그 단계 params 에 적힌 것만, 없으면 기본값
+    # = BTC 1개·1포지션·고정 슬리피지). 그래서 4코인 모드를 현재 설정에 켜도 활성화 시각 전 장부는 그대로다.
     hist = []
     for h in config.get("rule_history") or []:
-        base = dict(config); base.pop("rule_history", None); base.update(h.get("params", {}))
+        base = dict(config); base.pop("rule_history", None)
+        for k in HIST_NO_INHERIT:
+            base.pop(k, None)
+        base.update(h.get("params", {}))
         hp = load_params(base)
         hist.append((parse_kst(h["until"]), hp))
     P["rule_history"] = sorted(hist, key=lambda x: x[0])
     return P
+
+
+def params_at(P, t):
+    """시각 t 의 봉에 적용되는 규칙(run·run_multi 의 단계 전환과 같은 기준: t < until 인 첫 단계, 없으면 현재 설정)"""
+    for until, hp in P.get("rule_history") or []:
+        if t < until:
+            return hp
+    return P
+
+
+def all_markets(P):
+    """어느 단계에서든 매매 대상인 코인 전체(우선순위 순) — 데이터를 준비할 코인 목록"""
+    ms = list(P["markets"])
+    for _u, hp in P.get("rule_history") or []:
+        ms += hp["markets"]
+    return market_order(ms)
 
 
 def parse_kst(s):
@@ -764,6 +811,586 @@ def run(D, P, start_time=None, close_at_end=False, events=None):
                 targetDays=targetDays, withdrawn=withdrawn, withdrawals=withdrawals, seed=seed_now,
                 realized=realized, final=seed_now, equity=equity, unrealized=unreal, day=day,
                 last_close=C[-1] if n else None)
+
+
+# ============================== 1계좌 · 여러 코인 · 동시 여러 포지션 ==============================
+# run() 의 신호·손절·T1·본절·청산 로직을 코인별 상태(_CoinSim)로 나누고, 자금 관리(하루 한도·목표·첫 승 절반·
+# 주간 출금·1R)는 계좌 하나(run_multi)에서 청산 순서대로 집계한다. 그림자 장부는 기존 run() 을 그대로 쓴다.
+# markets=[KRW-BTC], maxOpenPositions=1 이면 run() 과 거래·잔고·이벤트가 완전히 같다(research/checks/c_multipos_equivalence.py).
+
+def _slip_fn(P):
+    if P.get("slipMode", "fixed") == "tick":
+        ticks = P.get("slipTicks", 1.0)
+        return lambda px: tick_size(px) * ticks
+    s = P["slip"]
+    return lambda px: s
+
+
+def _px_txt(x):
+    """청산내역 가격 문자열: 100만 원 이상은 기존과 같은 정수(BTC·ETH), 그 아래(SOL·XRP)는 소수 둘째 자리"""
+    return f"{x:,.0f}" if abs(x) >= 1_000_000 else f"{x:,.2f}"
+
+
+class _CoinSim:
+    """코인 하나의 신호 상태(스윙·FVG·OB·B+/C 사용 기록)와 포지션. 계산식은 run() 과 한 줄씩 같다."""
+
+    def __init__(self, market, D, acct):
+        self.market, self.coin, self.D, self.acct = market, coin_of(market), D, acct
+        self.idx = {t: i for i, t in enumerate(D.T)}
+        self.phV, self.phB, self.phVol, self.plV, self.plB, self.plVol = [], [], [], [], [], []
+        self.fBT = self.fBB = self.fST = self.fSB = None
+        self.oBT = self.oBB = self.oST = self.oSB = None
+        self.lastPH = self.lastPL = None
+        self.bpUsedL = self.bpUsedS = self.cUsedL = self.cUsedS = -1
+        self.pos = None; self.pending = None; self.pending_close = None
+        self.last_close = None; self.cur = None
+
+    def tid(self, t, side):
+        b = trade_id(t, side)
+        return b if self.coin == "BTC" else f"{self.coin}-{b}"     # BTC 는 기존 ID 그대로(알림 중복 방지 기록 호환)
+
+    # ---- 청산 (run() 의 close_part 와 같음, 손익은 계좌로) ----
+    def close_part(self, qty, price, reason, i):
+        A = self.acct; pos = self.pos; T = self.D.T; fee = A.fee
+        s = pos["side"]
+        pnl = s * (price - pos["entry"]) * qty - price * qty * fee - pos["entry"] * qty * fee
+        A.realized += pnl
+        pos["pnl"] += pnl
+        pos["open"] = round(pos["open"] - qty, 8)
+        pos["exits"].append(f"{reason}@{_px_txt(price)}x{qty:.4f}({T[i].strftime('%m-%d %H:%M')})")
+        pos["fills"].append(dict(reason=reason, price=price, qty=qty, pnl=pnl, time=T[i]))
+        done = pos["open"] <= 1e-9
+        A.events.append(dict(type="exit" if done else "t1", id=pos["id"] + (":X" if done else ":T1"),
+                             time=T[i], side=s, tag=pos["tag"], grade=pos["grade"], reason=reason,
+                             price=price, qty=qty, part_pnl=pnl, total_pnl=pos["pnl"],
+                             coin=self.coin, market=self.market))
+        if done:
+            risk_won = pos["qty"] * abs(pos["entry"] - pos["stop0"])
+            pos["R"] = pos["pnl"] / risk_won if risk_won > 0 else 0.0
+            pos["exit_time"] = T[i]
+            pos["exit_bar"] = i
+            pos["exit_reason"] = reason
+            A.trades.append(pos)
+            self.pos = None
+            return True
+        return False
+
+    # ---- 1) 이번 봉 안에서의 체결 ----
+    def fills(self, i, P):
+        D = self.D; T = D.T; o, h, l = D.O[i], D.H[i], D.L[i]
+        sl = _slip_fn(P)
+        closed = []
+        if self.pending is not None:
+            pd = self.pending; self.pending = None
+            fill = o + pd["side"] * sl(o)
+            self.pos = dict(pd, entry=fill, open=pd["qty"], pnl=0.0, exits=[], fills=[], entry_bar=i,
+                            entry_time=T[i], t1Done=False, t1Hit=False, nxt=None, stop0=pd["stop"],
+                            lev=pd["qty"] * fill / pd["eq"], id=self.tid(T[i], pd["side"]))
+            pos = self.pos
+            self.acct.events.append(dict(type="entry", id=pos["id"] + ":E", time=T[i], side=pos["side"], tag=pos["tag"],
+                                         grade=pos["grade"], price=fill, stop=pos["stop"], t1=pos["t1"],
+                                         qty=pos["qty"], lev=pos["lev"], coin=self.coin, market=self.market))
+        if self.pos is not None and self.pending_close is not None:
+            s = self.pos["side"]; tr = self.pos
+            if self.close_part(self.pos["open"], o - s * sl(o), self.pending_close, i):
+                closed.append(tr)
+        self.pending_close = None
+        pos = self.pos
+        if pos is not None:
+            s = pos["side"]; stp = pos["stop"]
+            tgt = pos["t1"] if P["exitMode"] == "v13" else (pos["t1"] if not pos["t1Hit"] else pos["nxt"])
+            stop_hit = (l <= stp) if s == 1 else (h >= stp)
+            lim_hit = tgt is not None and ((h >= tgt) if s == 1 else (l <= tgt))
+            tr = pos
+            if stop_hit:
+                px = (min(o, stp) - sl(min(o, stp))) if s == 1 else (max(o, stp) + sl(max(o, stp)))
+                if self.close_part(pos["open"], px, "본절" if pos["t1Hit"] else "손절", i):
+                    closed.append(tr)
+            elif lim_hit:
+                px = max(o, tgt) if s == 1 else min(o, tgt)
+                if P["exitMode"] == "v13":
+                    if self.close_part(pos["open"], px, "1.5R 익절", i):
+                        closed.append(tr)
+                elif not pos["t1Hit"]:
+                    half = math.floor(pos["qty"] * 0.5 * 10000) / 10000
+                    if half <= 0 or half >= pos["open"]:
+                        half = pos["open"]
+                    pos["t1Hit"] = True
+                    if self.close_part(half, px, "T1 반익절", i):
+                        closed.append(tr)
+                else:
+                    if self.close_part(pos["open"], px, "다음 스윙", i):
+                        closed.append(tr)
+        return closed
+
+    # ---- 2) 봉 마감 지표 (모든 봉에서 계산 — 매매 대상이 아니어도 스윙·FVG 상태는 이어감) ----
+    def indicators(self, i, P):
+        D = self.D; T, O, H, L, C, V = D.T, D.O, D.H, D.L, D.C, D.V
+        o, h, l, c, v = O[i], H[i], L[i], C[i], V[i]
+        sw, tol = P["swLen"], P["zoneTolP"] / 100
+        self.last_close = c
+        sma5, rsi, volAvg = D.sma20[i], D.rsi[i], D.volAvg[i]
+        body = abs(c - o); lowW = min(o, c) - l; upW = h - max(o, c)
+        if i >= 1:
+            o1, c1 = O[i - 1], C[i - 1]
+            bullEng = c > o and c1 < o1 and o <= c1 and c >= o1
+            bearEng = c < o and c1 > o1 and o >= c1 and c <= o1
+        else:
+            bullEng = bearEng = False
+        bullB = c > o or (lowW >= 2 * body and c >= (h + l) / 2)
+        bearB = c < o or (upW >= 2 * body and c <= (h + l) / 2)
+        AB = P["gradeMode"] == "A+B"
+        okL = bullEng or (AB and bullB)
+        okS = bearEng or (AB and bearB)
+
+        def _dir(x):
+            if x is None:
+                return 0
+            return 1 if x > P["slopeThr"] else (-1 if x < -P["slopeThr"] else 0)
+        dir15, dir60 = _dir(D.slope15[i]), _dir(D.slope60[i])
+        hBT, hBB, hST, hSB = D.fvg15[i]
+        volSup = (i >= 1 and v > V[i - 1] and D.vol3[i - 1] is not None and D.volAvg[i - 1] is not None
+                  and D.vol3[i - 1] < D.volAvg[i - 1])
+        r1_ = D.rsi[i - 1] if i >= 1 else None
+        rsiSupL = r1_ is not None and rsi is not None and 40 <= r1_ <= 55 and rsi > r1_
+        rsiSupS = r1_ is not None and rsi is not None and 45 <= r1_ <= 60 and rsi < r1_
+        htfL = hBT is not None and l <= hBT and h >= hBB
+        htfS = hST is not None and h >= hSB and l <= hST
+        supL = volSup or rsiSupL or dir60 == 1 or htfL
+        supS = volSup or rsiSupS or dir60 == -1 or htfS
+        noChase = (sma5 is not None and rsi is not None and abs(c - sma5) / sma5 * 100 < P["chaseP"]
+                   and 25 < rsi < 75)
+        phV, phB, phVol, plV, plB, plVol = self.phV, self.phB, self.phVol, self.plV, self.plB, self.plVol
+        if i >= 2 * sw:
+            k = i - sw
+            hk, lk = H[k], L[k]
+            isPH = all(H[k + j] < hk for j in range(1, sw + 1)) and all(H[k - j] <= hk for j in range(1, sw + 1))
+            isPL = all(L[k + j] > lk for j in range(1, sw + 1)) and all(L[k - j] >= lk for j in range(1, sw + 1))
+            if isPH:
+                phV.append(hk); phB.append(k); phVol.append(V[k])
+                if len(phV) > 12:
+                    phV.pop(0); phB.pop(0); phVol.pop(0)
+            if isPL:
+                plV.append(lk); plB.append(k); plVol.append(V[k])
+                if len(plV) > 12:
+                    plV.pop(0); plB.pop(0); plVol.pop(0)
+        else:
+            isPH = isPL = False
+        prevPH, prevPL = self.lastPH, self.lastPL
+        if isPH:
+            self.lastPH = H[i - sw]
+        if isPL:
+            self.lastPL = L[i - sw]
+        lastPH, lastPL = self.lastPH, self.lastPL
+        bosUp = (lastPH is not None and prevPH is not None and i >= 1 and c > lastPH and C[i - 1] <= prevPH)
+        bosDn = (lastPL is not None and prevPL is not None and i >= 1 and c < lastPL and C[i - 1] >= prevPL)
+        pfBT, pfBB, pfST, pfSB = self.fBT, self.fBB, self.fST, self.fSB
+        poBT, poBB, poST, poSB = self.oBT, self.oBB, self.oST, self.oSB
+        if i >= 2:
+            if l > H[i - 2] and C[i - 1] > O[i - 1]:
+                self.fBT, self.fBB = l, H[i - 2]
+            if h < L[i - 2] and C[i - 1] < O[i - 1]:
+                self.fST, self.fSB = L[i - 2], h
+        if self.fBB is not None and c < self.fBB:
+            self.fBT = self.fBB = None
+        if self.fST is not None and c > self.fST:
+            self.fST = self.fSB = None
+        if bosUp:
+            for j in range(1, 16):
+                if i - j >= 0 and C[i - j] < O[i - j]:
+                    self.oBT, self.oBB = H[i - j], L[i - j]
+                    break
+        if bosDn:
+            for j in range(1, 16):
+                if i - j >= 0 and C[i - j] > O[i - j]:
+                    self.oST, self.oSB = H[i - j], L[i - j]
+                    break
+        if self.oBB is not None and c < self.oBB:
+            self.oBT = self.oBB = None
+        if self.oST is not None and c > self.oST:
+            self.oST = self.oSB = None
+        sup = [x for x in phV + plV if x < c and l <= x * (1 + tol)]
+        lvlL = max(sup) if sup else None
+        fvgTL = pfBT is not None and l <= pfBT and c > pfBB
+        obTL = poBT is not None and l <= poBT and c > poBB
+        zoneL = lvlL is not None or fvgTL or obTL
+        zoneBotL = min(lvlL * (1 - tol) if lvlL is not None else c, pfBB if fvgTL else c, poBB if obTL else c)
+        res = [x for x in phV + plV if x > c and h >= x * (1 - tol)]
+        lvlS = min(res) if res else None
+        fvgTS = pfSB is not None and h >= pfSB and c < pfST
+        obTS = poSB is not None and h >= poSB and c < poST
+        zoneS = lvlS is not None or fvgTS or obTS
+        zoneTopS = max(lvlS * (1 + tol) if lvlS is not None else c, pfST if fvgTS else c, poST if obTS else c)
+        bpL = bpS = False; bpLineNextL = bpLineNextS = None; bpKeyL = bpKeyS = -1
+        if len(phV) >= 2 and volAvg is not None:
+            v1, v2, b1, b2, vo1, vo2 = phV[-2], phV[-1], phB[-2], phB[-1], phVol[-2], phVol[-1]
+            if v2 > v1 and b2 > b1 and b2 - b1 <= 100 and vo2 > vo1 and b2 != self.bpUsedL:
+                sl_ = (v2 - v1) / (b2 - b1)
+                ln = v2 + sl_ * (i - b2)
+                bpL = c > ln and o < ln and v > vo2 and v >= 2 * volAvg
+                bpLineNextL = ln + sl_; bpKeyL = b2
+        if len(plV) >= 2 and volAvg is not None:
+            w1, w2, c1_, c2_, wo1, wo2 = plV[-2], plV[-1], plB[-2], plB[-1], plVol[-2], plVol[-1]
+            if w2 < w1 and c2_ > c1_ and c2_ - c1_ <= 100 and wo2 > wo1 and c2_ != self.bpUsedS:
+                sl2 = (w2 - w1) / (c2_ - c1_)
+                ln2 = w2 + sl2 * (i - c2_)
+                bpS = c < ln2 and o > ln2 and v > wo2 and v >= 2 * volAvg
+                bpLineNextS = ln2 + sl2; bpKeyS = c2_
+        low3 = min(L[max(0, i - 2):i + 1]); high3 = max(H[max(0, i - 2):i + 1])
+        lastPLv = plV[-1] if plV else None; lastPLb = plB[-1] if plB else -1
+        lastPHv = phV[-1] if phV else None; lastPHb = phB[-1] if phB else -1
+        cL = lastPLv is not None and low3 < lastPLv and c > lastPLv and lastPLb != self.cUsedL and i - 3 > lastPLb + sw
+        cS = lastPHv is not None and high3 > lastPHv and c < lastPHv and lastPHb != self.cUsedS and i - 3 > lastPHb + sw
+        self.cur = dict(i=i, o=o, h=h, l=l, c=c, v=v, volAvg=volAvg, bullEng=bullEng, bearEng=bearEng, okL=okL, okS=okS,
+                        dir15=dir15, dir60=dir60, volSup=volSup, rsiSupL=rsiSupL, rsiSupS=rsiSupS, htfL=htfL, htfS=htfS,
+                        supL=supL, supS=supS, noChase=noChase, lvlL=lvlL, fvgTL=fvgTL, obTL=obTL, zoneL=zoneL,
+                        zoneBotL=zoneBotL, lvlS=lvlS, fvgTS=fvgTS, obTS=obTS, zoneS=zoneS, zoneTopS=zoneTopS,
+                        bpL=bpL, bpS=bpS, bpLineNextL=bpLineNextL, bpLineNextS=bpLineNextS, bpKeyL=bpKeyL, bpKeyS=bpKeyS,
+                        cL=cL, cS=cS, low3=low3, high3=high3, lastPLb=lastPLb, lastPHb=lastPHb)
+
+    # ---- 4) 진입 후보 (run() 의 신호 판정과 같음. 수량은 계좌가 정한다) ----
+    def signal(self, P, fcap, baseRisk, redRisk):
+        x = self.cur; i = x["i"]; L, H = self.D.L, self.D.H
+        l, h, c = x["l"], x["h"], x["c"]
+        dir15, dir60 = x["dir15"], x["dir60"]
+        sig = grd = ""; stp = rm = None; side = 0
+        if P["allowLong"] and P["useZone"] and dir15 == 1 and x["zoneL"] and x["okL"] and x["supL"] and x["noChase"]:
+            sig, grd = "구간", ("A" if x["bullEng"] else "B")
+            stp = (min(l, L[i - 1]) if x["bullEng"] else min(l, x["zoneBotL"])) * (1 - P["bufP"] / 100)
+            rm = fcap(redRisk if dir60 == -1 else baseRisk); side = 1
+        elif P["allowLong"] and P["useBp"] and dir15 != -1 and x["bpL"]:
+            sig = "B+"; stp = l * (1 - P["bufP"] / 100); rm = fcap(redRisk); side = 1
+        elif P["allowLong"] and P["useC"] and dir15 != -1 and x["cL"]:
+            sig = "C"; stp = x["low3"] * (1 - P["bufP"] / 100); rm = fcap(redRisk); side = 1
+        elif P["allowShort"] and P["useZone"] and dir15 == -1 and x["zoneS"] and x["okS"] and x["supS"] and x["noChase"]:
+            sig, grd = "구간", ("A" if x["bearEng"] else "B")
+            stp = (max(h, H[i - 1]) if x["bearEng"] else max(h, x["zoneTopS"])) * (1 + P["bufP"] / 100)
+            rm = fcap(redRisk if dir60 == 1 else baseRisk); side = -1
+        elif P["allowShort"] and P["useBp"] and dir15 != 1 and x["bpS"]:
+            sig = "B+"; stp = h * (1 + P["bufP"] / 100); rm = fcap(redRisk); side = -1
+        elif P["allowShort"] and P["useC"] and dir15 != 1 and x["cS"]:
+            sig = "C"; stp = x["high3"] * (1 + P["bufP"] / 100); rm = fcap(redRisk); side = -1
+        if side == 0:
+            return None
+        dist = abs(c - stp)
+        dp = dist / c * 100
+        phV, plV = self.phV, self.plV
+        t1 = _next_above(phV, c) if side == 1 else _next_below(plV, c)
+        t1 = c + side * P["t1FbR"] * dist if t1 is None else t1
+        gap = abs(t1 - c)
+        if not (P["minStopP"] <= dp <= P["maxStopP"] and gap >= P["t1MinR"] * dist):
+            return None
+        if gap > P["t1MaxR"] * dist:
+            t1 = c + side * P["t1FbR"] * dist
+        if P["exitMode"] == "v13":
+            t1 = c + side * 1.5 * dist
+        return dict(side=side, tag=sig, grade=grd, stop=stp, t1=t1, rm=rm, dist=dist, dp=dp, c=c, dir15=dir15, dir60=dir60)
+
+    def commit(self, cand, q, rm, seed, P, size_tag, baseRisk, risk_cut):
+        """후보를 진입 대기로 확정하고 B+/C 사용 기록을 남긴다(run() 과 같이 q>0 일 때만 호출)"""
+        x = self.cur; side, sig, c, dist = cand["side"], cand["tag"], cand["c"], cand["dist"]
+        self.pending = dict(side=side, tag=sig, grade=cand["grade"], stop=cand["stop"], t1=cand["t1"], qty=q, eq=seed,
+                            sigClose=c, rm=rm, dir60=cand["dir60"], signal_time=self.D.T[x["i"]], sizeTag=size_tag,
+                            baseR=baseRisk,
+                            bpLine=(x["bpLineNextL"] if side == 1 else x["bpLineNextS"]) if sig == "B+" else None,
+                            coin=self.coin, market=self.market, rm_signal=cand["rm"], riskCut=risk_cut)
+        if sig == "구간":
+            zparts = ([f"스윙레벨 {_pxs(x['lvlL'])}"] if x["lvlL"] is not None else []) + (["5분 FVG"] if x["fvgTL"] else []) + (["OB"] if x["obTL"] else []) \
+                if side == 1 else ([f"스윙레벨 {_pxs(x['lvlS'])}"] if x["lvlS"] is not None else []) + (["5분 FVG"] if x["fvgTS"] else []) + (["OB"] if x["obTS"] else [])
+            sparts = ((["거래량"] if x["volSup"] else []) + (["RSI"] if (x["rsiSupL"] if side == 1 else x["rsiSupS"]) else [])
+                      + (["1시간 방향"] if cand["dir60"] == side else []) + (["15분 FVG"] if (x["htfL"] if side == 1 else x["htfS"]) else []))
+        elif sig == "B+":
+            zparts, sparts = ["거래량 단계 돌파선"], ["거래량 ≥ 20봉 평균 2배"]
+        else:
+            zparts, sparts = ["직전 스윙 가짜 이탈"], []
+        self.pending["why"] = dict(dir15=cand["dir15"], dir60=cand["dir60"], zone=zparts, support=sparts,
+                                   stop_pct=round(cand["dp"], 4), t1_R=round(abs(cand["t1"] - c) / dist, 3) if dist > 0 else None)
+        if sig == "B+":
+            if side == 1: self.bpUsedL = x["bpKeyL"]
+            else: self.bpUsedS = x["bpKeyS"]
+        if sig == "C":
+            if side == 1: self.cUsedL = x["lastPLb"]
+            else: self.cUsedS = x["lastPHb"]
+
+    # ---- 5) 보유 중 관리 ----
+    def manage(self, P):
+        pos = self.pos
+        if pos is None:
+            return
+        x = self.cur; i, c, v, volAvg = x["i"], x["c"], x["v"], x["volAvg"]
+        s = pos["side"]
+        if pos["tag"] == "B+" and pos["entry_bar"] == i and pos["bpLine"] is not None:
+            if (s == 1 and c < pos["bpLine"]) or (s == -1 and c > pos["bpLine"]):
+                self.pending_close = "돌파 실패"
+        if P["exitMode"] == "v14":
+            if pos["t1Hit"] and not pos["t1Done"]:
+                pos["t1Done"] = True
+                pos["stop"] = pos["entry"]
+            if pos["t1Done"]:
+                pos["nxt"] = _next_above(self.phV, pos["t1"]) if s == 1 else _next_below(self.plV, pos["t1"])
+                opp = x["bearEng"] if s == 1 else x["bullEng"]
+                if (P["useOppEng"] and opp) or (volAvg is not None and v >= P["volExitX"] * volAvg):
+                    self.pending_close = self.pending_close or ("반대 장악형" if (P["useOppEng"] and opp) else "거래량 급증")
+
+    def unreal(self, fee):
+        p = self.pos
+        if p is None:
+            return 0.0
+        return p["side"] * (self.last_close - p["entry"]) * p["open"] - p["entry"] * p["open"] * fee
+
+
+def _next_above(arr, px):
+    b = None
+    for x in arr:
+        if x > px and (b is None or x < b):
+            b = x
+    return b
+
+
+def _next_below(arr, px):
+    b = None
+    for x in arr:
+        if x < px and (b is None or x > b):
+            b = x
+    return b
+
+
+class _Acct:
+    pass
+
+
+def run_multi(Ds, P, start_time=None, events=None):
+    """
+    1계좌 · 여러 코인 · 동시 여러 포지션.
+    Ds: {market: Data} (지표 준비용으로 매매 대상이 아닌 코인도 넣어도 됨)
+    P : load_params 결과. 단계별(rule_history) P["markets"]·maxOpenPositions·maxOpenRiskPct 를 그 시각부터 적용.
+
+    봉 시각마다(모든 코인의 시각을 합쳐 시간순):
+      0) 규칙 단계 전환, 주간 출금(계좌 봉에서만)
+      1) 그 시각에 봉이 있는 코인마다(우선순위 순) 체결: 진입 대기 → 진입, 청산 대기, 손절·T1
+      2) 코인마다 봉 마감 지표(매매 대상이 아니어도 계산 — 스윙·FVG 상태 유지)
+      3) 계좌: 미실현(각 코인 마지막 가격) 합계로 평가 잔고, 하루 한도·목표·첫 승 절반(청산 순서대로)
+      4) 진입 후보를 모아 우선순위(등급 A > B+ > B > C, 같으면 BTC > ETH > SOL > XRP)로 하나씩 허용:
+         - 동시 보유(진입 대기 포함) < maxOpenPositions
+         - 하루 실현 − 열린 포지션(대기 포함) 최초 위험 합계 ≤ −하루 한도 이면 신규 금지
+         - 위험 여유 = 시드 × maxOpenRiskPct% − 열린 위험 합계. 새 위험 > 여유면 여유만큼 줄이고, 여유 < 1R × minRoomFrac 이면 진입 안 함
+         - 수량 ≤ 시드×maxLev/가격 (포지션별, 기존) 그리고 ≤ (평가 잔고×maxLev − 열린 명목가 합계)/가격
+      5) 코인마다 보유 중 관리(본절, 잔량 청산 신호)
+    '계좌 봉' = 그 시각에 매매 대상 코인 또는 포지션·대기가 있는 코인의 봉이 있는 시각(하루 시작·곡선·출금은 이 봉 기준).
+    반환: run() 과 같은 키 + positions(진입 순), pendings, pending_closes{coin}, last_closes{coin}, alloc_log(배분 기록)
+    """
+    P_final = P
+    phases = list(P.get("rule_history") or [])
+    if phases:
+        P = phases[0][1]
+    A = _Acct()
+    A.fee = P["fee"]; A.realized = 0.0; A.trades = []; A.events = []
+    eq0 = P["capital"]
+    capP = P["maxRiskCapP"]; tgtP = P["dayTargetP"]
+    order = market_order(list(Ds))
+    sims = [_CoinSim(m, Ds[m], A) for m in order]
+    bar_td = dt.timedelta(minutes=getattr(Ds[order[0]], "bar_min", 5)) if order else dt.timedelta(minutes=5)
+    ev_win = []
+    if P.get("eventBlock") and events:
+        b4, af = dt.timedelta(minutes=P["eventBeforeMin"]), dt.timedelta(minutes=P["eventAfterMin"])
+        ev_win = [(e[0] - b4, e[0] + af, e[1]) for e in events]
+
+    def event_blocked(t_fill):
+        for a, b, _nm in ev_win:
+            if a <= t_fill < b:
+                return True
+        return False
+
+    times = sorted(set().union(*[set(D.T) for D in Ds.values()])) if Ds else []
+    withdrawn = 0.0; withdrawals = []
+    weekKey = None; weekStartNP = 0.0
+    dayFirst = None; tgtReached = False
+    targetDays, lossLimitDays, consecDays = set(), set(), set()
+    nextFactor = 1.0; nextMode = "보통"; nextRisk = None; lastBaseRisk = 0.0; lastTargetAmt = 0.0; lastLossAmt = 0.0
+    dayKey = None; dayStartNP = 0.0; dayStartEq = eq0; consec = 0
+    dayStop = False; dayStopDays = set()
+    curve, curve_time, curve_acct = [], [], []
+    alloc_log = []
+    equity = eq0; unreal = 0.0
+    max_open_seen = 0; max_risk_pct_seen = 0.0
+
+    for t in times:
+        while phases and t >= phases[0][0]:
+            phases.pop(0)
+            P = phases[0][1] if phases else P_final
+            capP = P["maxRiskCapP"]; tgtP = P["dayTargetP"]
+        can_trade = start_time is None or t >= start_time
+        active = set(P["markets"])
+        here = [(s, s.idx[t]) for s in sims if t in s.idx]
+        acct_bar = any(s.market in active or s.pos is not None or s.pending is not None for s, _ in here)
+        closed_now = []
+        if acct_bar:
+            wk = t.date() - dt.timedelta(days=t.weekday())
+            if wk != weekKey:
+                if weekKey is not None and P["withdrawPct"] > 0:
+                    wpnl = A.realized - weekStartNP
+                    if wpnl > 0:
+                        amt = wpnl * P["withdrawPct"] / 100
+                        withdrawn += amt
+                        withdrawals.append(dict(time=t, week_start=weekKey, week_pnl=wpnl, amount=amt,
+                                                total=withdrawn, seed_after=eq0 + A.realized - withdrawn))
+                        A.events.append(dict(type="withdraw", id=f"W{wk.strftime('%Y%m%d')}", time=t,
+                                             amount=amt, week_pnl=wpnl, pct=P["withdrawPct"], total=withdrawn,
+                                             principal_done=withdrawn >= eq0))
+                weekKey = wk; weekStartNP = A.realized
+        for s, i in here:
+            closed_now += s.fills(i, P)
+        for s, i in here:
+            s.indicators(i, P)
+        if acct_bar:
+            fee = A.fee
+            unreal = 0.0
+            for s in sims:
+                if s.pos is not None:
+                    unreal += s.unreal(fee)
+            seed = eq0 + A.realized - withdrawn
+            equity = seed + unreal
+            dk = t.date()
+            if dk != dayKey:
+                dayKey = dk; dayStartNP = A.realized; dayStartEq = equity; consec = 0
+                dayFirst = None; tgtReached = False
+            for tr in closed_now:
+                consec = consec + 1 if tr["pnl"] < 0 else 0
+                if dayFirst is None and tr["entry_time"].date() == dk:
+                    dayFirst = "수익" if tr["pnl"] > 0 else ("손실" if tr["pnl"] < 0 else "본전")
+            dayReal = A.realized - dayStartNP
+            lossAmt = dayStartEq * P["dayLossP"] / 100
+            hitLoss = dayReal <= -lossAmt
+            hitConsec = consec >= P["maxConsec"]
+            dayStop = hitLoss or hitConsec
+            if dayStop:
+                if dk not in dayStopDays and can_trade:
+                    why = f"{consec}연속 손절" if hitConsec else f"하루 손실 {P['dayLossP']:g}% 도달"
+                    A.events.append(dict(type="daystop", id=f"D{dk.strftime('%Y%m%d')}", time=t, reason=why,
+                                         day_pnl=dayReal))
+                dayStopDays.add(dk)
+                if can_trade:
+                    (consecDays if hitConsec else lossLimitDays).add(dk)
+            targetAmt = dayStartEq * tgtP / 100
+            if tgtP > 0 and dayReal >= targetAmt:
+                if not tgtReached and can_trade:
+                    A.events.append(dict(type="target", id=f"G{dk.strftime('%Y%m%d')}", time=t, day_pnl=dayReal,
+                                         target=targetAmt, after=P["afterTargetSizing"]))
+                    targetDays.add(dk)
+                tgtReached = True
+            baseRisk = seed * P["riskPct"] / 100
+            redRisk = seed * P["redPct"] / 100
+            hardCap = seed * capP / 100
+            lockCap = dayReal - baseRisk if dayReal >= 2 * baseRisk else None
+            halfNow = P["firstWinHalf"] and dayFirst == "수익"
+            tgtCap = None; tgtBlock = False
+            if tgtReached:
+                tgtCap = dayReal - targetAmt
+                if not P["afterTargetSizing"] or tgtCap < baseRisk * P["afterTargetMinFrac"]:
+                    tgtBlock = True
+
+            def fcap(r):
+                r = r if lockCap is None else min(r, lockCap)
+                if halfNow:
+                    r = r * 0.5
+                if tgtCap is not None:
+                    r = min(r, tgtCap)
+                return min(r, hardCap)
+
+            size_tag = "목표후" if tgtCap is not None else ("0.5" if halfNow else "1")
+            lastBaseRisk, lastTargetAmt, lastLossAmt = baseRisk, targetAmt, lossAmt
+            if dayStop:
+                nextMode, nextFactor, nextRisk = "진입 금지(하루 한도)", 0.0, 0.0
+            elif tgtBlock:
+                nextMode, nextFactor, nextRisk = "진입 안 함(목표 보호)", 0.0, 0.0
+            else:
+                nextRisk = fcap(baseRisk)
+                nextFactor = nextRisk / baseRisk if baseRisk > 0 else 0.0
+                nextMode = "목표 후 축소" if tgtCap is not None else ("절반(첫 매매 수익)" if halfNow else "보통")
+
+            # ---------- 4) 진입 후보 → 우선순위대로 배분 ----------
+            if not dayStop and not tgtBlock and can_trade and not (ev_win and event_blocked(t + bar_td)):
+                cands = []
+                for s, i in here:
+                    if s.market in active and s.pos is None and s.pending is None:
+                        cd = s.signal(P, fcap, baseRisk, redRisk)
+                        if cd is not None:
+                            cands.append((SETUP_RANK.get((cd["tag"], cd["grade"]), 9), sims.index(s), s, cd))
+                cands.sort(key=lambda z: (z[0], z[1]))
+                for _rk, _pr, s, cd in cands:
+                    busy = [z for z in sims if z.pos is not None or z.pending is not None]
+                    open_risk = sum((z.pos or z.pending)["rm"] for z in busy)
+                    rec = dict(time=t, coin=s.coin, setup=cd["tag"] + cd["grade"], side=cd["side"], rm_signal=cd["rm"],
+                               open_before=len(busy), open_risk_before=open_risk, seed=seed, base_risk=baseRisk,
+                               day_real=dayReal, loss_amt=lossAmt, rank=_rk)
+                    if len(busy) >= P["maxOpenPositions"]:
+                        alloc_log.append(dict(rec, result="거절: 동시 보유 상한")); continue
+                    if dayReal - open_risk <= -lossAmt:
+                        alloc_log.append(dict(rec, result="거절: 하루 한도(실현−열린 위험)")); continue
+                    rm = cd["rm"]; cut = False
+                    if P["maxOpenRiskPct"] > 0:
+                        room = seed * P["maxOpenRiskPct"] / 100 - open_risk
+                        if rm > room:
+                            if room < baseRisk * P["minRoomFrac"]:
+                                alloc_log.append(dict(rec, result="거절: 위험 여유 부족", room=room)); continue
+                            rm = room; cut = True
+                    c = cd["c"]; dist = cd["dist"]
+                    notional = sum(z.pos["open"] * z.last_close for z in busy if z.pos is not None) \
+                        + sum(z.pending["qty"] * z.pending["sigClose"] for z in busy if z.pending is not None)
+                    q = rm / dist if dist > 0 and rm > 0 else 0.0
+                    q = math.floor(min(q, seed * P["maxLev"] / c, (equity * P["maxLev"] - notional) / c) * 10000) / 10000
+                    if q > 0:
+                        s.commit(cd, q, rm, seed, P, size_tag, baseRisk, cut)
+                        alloc_log.append(dict(rec, result="진입(여유만큼 축소)" if cut else "진입", rm=rm, qty=q,
+                                              notional_before=notional, equity=equity))
+                    else:
+                        alloc_log.append(dict(rec, result="거절: 수량 0(레버리지 합계 상한 등)"))
+        for s, i in here:
+            s.manage(P)
+        busy = [z for z in sims if z.pos is not None or z.pending is not None]
+        max_open_seen = max(max_open_seen, len(busy))
+        if acct_bar:
+            sd = eq0 + A.realized - withdrawn
+            if sd > 0:
+                max_risk_pct_seen = max(max_risk_pct_seen, sum((z.pos or z.pending)["rm"] for z in busy) / sd * 100)
+        if acct_bar and can_trade:
+            curve.append(equity + withdrawn); curve_acct.append(equity); curve_time.append(t)
+
+    if any(s.pos is not None for s in sims):     # 데이터 끝: 각 코인 마지막 종가로 미실현 합계 (run() 과 같은 식)
+        unreal = 0.0
+        for s in sims:
+            if s.pos is not None:
+                s.last_close = s.D.C[-1]
+                unreal += s.unreal(A.fee)
+        equity = eq0 + A.realized - withdrawn + unreal
+    day = dict(date=dayKey, realized=A.realized - dayStartNP, start_equity=dayStartEq, consec=consec,
+               stop=dayStop, reason=None,
+               target_reached=tgtReached, target_amount=lastTargetAmt if tgtP > 0 else None,
+               loss_limit_amount=lastLossAmt, first_trade_result=dayFirst,
+               next_size_factor=nextFactor, next_size_mode=nextMode, next_risk=nextRisk,
+               risk_per_trade=lastBaseRisk)
+    if dayStop:
+        day["reason"] = (f"{consec}연속 손절" if consec >= P["maxConsec"]
+                         else f"하루 손실 {P['dayLossP']:g}% 도달")
+    seed_now = eq0 + A.realized - withdrawn
+    positions = sorted([s.pos for s in sims if s.pos is not None],
+                       key=lambda p: (p["entry_time"], order.index(p["market"])))
+    pendings = [s.pending for s in sims if s.pending is not None]
+    pcl = {s.coin: s.pending_close for s in sims if s.pending_close is not None}
+    last_closes = {s.coin: s.D.C[-1] for s in sims if s.D.n}
+    legacy_pos = positions[0] if positions else None
+    btc = next((s for s in sims if s.coin == "BTC"), sims[0] if sims else None)
+    return dict(trades=A.trades, position=legacy_pos, pending=pendings[0] if pendings else None,
+                pending_close=pcl.get(legacy_pos["coin"]) if legacy_pos else None,
+                positions=positions, pendings=pendings, pending_closes=pcl, last_closes=last_closes,
+                last_bar_times={s.coin: s.D.T[-1] for s in sims if s.D.n},
+                curve=curve, curve_acct=curve_acct, curve_time=curve_time, events=A.events,
+                dayStopDays=dayStopDays, lossLimitDays=lossLimitDays, consecDays=consecDays,
+                targetDays=targetDays, withdrawn=withdrawn, withdrawals=withdrawals, seed=seed_now,
+                realized=A.realized, final=seed_now, equity=equity, unrealized=unreal, day=day,
+                last_close=btc.D.C[-1] if btc is not None and btc.D.n else None,
+                alloc_log=alloc_log, markets=list(P_final["markets"]), max_open_seen=max_open_seen,
+                max_open_risk_pct_seen=max_risk_pct_seen)
 
 
 def stats(trades, curve=None):

@@ -1,0 +1,197 @@
+{
+  "method": "C 검증 2 — 4코인 · 동시 여러 포지션(engine.run_multi) 단위 테스트. 오프라인, 로컬 data/ 의 4코인 5분봉(2026-11-14~)만 읽음.\n결과는 research/checks/c_tests_result.json 에만 쓴다(ledger/ 는 건드리지 않음). research/holdout 사용 안 함.\n\n  T1 실데이터 시뮬레이션(운영 config, 4코인 단계를 2026-11-15 00:00 부터 켰다고 가정):\n     - 어느 봉에서도 동시 보유(진입 대기 포함) ≤ 2, 열린 위험 합계 ≤ 시드 1.0%\n     - 거래 보유 구간 [진입, 청산) 이 3개 이상 겹치는 시각 없음, 한 코인에 겹치는 포지션 없음\n     - 배분 기록: 같은 봉 후보 처리 순서 = (등급 A > B+ > B > C, BTC > ETH > SOL > XRP)\n     - 모든 진입: 위험 ≤ 여유, 축소 진입이면 위험 = 여유 ≥ 1R×0.25, 명목가 합계 ≤ 평가 잔고×10, 하루 실현−열린 위험 > −한도\n     - 하루 정지(daystop) 뒤 그날 신규 진입 없음, 2026-11-17 15:00 활성화 시나리오(운영 config 그대로)에선 15:00 전 BTC 만\n  T2~T7 신호를 고정해서 넣는 규칙 테스트(_CoinSim.signal 을 바꿔 정해진 봉에 정해진 후보만 냄):\n     T2 우선순위   : 같은 봉에 BTC C, ETH B+, SOL A, XRP A → SOL·XRP 진입, BTC·ETH 는 '동시 보유 상한'\n     T3 축소 진입  : 상한 0.8%, 1R 0.5% → 두 번째는 0.3% 로 축소 진입\n     T4 여유 부족  : 상한 0.6% → 여유 0.1% < 1R×0.25 → 두 번째 거절\n     T5 하루 한도  : dayLossP 0.3% → 실현 0 − 열린 위험 0.5% ≤ −0.3% → 두 번째 거절\n     T6 2연속 손절 : BTC·ETH 가 같은 봉에서 손절 → 계좌 2연패 → 그날 SOL 후보는 아예 배분 안 됨 (대조: maxConsec 큼이면 진입)\n     T7 레버리지 합계: maxLev 1 → 첫 포지션 명목가 ≈ 잔고 → 두 번째 수량 0 거절",
+  "tests": {
+    "T1_real_4coin_from_11-15": {
+      "pass_": true,
+      "max_open_seen": 2,
+      "max_open_risk_pct_seen": 1.0,
+      "open_le_2": true,
+      "risk_le_1pct": true,
+      "max_concurrent_held": 2,
+      "held_le_2": true,
+      "no_same_coin_overlap": true,
+      "same_bar_multi_candidates": 3,
+      "priority_order_ok": true,
+      "entries": 22,
+      "cut_entries": 0,
+      "entry_rules_ok": true,
+      "cut_rules_ok": true,
+      "rejections": {
+        "거절: 동시 보유 상한": 7
+      },
+      "daystops": {
+        "2026-11-15": "11-15 13:10",
+        "2026-11-16": "11-16 04:00",
+        "2026-11-17": "11-17 03:35"
+      },
+      "no_entry_after_daystop": true,
+      "notional_ok": true,
+      "trades_by_coin": {
+        "BTC": {
+          "n": 4,
+          "pnl": 7798
+        },
+        "SOL": {
+          "n": 8,
+          "pnl": -11123
+        },
+        "ETH": {
+          "n": 4,
+          "pnl": -1477
+        },
+        "XRP": {
+          "n": 6,
+          "pnl": -4178
+        }
+      },
+      "n_trades": 22,
+      "realized": -8980,
+      "equity": 988388
+    },
+    "T1b_activation_config": {
+      "pass_": true,
+      "trades_before_activation": 3,
+      "note": "데이터가 활성화 시각 전에 끝나므로 모두 BTC 여야 함"
+    },
+    "T2_priority": {
+      "pass_": true,
+      "got": [
+        [
+          "SOL",
+          "진입"
+        ],
+        [
+          "XRP",
+          "진입"
+        ],
+        [
+          "ETH",
+          "거절: 동시 보유 상한"
+        ],
+        [
+          "BTC",
+          "거절: 동시 보유 상한"
+        ]
+      ],
+      "expected": [
+        [
+          "SOL",
+          "진입"
+        ],
+        [
+          "XRP",
+          "진입"
+        ],
+        [
+          "ETH",
+          "거절: 동시 보유 상한"
+        ],
+        [
+          "BTC",
+          "거절: 동시 보유 상한"
+        ]
+      ]
+    },
+    "T3_cut_entry": {
+      "pass_": true,
+      "log": [
+        [
+          "BTC",
+          "진입",
+          5000
+        ],
+        [
+          "ETH",
+          "진입(여유만큼 축소)",
+          3000
+        ]
+      ],
+      "expected": "BTC 진입 위험 0.5%, ETH 축소 진입 위험 0.3%",
+      "entries_next_bar": [
+        [
+          "BTC",
+          0.0093
+        ],
+        [
+          "ETH",
+          0.1998
+        ]
+      ],
+      "pendings": []
+    },
+    "T4_room_too_small": {
+      "pass_": true,
+      "log": [
+        [
+          "BTC",
+          "진입",
+          0
+        ],
+        [
+          "ETH",
+          "거절: 위험 여유 부족",
+          1000
+        ]
+      ]
+    },
+    "T5_day_limit_open_risk": {
+      "pass_": true,
+      "log": [
+        [
+          "BTC",
+          "진입"
+        ],
+        [
+          "ETH",
+          "거절: 하루 한도(실현−열린 위험)"
+        ]
+      ]
+    },
+    "T6_consec_daystop": {
+      "pass_": true,
+      "signal_bar": "11-16 02:25",
+      "trades": [
+        [
+          "BTC",
+          -15216,
+          "손절"
+        ],
+        [
+          "ETH",
+          -5,
+          "손절"
+        ]
+      ],
+      "daystop": [
+        [
+          "02:30",
+          "2연속 손절"
+        ]
+      ],
+      "sol_alloc": [],
+      "control_sol": [
+        "진입"
+      ]
+    },
+    "T7_total_leverage": {
+      "pass_": true,
+      "log": [
+        [
+          "BTC",
+          "진입",
+          0.0112
+        ],
+        [
+          "ETH",
+          "진입",
+          0.0003
+        ]
+      ],
+      "eth_notional_total_after": 999880,
+      "equity_x_maxLev": 1000000,
+      "eth_qty_without_cap": 1.9984012789768186,
+      "note": "maxLev 1: BTC 가 잔고 거의 전부를 쓰고, ETH 는 남은 명목가 여유만큼만(또는 0이면 거절)"
+    }
+  },
+  "pass": true
+}

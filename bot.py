@@ -24,6 +24,10 @@ v2.0 기반 시설 이식 (2026-11-17, 사전 등록서 v3 전진 시험용) —
   - 그림자 장부: config.json "shadow_ledgers" (기본 없음/꺼짐). 본 장부와 별도 규칙·별도 파일 ledger/shadow/{이름}/
   - 매매 일지: ledger/journal.csv (본 장부), ledger/shadow/{이름}/journal.csv — 거래마다 진입 근거·결과
   - 경제 일정: data/events.csv 읽기. 진입 금지 규칙은 eventBlock=true 일 때만(기본 꺼짐)
+v2.1 1계좌 · 여러 코인 · 동시 여러 포지션 (2026-11-17) — 본 장부는 engine.run_multi 로 계산
+  - config "markets"·"maxOpenPositions"·"maxOpenRiskPct" (rule_history 로 활성화 시각 이후에만 적용)
+  - markets=[KRW-BTC], maxOpenPositions=1 이면 기존 run() 과 같은 장부(research/checks/c_multipos_equivalence.py)
+  - trades.csv·journal.csv 에 '코인' 열, status.json 에 positions·pending_entries 등, 알림 앞에 [코인]
 표준 라이브러리만 사용.
 """
 import argparse
@@ -256,16 +260,34 @@ def setup_name(tag, grade):
     return f"{tag}{grade}"
 
 
+def coin_tr(t):
+    """거래·포지션의 코인 이름 (run_multi 는 'coin' 을 넣음, 없으면 BTC)"""
+    return t.get("coin") or "BTC"
+
+
+def _cp(x, coin):
+    """trades.csv 가격: BTC·ETH(100만 원 이상)는 기존과 같은 정수, 그 아래(SOL·XRP)는 유효숫자 10자리"""
+    return f"{x:.0f}" if coin == "BTC" or abs(x) >= 1_000_000 else f"{x:.10g}"
+
+
+def _r(x):
+    """status.json 가격: 10만 원 이상은 정수(기존과 같음), 그 아래(XRP 등)는 소수 넷째 자리"""
+    return round(x) if abs(x) >= 100_000 else round(x, 4)
+
+
 def write_trades(trades):
     os.makedirs(LEDGER_DIR, exist_ok=True)
     with open(TRADES, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f)
-        w.writerow(["번호", "거래ID", "진입시각", "방향", "셋업", "등급", "진입가", "최초손절", "T1", "수량BTC",
+        # '코인' 열은 2026-11-17 다중 코인 확장 때 번호 다음에 추가. '수량BTC' 열 이름은 웹사이트 호환을 위해 그대로 두고
+        # 그 코인의 수량을 적는다(ETH 거래면 ETH 수량).
+        w.writerow(["번호", "코인", "거래ID", "진입시각", "방향", "셋업", "등급", "진입가", "최초손절", "T1", "수량BTC",
                     "레버리지", "위험금액", "1시간방향", "청산내역", "마지막청산", "청산시각", "손익원", "R",
                     "수량배율"])          # 수량배율: 1 / 0.5(그날 첫 매매 수익 뒤) / 목표후(목표가 남는 크기) — 기존 열 순서 유지, 끝에 추가
         for k, t in enumerate(trades, 1):
-            w.writerow([k, t["id"], t["entry_time"].strftime("%Y-%m-%d %H:%M"), side_ko(t["side"]), t["tag"],
-                        t["grade"], f"{t['entry']:.0f}", f"{t['stop0']:.0f}", f"{t['t1']:.0f}", f"{t['qty']:.4f}",
+            cn = coin_tr(t)
+            w.writerow([k, cn, t["id"], t["entry_time"].strftime("%Y-%m-%d %H:%M"), side_ko(t["side"]), t["tag"],
+                        t["grade"], _cp(t["entry"], cn), _cp(t["stop0"], cn), _cp(t["t1"], cn), f"{t['qty']:.4f}",
                         f"{t['lev']:.2f}", f"{t['rm']:.0f}", t["dir60"], " | ".join(t["exits"]), t["exit_reason"],
                         t["exit_time"].strftime("%Y-%m-%d %H:%M"), f"{t['pnl']:.0f}", f"{t['R']:.3f}",
                         t.get("sizeTag", "1")])
@@ -279,6 +301,11 @@ def _fp(x):
     if x is None:
         return ""
     return f"{x:.0f}" if abs(x) >= 1000 else f"{x:.8g}"
+
+
+def _mp(x):
+    """사람용 가격 표시(ACCOUNT.md·알림): 1,000 이상은 쉼표 정수, 그 아래는 유효숫자 6자리"""
+    return f"{x:,.0f}" if abs(x) >= 1000 else f"{x:.6g}"
 
 
 def result_ko(t):
@@ -314,10 +341,24 @@ def write_journal(trades, path, coin_of=None, events=None):
                         near_events(t, events)])
 
 
-def position_dict(pos, last_close, fee):
+def position_dict(pos, last_close, fee, multi=False):
+    """multi=True(본 장부, run_multi): market·coin 을 넣고 가격은 _r(10만 원 미만 코인도 소수까지).
+    multi=False(그림자 장부): 기존 형식 그대로."""
     if pos is None:
         return None
     unreal = pos["side"] * (last_close - pos["entry"]) * pos["open"] - pos["entry"] * pos["open"] * fee
+    if multi:
+        return dict(
+            market=pos.get("market", "KRW-BTC"), coin=coin_tr(pos),
+            id=pos["id"], side=side_ko(pos["side"]), setup=pos["tag"], grade=pos["grade"],
+            entry_time=pos["entry_time"].strftime(TFMT), entry=_r(pos["entry"]),
+            stop=_r(pos["stop"]), stop0=_r(pos["stop0"]), t1=_r(pos["t1"]),
+            next_target=_r(pos["nxt"]) if pos.get("nxt") else None,
+            qty=pos["qty"], qty_open=pos["open"], leverage=round(pos["lev"], 2), risk_money=round(pos["rm"]),
+            t1_done=pos["t1Hit"], realized_part=round(pos["pnl"]), last_price=_r(last_close),
+            unrealized_pnl=round(unreal),
+            note="미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
+        )
     return dict(
         id=pos["id"], side=side_ko(pos["side"]), setup=pos["tag"], grade=pos["grade"],
         entry_time=pos["entry_time"].strftime(TFMT), entry=round(pos["entry"]),
@@ -330,6 +371,49 @@ def position_dict(pos, last_close, fee):
     )
 
 
+def pending_dict(pend):
+    if pend is None:
+        return None
+    return dict(
+        side=side_ko(pend["side"]), setup=pend["tag"], grade=pend["grade"],
+        signal_time=pend["signal_time"].strftime(TFMT), signal_close=_r(pend["sigClose"]),
+        stop=_r(pend["stop"]), t1=_r(pend["t1"]), qty=pend["qty"],
+        note="다음 봉 시가에 진입 예정")
+
+
+def multi_fields(P, R):
+    """다중 코인·다중 포지션 필드 (status.json 에 추가, 기존 필드는 그대로)"""
+    if "positions" not in R:          # run() 결과(다중 아님)
+        return {}
+    last_t = engine.parse_kst(R["last_bar_time"]) if R.get("last_bar_time") else None
+    Pn = engine.params_at(P, last_t) if last_t else P
+    lc = R["last_closes"]
+    poss = []
+    for p in R["positions"]:
+        d = position_dict(p, lc.get(coin_tr(p), p["entry"]), P["fee"], multi=True)
+        d["pending_close"] = R["pending_closes"].get(coin_tr(p))
+        poss.append(d)
+    pends = []
+    for q in R["pendings"]:
+        d = dict(market=q.get("market", "KRW-BTC"), coin=coin_tr(q), **pending_dict(q))
+        d.update(risk_money=round(q["rm"]), risk_cut=bool(q.get("riskCut")))
+        pends.append(d)
+    open_risk = sum(p["rm"] for p in R["positions"]) + sum(q["rm"] for q in R["pendings"])
+    seed = R["seed"]
+    return dict(
+        markets=[engine.coin_of(m) for m in Pn["markets"]],             # 지금(마지막 봉) 매매 대상 코인
+        max_open_positions=Pn["maxOpenPositions"],
+        max_open_risk_pct=Pn["maxOpenRiskPct"],
+        open_positions_count=len(poss) + len(pends),                     # 보유 + 진입 대기
+        open_risk_won=round(open_risk),
+        open_risk_pct=round(open_risk / seed * 100, 3) if seed > 0 else 0.0,   # 열린 포지션(대기 포함) 최초 위험 합계 ÷ 시드
+        positions=poss,                                                  # 진입 순
+        pending_entries=pends,
+        last_prices={k: _r(v) for k, v in lc.items()},
+        last_bar_times={k: v.strftime(TFMT) for k, v in R["last_bar_times"].items()},
+    )
+
+
 def build_status(cfg, P, R, start_time, primary, used, now):
     trades = R["trades"]
     st = engine.stats(trades, R["curve"])
@@ -337,6 +421,7 @@ def build_status(cfg, P, R, start_time, primary, used, now):
     pend = R["pending"]
     eq0 = P["capital"]
     wd_total = R["withdrawn"]
+    multi = "positions" in R
     return dict(
         mode="가상 매매(paper) — 실제 주문 없음",
         rules="원칙 v1.4.1 + 쉽알남 자금 관리(v1.4.1-mm)",
@@ -362,12 +447,12 @@ def build_status(cfg, P, R, start_time, primary, used, now):
         trades_count=st["N"], win_rate=round(st["win"], 1), avg_R=round(st["avgR"], 3),
         max_drawdown_pct=round(st["mdd"], 2),
         has_position=R["position"] is not None,
-        position=position_dict(R["position"], R["last_close"], P["fee"]),
-        pending_entry=None if pend is None else dict(
-            side=side_ko(pend["side"]), setup=pend["tag"], grade=pend["grade"],
-            signal_time=pend["signal_time"].strftime(TFMT), signal_close=round(pend["sigClose"]),
-            stop=round(pend["stop"]), t1=round(pend["t1"]), qty=pend["qty"],
-            note="다음 봉 시가에 진입 예정"),
+        # 호환 필드: 포지션이 여럿이면 가장 먼저 진입한 것(진입 대기도 첫 번째). 전체는 positions·pending_entries
+        position=(position_dict(R["position"], R["last_closes"].get(coin_tr(R["position"]), R["last_close"]),
+                                P["fee"], multi=True) if multi and R["position"]
+                  else position_dict(R["position"], R["last_close"], P["fee"])),
+        pending_entry=(dict(market=pend.get("market", "KRW-BTC"), coin=coin_tr(pend), **pending_dict(pend))
+                       if multi and pend else pending_dict(pend)),
         pending_close=R["pending_close"],
         today=dict(date=str(day["date"]) if day["date"] else None, realized_pnl=round(day["realized"]),
                    consecutive_losses=day["consec"], no_new_entries=bool(day["stop"]), reason=day["reason"],
@@ -385,6 +470,7 @@ def build_status(cfg, P, R, start_time, primary, used, now):
         data_source=primary, data_source_this_run=used,
         updated_at=now.strftime(TFMT),
         warnings=_warnings[:],
+        **multi_fields(P, R),
     )
 
 
@@ -396,8 +482,10 @@ def write_account(status, R):
     trades = R["trades"]
     p = status["position"]
     L = []
-    L.append(f"# BTC 5분봉 가상 매매 계좌 (원칙 v1.4.1 + 쉽알남 자금 관리)\n")
-    L.append(f"## 포지션: {'있음' if p else '없음'}\n")
+    mk = status.get("markets") or ["BTC"]
+    L.append(f"# {'·'.join(mk)} 5분봉 가상 매매 계좌 (원칙 v1.4.1 + 쉽알남 자금 관리)\n")
+    np_ = len(status.get("positions") or ([p] if p else []))
+    L.append(f"## 포지션: {('있음 ' + str(np_) + '개' if np_ > 1 else '있음') if p else '없음'}\n")
     L.append("> ⚠️ 실제 돈을 쓰지 않는 **가상 매매** 기록입니다. 거래소에 주문하지 않습니다.\n")
     L.append(f"> 계좌 성격: **{status['account_type']}**. 수익 일부는 매주 장투 계좌로 '출금'한 것으로 칩니다.\n")
     L.append(f"- 업데이트: {status['updated_at']} (KST) · 마지막 봉: {status['last_bar_time']} · "
@@ -435,35 +523,50 @@ def write_account(status, R):
     L.append(f"| 연속 손절 | {td['consecutive_losses']}회 |")
     L.append(f"| 오늘 신규 진입 | {'⛔ 금지 (' + td['reason'] + ')' if td['no_new_entries'] else ('🎯 목표 보호로 진입 안 함' if td['next_size_factor'] == 0 else '✅ 가능')} |\n")
 
-    L.append("## 현재 포지션\n")
-    if p:
-        L.append("| 방향 | 셋업 | 등급 | 진입 시각 | 진입가 | 손절 | T1 | 수량(남은/처음) | 레버리지 | 미실현손익 |")
-        L.append("|---|---|---|---|---|---|---|---|---|---|")
-        stop_txt = f"{p['stop']:,}" + (" (본절)" if p["t1_done"] else "")
-        L.append(f"| {p['side']} | {p['setup']} | {p['grade'] or '-'} | {p['entry_time'][5:16]} | {p['entry']:,} | "
-                 f"{stop_txt} | {p['t1']:,}{' ✅' if p['t1_done'] else ''} | {p['qty_open']:.4f} / {p['qty']:.4f} BTC | "
-                 f"{p['leverage']:.1f}배 | {won(p['unrealized_pnl'])} |")
-        if p["t1_done"]:
-            L.append(f"\nT1 반익절 완료(실현 {won(p['realized_part'])}). 남은 물량은 본절 손절"
-                     + (f", 다음 스윙 {p['next_target']:,}" if p["next_target"] else "") + ".")
+    poss = status.get("positions")
+    if poss is None:                                   # 다중 필드가 없는 경우(기존 형식)
+        poss = [dict(p, coin="BTC")] if p else []
+    pends = status.get("pending_entries")
+    if pends is None:
+        pends = [dict(status["pending_entry"], coin="BTC")] if status["pending_entry"] else []
+    if "max_open_positions" in status:
+        L.append(f"## 현재 포지션 ({len(poss)}개 보유 · 대기 {len(pends)}개 / 동시 최대 {status['max_open_positions']}개, "
+                 f"열린 위험 {status['open_risk_won']:,}원 = 시드의 {status['open_risk_pct']:.2f}%"
+                 + (f" / 상한 {status['max_open_risk_pct']:g}%" if status["max_open_risk_pct"] else "")
+                 + f" · 대상 코인 {', '.join(status['markets'])})\n")
+    else:
+        L.append("## 현재 포지션\n")
+    if poss:
+        L.append("| 코인 | 방향 | 셋업 | 등급 | 진입 시각 | 진입가 | 손절 | T1 | 수량(남은/처음) | 레버리지 | 위험 | 미실현손익 |")
+        L.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
+        for q in poss:
+            stop_txt = f"{q['stop']:,}" + (" (본절)" if q["t1_done"] else "")
+            L.append(f"| {q['coin']} | {q['side']} | {q['setup']} | {q['grade'] or '-'} | {q['entry_time'][5:16]} | {q['entry']:,} | "
+                     f"{stop_txt} | {q['t1']:,}{' ✅' if q['t1_done'] else ''} | {q['qty_open']:.4f} / {q['qty']:.4f} {q['coin']} | "
+                     f"{q['leverage']:.1f}배 | {q['risk_money']:,}원 | {won(q['unrealized_pnl'])} |")
+        for q in poss:
+            if q["t1_done"]:
+                L.append(f"\n[{q['coin']}] T1 반익절 완료(실현 {won(q['realized_part'])}). 남은 물량은 본절 손절"
+                         + (f", 다음 스윙 {q['next_target']:,}" if q["next_target"] else "") + ".")
+            pc = q.get("pending_close") if "pending_close" in q else status["pending_close"]
+            if pc:
+                L.append(f"\n⏳ [{q['coin']}] 청산 대기: 다음 봉 시가에 남은 물량 청산 ({pc})")
     else:
         L.append("보유 포지션 없음.")
-    if status["pending_entry"]:
-        q = status["pending_entry"]
-        L.append(f"\n⏳ 진입 대기: {q['signal_time'][5:16]} 봉 마감 신호 → 다음 봉 시가에 **{q['side']} [{q['setup']}{q['grade']}]** "
-                 f"진입 예정 (손절 {q['stop']:,} / T1 {q['t1']:,} / {q['qty']:.4f} BTC)")
-    if status["pending_close"]:
-        L.append(f"\n⏳ 청산 대기: 다음 봉 시가에 남은 물량 청산 ({status['pending_close']})")
+    for q in pends:
+        L.append(f"\n⏳ [{q['coin']}] 진입 대기: {q['signal_time'][5:16]} 봉 마감 신호 → 다음 봉 시가에 **{q['side']} [{q['setup']}{q['grade']}]** "
+                 f"진입 예정 (손절 {q['stop']:,} / T1 {q['t1']:,} / {q['qty']:.4f} {q['coin']}"
+                 + (", 위험 여유만큼 축소" if q.get("risk_cut") else "") + ")")
     L.append("")
 
     L.append("## 최근 거래 20건 (최신순)\n")
     if trades:
-        L.append("| # | 진입 | 방향 | 셋업 | 진입가 | 손절 | T1 | 수량 | 레버리지 | 청산 | 청산 시각 | 손익 | R |")
-        L.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+        L.append("| # | 코인 | 진입 | 방향 | 셋업 | 진입가 | 손절 | T1 | 수량 | 레버리지 | 청산 | 청산 시각 | 손익 | R |")
+        L.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
         for k in range(len(trades) - 1, max(-1, len(trades) - 21), -1):
             t = trades[k]
-            L.append(f"| {k + 1} | {t['entry_time']:%m-%d %H:%M} | {side_ko(t['side'])} | {setup_name(t['tag'], t['grade'])} | "
-                     f"{t['entry']:,.0f} | {t['stop0']:,.0f} | {t['t1']:,.0f} | {t['qty']:.4f} | {t['lev']:.1f}배 | "
+            L.append(f"| {k + 1} | {coin_tr(t)} | {t['entry_time']:%m-%d %H:%M} | {side_ko(t['side'])} | {setup_name(t['tag'], t['grade'])} | "
+                     f"{_mp(t['entry'])} | {_mp(t['stop0'])} | {_mp(t['t1'])} | {t['qty']:.4f} | {t['lev']:.1f}배 | "
                      f"{'T1 반익절 → ' if t['t1Hit'] and t['exit_reason'] != 'T1 반익절' else ''}{t['exit_reason']} | "
                      f"{t['exit_time']:%m-%d %H:%M} | {won(t['pnl'])} | {t['R']:+.2f} |".replace("| -", "| −"))
     else:
@@ -487,6 +590,15 @@ def write_account(status, R):
         for k in sorted(by):
             s = engine.stats(by[k])
             L.append(f"| {k} | {s['N']} | {s['win']:.0f}% | {s['avgR']:+.3f} | {won(s['pnl'])} |")
+        byc = defaultdict(list)
+        for t in trades:
+            byc[coin_tr(t)].append(t)
+        if len(byc) > 1 or "markets" in status and len(status["markets"]) > 1:
+            L.append("\n## 코인별 성적\n")
+            L.append("| 코인 | 거래 수 | 승률 | 평균 R | 손익 |\n|---|---|---|---|---|")
+            for k in engine.market_order(byc):
+                s = engine.stats(byc[k])
+                L.append(f"| {k} | {s['N']} | {s['win']:.0f}% | {s['avgR']:+.3f} | {won(s['pnl'])} |")
     else:
         L.append("아직 청산된 거래가 없습니다.")
     if status["withdrawals"]:
@@ -501,6 +613,11 @@ def write_account(status, R):
              + (f", 하루 +{td['target_pct']:g}% 달성 후엔 목표가 남는 크기만" if td["target_pct"] else "")
              + (", 그날 첫 매매 수익이면 다음 매매 절반" if status.get("first_win_half") else "")
              + (f", 매주 월요일 지난주 수익의 {status['withdraw_pct']:g}% 출금" if status["withdraw_pct"] else "")
+             + (f". 1계좌 {len(mk)}코인({', '.join(mk)}) 각자 차트 기준 신호, 코인당 1포지션·동시 최대 {status['max_open_positions']}개, "
+                f"열린 위험 합계 ≤ 시드 {status['max_open_risk_pct']:g}%(넘으면 여유만큼 축소, 1R의 25% 미만이면 안 함), "
+                f"명목가 합계 ≤ 평가 잔고×10, 같은 봉 신호 우선순위 A > B+ > B > C · BTC > ETH > SOL > XRP, "
+                f"자금 관리는 계좌 단위"
+                if len(mk) > 1 or status.get("max_open_positions", 1) > 1 else "")
              + ". 자세한 거래 목록: [trades.csv](trades.csv), 기계용 상태: [status.json](status.json)")
     os.makedirs(LEDGER_DIR, exist_ok=True)
     with open(ACCOUNT, "w", encoding="utf-8") as f:
@@ -539,8 +656,10 @@ def write_trades_coin(trades, path, coin_of):
                         t.get("sizeTag", "1")])
 
 
-def run_shadows(cfg, end, main_candles, events, offline=False):
-    """활성 그림자 장부를 모두 계산·저장. 실패해도 본 장부에는 영향 없음."""
+def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None):
+    """활성 그림자 장부를 모두 계산·저장. 실패해도 본 장부에는 영향 없음.
+    preloaded: {market: candles} 이번 실행에서 본 장부가 이미 받아 저장한 코인 봉(같은 데이터, 중복 요청 방지)"""
+    preloaded = preloaded or {}
     shs = [s for s in (cfg.get("shadow_ledgers") or []) if s.get("enabled")]
     if not shs:
         return
@@ -561,6 +680,8 @@ def run_shadows(cfg, end, main_candles, events, offline=False):
                 path = candle_path(market)
                 if path == CANDLES:
                     c = main_candles
+                elif market in preloaded:
+                    c = preloaded[market]
                 elif offline:
                     c = load_candles(path)
                 else:
@@ -615,20 +736,23 @@ def run_shadows(cfg, end, main_candles, events, offline=False):
 # ============================== 3) 알림 ==============================
 
 def event_message(e):
+    """알림 문구. 코인 이벤트(진입·T1·청산)는 앞에 [코인] (예: "[ETH] 🟢 롱 진입 …")"""
+    cn = e.get("coin") or "BTC"
+    pre = f"[{cn}] "
     if e["type"] == "entry":
         icon = "🟢" if e["side"] == 1 else "🔵"
-        return (f"{icon} {side_ko(e['side'])} 진입 [{setup_name(e['tag'], e['grade'])}] {e['price']:,.0f} / "
-                f"손절 {e['stop']:,.0f} / T1 {e['t1']:,.0f} / {e['qty']:.4f} BTC ({e['lev']:.1f}배)")
+        return (f"{pre}{icon} {side_ko(e['side'])} 진입 [{setup_name(e['tag'], e['grade'])}] {_mp(e['price'])} / "
+                f"손절 {_mp(e['stop'])} / T1 {_mp(e['t1'])} / {e['qty']:.4f} {cn} ({e['lev']:.1f}배)")
     if e["type"] == "t1":
-        return f"✅ T1 반익절 {won(e['part_pnl'])} ({e['price']:,.0f}, 남은 물량 손절은 진입가로)"
+        return f"{pre}✅ T1 반익절 {won(e['part_pnl'])} ({_mp(e['price'])}, 남은 물량 손절은 진입가로)"
     if e["type"] == "exit":
         r = e["reason"]
         tot = e["total_pnl"]
         if r == "손절":
-            return f"🔴 손절 {won(tot)} ({e['price']:,.0f})"
+            return f"{pre}🔴 손절 {won(tot)} ({_mp(e['price'])})"
         icon = "✅" if tot > 0 else ("🔴" if tot < 0 else "⚪")
         part = f" / 이번 청산 {won(e['part_pnl'])}" if abs(e["part_pnl"] - tot) > 0.5 else ""
-        return f"{icon} 청산({r}) 거래 합계 {won(tot)}{part} ({e['price']:,.0f})"
+        return f"{pre}{icon} 청산({r}) 거래 합계 {won(tot)}{part} ({_mp(e['price'])})"
     if e["type"] == "daystop":
         return f"⛔ 오늘 신규 금지({e['reason']}, 오늘 실현 {won(e['day_pnl'])})"
     if e["type"] == "target":
@@ -697,6 +821,49 @@ def save_log():
         f.write("\n".join(lines) + "\n")
 
 
+def to_data(c):
+    ts = sorted(c)
+    return engine.Data(ts, [c[t][0] for t in ts], [c[t][1] for t in ts], [c[t][2] for t in ts],
+                       [c[t][3] for t in ts], [c[t][4] for t in ts])
+
+
+MAX_WAIT_LAG = dt.timedelta(minutes=60)
+
+
+def compute_main(P, cands, start_time, events):
+    """본 장부 계산(engine.run_multi). cands: {market: candles dict} (BTC 필수).
+    마지막 봉 기준 매매 대상 코인 중 봉이 늦게 들어온 코인이 있으면(60분 이내 지연), 모든 코인을 그 코인의 마지막 봉까지만
+    계산한다 → 다음 실행에서 늦은 봉이 들어와도 이미 계산·알림한 과거가 바뀌지 않게(결정적 재계산 유지)."""
+    btc = cands.get("KRW-BTC") or cands[engine.market_order(cands)[0]]
+    lasts = {m: max(c) for m, c in cands.items() if c}
+    ref = max(lasts.values())
+    act = engine.params_at(P, ref)["markets"]
+    cut = ref
+    for m in act:
+        if m not in lasts:
+            log(f"{engine.coin_of(m)} 봉 파일이 없어 이 코인은 빼고 계산합니다.", warn=True)
+        elif lasts[m] < ref:
+            if ref - lasts[m] <= MAX_WAIT_LAG:
+                cut = min(cut, lasts[m])
+            else:
+                log(f"{engine.coin_of(m)} 봉이 {lasts[m]:%m-%d %H:%M} 에서 멈춤({int((ref - lasts[m]).total_seconds() // 60)}분 지연) — "
+                    f"기다리지 않고 계산합니다(나중에 봉이 채워지면 과거 결과가 바뀔 수 있음).", warn=True)
+    if cut < ref:
+        log(f"일부 코인 봉이 늦어 {cut:%m-%d %H:%M} 봉까지만 계산합니다(다음 실행에서 이어감).")
+    Ds = {}
+    for m, c in cands.items():
+        cc = {t: v for t, v in c.items() if t <= cut} if cut < ref else c
+        if not cc:
+            continue
+        Ds[m] = to_data(cc)
+        if Ds[m].gaps:
+            log(f"{engine.coin_of(m)}: 5분 간격이 아닌 곳 {Ds[m].gaps}개(거래소 데이터 공백). 그대로 계산합니다.")
+    R = engine.run_multi(Ds, P, start_time=start_time, events=events)
+    bt = [t for t in btc if t <= cut]
+    R["last_bar_time"] = max(bt).strftime(TFMT)
+    return R
+
+
 def main():
     ap = argparse.ArgumentParser(description="BTC 5분봉 가상 매매 봇 (원칙 v1.4.1, 실제 주문 없음)")
     ap.add_argument("--dry-run", action="store_true", help="알림을 보내지 않고 화면에만 출력")
@@ -725,25 +892,35 @@ def main():
     if first > start_time - dt.timedelta(days=1):
         log(f"워밍업 데이터가 1일 미만입니다(첫 봉 {first:%m-%d %H:%M}). 초반 지표가 부정확할 수 있습니다.", warn=True)
 
-    ts = sorted(candles)
-    D = engine.Data(ts, [candles[t][0] for t in ts], [candles[t][1] for t in ts], [candles[t][2] for t in ts],
-                    [candles[t][3] for t in ts], [candles[t][4] for t in ts])
-    if D.gaps:
-        log(f"5분 간격이 아닌 곳 {D.gaps}개(거래소 데이터 공백). 그대로 계산합니다.")
+    # 다른 코인(어느 규칙 단계에서든 매매 대상인 코인) 5분봉도 받아 둔다 — 그림자 장부와 같은 파일(candle_path)
+    main_mkt = cfg.get("market", "KRW-BTC")
+    cands = {main_mkt: candles}
+    for m in engine.all_markets(P):
+        if m == main_mkt:
+            continue
+        path = candle_path(m)
+        c, u, _ = update_candles(cfg, start_time, end, market=m, path=path)
+        if u:
+            save_candles(c, path)
+        if c:
+            cands[m] = c
+        else:
+            log(f"{engine.coin_of(m)} 봉 없음 — 이 코인은 빼고 계산합니다.", warn=True)
     events = engine.load_events(os.path.join(HERE, cfg["events_file"]) if cfg.get("events_file") else EVENTS_DEFAULT)
-    R = engine.run(D, P, start_time=start_time, close_at_end=False, events=events)
-    R["last_bar_time"] = ts[-1].strftime(TFMT)
-    log(f"재계산: 봉 {D.n}개(매매 대상 {len(R['curve'])}개), 거래 {len(R['trades'])}건, "
-        f"포지션 {'있음' if R['position'] else '없음'}, 실현 {won(R['realized'])}")
+    R = compute_main(P, cands, start_time, events)
+    log(f"재계산: 코인 {', '.join(engine.coin_of(m) for m in cands)}, 거래 {len(R['trades'])}건 "
+        f"(매매 대상 봉 {len(R['curve'])}개), 포지션 {len(R['positions'])}개, 진입 대기 {len(R['pendings'])}개, "
+        f"실현 {won(R['realized'])}")
+    ts = [engine.parse_kst(R["last_bar_time"])]
 
     prev = read_json(STATUS, None)
     status = build_status(cfg, P, R, start_time, primary, used, dt.datetime.now(KST))
     write_trades(R["trades"])
     write_json(STATUS, status)
     write_account(status, R)
-    write_journal(R["trades"], JOURNAL, events=events)
+    write_journal(R["trades"], JOURNAL, coin_of=coin_tr, events=events)
     log("장부 저장: ledger/trades.csv, ledger/status.json, ledger/ACCOUNT.md, ledger/journal.csv")
-    run_shadows(cfg, end, candles, events)
+    run_shadows(cfg, end, candles, events, preloaded=cands)
 
     if prev and prev.get("has_position") != status["has_position"]:
         log(f"포지션 변화: {'없음 → 있음' if status['has_position'] else '있음 → 없음'}")
