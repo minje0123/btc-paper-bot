@@ -89,12 +89,12 @@
   },
   "5acddaecac67": {
    "status": "queued",
-   "fails": 1
+   "fails": 2
   }
  },
  "extractor": {
   "queue": 1,
-  "last_attempt": "2026-11-18 02:55:20",
+  "last_attempt": "2026-11-18 02:55:55",
   "state": "FAIL",
   "last_error": "TimeoutError: The read operation timed out"
  },
