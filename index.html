@@ -701,7 +701,10 @@
       + (last ? `<br>최근 출금: ${esc(last.time.slice(0, 16))} ${won(last.amount)}원 (지난주 수익 ${sWon(last.week_pnl)}의 ${esc(S.withdraw_pct)}%)` : '');
     $('mmSub').textContent = td.date ? `${td.date} 기준` : '';
     $('rulesText').textContent = `규칙: 1R = 거래 시드의 ${S.risk_pct}%(1시간 반대·B+·C ${S.reduced_risk_pct}%), 1회 위험 상한 5% · 최소 손절폭 0.40%, 최대 1.5% · 레버리지 상한 10배 · 수수료 0.05%·슬리피지 1틱 · `
-      + `T1에서 50% 익절 후 남은 물량 본절 · 하루 −${td.loss_limit_pct}% 또는 ${td.max_consec ?? 2}연속 손절이면 그날 신규 진입 금지`
+      + `T1에서 50% 익절 후 남은 물량 본절 · `
+      + (td.loss_limit_on === false || !has(td.loss_limit_pct)
+          ? `하루 손실 한도 없음(11/18 08:45부터) · ${td.max_consec ?? 2}연속 손절이면 신규 진입 금지`
+          : `하루 −${td.loss_limit_pct}% 또는 ${td.max_consec ?? 2}연속 손절이면 그날 신규 진입 금지`)
       + (td.target_pct ? ` · 하루 +${td.target_pct}% 달성 후엔 목표가 남는 크기만` : '')
       + (S.first_win_half ? ' · 그날 첫 매매가 수익이면 다음 매매 절반' : '')
       + (S.withdraw_pct ? ` · 매주 월요일 지난주 수익의 ${S.withdraw_pct}% 출금` : '') + '.';
