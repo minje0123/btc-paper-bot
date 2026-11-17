@@ -25,7 +25,19 @@
   "max_drawdown_pct": 3.68,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-XRP",
+    "coin": "XRP",
+    "side": "롱",
+    "setup": "구간",
+    "grade": "B",
+    "signal_time": "2026-11-18 08:50:00",
+    "signal_close": 1337.0,
+    "stop": 1327.336,
+    "t1": 1346.0,
+    "qty": 499.4917,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-18",
@@ -46,11 +58,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4827
   },
-  "last_bar_time": "2026-11-18 08:45:00",
-  "last_price": 88350000,
+  "last_bar_time": "2026-11-18 08:50:00",
+  "last_price": 88351000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-18 08:50:24",
+  "updated_at": "2026-11-18 08:55:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -60,22 +72,38 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 2.0,
-  "open_positions_count": 0,
-  "open_risk_won": 0,
-  "open_risk_pct": 0.0,
+  "open_positions_count": 1,
+  "open_risk_won": 4827,
+  "open_risk_pct": 0.5,
   "positions": [],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-XRP",
+      "coin": "XRP",
+      "side": "롱",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-18 08:50:00",
+      "signal_close": 1337.0,
+      "stop": 1327.336,
+      "t1": 1346.0,
+      "qty": 499.4917,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4827,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 88350000,
+    "BTC": 88351000,
     "ETH": 2481000,
-    "SOL": 102100,
-    "XRP": 1338.0
+    "SOL": 102000,
+    "XRP": 1337.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-18 08:45:00",
-    "ETH": "2026-11-18 08:45:00",
-    "SOL": "2026-11-18 08:45:00",
-    "XRP": "2026-11-18 08:45:00"
+    "BTC": "2026-11-18 08:50:00",
+    "ETH": "2026-11-18 08:50:00",
+    "SOL": "2026-11-18 08:50:00",
+    "XRP": "2026-11-18 08:50:00"
   },
   "independent_clusters": 12,
   "stop_decomp": {
