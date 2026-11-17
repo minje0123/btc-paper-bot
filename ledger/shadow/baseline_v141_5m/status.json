@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 18:20:00",
+      "last_bar_time": "2026-11-17 18:25:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": -6133,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 18:20:00",
+      "last_bar_time": "2026-11-17 18:25:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 0,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 18:20:00",
+      "last_bar_time": "2026-11-17 18:25:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 0,
@@ -113,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 18:20:00",
+      "last_bar_time": "2026-11-17 18:25:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": -3581,
@@ -122,5 +122,18 @@
       }
     }
   },
-  "updated_at": "2026-11-17 18:25:26"
+  "updated_at": "2026-11-17 18:30:26",
+  "independent_clusters": 3,
+  "stop_decomp": {
+    "plan_R": -1.0,
+    "gap_R": 0.0,
+    "slip_R": -0.0122,
+    "fee_entry_R": -0.1113,
+    "fee_exit_R": -0.1113,
+    "sum_R": -1.2347,
+    "R": -1.2347,
+    "risk_ratio": 1.073,
+    "n": 2
+  },
+  "r_definition": "R = 거래 손익(수수료 포함) ÷ (수량 × |진입 체결가 − 최초 손절가|)"
 }

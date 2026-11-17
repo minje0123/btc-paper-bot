@@ -1,0 +1,63 @@
+{
+  "schedule": {
+    "last_attempt": "2026-11-17 18:30:20",
+    "ok": true,
+    "last_success": "2026-11-17 18:30:20",
+    "error": null,
+    "received": 8,
+    "added": 4,
+    "skipped": [
+      "[일정] Fed Chairman Warsh Speaks (USD): 과거 시각"
+    ]
+  },
+  "sources": {
+    "ff_thisweek": {
+      "last_attempt": "2026-11-17 18:30:20",
+      "optional": false,
+      "ok": true,
+      "last_success": "2026-11-17 18:30:20",
+      "error": null,
+      "count": 8
+    },
+    "ff_nextweek": {
+      "last_attempt": "2026-11-17 18:30:20",
+      "ok": false,
+      "error": "HTTP 404",
+      "optional": true
+    },
+    "coindesk": {
+      "last_attempt": "2026-11-17 18:30:20",
+      "ok": true,
+      "last_success": "2026-11-17 18:30:20",
+      "error": null,
+      "count": 25
+    },
+    "cointelegraph": {
+      "last_attempt": "2026-11-17 18:30:20",
+      "ok": true,
+      "last_success": "2026-11-17 18:30:20",
+      "error": null,
+      "count": 30
+    },
+    "theblock": {
+      "last_attempt": "2026-11-17 18:30:20",
+      "ok": true,
+      "last_success": "2026-11-17 18:30:20",
+      "error": null,
+      "count": 20
+    }
+  },
+  "breaking": {
+    "last_attempt": "2026-11-17 18:30:20",
+    "ok": true,
+    "last_success": "2026-11-17 18:30:20",
+    "error": null,
+    "received": 75,
+    "recent": 4,
+    "matched": 1,
+    "added": 1,
+    "sources_ok": 3,
+    "skipped": []
+  },
+  "note": "이벤트 피드 수집 기록(봇이 갱신). 정기 일정 0건 = 받기는 성공했지만 해당 일정이 없다는 뜻이지, 데이터가 없다는 뜻이 아님."
+}

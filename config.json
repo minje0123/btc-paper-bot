@@ -205,12 +205,17 @@
       "name": "v4_30m_fixed",
       "enabled": true,
       "description": "v4 짝 비교 A: PREREG v3 30m 실행(E1 구현 세부 — 30분봉 실행, 방향 90분·보조 360분, 최소 손절 0.40%·최대 4.1568%, E2~E8 에서 고른 30m 그대로) + 기존 고정 최소 손절. 1R 0.5% 고정, 자금 관리 끔, 이벤트 회피 끔.",
-      "markets": ["KRW-BTC", "KRW-ETH", "KRW-XRP", "KRW-SOL"],
+      "markets": [
+        "KRW-BTC",
+        "KRW-ETH",
+        "KRW-XRP",
+        "KRW-SOL"
+      ],
       "timeframe": 30,
       "warmup_days": 7,
       "pair_group": "v4_30m",
       "pair_role": "A",
-      "start_time": null,
+      "start_time": "2026-11-21 09:30",
       "initial_capital": 1000000,
       "params": {
         "eventBlock": false,
@@ -231,12 +236,17 @@
       "name": "v4_30m_cost",
       "enabled": true,
       "description": "v4 짝 비교 B: v4_30m_fixed 와 같고 손절 하한만 PREREG v3 E3 비용 기준 손절(왕복 비용 2×0.05%+2틱 ÷ 손절 거리 ≤ 15%, 최소 0.40% 조건 대신). 같은 신호는 같은 signal_id.",
-      "markets": ["KRW-BTC", "KRW-ETH", "KRW-XRP", "KRW-SOL"],
+      "markets": [
+        "KRW-BTC",
+        "KRW-ETH",
+        "KRW-XRP",
+        "KRW-SOL"
+      ],
       "timeframe": 30,
       "warmup_days": 7,
       "pair_group": "v4_30m",
       "pair_role": "B",
-      "start_time": null,
+      "start_time": "2026-11-21 09:30",
       "initial_capital": 1000000,
       "params": {
         "eventBlock": false,
