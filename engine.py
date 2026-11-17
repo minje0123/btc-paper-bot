@@ -47,6 +47,8 @@ DEFAULTS = dict(
     useOppEng=True,      # 잔량 청산: 반대 장악형
     exitMode="v14",      # "v14" 반익반본 / "v13" 1.5R 전량
     dayLossP=2.0,        # 하루 손실 한도 %
+    dayLossOn=True,      # False 면 하루 손실 한도(dayLossP)만 끔 — 신호 승인·배분 재검사 모두. 연패 정지·목표 보호는 그대로
+                         # (dayLossP=0 은 '끔'이 아니라 '손실 0원에서 정지'라서 별도 플래그를 둠, 2026-11-18)
     maxConsec=2,         # 연속 손절 한도
     fee=0.0005,          # 수수료(편도) 0.05%
     slip=1000.0,         # 슬리피지(원) — KRW-BTC 1틱
@@ -182,7 +184,8 @@ def event_hit(wins, t_fill):
 
 HARD_MAX_RISK_P = 5.0        # 어떤 설정으로도 넘을 수 없는 1회 위험 상한 %
 # eventBlock 도 과거 단계가 물려받지 않는다 → 현재 설정에서 켜도 rule_history 의 마지막 until 이전 장부는 그대로.
-HIST_NO_INHERIT = ("markets", "maxOpenPositions", "maxOpenRiskPct", "minRoomFrac", "slipMode", "slipTicks", "eventBlock")
+HIST_NO_INHERIT = ("markets", "maxOpenPositions", "maxOpenRiskPct", "minRoomFrac", "slipMode", "slipTicks", "eventBlock",
+                   "dayLossOn")
 
 
 def load_params(config):
@@ -199,6 +202,7 @@ def load_params(config):
               "eventAfterMin", "costGateR"):
         P[k] = float(P[k])
     P["eventBlock"] = bool(P["eventBlock"])
+    P["dayLossOn"] = bool(P["dayLossOn"])
     P["swLen"] = int(P["swLen"]); P["maxConsec"] = int(P["maxConsec"])
     for k in ("firstWinHalf", "afterTargetSizing"):
         P[k] = bool(P[k])
@@ -718,7 +722,7 @@ def run(D, P, start_time=None, close_at_end=False, events=None, coin=None):
                 dayFirst = "수익" if tr["pnl"] > 0 else ("손실" if tr["pnl"] < 0 else "본전")
         dayReal = realized - dayStartNP
         lossAmt = dayStartEq * P["dayLossP"] / 100
-        hitLoss = dayReal <= -lossAmt
+        hitLoss = P["dayLossOn"] and dayReal <= -lossAmt
         hitConsec = consec >= P["maxConsec"]
         dayStop = hitLoss or hitConsec
         if dayStop:
@@ -1331,7 +1335,7 @@ def run_multi(Ds, P, start_time=None, events=None):
                     dayFirst = "수익" if tr["pnl"] > 0 else ("손실" if tr["pnl"] < 0 else "본전")
             dayReal = A.realized - dayStartNP
             lossAmt = dayStartEq * P["dayLossP"] / 100
-            hitLoss = dayReal <= -lossAmt
+            hitLoss = P["dayLossOn"] and dayReal <= -lossAmt
             hitConsec = consec >= P["maxConsec"]
             dayStop = hitLoss or hitConsec
             if dayStop:
@@ -1403,7 +1407,7 @@ def run_multi(Ds, P, start_time=None, events=None):
                                day_real=dayReal, loss_amt=lossAmt, rank=_rk)
                     if len(busy) >= P["maxOpenPositions"]:
                         alloc_log.append(dict(rec, result="거절: 동시 보유 상한")); continue
-                    if dayReal - open_risk <= -lossAmt:
+                    if P["dayLossOn"] and dayReal - open_risk <= -lossAmt:
                         alloc_log.append(dict(rec, result="거절: 하루 한도(실현−열린 위험)")); continue
                     rm = cd["rm"]; cut = False
                     if P["maxOpenRiskPct"] > 0:

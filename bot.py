@@ -672,8 +672,9 @@ def build_status(cfg, P, R, start_time, primary, used, now):
                    target_pct=P["dayTargetP"],
                    target_amount=round(day["target_amount"]) if day["target_amount"] is not None else None,
                    target_reached=bool(day["target_reached"]),
-                   loss_limit_pct=P["dayLossP"], max_consec=P["maxConsec"],
-                   loss_limit_amount=round(day["loss_limit_amount"]),   # 양수 금액. 실현손익이 −이 값 이하면 신규 금지
+                   loss_limit_pct=P["dayLossP"] if P["dayLossOn"] else None, max_consec=P["maxConsec"],
+                   loss_limit_on=bool(P["dayLossOn"]),
+                   loss_limit_amount=round(day["loss_limit_amount"]) if P["dayLossOn"] else None,   # 양수 금액. 실현손익이 −이 값 이하면 신규 금지
                    first_trade_result=day["first_trade_result"],         # 수익 / 손실 / 본전 / None(아직 없음)
                    next_size_factor=round(day["next_size_factor"], 3),   # 1 / 0.5 / 목표 후 축소 비율 / 0(진입 안 함)
                    next_size_mode=day["next_size_mode"],
@@ -730,7 +731,10 @@ def write_account(status, R):
     if td["target_amount"] is not None:
         L.append(f"| 오늘 목표 (+{td['target_pct']:g}%) | {td['target_amount']:,}원 → "
                  f"{'🎯 달성' if td['target_reached'] else '진행 ' + format(td['realized_pnl'] / td['target_amount'] * 100 if td['target_amount'] else 0, '.0f') + '%'} |")
-    L.append(f"| 오늘 손실 한도 (−{td['loss_limit_pct']:g}%) | −{td['loss_limit_amount']:,}원 |")
+    if td.get("loss_limit_pct") is not None and td.get("loss_limit_amount") is not None:
+        L.append(f"| 오늘 손실 한도 (−{td['loss_limit_pct']:g}%) | −{td['loss_limit_amount']:,}원 |")
+    else:
+        L.append("| 오늘 손실 한도 | 없음 (2026-11-18 08:45부터 해제) |")
     L.append(f"| 오늘 첫 매매 결과 | {td['first_trade_result'] or '아직 없음'} |")
     L.append(f"| 다음 매매 크기 | {td['next_size_mode']} (×{td['next_size_factor']:g}, 위험 {td['next_risk_won']:,}원) |")
     L.append(f"| 연속 손절 | {td['consecutive_losses']}회 |")
@@ -822,7 +826,9 @@ def write_account(status, R):
     td = status["today"]
     L.append(f"\n---\n규칙: 1R = 거래 시드의 {status['risk_pct']:g}%(1시간 반대·B+·C {status['reduced_risk_pct']:g}%), "
              f"1회 위험 상한 5%, 최소 손절폭 0.40%, 최대 1.5%, 레버리지 상한 10배, 수수료 0.05%·슬리피지 1틱, "
-             f"T1 반익절 후 본절, 하루 −{td['loss_limit_pct']:g}% 또는 {td.get('max_consec', 2)}연속 손절 시 신규 금지"
+             + (f"T1 반익절 후 본절, 하루 −{td['loss_limit_pct']:g}% 또는 {td.get('max_consec', 2)}연속 손절 시 신규 금지"
+                if td.get("loss_limit_pct") is not None
+                else f"T1 반익절 후 본절, 하루 손실 한도 없음, {td.get('max_consec', 2)}연속 손절 시 신규 금지")
              + (f", 하루 +{td['target_pct']:g}% 달성 후엔 목표가 남는 크기만" if td["target_pct"] else "")
              + (", 그날 첫 매매 수익이면 다음 매매 절반" if status.get("first_win_half") else "")
              + (f", 매주 월요일 지난주 수익의 {status['withdraw_pct']:g}% 출금" if status["withdraw_pct"] else "")
@@ -844,7 +850,7 @@ def write_account(status, R):
 # - 본 장부와 완전히 별도: 별도 규칙(params 로 본 설정을 덮어씀), 별도 파일(ledger/shadow/{name}/), 알림 없음.
 # - 코인마다 독립 계좌(코인당 포지션 1개, initial_capital 각각). rule_history 는 쓰지 않음.
 # - start_time 이 비어 있으면 첫 실행 시각으로 채워 config.json 에 기록(이후 고정).
-SHADOW_SKIP_KEYS = ("rule_history", "shadow_ledgers", "start_time")
+SHADOW_SKIP_KEYS = ("rule_history", "shadow_ledgers", "start_time", "dayLossOn")   # 하루 손실 한도 끔은 본 장부 전용
 
 
 def shadow_params(cfg, sh):

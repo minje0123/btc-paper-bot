@@ -1,0 +1,127 @@
+{
+  "T1_regression_before_activation": {
+    "pass_": true,
+    "data_last_bar": "2026-11-18 08:15:00+09:00",
+    "activation": "2026-11-18 08:45:00+09:00",
+    "trades": 12,
+    "events": 30,
+    "alloc": 14,
+    "diff_keys": [],
+    "note": "데이터 마지막 봉이 해제 시각보다 앞서야 이 비교가 '해제 전 장부 불변'을 뜻함"
+  },
+  "T2_shadow_params_unchanged": {
+    "pass_": true,
+    "shadows": {
+      "baseline_v141_5m": {
+        "same": true,
+        "new_keys": [
+          "dayLossOn"
+        ],
+        "dayLossOn": true,
+        "dayLossP": 100.0,
+        "costGateR": 0.0
+      },
+      "v4_30m_fixed": {
+        "same": true,
+        "new_keys": [
+          "dayLossOn"
+        ],
+        "dayLossOn": true,
+        "dayLossP": 100.0,
+        "costGateR": 0.0
+      },
+      "v4_30m_cost": {
+        "same": true,
+        "new_keys": [
+          "dayLossOn"
+        ],
+        "dayLossOn": true,
+        "dayLossP": 100.0,
+        "costGateR": 0.15
+      },
+      "news_v1_5m": {
+        "same": true,
+        "new_keys": [
+          "dayLossOn"
+        ],
+        "dayLossOn": true,
+        "dayLossP": 100.0,
+        "costGateR": 0.0
+      }
+    }
+  },
+  "T3_dayloss_released": {
+    "pass_": true,
+    "control_dayloss_stops": 3,
+    "control_dayloss_rejects": 4,
+    "off_dayloss_stops": 0,
+    "off_dayloss_rejects": 0,
+    "off_entries_after_control_stop": 32,
+    "control_rejected_same_candidate_results_in_off": [
+      [
+        "2026-11-14 16:15:00+09:00",
+        "XRP",
+        "진입"
+      ],
+      [
+        "2026-11-16 03:25:00+09:00",
+        "SOL",
+        "진입"
+      ],
+      [
+        "2026-11-16 04:15:00+09:00",
+        "SOL",
+        "진입"
+      ],
+      [
+        "2026-11-18 01:20:00+09:00",
+        "ETH",
+        "진입"
+      ]
+    ],
+    "control_rejected_then_entered_in_off": 4,
+    "trades_on": 32,
+    "trades_off": 68
+  },
+  "T4_other_limits_kept": {
+    "pass_": true,
+    "entries": 68,
+    "open_risk_room_ok": true,
+    "per_trade_risk_ok": true,
+    "max_open_ok": true,
+    "per_position_leverage_ok": true,
+    "max_open_risk_pct_seen": 1.0029,
+    "risk_room_rejects": 0,
+    "max_open_rejects": 0,
+    "stop_loss_exits": 36,
+    "consec3_stops": 4,
+    "consec3_no_entry_after": true,
+    "consec1_stops": 5,
+    "consec1_no_entry_after": true,
+    "target_events": 1,
+    "target_protection_ok": true
+  },
+  "T4b_tightened_limits_still_bind": {
+    "pass_": true,
+    "open_risk_0p6_rejects": 17,
+    "open_risk_0p6_cut_entries": 1,
+    "open_risk_0p6_max_seen": 0.6,
+    "max_open_1_rejects": 37,
+    "max_open_1_seen": 1,
+    "maxLev_0p3_notional_ok": true,
+    "maxLev_0p3_trades": 63
+  },
+  "T5_zero_is_not_off": {
+    "pass_": true,
+    "dayLossP0_dayloss_stops": 4,
+    "note": "dayLossP=0 은 하루 실현 0원 이하에서 바로 정지 → 끔으로 쓸 수 없음"
+  },
+  "summary": {
+    "T1_regression_before_activation": true,
+    "T2_shadow_params_unchanged": true,
+    "T3_dayloss_released": true,
+    "T4_other_limits_kept": true,
+    "T4b_tightened_limits_still_bind": true,
+    "T5_zero_is_not_off": true
+  }
+}

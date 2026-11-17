@@ -34,6 +34,8 @@
   "exitMode": "v14",
   "_하루 한도·목표": "하루 실현 −1% 또는 2연속 손절 → 그날(KST) 신규 금지. 하루 실현 +1% 이상(2R, 2026-11-16 23:50부터. 이전엔 +2%) → 일반 크기 금지, 이후엔 '손절돼도 목표가 남는 크기'(위험 ≤ 오늘 실현 − 목표)만, 그 값이 1R의 20% 미만이면 진입 안 함. 그날 첫 매매가 수익이면 그날 남은 매매는 수량 절반.",
   "dayLossP": 2.0,
+  "dayLossOn": false,
+  "_하루 손실 한도 해제": "2026-11-18 08:45(KST)부터 하루 손실 한도(dayLossP 2%)만 끔(dayLossOn=false): 신호 승인과 배분 재검사(실현−열린 위험 ≤ −한도) 모두 해제. dayLossP=0 은 '손실 0원에서 정지'라 끔이 아니므로 별도 플래그 사용. 개별 손절·1회 위험 0.5%·5% 절대 상한·열린 위험 합계 2%·레버리지 10배·3연패 정지·하루 목표 보호·첫 승 후 절반은 그대로. 그림자 장부(v4 E3 포함)는 dayLossOn 을 물려받지 않음. 이전 장부는 rule_history 로 그대로.",
   "maxConsec": 3,
   "dayTargetP": 1.0,
   "afterTargetSizing": true,
@@ -58,6 +60,27 @@
   "maxOpenRiskPct": 2.0,
   "minRoomFrac": 0.25,
   "rule_history": [
+    {
+      "until": "2026-11-18 08:45",
+      "rules": "하루 손실 한도 끄기 전 (이벤트 회피 켬, 4코인·동시 4개·열린 위험 2%, 1회 위험 0.5%, 하루 −2%·3연패 종료, 하루 목표 +1%, 첫 승 후 절반, 주간 30% 출금, 슬리피지 1틱)",
+      "params": {
+        "dayLossOn": true,
+        "dayLossP": 2.0,
+        "maxConsec": 3,
+        "eventBlock": true,
+        "markets": [
+          "KRW-BTC",
+          "KRW-ETH",
+          "KRW-XRP",
+          "KRW-SOL"
+        ],
+        "maxOpenPositions": 4,
+        "maxOpenRiskPct": 2.0,
+        "minRoomFrac": 0.25,
+        "slipMode": "tick",
+        "slipTicks": 1
+      }
+    },
     {
       "until": "2026-11-17 15:50",
       "rules": "이벤트 회피 켜기 전 (4코인·동시 4개·열린 위험 2%, 1회 위험 0.5%, 하루 −2%·3연패 종료, 하루 목표 +1%, 첫 승 후 절반, 주간 30% 출금, 슬리피지 1틱)",
