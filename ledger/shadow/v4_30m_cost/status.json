@@ -44,9 +44,9 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:30:00",
+      "last_bar_time": "2026-11-18 00:00:00",
       "today": {
-        "date": "2026-11-17",
+        "date": "2026-11-18",
         "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
@@ -68,9 +68,9 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:30:00",
+      "last_bar_time": "2026-11-18 00:00:00",
       "today": {
-        "date": "2026-11-17",
+        "date": "2026-11-18",
         "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
@@ -92,9 +92,9 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:30:00",
+      "last_bar_time": "2026-11-18 00:00:00",
       "today": {
-        "date": "2026-11-17",
+        "date": "2026-11-18",
         "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
@@ -116,16 +116,16 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:30:00",
+      "last_bar_time": "2026-11-18 00:00:00",
       "today": {
-        "date": "2026-11-17",
+        "date": "2026-11-18",
         "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
     }
   },
-  "updated_at": "2026-11-18 00:25:24",
+  "updated_at": "2026-11-18 00:30:25",
   "timeframe": 30,
   "pair_group": "v4_30m",
   "pair_role": "B",
