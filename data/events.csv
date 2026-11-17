@@ -1,5 +1,6 @@
-# 경제 지표 일정 (KST). config.json eventBlock=true 일 때만 발표 30분 전 ~ 15분 뒤 신규 진입 금지(기본 꺼짐: 일지 기록만).
-# 한 줄에 하나: time_kst(YYYY-MM-DD HH:MM),name,importance(선택). '#' 으로 시작하는 줄은 무시.
-# 예) 2026-12-10 22:30,미국 CPI,high  /  2026-12-17 04:00,FOMC 금리 결정,high
-# 다가오는 미국 CPI·FOMC·고용지표 등은 인베스팅닷컴 경제 캘린더에서 확인해 아래에 추가하세요(UmEPMyzjQS8).
-time_kst,name,importance
+# 경제 일정·이벤트 (KST). config.json eventBlock=true 일 때만 importance=high 일정의 [발표−before_min, 발표+after_min) 동안
+# 해당 코인(coins: ALL 또는 BTC|ETH|XRP|SOL) 신규 진입 금지. before/after 비면 config eventBeforeMin/eventAfterMin.
+# added_at(KST) 이 있으면 그 시각 이후 봉에만 적용(나중에 추가한 일정이 과거 장부를 바꾸지 않음). 없으면 늘 적용.
+# 봇이 Gemini(tools/gemini_events.py)로 자동 추가한다. 손으로 추가해도 됨: 예) 2026-12-10 22:30,미국 CPI,high,ALL,,,2026-11-17 16:00,https://www.bls.gov/
+# 옛 형식(time_kst,name,importance)도 그대로 읽힌다. '#' 으로 시작하는 줄은 무시.
+time_kst,name,importance,coins,before_min,after_min,added_at,source

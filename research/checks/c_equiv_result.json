@@ -3,63 +3,161 @@
   "cases": {
     "1_single_BTC_config": {
       "trades_csv": {
-        "same_without_coin_col": true,
+        "same_without_coin_col": false,
         "coin_col_all_BTC": true,
         "header_coin_after_번호": true,
         "rows": 3
       },
       "status_json": {
-        "same_on_old_keys": true,
-        "diff": {},
-        "added_keys": [
-          "last_bar_times",
-          "last_prices",
-          "markets",
-          "max_open_positions",
-          "max_open_risk_pct",
-          "open_positions_count",
-          "open_risk_pct",
-          "open_risk_won",
-          "pending_entries",
-          "positions"
-        ]
+        "same_on_old_keys": false,
+        "diff": {
+          "balance": [
+            986627,
+            993699
+          ],
+          "trading_seed": [
+            986627,
+            993699
+          ],
+          "risk_per_trade_won": [
+            4933,
+            4968
+          ],
+          "total_value": [
+            986627,
+            993699
+          ],
+          "equity": [
+            986627,
+            993699
+          ],
+          "realized_pnl": [
+            -13373,
+            -6301
+          ],
+          "trades_count": [
+            4,
+            3
+          ],
+          "win_rate": [
+            25.0,
+            33.3
+          ],
+          "avg_R": [
+            -0.684,
+            -0.5
+          ],
+          "max_drawdown_pct": [
+            1.57,
+            0.86
+          ],
+          "today": [
+            {
+              "date": "2026-11-17",
+              "realized_pnl": -12747,
+              "consecutive_losses": 2,
+              "no_new_entries": false,
+              "reason": null,
+              "start_equity": 999374,
+              "target_pct": 1.0,
+              "target_amount": 9994,
+              "target_reached": false,
+              "loss_limit_pct": 2.0,
+              "max_consec": 3,
+              "loss_limit_amount": 19987,
+              "first_trade_result": "손실",
+              "next_size_factor": 1.0,
+              "next_size_mode": "보통",
+              "next_risk_won": 4933
+            },
+            {
+              "date": "2026-11-17",
+              "realized_pnl": -5674,
+              "consecutive_losses": 1,
+              "no_new_entries": false,
+              "reason": null,
+              "start_equity": 999374,
+              "target_pct": 1.0,
+              "target_amount": 9994,
+              "target_reached": false,
+              "loss_limit_pct": 2.0,
+              "max_consec": 3,
+              "loss_limit_amount": 19987,
+              "first_trade_result": "손실",
+              "next_size_factor": 1.0,
+              "next_size_mode": "보통",
+              "next_risk_won": 4968
+            }
+          ],
+          "markets": [
+            [
+              "BTC",
+              "ETH",
+              "SOL",
+              "XRP"
+            ],
+            [
+              "BTC"
+            ]
+          ],
+          "max_open_positions": [
+            4,
+            1
+          ],
+          "max_open_risk_pct": [
+            2.0,
+            0.0
+          ],
+          "last_prices": [
+            {
+              "BTC": 88063000,
+              "ETH": 2492000,
+              "SOL": 98700.0,
+              "XRP": 1309.0
+            },
+            {
+              "BTC": 88063000
+            }
+          ],
+          "last_bar_times": [
+            {
+              "BTC": "2026-11-17 15:05:00",
+              "ETH": "2026-11-17 15:05:00",
+              "SOL": "2026-11-17 15:05:00",
+              "XRP": "2026-11-17 15:05:00"
+            },
+            {
+              "BTC": "2026-11-17 15:05:00"
+            }
+          ]
+        },
+        "added_keys": []
       },
-      "journal_csv_same": true,
+      "journal_csv_same": false,
       "n_trades": 3,
-      "last_bar_time": "2026-11-17 09:35:00",
+      "last_bar_time": "2026-11-17 15:05:00",
       "positions": 0,
       "pendings": 0,
-      "pass": true
+      "pass": false
     },
     "2_actual_config_4coins": {
       "trades_csv": {
-        "same_without_coin_col": true,
-        "coin_col_all_BTC": true,
+        "same_without_coin_col": false,
+        "coin_col_all_BTC": false,
         "header_coin_after_번호": true,
-        "rows": 3
+        "rows": 4
       },
       "status_json": {
         "same_on_old_keys": true,
         "diff": {},
-        "added_keys": [
-          "last_bar_times",
-          "last_prices",
-          "markets",
-          "max_open_positions",
-          "max_open_risk_pct",
-          "open_positions_count",
-          "open_risk_pct",
-          "open_risk_won",
-          "pending_entries",
-          "positions"
-        ]
+        "added_keys": []
       },
       "journal_csv_same": true,
-      "n_trades": 3,
-      "last_bar_time": "2026-11-17 09:35:00",
+      "n_trades": 4,
+      "last_bar_time": "2026-11-17 15:05:00",
       "positions": 0,
       "pendings": 0,
-      "pass": true
+      "pass": false
     },
     "3_raw_run_vs_run_multi_BTC": {
       "all_same": true,
@@ -115,8 +213,8 @@
         "targetDays": true,
         "last_close": true
       },
-      "n_trades": 9,
-      "n_events": 25,
+      "n_trades": 10,
+      "n_events": 27,
       "pass": true,
       "note": "거래ID 앞 코인 접두어·청산내역 문자열(가격 소수 표기)만 정규화, 나머지 모든 필드 비교"
     },
@@ -175,8 +273,8 @@
         "targetDays": true,
         "last_close": true
       },
-      "n_trades": 10,
-      "n_events": 27,
+      "n_trades": 13,
+      "n_events": 33,
       "pass": true,
       "note": "거래ID 앞 코인 접두어·청산내역 문자열(가격 소수 표기)만 정규화, 나머지 모든 필드 비교"
     },
@@ -192,5 +290,5 @@
       "pass": true
     }
   },
-  "pass": true
+  "pass": false
 }

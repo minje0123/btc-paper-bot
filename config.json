@@ -59,6 +59,30 @@
   "minRoomFrac": 0.25,
   "rule_history": [
     {
+      "until": "2026-11-17 15:50",
+      "rules": "이벤트 회피 켜기 전 (4코인·동시 4개·열린 위험 2%, 1회 위험 0.5%, 하루 −2%·3연패 종료, 하루 목표 +1%, 첫 승 후 절반, 주간 30% 출금, 슬리피지 1틱)",
+      "params": {
+        "riskPct": 0.5,
+        "redPct": 0.5,
+        "dayLossP": 2.0,
+        "maxConsec": 3,
+        "dayTargetP": 1.0,
+        "firstWinHalf": true,
+        "withdrawPct": 30,
+        "markets": [
+          "KRW-BTC",
+          "KRW-ETH",
+          "KRW-XRP",
+          "KRW-SOL"
+        ],
+        "maxOpenPositions": 4,
+        "maxOpenRiskPct": 2.0,
+        "minRoomFrac": 0.25,
+        "slipMode": "tick",
+        "slipTicks": 1
+      }
+    },
+    {
       "until": "2026-11-17 13:55",
       "rules": "4코인 동시 포지션 1차 (BTC·ETH·XRP·SOL, 동시 최대 2개·열린 위험 합계 1%, 1회 위험 0.5%, 하루 −1%·2연패 종료, 하루 목표 +1%, 첫 승 후 절반, 주간 30% 출금, 슬리피지 1틱)",
       "params": {
@@ -129,11 +153,23 @@
     }
   ],
   "_rule_history_설명": "규칙 변경 이력. until 이전 봉은 그 params(옛 규칙)로 계산하고, 이후는 위 현재 설정(쉽알남 자금 관리)으로 계산. 이미 끝난 거래는 그때 규칙 그대로 남고, 보유 중이던 포지션은 처음 크기 그대로 이어진다.",
-  "_경제 일정": "events_file 의 일정(time_kst,name,importance)을 읽어 매매 일지에 진입 앞뒤 2시간 일정을 적는다. eventBlock 이 true 일 때만 발표 eventBeforeMin 전 ~ eventAfterMin 뒤 신규 진입 금지(기본 꺼짐).",
+  "_경제 일정": "events_file 의 일정(time_kst,name,importance,coins,before_min,after_min,added_at,source — 옛 3열도 읽힘)을 읽어 매매 일지에 진입 앞뒤 2시간 일정을 적는다. eventBlock 이 true 일 때만 importance=high 일정의 [발표−eventBeforeMin, 발표+eventAfterMin) 동안 그 코인(coins, ALL=전체) 신규 진입(진입 대기 포함) 금지, 이미 열린 포지션은 그대로 관리. 일정 줄의 before_min/after_min 이 있으면 그 값 우선. added_at 이 있으면 그 시각 이후 봉에만 적용(과거 장부 불변). eventBlock 은 과거 rule_history 단계로 물려받지 않음 — 켤 때는 현재 설정에서 true 로 바꾸고 rule_history 맨 앞에 until=켜는 시각 항목을 추가.",
   "events_file": "data/events.csv",
-  "eventBlock": false,
+  "eventBlock": true,
   "eventBeforeMin": 30,
-  "eventAfterMin": 15,
+  "eventAfterMin": 30,
+  "_Gemini 이벤트 수집": "환경변수 GEMINI_API_KEY 가 있을 때만 tools/gemini_events.py 가 동작(없으면 조용히 건너뜀). eventAutoFetch=false 면 끔. 정기 일정 eventScheduleHours 시간마다(앞으로 7일 고영향 일정), 돌발 eventBreakingMin 분마다(최근 2시간 충격 → 다음 5분봉부터 60~180분 차단 창, 하루 high 최대 eventBreakingMaxPerDay 건). 대상 코인 eventCoins. 모델 geminiModel(실패 시 flash 계열 자동 대체). 수집만 하고, 진입 금지는 eventBlock=true 일 때만.",
+  "eventAutoFetch": true,
+  "eventCoins": [
+    "BTC",
+    "ETH",
+    "XRP",
+    "SOL"
+  ],
+  "eventScheduleHours": 6,
+  "eventBreakingMin": 30,
+  "eventBreakingMaxPerDay": 6,
+  "geminiModel": "gemini-2.5-flash",
   "_그림자 장부": "본 장부와 별도 규칙·별도 파일(ledger/shadow/이름/)로 나란히 계산하는 가상 장부. 알림 없음. 코인마다 독립 계좌. enabled 가 true 인 항목만 계산. params 는 위 본 설정을 덮어쓸 값. start_time 이 null 이면 첫 실행 시각으로 채워짐. 비어 있으면 본 장부만 계산(기존과 같음).",
   "shadow_ledgers": [
     {
@@ -149,6 +185,7 @@
       "start_time": "2026-11-17 09:10",
       "initial_capital": 1000000,
       "params": {
+        "eventBlock": false,
         "slipMode": "tick",
         "riskPct": 0.5,
         "redPct": 0.5,

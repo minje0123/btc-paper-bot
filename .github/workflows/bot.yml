@@ -33,6 +33,7 @@ jobs:
       - name: 5분봉 마감마다 봇 실행 (약 5시간 40분)
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TZ: Asia/Seoul
           GH_TOKEN: ${{ github.token }}
         run: |

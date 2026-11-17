@@ -1,0 +1,410 @@
+{
+  "method": "C 검증 3 — (A) 자동 복기 · (B) 이벤트 회피 단위 테스트. 오프라인(네트워크·API 키 없이 가짜 Gemini 응답), 로컬 data/ 의\n5분봉만 읽음. 결과는 research/checks/c_events_review_result.json 에만 쓴다(ledger/·state/·data/ 는 건드리지 않음,\n임시 폴더 사용). research/holdout 사용 안 함.\n\n  E1 added_at 이후만 차단 : 실제 BTC 첫 거래의 진입 시각에 high 일정 → added_at 없음/이전이면 그 진입이 막히고(blocked 기록),\n                            added_at 이 진입 뒤면 결과가 이벤트 없는 계산과 완전히 같음\n  E2 코인별 차단          : 4코인 run_multi — coins=ETH 일정은 ETH 진입만 막고, coins=BTC 일정은 그 ETH 거래를 안 막음.\n                            run() 도 coin 인자로 같은 필터. medium 일정·eventBlock=false 는 아무것도 안 막음\n  E3 옛 3열 파일 호환      : time_kst,name,importance 파일 → coins=ALL·창 기본값·added_at 없음(늘 적용), 잘못된 줄은 건너뜀,\n                            옛 3열 파일에 Gemini 결과를 덧붙이면 8열 머리글로 바뀌고 기존 줄 보존\n  E4 Gemini 가짜 응답     : 정기 일정(잘못된 시각·과거·7일 밖·과도한 창·URL 없음·중복 거름, medium 은 기록), 돌발(시작<다음 봉·\n                            창>240분·오래된 뉴스 거름, 시작=다음 봉, 하루 high 6건 한도), 모델 대체(404 → 목록의 flash),\n                            키 없음이면 호출 안 함, 응답이 JSON 아니면 실패 기록만\n  E5 원인 태그 예시        : 합성 봉으로 즉시 역행 / T1 근접 후 반전 / 1시간 역방향 / 변동성 급등 / 이벤트 근처 /\n                            T1 후 본절 / 추세 연장 익절 / T1 반익절만 + 실제 본 장부 거래의 태그\n  E6 reviews.json 캐시     : 첫 실행에 거래마다 1회 호출, 다시 돌리면 0회, 키 없으면 0회·파일 없음, 실패는 3회까지만 재시도\n  E7 하루 복기 리포트      : 전날 리포트 파일 1회 생성(다시 불러도 덮어쓰지 않음), 알림 ID R{날짜}, 요약 3~4줄\n  E8 status 이벤트 필드    : 창 안이면 event_block.active, upcoming_events, 막힌 신호 목록 / 새 창 알림 1회용 ID\n  E9 rule_history         : eventBlock 은 과거 단계가 물려받지 않음",
+  "tests": {
+    "E1_added_at": {
+      "pass_": true,
+      "first_trade": "202611150050S",
+      "entry": "2026-11-15 00:50",
+      "eventBlock_false_identical": true,
+      "cases": {
+        "added_at 없음": {
+          "first_trade_blocked": true,
+          "blocked": [
+            [
+              "2026-11-15 00:45",
+              "이벤트 회피(테스트 일정)"
+            ]
+          ],
+          "identical_to_no_event": false
+        },
+        "added_at = 신호 봉 마감 5분 전": {
+          "first_trade_blocked": true,
+          "blocked": [
+            [
+              "2026-11-15 00:45",
+              "이벤트 회피(테스트 일정)"
+            ]
+          ],
+          "identical_to_no_event": false
+        },
+        "added_at = 진입 시각과 같음": {
+          "first_trade_blocked": true,
+          "blocked": [
+            [
+              "2026-11-15 00:45",
+              "이벤트 회피(테스트 일정)"
+            ]
+          ],
+          "identical_to_no_event": false
+        },
+        "added_at = 진입 5분 뒤": {
+          "first_trade_blocked": false,
+          "blocked": [],
+          "identical_to_no_event": true
+        },
+        "added_at = 하루 뒤": {
+          "first_trade_blocked": false,
+          "blocked": [],
+          "identical_to_no_event": true
+        }
+      }
+    },
+    "E2_per_coin": {
+      "pass_": true,
+      "eth_trade": "ETH-202611150305S",
+      "entry": "2026-11-15 03:05",
+      "ETH일정: ETH 첫 거래 막힘": true,
+      "ETH일정: 막힌 신호 코인": [
+        "ETH"
+      ],
+      "BTC일정: ETH 첫 거래 그대로": true,
+      "BTC일정: 막힌 신호 코인": [],
+      "medium 일정: 결과 동일·막힘 0": true,
+      "run(): BTC일정은 ETH 계산 불변": true,
+      "run(): ETH일정은 ETH 신호 막음": true
+    },
+    "E3_old_3col_file": {
+      "pass_": true,
+      "rows": [
+        [
+          "2026-11-16 22:30",
+          "미국 CPI",
+          "high",
+          null,
+          null,
+          null,
+          null,
+          ""
+        ],
+        [
+          "2026-11-17 04:00",
+          "FOMC",
+          "medium",
+          null,
+          null,
+          null,
+          null,
+          ""
+        ],
+        [
+          "2026-11-18 21:30",
+          "이름만",
+          "",
+          null,
+          null,
+          null,
+          null,
+          ""
+        ]
+      ],
+      "windows_SOL": [
+        [
+          "2026-11-16 22:00",
+          "2026-11-16 23:00",
+          null,
+          "미국 CPI"
+        ]
+      ],
+      "hit_always(added 없음)": true,
+      "after_append_header": "time_kst,name,importance,coins,before_min,after_min,added_at,source",
+      "after_append_rows": 4,
+      "data_events_csv_rows": 0
+    },
+    "E4_gemini_fake": {
+      "pass_": true,
+      "added": [
+        [
+          "2026-11-19 22:30",
+          "미국 10월 CPI",
+          "high",
+          "ALL",
+          "",
+          ""
+        ],
+        [
+          "2026-11-20 04:00",
+          "FOMC 금리 결정",
+          "high",
+          "ALL",
+          "60",
+          "90"
+        ],
+        [
+          "2026-11-21 12:00",
+          "SOL 업그레이드",
+          "medium",
+          "SOL",
+          "",
+          ""
+        ],
+        [
+          "2026-11-17 16:05",
+          "[돌발] 거래소 해킹",
+          "high",
+          "ETH",
+          "0",
+          "120"
+        ],
+        [
+          "2026-11-17 16:05",
+          "[돌발] 짧은 창",
+          "medium",
+          "SOL",
+          "0",
+          "60"
+        ]
+      ],
+      "schedule_rejected": [
+        "미국 CPI (중복): 중복",
+        "잘못된 시각: 시각 형식",
+        "과거 일정: 과거 시각",
+        "7일 밖: 7일 밖",
+        "과도한 창: 창 길이 초과",
+        "근거 없음: 근거 URL 없음",
+        "모르는 코인: 코인 이름",
+        "중요도 이상: importance"
+      ],
+      "breaking_rejected": [
+        "너무 긴 창: 창 길이 초과",
+        "시작이 과거: 시작이 다음 봉 전",
+        "오래된 뉴스: 최근 2시간 밖의 뉴스"
+      ],
+      "model_used": "gemini-2.5-flash-preview-x",
+      "calls": [
+        [
+          "POST",
+          "models/gemini-2.5-flash:generateContent"
+        ],
+        [
+          "GET",
+          "models?pageSize=200"
+        ],
+        [
+          "POST",
+          "models/gemini-2.5-flash-preview-x:generateContent"
+        ],
+        [
+          "POST",
+          "models/gemini-2.5-flash-preview-x:generateContent"
+        ],
+        [
+          "POST",
+          "models/gemini-2.5-flash-preview-x:generateContent"
+        ]
+      ],
+      "돌발 시작 = 다음 봉": true,
+      "돌발 짧은 창 → 60분으로": true,
+      "모델 대체": true,
+      "added_at = 지금": true,
+      "5분 뒤 재호출 수": 0,
+      "31분 뒤 호출(돌발만)": [
+        "models/gemini-2.5-flash-preview-x:generateContent"
+      ],
+      "31분 뒤 중복 거름": true,
+      "하루 한도: 8건 중 받음": 6,
+      "하루 한도: 오늘 이미 5건이면 받음": 1,
+      "키 없음: 호출 수": 0,
+      "JSON 아님: 실패 기록": [
+        false,
+        false,
+        1
+      ],
+      "extract_json 엄격": [
+        {
+          "a": 1
+        },
+        {
+          "a": 2
+        },
+        "오류: ValueError",
+        "오류: ValueError"
+      ]
+    },
+    "E5_cause_tags": {
+      "pass_": true,
+      "즉시 역행": {
+        "held_bars": 2,
+        "mfe_R": 0.1,
+        "mae_R": -1.2,
+        "entry_hour": 10,
+        "atr_pct": 0.0,
+        "tags": [
+          "즉시 역행"
+        ],
+        "events_near": []
+      },
+      "T1 근접 후 반전 + 1시간 역방향": {
+        "held_bars": 8,
+        "mfe_R": 0.8,
+        "mae_R": -1.2,
+        "entry_hour": 10,
+        "atr_pct": 0.0,
+        "tags": [
+          "T1 근접 후 반전",
+          "1시간 추세 역방향 진입"
+        ],
+        "events_near": []
+      },
+      "변동성 급등 + 이벤트 근처": {
+        "held_bars": 11,
+        "mfe_R": 0.1,
+        "mae_R": -0.1,
+        "entry_hour": 10,
+        "atr_pct": 99.0,
+        "tags": [
+          "변동성 급등",
+          "이벤트 근처"
+        ],
+        "events_near": [
+          "미국 CPI"
+        ]
+      },
+      "T1 후 본절": [
+        "T1 후 본절"
+      ],
+      "추세 연장 익절": [
+        "추세 연장 익절"
+      ],
+      "T1 반익절만(반대 신호 0.6R)": [
+        "T1 반익절만"
+      ],
+      "T1 반익절만(전량)": [
+        "T1 반익절만"
+      ],
+      "숏 MFE/MAE": [
+        0.8,
+        -0.4
+      ],
+      "실제 본 장부": [
+        [
+          "202611161510S",
+          -1.229,
+          5,
+          0.141,
+          -1.017,
+          15,
+          [
+            "미분류 손절"
+          ]
+        ],
+        [
+          "202611161705S",
+          0.942,
+          12,
+          1.518,
+          -0.058,
+          17,
+          [
+            "T1 반익절만"
+          ]
+        ],
+        [
+          "202611170625L",
+          -1.213,
+          27,
+          0.781,
+          -1.35,
+          6,
+          [
+            "T1 근접 후 반전",
+            "1시간 추세 역방향 진입"
+          ]
+        ],
+        [
+          "SOL-202611171425L",
+          -1.238,
+          3,
+          0.0,
+          -1.11,
+          14,
+          [
+            "즉시 역행"
+          ]
+        ]
+      ]
+    },
+    "E6_reviews_cache": {
+      "pass_": true,
+      "키 없음: 호출": 0,
+      "키 없음: 파일 생김": false,
+      "1차 호출 수": 4,
+      "1차 해설 수": 4,
+      "2차(재계산) 추가 호출": 0,
+      "프롬프트 예시": "너는 단타 매매 복기 코치다. 아래는 가상 매매(실제 돈 아님) 한 건의 숫자 기록이다.\n이 기록만 근거로, 한국어 2~3문장으로 '왜 이겼는지/졌는지'와 '다음에 볼 점'을 써라.\n가격 예측·매수/매도 추천·규칙 변경 제안은 하지 말고, 이 거래 자체의 복기만. 머리말·목록·마크다운 없이 문장만.\n\n- 코인: SOL / 방향: 롱 / 셋업: 구간B\n- 진입 근거: 구간 스윙레벨 99,200, 보조 거래량 + RSI + 1시간 방향\n- 15분 방향: 상승 / 1시간 방향: 상승\n- 진입 11-17 14:25 KST @ 99,410, 최초 손절 98,950, T1 99,949 (손절폭 0.4021%, T1까지 1.5R)\n- 청산 내역: 손절@98,940.50x12.4367(11-17 14:35)\n- 결과: 마지막 청산 '손절', 거래 합계 -1.24R\n- 보유 3봉(5분), MFE 0.0R, MAE -1.11R, 진입 직전 ATR 백분위 39.0\n- 규칙 기반 원인 태그: 즉시 역행",
+      "실패 재시도 횟수(5번 실행)": 3,
+      "실행당 상한": 3,
+      "일지 새 열": [
+        "보유봉수",
+        "MFE_R",
+        "MAE_R",
+        "원인태그",
+        "복기해설"
+      ]
+    },
+    "E7_daily_report": {
+      "pass_": true,
+      "event_id": "R20261116",
+      "summary": "📝 11-16 복기: 거래 2건 · 이익 1건 · -0.29R · −626원\n실패 패턴: 미분류 손절 1건\n최고 BTC 구간B +0.94R · 최저 BTC 구간B -1.23R\n리포트: ledger/review/2026-11-16.md",
+      "same_id_again": true,
+      "not_overwritten": true,
+      "sections": [
+        "# 복기 리포트 2026-11-16 (KST, 청산 기준)",
+        "## 거래별",
+        "### 복기 해설 (Gemini)",
+        "## 원인 태그별",
+        "## 코인별",
+        "## 진입 시간대별(KST)",
+        "## 반복된 실패 패턴 상위 3개 (이날)",
+        "## 반복된 실패 패턴 상위 3개 (최근 7일)"
+      ],
+      "msg_lines": 4,
+      "notify_text": "📝 11-16 복기: 거래 2건 · 이익 1건 · -0.29R · −626원\n실패 패턴: 미분류 손절 1건\n최고 BTC 구간B +0.94R · 최저 BTC 구간B -1.23R\n리포트: ledger/review/2026-11-16.md",
+      "before_start": null
+    },
+    "E8_status_fields": {
+      "pass_": false,
+      "event_block": {
+        "enabled": false,
+        "active": false,
+        "name": null,
+        "coins": [],
+        "start": null,
+        "until": null
+      },
+      "upcoming": [
+        [
+          "2026-11-17 15:25:00",
+          "미국 CPI"
+        ],
+        [
+          "2026-11-19 15:05:00",
+          "FOMC"
+        ]
+      ],
+      "window_msgs": [],
+      "window_ids": [],
+      "off_block": {
+        "enabled": false,
+        "active": false,
+        "name": null,
+        "coins": [],
+        "start": null,
+        "until": null
+      },
+      "off_msgs": 0
+    },
+    "E9_rule_history": {
+      "pass_": false,
+      "current": true,
+      "history": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "config_eventBlock": true
+    }
+  },
+  "pass": false
+}

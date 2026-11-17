@@ -61,9 +61,9 @@ DEFAULTS = dict(
     # ---- v2.0 기반 시설 이식(2026-11-17) — 아래 기본값이면 기존과 완전히 같은 결과 ----
     slipMode="fixed",        # "fixed" = slip 원(기존) / "tick" = 체결가의 호가 단위 × slipTicks (여러 코인용)
     slipTicks=1.0,           # slipMode "tick" 일 때 틱 수
-    eventBlock=False,        # True 면 경제 일정(events) 발표 eventBeforeMin 전 ~ eventAfterMin 뒤 신규 진입 금지
-    eventBeforeMin=30,
-    eventAfterMin=15,
+    eventBlock=False,        # True 면 high 일정(events) 발표 eventBeforeMin 전 ~ eventAfterMin 뒤 그 코인 신규 진입 금지
+    eventBeforeMin=30,       # 일정 줄에 before_min/after_min 이 있으면 그 값이 우선
+    eventAfterMin=30,
     # ---- 1계좌 · 여러 코인 · 동시 여러 포지션 (run_multi 전용, 2026-11-17) — 아래 기본값이면 기존 BTC 1포지션과 같음 ----
     markets=None,            # 매매 대상 코인 목록. None = config "market" 하나(기본 KRW-BTC)
     maxOpenPositions=1,      # 동시 보유(진입 대기 포함) 상한 개수. 한 코인에는 항상 1개
@@ -103,8 +103,32 @@ def _pxs(x):
     return f"{x:,.0f}" if abs(x) >= 1000 else f"{x:.8g}"
 
 
+EVENT_COLS = ("time_kst", "name", "importance", "coins", "before_min", "after_min", "added_at", "source")
+EVENT_COINS = ("BTC", "ETH", "XRP", "SOL")
+
+
+def _parse_coins(s):
+    """'ALL'·빈칸 → None(모든 코인), 'BTC|ETH' → frozenset({'BTC','ETH'})"""
+    s = (s or "").strip().upper()
+    if not s or s == "ALL":
+        return None
+    cs = frozenset(x.strip() for x in s.replace(",", "|").replace("/", "|").split("|") if x.strip())
+    return cs or None
+
+
+def _opt_min(s):
+    s = (s or "").strip()
+    if not s:
+        return None
+    return float(s)
+
+
 def load_events(path):
-    """경제 일정 CSV(time_kst,name[,importance]) → [(KST 시각, 이름, 중요도)]. 빈 줄·'#' 줄 무시. 파일 없으면 []"""
+    """경제 일정·이벤트 CSV → 시각순 튜플 목록. 빈 줄·'#' 줄 무시. 파일 없으면 [].
+    새 형식: time_kst,name,importance,coins,before_min,after_min,added_at,source
+    옛 형식(time_kst,name[,importance]) 도 그대로 읽힌다(빠진 열은 coins=ALL, 창=설정 기본값, added_at 없음=늘 적용).
+    튜플: (시각, 이름, 중요도, 코인 frozenset|None(ALL), before_min|None, after_min|None, added_at|None, source)
+    — 앞 3개는 옛 형식과 같은 자리라 e[0]·e[1]·e[2] 로 쓰던 코드는 그대로 동작. 잘못된 줄은 건너뛴다."""
     out = []
     try:
         f = open(path, encoding="utf-8-sig")
@@ -116,11 +140,46 @@ def load_events(path):
         t = (r.get("time_kst") or "").strip()
         if not t:
             continue
-        out.append((parse_kst(t), (r.get("name") or "").strip(), (r.get("importance") or "").strip()))
+        try:
+            ad = (r.get("added_at") or "").strip()
+            out.append((parse_kst(t), (r.get("name") or "").strip(), (r.get("importance") or "").strip(),
+                        _parse_coins(r.get("coins")), _opt_min(r.get("before_min")), _opt_min(r.get("after_min")),
+                        parse_kst(ad) if ad else None, (r.get("source") or "").strip()))
+        except (ValueError, TypeError):
+            continue
     return sorted(out, key=lambda x: x[0])
 
+
+def event_windows(P, events, coin):
+    """P["eventBlock"] 이 켜져 있을 때 coin 의 신규 진입을 막는 창 목록 [(시작, 끝, added_at|None, 이름)].
+    importance 가 high 인 일정만, coins 가 ALL 이거나 coin 을 포함할 때만. 창 = [발표 − before, 발표 + after)."""
+    if not P.get("eventBlock") or not events:
+        return []
+    out = []
+    for e in events:
+        if (e[2] if len(e) > 2 else "").strip().lower() != "high":
+            continue
+        coins = e[3] if len(e) > 3 else None
+        if coins is not None and coin not in coins:
+            continue
+        b4 = e[4] if len(e) > 4 and e[4] is not None else P["eventBeforeMin"]
+        af = e[5] if len(e) > 5 and e[5] is not None else P["eventAfterMin"]
+        out.append((e[0] - dt.timedelta(minutes=b4), e[0] + dt.timedelta(minutes=af),
+                    e[6] if len(e) > 6 else None, e[1]))
+    return out
+
+
+def event_hit(wins, t_fill):
+    """t_fill(진입 체결 시각 = 신호 봉 마감 시각)이 창 안이고, 그 일정이 그 전에 추가됐으면(added_at ≤ t_fill) 이름을 돌려준다.
+    added_at 이후 봉에만 적용 → 나중에 추가된 일정이 이미 지난 장부를 바꾸지 않는다(결정적 재계산)."""
+    for a, b, added, nm in wins:
+        if a <= t_fill < b and (added is None or added <= t_fill):
+            return nm
+    return None
+
 HARD_MAX_RISK_P = 5.0        # 어떤 설정으로도 넘을 수 없는 1회 위험 상한 %
-HIST_NO_INHERIT = ("markets", "maxOpenPositions", "maxOpenRiskPct", "minRoomFrac", "slipMode", "slipTicks")
+# eventBlock 도 과거 단계가 물려받지 않는다 → 현재 설정에서 켜도 rule_history 의 마지막 until 이전 장부는 그대로.
+HIST_NO_INHERIT = ("markets", "maxOpenPositions", "maxOpenRiskPct", "minRoomFrac", "slipMode", "slipTicks", "eventBlock")
 
 
 def load_params(config):
@@ -321,10 +380,12 @@ def trade_id(t_entry, side):
     return f"{t_entry.strftime('%Y%m%d%H%M')}{'L' if side == 1 else 'S'}"
 
 
-def run(D, P, start_time=None, close_at_end=False, events=None):
+def run(D, P, start_time=None, close_at_end=False, events=None, coin=None):
     """
-    events: [(KST 시각, 이름, ...)] 경제 일정(load_events). P["eventBlock"] 이 True 일 때만 쓰인다(기본 꺼짐).
-            진입 체결 시각(다음 봉 시가)이 [발표 − eventBeforeMin, 발표 + eventAfterMin) 안이면 신호를 내지 않는다.
+    events: load_events 결과. P["eventBlock"] 이 True 일 때만 쓰인다(기본 꺼짐).
+            importance high 이고 coins 가 ALL 또는 coin 을 포함하는 일정만, 진입 체결 시각(다음 봉 시가)이
+            [발표 − before, 발표 + after) 안이고 added_at ≤ 그 시각이면 신호를 진입 대기로 만들지 않고 blocked 에 기록.
+    coin  : 이 데이터의 코인 이름(이벤트 코인 필터용). None 이면 P["markets"] 첫 코인(기본 BTC).
     D: Data, P: 파라미터(dict), start_time: 이 시각 이후 봉부터 진입 허용(None이면 처음부터)
     close_at_end: True면 백테스트처럼 마지막 종가로 남은 포지션 정리('기간 종료')
 
@@ -372,17 +433,17 @@ def run(D, P, start_time=None, close_at_end=False, events=None):
         def sl(px):
             return slip
     bar_td = dt.timedelta(minutes=getattr(D, "bar_min", 5))
-    ev_win = []
-    if P.get("eventBlock") and events:
-        b4, af = dt.timedelta(minutes=P["eventBeforeMin"]), dt.timedelta(minutes=P["eventAfterMin"])
-        ev_win = [(e[0] - b4, e[0] + af, e[1]) for e in events]
+    ev_coin = coin or coin_of((P_final.get("markets") or ["KRW-BTC"])[0])
+    ev_list = events            # 아래에서 'events' 는 알림 목록 이름으로 다시 쓰이므로 일정 목록을 따로 잡아 둔다
+    _ev_cache = {}
 
-    def event_blocked(t_fill):
-        for a, b, _nm in ev_win:
-            if a <= t_fill < b:
-                return True
-        return False
+    def ev_wins(PP):
+        k = id(PP)
+        if k not in _ev_cache:
+            _ev_cache[k] = event_windows(PP, ev_list, ev_coin)
+        return _ev_cache[k]
 
+    blocked = []
     withdrawn = 0.0
     withdrawals = []
     weekKey = None; weekStartNP = 0.0
@@ -710,8 +771,9 @@ def run(D, P, start_time=None, close_at_end=False, events=None):
             nextMode = "목표 후 축소" if tgtCap is not None else ("절반(첫 매매 수익)" if halfNow else "보통")
 
         # ---------- 4) 진입 판단 (봉 마감, 다음 봉 시가 체결) ----------
-        if (pos is None and pending is None and not dayStop and not tgtBlock and can_trade
-                and not (ev_win and event_blocked(T[i] + bar_td))):
+        if pos is None and pending is None and not dayStop and not tgtBlock and can_trade:
+            _w = ev_wins(P)
+            ev_nm = event_hit(_w, T[i] + bar_td) if _w else None
             sig = grd = ""; stp = rm = None; side = 0
             if P["allowLong"] and P["useZone"] and dir15 == 1 and zoneL and okL and supL and noChase:
                 sig, grd = "구간", ("A" if bullEng else "B")
@@ -743,7 +805,10 @@ def run(D, P, start_time=None, close_at_end=False, events=None):
                         t1 = c + side * 1.5 * dist
                     q = rm / dist if dist > 0 and rm > 0 else 0.0
                     q = math.floor(min(q, seed * P["maxLev"] / c) * 10000) / 10000   # 레버리지 상한(안전장치)
-                    if q > 0:
+                    if q > 0 and ev_nm is not None:          # 이벤트 회피: 진입 대기로 만들지 않고 기록만
+                        blocked.append(dict(time=T[i], fill_time=T[i] + bar_td, coin=ev_coin, side=side, tag=sig,
+                                            grade=grd, event=ev_nm, reason=f"이벤트 회피({ev_nm})"))
+                    elif q > 0:
                         pending = dict(side=side, tag=sig, grade=grd, stop=stp, t1=t1, qty=q, eq=seed,
                                        sigClose=c, rm=rm, dir60=dir60, signal_time=T[i], sizeTag=size_tag(),
                                        baseR=baseRisk,
@@ -810,7 +875,7 @@ def run(D, P, start_time=None, close_at_end=False, events=None):
                 dayStopDays=dayStopDays, lossLimitDays=lossLimitDays, consecDays=consecDays,
                 targetDays=targetDays, withdrawn=withdrawn, withdrawals=withdrawals, seed=seed_now,
                 realized=realized, final=seed_now, equity=equity, unrealized=unreal, day=day,
-                last_close=C[-1] if n else None)
+                last_close=C[-1] if n else None, blocked=blocked)
 
 
 # ============================== 1계좌 · 여러 코인 · 동시 여러 포지션 ==============================
@@ -1190,17 +1255,15 @@ def run_multi(Ds, P, start_time=None, events=None):
     order = market_order(list(Ds))
     sims = [_CoinSim(m, Ds[m], A) for m in order]
     bar_td = dt.timedelta(minutes=getattr(Ds[order[0]], "bar_min", 5)) if order else dt.timedelta(minutes=5)
-    ev_win = []
-    if P.get("eventBlock") and events:
-        b4, af = dt.timedelta(minutes=P["eventBeforeMin"]), dt.timedelta(minutes=P["eventAfterMin"])
-        ev_win = [(e[0] - b4, e[0] + af, e[1]) for e in events]
+    _ev_cache = {}
 
-    def event_blocked(t_fill):
-        for a, b, _nm in ev_win:
-            if a <= t_fill < b:
-                return True
-        return False
+    def ev_wins(PP, cn):
+        k = (id(PP), cn)
+        if k not in _ev_cache:
+            _ev_cache[k] = event_windows(PP, events, cn)
+        return _ev_cache[k]
 
+    blocked = []
     times = sorted(set().union(*[set(D.T) for D in Ds.values()])) if Ds else []
     withdrawn = 0.0; withdrawals = []
     weekKey = None; weekStartNP = 0.0
@@ -1309,12 +1372,19 @@ def run_multi(Ds, P, start_time=None, events=None):
                 nextMode = "목표 후 축소" if tgtCap is not None else ("절반(첫 매매 수익)" if halfNow else "보통")
 
             # ---------- 4) 진입 후보 → 우선순위대로 배분 ----------
-            if not dayStop and not tgtBlock and can_trade and not (ev_win and event_blocked(t + bar_td)):
+            if not dayStop and not tgtBlock and can_trade:
                 cands = []
                 for s, i in here:
                     if s.market in active and s.pos is None and s.pending is None:
                         cd = s.signal(P, fcap, baseRisk, redRisk)
                         if cd is not None:
+                            _w = ev_wins(P, s.coin)
+                            ev_nm = event_hit(_w, t + bar_td) if _w else None
+                            if ev_nm is not None:        # 이벤트 회피: 이 코인 후보는 배분하지 않고 기록만
+                                blocked.append(dict(time=t, fill_time=t + bar_td, coin=s.coin, side=cd["side"],
+                                                    tag=cd["tag"], grade=cd["grade"], event=ev_nm,
+                                                    reason=f"이벤트 회피({ev_nm})"))
+                                continue
                             cands.append((SETUP_RANK.get((cd["tag"], cd["grade"]), 9), sims.index(s), s, cd))
                 cands.sort(key=lambda z: (z[0], z[1]))
                 for _rk, _pr, s, cd in cands:
@@ -1390,7 +1460,7 @@ def run_multi(Ds, P, start_time=None, events=None):
                 realized=A.realized, final=seed_now, equity=equity, unrealized=unreal, day=day,
                 last_close=btc.D.C[-1] if btc is not None and btc.D.n else None,
                 alloc_log=alloc_log, markets=list(P_final["markets"]), max_open_seen=max_open_seen,
-                max_open_risk_pct_seen=max_risk_pct_seen)
+                max_open_risk_pct_seen=max_risk_pct_seen, blocked=blocked)
 
 
 def stats(trades, curve=None):

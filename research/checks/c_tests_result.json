@@ -3,58 +3,56 @@
   "tests": {
     "T1_real_4coin_from_11-15": {
       "pass_": true,
-      "max_open_seen": 2,
+      "max_open_seen": 4,
       "max_open_risk_pct_seen": 1.0,
       "open_le_2": true,
       "risk_le_1pct": true,
-      "max_concurrent_held": 2,
+      "max_concurrent_held": 4,
       "held_le_2": true,
       "no_same_coin_overlap": true,
       "same_bar_multi_candidates": 3,
       "priority_order_ok": true,
-      "entries": 22,
+      "entries": 32,
       "cut_entries": 0,
       "entry_rules_ok": true,
       "cut_rules_ok": true,
-      "rejections": {
-        "거절: 동시 보유 상한": 7
-      },
+      "rejections": {},
       "daystops": {
-        "2026-11-15": "11-15 13:10",
-        "2026-11-16": "11-16 04:00",
-        "2026-11-17": "11-17 03:35"
+        "2026-11-15": "11-15 13:35",
+        "2026-11-16": "11-16 04:30",
+        "2026-11-17": "11-17 08:35"
       },
       "no_entry_after_daystop": true,
       "notional_ok": true,
       "trades_by_coin": {
         "BTC": {
-          "n": 4,
-          "pnl": 7798
+          "n": 6,
+          "pnl": 5816
         },
         "SOL": {
-          "n": 8,
-          "pnl": -11123
-        },
-        "ETH": {
-          "n": 4,
-          "pnl": -1477
+          "n": 12,
+          "pnl": -12846
         },
         "XRP": {
-          "n": 6,
-          "pnl": -4178
+          "n": 9,
+          "pnl": 5133
+        },
+        "ETH": {
+          "n": 5,
+          "pnl": -721
         }
       },
-      "n_trades": 22,
-      "realized": -8980,
-      "equity": 988388
+      "n_trades": 32,
+      "realized": -2619,
+      "equity": 990609
     },
     "T1b_activation_config": {
-      "pass_": true,
-      "trades_before_activation": 3,
+      "pass_": false,
+      "trades_before_activation": 4,
       "note": "데이터가 활성화 시각 전에 끝나므로 모두 BTC 여야 함"
     },
     "T2_priority": {
-      "pass_": true,
+      "pass_": false,
       "got": [
         [
           "SOL",
@@ -66,11 +64,11 @@
         ],
         [
           "ETH",
-          "거절: 동시 보유 상한"
+          "진입"
         ],
         [
           "BTC",
-          "거절: 동시 보유 상한"
+          "진입"
         ]
       ],
       "expected": [
@@ -148,7 +146,7 @@
       ]
     },
     "T6_consec_daystop": {
-      "pass_": true,
+      "pass_": false,
       "signal_bar": "11-16 02:25",
       "trades": [
         [
@@ -160,15 +158,40 @@
           "ETH",
           -5,
           "손절"
+        ],
+        [
+          "SOL",
+          -5908,
+          "손절"
         ]
       ],
       "daystop": [
         [
-          "02:30",
-          "2연속 손절"
+          "03:15",
+          "3연속 손절"
         ]
       ],
-      "sol_alloc": [],
+      "sol_alloc": [
+        {
+          "time": "2026-11-16 03:00:00+09:00",
+          "coin": "SOL",
+          "setup": "구간A",
+          "side": 1,
+          "rm_signal": 4923.891540743625,
+          "open_before": 0,
+          "open_risk_before": 0,
+          "seed": 984778.308148725,
+          "base_risk": 4923.891540743625,
+          "day_real": -15221.691851275002,
+          "loss_amt": 20000.0,
+          "rank": 0,
+          "result": "진입",
+          "rm": 4923.891540743625,
+          "qty": 8.3103,
+          "notional_before": 0,
+          "equity": 984778.308148725
+        }
+      ],
       "control_sol": [
         "진입"
       ]
@@ -193,5 +216,5 @@
       "note": "maxLev 1: BTC 가 잔고 거의 전부를 쓰고, ETH 는 남은 명목가 여유만큼만(또는 0이면 거절)"
     }
   },
-  "pass": true
+  "pass": false
 }
