@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 02:50:00",
+      "last_bar_time": "2026-11-18 02:55:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": 0,
@@ -53,7 +53,7 @@
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
       "balance": 998799,
-      "equity": 996074,
+      "equity": 996451,
       "realized_pnl": -1201,
       "withdrawn_total": 0,
       "trades_count": 2,
@@ -79,13 +79,13 @@
         "risk_money": 4994,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 2435000,
-        "unrealized_pnl": -2725,
+        "last_price": 2434000,
+        "unrealized_pnl": -2347,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 02:50:00",
+      "last_bar_time": "2026-11-18 02:55:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": 1993,
@@ -109,7 +109,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 02:50:00",
+      "last_bar_time": "2026-11-18 02:55:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -6104,
@@ -133,7 +133,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 02:50:00",
+      "last_bar_time": "2026-11-18 02:55:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -5786,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-18 02:56:11",
+  "updated_at": "2026-11-18 03:00:32",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 9,
@@ -172,14 +172,14 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "TimeoutError: The read operation timed out",
-      "queue": 1,
+      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+      "queue": 0,
       "backoff_until": null
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-17 21:15:20",
-      "title": "US senators seek SEC answers on tokenized stock money laundering risks",
+      "decided_at": "2026-11-18 03:00:21",
+      "title": "Fed’s Waller cites Binance hack in warning over tokenized finance",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
@@ -190,6 +190,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-18 03:00:21",
+        "title": "Fed’s Waller cites Binance hack in warning over tokenized finance",
+        "url": "https://cointelegraph.com/news/feds-waller-cites-binance-hack-in-warning-over-tokenized-finance?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "EXTRACTOR_FAILED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-17 21:15:20",
         "title": "US senators seek SEC answers on tokenized stock money laundering risks",
