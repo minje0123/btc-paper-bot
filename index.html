@@ -513,6 +513,23 @@
       · 최소 효과 +${ps.delta_R ?? 0.1}R · 양측 α 0.05 · 검정력 80%${(() => { const p = ps.pairs_csv_ledger || ps.pairs_csv || ''; return /^[\w\/.-]+$/.test(p) ? ` · <a href="https://github.com/${OWNER}/${REPO}/blob/main/${esc(p)}" target="_blank" rel="noopener" style="color:var(--cyan)">짝 목록 CSV</a>` : ''; })()}</div>
       ${prog === null ? '' : `<div style="height:6px;border:1px solid var(--line2);margin-top:4px"><div style="height:100%;width:${prog.toFixed(1)}%;background:var(--neon)"></div></div>`}</div>`;
   }
+  // 뉴스 판정 v1 (status.json news_v1 · filter_summary — 필드가 없으면 빈칸, 깨지지 않게)
+  function newsHtml(nv, fs) {
+    if (!nv || typeof nv !== 'object') return '';
+    const st = v => { const s = (v && v.state) || '–'; const c = s === 'OK' || s === 'IDLE' ? 'b-ok' : 'b-warn'; return `<span class="badge ${c}">${esc(s)}</span>`; };
+    const col = nv.collector || {}, ex = nv.extractor || {};
+    const rec = Array.isArray(nv.recent) ? nv.recent.slice(0, 10) : [];
+    const rows = rec.map(r => `<tr><td class="l">${esc((r.decided_at || '').slice(5, 16))}</td>
+      <td class="l" style="white-space:normal;min-width:180px">${/^https?:\/\//.test(r.url || '') ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:var(--cyan)">${esc((r.title || '').slice(0, 70))}</a>` : esc((r.title || '').slice(0, 70))}</td>
+      <td class="l muted" style="white-space:normal;min-width:140px">${esc(r.legacy || '–')}</td>
+      <td class="l">${esc(r.decision || '–')} <span class="muted">${esc(r.rows || '')}</span>${r.targets ? `<br>${esc(r.targets)} ${esc(r.window || '')}` : ''}</td>
+      <td class="l muted" style="white-space:normal;min-width:160px">${esc(r.evidence || '–')}${r.confirmation ? `<br>${esc(r.event_type || '')} · ${esc(r.confirmation)}` : ''}</td>
+      <td class="l">${esc(r.diff || '–')}</td><td class="l muted">${esc(r.rules_version || '')}</td></tr>`).join('');
+    const fsum = fs ? ` · 같은 신호 ${fs.signals ?? 0}개 중 차단 ${fs.blocked ?? 0} (막힌 신호의 무필터 R 합 ${f3(fs.blocked_base_sumR, 2)}) · Σd ${f3(fs.sum_d, 2)}R` : '';
+    return `<div class="kv" style="margin:8px 0;grid-column:1/-1"><div class="k">뉴스 판정 v1 (기록 전용 · ${esc(nv.rules_version || '')} · 차단 시간은 ${esc(nv.candidate_note || '후보값')})</div>
+      <div class="note">수집기 ${st(col)} · 추출기(Gemini) ${st(ex)}${ex.queue ? ` 대기 ${esc(ex.queue)}건` : ''}${ex.backoff_until ? ` · ${esc(String(ex.backoff_until).slice(5, 16))}까지 쉼` : ''} · unmapped ${esc(nv.unmapped_count ?? 0)} · 보류 중 ${esc(nv.holds_active ?? 0)}${fsum}</div>
+      <div class="tbl" style="padding:0;margin-top:6px">${rows ? `<table><thead><tr><th class="l">판정</th><th class="l">기사</th><th class="l">기존 판정</th><th class="l">새 판정</th><th class="l">근거 문장</th><th class="l">차이</th><th class="l">규칙</th></tr></thead><tbody>${rows}</tbody></table>` : '<div class="empty">아직 판정 기록이 없어요.</div>'}</div></div>`;
+  }
   function renderShadow() {
     if (!shadows.length) { $('shadowBody').innerHTML = '<div class="empty">켜진 그림자 장부가 없어요.</div>'; $('coinBtns').innerHTML = ''; $('shBtns').innerHTML = ''; return; }
     if (shIdx >= shadows.length) shIdx = 0;
@@ -532,6 +549,7 @@
     const notStarted = s.start_time && kstTs(s.start_time) > nowKst();
     $('shadowBody').innerHTML = `<div class="note" style="margin:0 0 8px">${esc(s.name)}${s.timeframe ? ` · <b>${esc(s.timeframe)}분봉 실행</b>` : ''} · 시작 ${esc(s.start_time)}${notStarted ? ' <span class="badge b-warn">시작 전(지표 준비 중)</span>' : ''} · ${esc(s.description || '')}</div>
       ${pairHtml(s.pair_summary)}
+      ${newsHtml(s.news_v1, s.filter_summary)}
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">${cards}</div>
       <div class="note">전체 ${s.trades_count}건${s.independent_clusters != null ? ` (독립 묶음 ${s.independent_clusters}개)` : ''} · 평균 ${s.trades_count ? (s.avg_R >= 0 ? '+' : '') + (+s.avg_R).toFixed(3) + 'R' : '–'} · 갱신 ${esc((s.updated_at || '').slice(5, 16))} · 자금 관리 없이 거래당 R로 기록(본 장부와 비교용)</div>
       <div class="tbl" style="padding:0;margin-top:8px">${tr.length ? `<table><thead><tr><th class="l">코인</th><th class="l">진입</th><th class="l">방향</th><th class="l">셋업</th><th class="l">청산</th><th class="l">청산 시각</th><th>R</th></tr></thead><tbody>${rows}</tbody></table>` : '<div class="empty">아직 청산된 그림자 거래가 없어요.</div>'}</div>`;
