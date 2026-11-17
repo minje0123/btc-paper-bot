@@ -28,12 +28,16 @@
             993699
           ],
           "equity": [
-            986627,
-            993699
+            982651,
+            991135
           ],
           "realized_pnl": [
             -13373,
             -6301
+          ],
+          "unrealized_pnl": [
+            -3976,
+            -2565
           ],
           "trades_count": [
             4,
@@ -48,8 +52,56 @@
             -0.5
           ],
           "max_drawdown_pct": [
-            1.57,
-            0.86
+            1.96,
+            1.13
+          ],
+          "position": [
+            {
+              "market": "KRW-BTC",
+              "coin": "BTC",
+              "id": "202611171535S",
+              "side": "숏",
+              "setup": "B+",
+              "grade": "",
+              "entry_time": "2026-11-17 15:35:00",
+              "entry": 87621000,
+              "stop": 88003980,
+              "stop0": 88003980,
+              "t1": 87046530,
+              "next_target": null,
+              "qty": 0.0128,
+              "qty_open": 0.0128,
+              "leverage": 1.14,
+              "risk_money": 4933,
+              "t1_done": false,
+              "realized_part": 0,
+              "last_price": 87776000,
+              "unrealized_pnl": -2545,
+              "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
+            },
+            {
+              "market": "KRW-BTC",
+              "coin": "BTC",
+              "id": "202611171535S",
+              "side": "숏",
+              "setup": "B+",
+              "grade": "",
+              "entry_time": "2026-11-17 15:35:00",
+              "entry": 87621000,
+              "stop": 88003980,
+              "stop0": 88003980,
+              "t1": 87046530,
+              "next_target": null,
+              "qty": 0.0129,
+              "qty_open": 0.0129,
+              "leverage": 1.14,
+              "risk_money": 4968,
+              "t1_done": false,
+              "realized_part": 0,
+              "last_price": 87776000,
+              "unrealized_pnl": -2565,
+              "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
+            }
           ],
           "today": [
             {
@@ -89,54 +141,152 @@
               "next_risk_won": 4968
             }
           ],
-          "markets": [
+          "warnings": [
+            [],
             [
-              "BTC",
-              "ETH",
-              "SOL",
-              "XRP"
-            ],
-            [
-              "BTC"
+              "ETH 봉 파일이 없어 이 코인은 빼고 계산합니다.",
+              "SOL 봉 파일이 없어 이 코인은 빼고 계산합니다.",
+              "XRP 봉 파일이 없어 이 코인은 빼고 계산합니다."
             ]
           ],
-          "max_open_positions": [
-            4,
+          "open_positions_count": [
+            2,
             1
           ],
-          "max_open_risk_pct": [
-            2.0,
-            0.0
+          "open_risk_won": [
+            9866,
+            4968
+          ],
+          "open_risk_pct": [
+            1.0,
+            0.5
+          ],
+          "positions": [
+            [
+              {
+                "market": "KRW-BTC",
+                "coin": "BTC",
+                "id": "202611171535S",
+                "side": "숏",
+                "setup": "B+",
+                "grade": "",
+                "entry_time": "2026-11-17 15:35:00",
+                "entry": 87621000,
+                "stop": 88003980,
+                "stop0": 88003980,
+                "t1": 87046530,
+                "next_target": null,
+                "qty": 0.0128,
+                "qty_open": 0.0128,
+                "leverage": 1.14,
+                "risk_money": 4933,
+                "t1_done": false,
+                "realized_part": 0,
+                "last_price": 87776000,
+                "unrealized_pnl": -2545,
+                "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
+                "pending_close": null
+              },
+              {
+                "market": "KRW-SOL",
+                "coin": "SOL",
+                "id": "SOL-202611171545L",
+                "side": "롱",
+                "setup": "구간",
+                "grade": "A",
+                "entry_time": "2026-11-17 15:45:00",
+                "entry": 98660.0,
+                "stop": 98100.925,
+                "stop0": 98100.925,
+                "t1": 99100.0,
+                "next_target": null,
+                "qty": 8.9844,
+                "qty_open": 8.9844,
+                "leverage": 0.9,
+                "risk_money": 4933,
+                "t1_done": false,
+                "realized_part": 0,
+                "last_price": 98550.0,
+                "unrealized_pnl": -1431,
+                "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
+                "pending_close": null
+              }
+            ],
+            [
+              {
+                "market": "KRW-BTC",
+                "coin": "BTC",
+                "id": "202611171535S",
+                "side": "숏",
+                "setup": "B+",
+                "grade": "",
+                "entry_time": "2026-11-17 15:35:00",
+                "entry": 87621000,
+                "stop": 88003980,
+                "stop0": 88003980,
+                "t1": 87046530,
+                "next_target": null,
+                "qty": 0.0129,
+                "qty_open": 0.0129,
+                "leverage": 1.14,
+                "risk_money": 4968,
+                "t1_done": false,
+                "realized_part": 0,
+                "last_price": 87776000,
+                "unrealized_pnl": -2565,
+                "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
+                "pending_close": null
+              }
+            ]
           ],
           "last_prices": [
             {
-              "BTC": 88063000,
-              "ETH": 2492000,
-              "SOL": 98700.0,
-              "XRP": 1309.0
+              "BTC": 87776000,
+              "ETH": 2480000,
+              "SOL": 98550.0,
+              "XRP": 1301.0
             },
             {
-              "BTC": 88063000
+              "BTC": 87776000
             }
           ],
           "last_bar_times": [
             {
-              "BTC": "2026-11-17 15:05:00",
-              "ETH": "2026-11-17 15:05:00",
-              "SOL": "2026-11-17 15:05:00",
-              "XRP": "2026-11-17 15:05:00"
+              "BTC": "2026-11-17 15:45:00",
+              "ETH": "2026-11-17 15:45:00",
+              "SOL": "2026-11-17 15:45:00",
+              "XRP": "2026-11-17 15:45:00"
             },
             {
-              "BTC": "2026-11-17 15:05:00"
+              "BTC": "2026-11-17 15:45:00"
             }
+          ],
+          "event_block": [
+            {
+              "enabled": false,
+              "active": false,
+              "name": null,
+              "coins": [],
+              "start": null,
+              "until": null
+            },
+            null
+          ],
+          "upcoming_events": [
+            [],
+            null
+          ],
+          "event_blocked_signals": [
+            [],
+            null
           ]
         },
         "added_keys": []
       },
       "journal_csv_same": false,
       "n_trades": 3,
-      "last_bar_time": "2026-11-17 15:05:00",
-      "positions": 0,
+      "last_bar_time": "2026-11-17 15:45:00",
+      "positions": 1,
       "pendings": 0,
       "pass": false
     },
@@ -148,14 +298,34 @@
         "rows": 4
       },
       "status_json": {
-        "same_on_old_keys": true,
-        "diff": {},
+        "same_on_old_keys": false,
+        "diff": {
+          "event_block": [
+            {
+              "enabled": false,
+              "active": false,
+              "name": null,
+              "coins": [],
+              "start": null,
+              "until": null
+            },
+            null
+          ],
+          "upcoming_events": [
+            [],
+            null
+          ],
+          "event_blocked_signals": [
+            [],
+            null
+          ]
+        },
         "added_keys": []
       },
-      "journal_csv_same": true,
+      "journal_csv_same": false,
       "n_trades": 4,
-      "last_bar_time": "2026-11-17 15:05:00",
-      "positions": 0,
+      "last_bar_time": "2026-11-17 15:45:00",
+      "positions": 2,
       "pendings": 0,
       "pass": false
     },
@@ -185,7 +355,7 @@
         "last_close": true
       },
       "n_trades": 3,
-      "n_events": 7,
+      "n_events": 8,
       "pass": true
     },
     "4_raw_single_ETH": {
@@ -274,7 +444,7 @@
         "last_close": true
       },
       "n_trades": 13,
-      "n_events": 33,
+      "n_events": 34,
       "pass": true,
       "note": "거래ID 앞 코인 접두어·청산내역 문자열(가격 소수 표기)만 정규화, 나머지 모든 필드 비교"
     },
@@ -282,9 +452,11 @@
       "detail": {
         "baseline_v141_5m": {
           "trades.csv": true,
-          "journal.csv": true,
-          "status.json": true
-        }
+          "journal.csv(기록용 열 제외)": true,
+          "status.json(ledger 키)": true
+        },
+        "v4_30m_fixed": "ledger 에 아직 없음(봇 첫 실행 전) — 건너뜀",
+        "v4_30m_cost": "ledger 에 아직 없음(봇 첫 실행 전) — 건너뜀"
       },
       "warnings": [],
       "pass": true

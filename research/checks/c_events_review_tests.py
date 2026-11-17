@@ -380,11 +380,19 @@ def e6(tmp, trades):
     ok = ok and len(calls) == min(len(trades), rvw.GEMINI_MAX_CALLS_PER_RUN)
     # 일지 열
     bot_j = os.path.join(tmp, "journal.csv")
-    bot.write_journal(trades, bot_j, coin_of=bot.coin_tr, events=[], review=True, texts=b)
+    # (11/17 v2.3: 기본 일지는 복기 열 뒤에 신호ID·묶음·손익 분해 열이 붙음 → 복기 열만 보려면 extras=False)
+    bot.write_journal(trades, bot_j, coin_of=bot.coin_tr, events=[], review=True, texts=b, extras=False)
     import csv
     rows = list(csv.reader(open(bot_j, encoding="utf-8-sig")))
     out["일지 새 열"] = rows[0][-5:]
     ok = ok and rows[0][-5:] == ["보유봉수", "MFE_R", "MAE_R", "원인태그", "복기해설"] and rows[1][-1].startswith("진입 직후")
+    bot.write_journal(trades, bot_j, coin_of=bot.coin_tr, events=[], review=True, texts=b)
+    rows = list(csv.reader(open(bot_j, encoding="utf-8-sig")))
+    from tools.extras import DECOMP_COLS
+    n = len(DECOMP_COLS)
+    out["일지 기본 끝 열(v2.3)"] = rows[0][-(n + 5):]
+    ok = ok and rows[0][-(n + 5):] == ["보유봉수", "MFE_R", "MAE_R", "원인태그", "복기해설"] + DECOMP_COLS \
+        and rows[1][-(n + 1)].startswith("진입 직후")
     return ok, out
 
 # ---------------- E7 ----------------
@@ -414,6 +422,9 @@ def e7(tmp, trades):
 def e8(R):
     cfg = json.load(open(os.path.join(REPO, "config.json"), encoding="utf-8-sig"))
     cfg["eventBlock"] = True
+    # 11/17 15:50 에 eventBlock 을 켜면서 rule_history 에 '켜기 전' 단계가 생김 → 저장된 마지막 봉이 그 전이면
+    # 꺼진 단계가 적용돼 시점에 따라 결과가 달라짐. 이 검사는 '켜졌을 때'의 상태·알림을 보는 것이므로 단계 없이 평가한다.
+    cfg.pop("rule_history", None)
     P = engine.load_params(cfg)
     last = k(R["last_bar_time"])
     evs = [ev(last + dt.timedelta(minutes=20), name="미국 CPI", coins=frozenset({"BTC", "ETH"})),

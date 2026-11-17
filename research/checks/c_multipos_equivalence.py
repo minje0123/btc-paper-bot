@@ -171,16 +171,29 @@ def main():
         bot.run_shadows(cfg0, engine.parse_kst(led_status["updated_at"]), cands["KRW-BTC"], ev, offline=True,
                         preloaded=cands)
         sh_ok = True; sh = {}
+        # 11/17 v2.3: 일지 끝의 기록용 열(복기·묶음·분해)은 빼고 비교, status 는 ledger 에 있는 키만 비교(새 기록 키 제외),
+        #             아직 봇이 한 번도 만들지 않은 그림자 장부(새로 켠 v4 등)는 '생성 전'으로 건너뜀
+        import csv as _csv
+        import io as _io
+        from tools.extras import DECOMP_COLS
+        rec_cols = set(DECOMP_COLS) | {"보유봉수", "MFE_R", "MAE_R", "원인태그", "복기해설"}
+
+        def _core(txt):
+            rows = list(_csv.reader(_io.StringIO(txt)))
+            keep = [i for i, h in enumerate(rows[0]) if h not in rec_cols] if rows else []
+            return [[r[i] for i in keep if i < len(r)] for r in rows]
         for s in cfg0.get("shadow_ledgers") or []:
             if not s.get("enabled"):
                 continue
             a, b = os.path.join(LEDGER, "shadow", s["name"]), os.path.join(sd, s["name"])
-            d = {}
-            for fn in ("trades.csv", "journal.csv"):
-                d[fn] = read(os.path.join(a, fn)) == read(os.path.join(b, fn))
+            if not os.path.exists(os.path.join(a, "status.json")):
+                sh[s["name"]] = "ledger 에 아직 없음(봇 첫 실행 전) — 건너뜀"
+                continue
+            d = {"trades.csv": read(os.path.join(a, "trades.csv")) == read(os.path.join(b, "trades.csv")),
+                 "journal.csv(기록용 열 제외)": _core(read(os.path.join(a, "journal.csv"))) == _core(read(os.path.join(b, "journal.csv")))}
             ja, jb = json.loads(read(os.path.join(a, "status.json"))), json.loads(read(os.path.join(b, "status.json")))
             ja.pop("updated_at", None); jb.pop("updated_at", None)
-            d["status.json"] = ja == jb
+            d["status.json(ledger 키)"] = all(ja[k_] == jb.get(k_) for k_ in ja)
             sh[s["name"]] = d
             sh_ok = sh_ok and all(d.values())
         res["cases"]["5_shadow_ledgers"] = dict(detail=sh, warnings=bot._warnings[:], **{"pass": sh_ok})

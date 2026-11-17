@@ -1,0 +1,191 @@
+{
+  "made_at": "2026-11-17 17:49:25",
+  "source": "research/E2E8/trades_E2E8.csv (E2~E8 실행 기록, 비용 ×1.0)",
+  "A": "30m|gate=0|core=0|filt=- (= v4_30m_fixed: 30m 실행, 최소 손절 0.40%)",
+  "B": "30m|gate=1|core=0|filt=- (= v4_30m_cost: E3 비용 기준 손절 15%)",
+  "delta_R": 0.1,
+  "alpha_two_sided": 0.05,
+  "power": 0.8,
+  "formula": "n = ((z_0.975 + z_0.80) × σ_d / δ)², d = R_B − R_A (신호마다, 진입 안 한 쪽 0R)",
+  "note": "개발 구간 수치는 증거가 아니라 필요 표본 계획용. 연구 엔진(자본 1조 원)과 그림자 장부(100만 원, 수량 내림)의 R 은 조금 다를 수 있음.",
+  "primary": {
+    "delta_R": 0.1,
+    "alpha_two_sided": 0.05,
+    "power": 0.8,
+    "z_alpha": 1.95996,
+    "z_power": 0.84162,
+    "primary": "d_sig (신호마다 B−A, 진입 안 한 쪽 0R)",
+    "n_signals": 1739,
+    "n_both": 271,
+    "n_only_A": 1421,
+    "n_only_B": 47,
+    "n_open": 0,
+    "mean_d": 0.17103,
+    "sd_d": 1.13078,
+    "sd_A": 1.20687,
+    "sd_B": 0.49688,
+    "rho": 0.35416,
+    "mean_A": -0.16292,
+    "mean_B": 0.00811,
+    "n_required": 1004,
+    "both": {
+      "n": 271,
+      "mean_d": 0.0,
+      "sd_d": 0.0,
+      "rho": 1.0,
+      "sd_A": 1.16519,
+      "sd_B": 1.16519
+    },
+    "trades_A": 1692,
+    "trades_B": 318,
+    "mean_R_per_trade_A": -0.16745,
+    "mean_R_per_trade_B": 0.04432,
+    "sd_R_per_trade_A": 1.22321,
+    "sd_R_per_trade_B": 1.16275,
+    "n_per_arm_unpaired": 2236,
+    "progress": 1.7321,
+    "period": "개발 2025-05-18 ~ 2026-03-17",
+    "by_regime": {
+      "상승": {
+        "n": 345,
+        "mean_d": 0.13865,
+        "sd_d": 1.17013
+      },
+      "하락": {
+        "n": 646,
+        "mean_d": 0.18053,
+        "sd_d": 1.09877
+      },
+      "횡보": {
+        "n": 651,
+        "mean_d": 0.2046,
+        "sd_d": 1.1196
+      },
+      "라벨 없음": {
+        "n": 97,
+        "mean_d": -0.00236,
+        "sd_d": 1.26554
+      },
+      "고변동(플래그)": {
+        "n": 672,
+        "mean_d": 0.26579,
+        "sd_d": 1.05991
+      }
+    },
+    "by_coin": {
+      "BTC": {
+        "n": 292,
+        "mean_d": 0.1467,
+        "sd_d": 1.09041
+      },
+      "ETH": {
+        "n": 461,
+        "mean_d": 0.08627,
+        "sd_d": 1.20293
+      },
+      "XRP": {
+        "n": 458,
+        "mean_d": 0.24825,
+        "sd_d": 1.1345
+      },
+      "SOL": {
+        "n": 528,
+        "mean_d": 0.1915,
+        "sd_d": 1.08118
+      }
+    },
+    "days": 304,
+    "signals_per_day": 5.72039,
+    "days_needed_at_this_rate": 175.5
+  },
+  "selection_period_reference": {
+    "delta_R": 0.1,
+    "alpha_two_sided": 0.05,
+    "power": 0.8,
+    "z_alpha": 1.95996,
+    "z_power": 0.84162,
+    "primary": "d_sig (신호마다 B−A, 진입 안 한 쪽 0R)",
+    "n_signals": 1269,
+    "n_both": 116,
+    "n_only_A": 1133,
+    "n_only_B": 20,
+    "n_open": 0,
+    "mean_d": 0.16363,
+    "sd_d": 1.16531,
+    "sd_A": 1.2085,
+    "sd_B": 0.3911,
+    "rho": 0.27027,
+    "mean_A": -0.16213,
+    "mean_B": 0.0015,
+    "n_required": 1066,
+    "both": {
+      "n": 116,
+      "mean_d": 0.0,
+      "sd_d": 0.0,
+      "rho": 1.0,
+      "sd_A": 1.18503,
+      "sd_B": 1.18503
+    },
+    "trades_A": 1249,
+    "trades_B": 136,
+    "mean_R_per_trade_A": -0.16473,
+    "mean_R_per_trade_B": 0.01401,
+    "sd_R_per_trade_A": 1.21797,
+    "sd_R_per_trade_B": 1.19856,
+    "n_per_arm_unpaired": 2292,
+    "progress": 1.1904,
+    "period": "선택 구간 2026-03-18 ~ 2026-11-16 (참고)",
+    "by_regime": {
+      "상승": {
+        "n": 458,
+        "mean_d": 0.22066,
+        "sd_d": 1.11943
+      },
+      "하락": {
+        "n": 392,
+        "mean_d": 0.05406,
+        "sd_d": 1.20169
+      },
+      "횡보": {
+        "n": 419,
+        "mean_d": 0.2038,
+        "sd_d": 1.1756
+      },
+      "라벨 없음": {
+        "n": 0,
+        "mean_d": null,
+        "sd_d": null
+      },
+      "고변동(플래그)": {
+        "n": 389,
+        "mean_d": 0.12977,
+        "sd_d": 1.16142
+      }
+    },
+    "by_coin": {
+      "BTC": {
+        "n": 196,
+        "mean_d": 0.04606,
+        "sd_d": 1.11155
+      },
+      "ETH": {
+        "n": 297,
+        "mean_d": 0.21999,
+        "sd_d": 1.14642
+      },
+      "XRP": {
+        "n": 360,
+        "mean_d": 0.19088,
+        "sd_d": 1.13931
+      },
+      "SOL": {
+        "n": 416,
+        "mean_d": 0.15522,
+        "sd_d": 1.22423
+      }
+    },
+    "days": 244,
+    "signals_per_day": 5.20082,
+    "days_needed_at_this_rate": 205.0
+  }
+}

@@ -170,6 +170,11 @@
   "eventBreakingMin": 30,
   "eventBreakingMaxPerDay": 6,
   "geminiModel": "gemini-flash-latest",
+  "_이벤트 수집 A안": "eventSource 가 \"feeds\"(기본)면 tools/event_feeds.py 가 무료 경제 캘린더 JSON(USD High→high, Medium→medium, eventScheduleHours 시간마다)과 코인 뉴스 RSS(eventBreakingMin 분마다, 최근 2시간 제목·요약 키워드 규칙)로 data/events.csv 에 추가. \"gemini\" 면 예전 Gemini 검색 수집(tools/gemini_events.py). 수집 상태는 state/event_feed.json, status.json event_data(OK/STALE/UNKNOWN). Gemini 는 복기 해설에만 쓰고, 429·할당량 오류면 하루 쉼. 한 번 실행에서 이벤트 수집 전체 eventFetchBudgetSec 초 이하(요청마다 최대 15초).",
+  "eventSource": "feeds",
+  "eventFetchBudgetSec": 30,
+  "eventScheduleStaleHours": 24,
+  "eventBreakingStaleMin": 120,
   "_그림자 장부": "본 장부와 별도 규칙·별도 파일(ledger/shadow/이름/)로 나란히 계산하는 가상 장부. 알림 없음. 코인마다 독립 계좌. enabled 가 true 인 항목만 계산. params 는 위 본 설정을 덮어쓸 값. start_time 이 null 이면 첫 실행 시각으로 채워짐. 비어 있으면 본 장부만 계산(기존과 같음).",
   "shadow_ledgers": [
     {
@@ -195,6 +200,59 @@
         "dayLossP": 100,
         "maxConsec": 1000
       }
+    },
+    {
+      "name": "v4_30m_fixed",
+      "enabled": true,
+      "description": "v4 짝 비교 A: PREREG v3 30m 실행(E1 구현 세부 — 30분봉 실행, 방향 90분·보조 360분, 최소 손절 0.40%·최대 4.1568%, E2~E8 에서 고른 30m 그대로) + 기존 고정 최소 손절. 1R 0.5% 고정, 자금 관리 끔, 이벤트 회피 끔.",
+      "markets": ["KRW-BTC", "KRW-ETH", "KRW-XRP", "KRW-SOL"],
+      "timeframe": 30,
+      "warmup_days": 7,
+      "pair_group": "v4_30m",
+      "pair_role": "A",
+      "start_time": null,
+      "initial_capital": 1000000,
+      "params": {
+        "eventBlock": false,
+        "slipMode": "tick",
+        "riskPct": 0.5,
+        "redPct": 0.5,
+        "dayTargetP": 0,
+        "firstWinHalf": false,
+        "withdrawPct": 0,
+        "dayLossP": 100,
+        "maxConsec": 1000,
+        "minStopP": 0.4,
+        "maxStopP": 4.156846768604231,
+        "costGateR": 0
+      }
+    },
+    {
+      "name": "v4_30m_cost",
+      "enabled": true,
+      "description": "v4 짝 비교 B: v4_30m_fixed 와 같고 손절 하한만 PREREG v3 E3 비용 기준 손절(왕복 비용 2×0.05%+2틱 ÷ 손절 거리 ≤ 15%, 최소 0.40% 조건 대신). 같은 신호는 같은 signal_id.",
+      "markets": ["KRW-BTC", "KRW-ETH", "KRW-XRP", "KRW-SOL"],
+      "timeframe": 30,
+      "warmup_days": 7,
+      "pair_group": "v4_30m",
+      "pair_role": "B",
+      "start_time": null,
+      "initial_capital": 1000000,
+      "params": {
+        "eventBlock": false,
+        "slipMode": "tick",
+        "riskPct": 0.5,
+        "redPct": 0.5,
+        "dayTargetP": 0,
+        "firstWinHalf": false,
+        "withdrawPct": 0,
+        "dayLossP": 100,
+        "maxConsec": 1000,
+        "minStopP": 0.4,
+        "maxStopP": 4.156846768604231,
+        "costGateR": 0.15
+      }
     }
-  ]
+  ],
+  "_v4 짝 비교": "pair_group 이 같은 그림자 장부 두 개(pair_role A·B)는 매 실행 research/v4/pairs.csv 를 다시 쓴다(신호 ID = 코인-신호봉시각-방향, 두 방식의 R·진입·청산·비용 전 R·BTC 일봉 국면 라벨). timeframe 30 = 저장된 5분봉을 KST 00:00 기준 30분봉으로 묶어(완성된 봉만) 실행, 방향 90분·보조 360분. start_time 이 null 이면 첫 실행 때 max(첫 실행 시각, 그 코인들 첫 5분봉 + warmup_days) 를 30분 단위로 올려 채움(두 장부 같은 값). 국면 라벨용 BTC 일봉은 data/btc_daily.csv(업비트 공개 일봉, 6시간마다 필요할 때만)."
 }

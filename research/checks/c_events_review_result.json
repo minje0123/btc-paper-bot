@@ -343,6 +343,22 @@
         "MAE_R",
         "원인태그",
         "복기해설"
+      ],
+      "일지 기본 끝 열(v2.3)": [
+        "보유봉수",
+        "MFE_R",
+        "MAE_R",
+        "원인태그",
+        "복기해설",
+        "신호ID",
+        "묶음ID",
+        "묶음크기",
+        "분해_계획R",
+        "분해_갭R",
+        "분해_슬리피지R",
+        "분해_진입수수료R",
+        "분해_청산수수료R",
+        "실제위험/계획위험"
       ]
     },
     "E7_daily_report": {
@@ -366,27 +382,34 @@
       "before_start": null
     },
     "E8_status_fields": {
-      "pass_": false,
+      "pass_": true,
       "event_block": {
-        "enabled": false,
-        "active": false,
-        "name": null,
-        "coins": [],
-        "start": null,
-        "until": null
+        "enabled": true,
+        "active": true,
+        "name": "미국 CPI",
+        "coins": [
+          "BTC",
+          "ETH"
+        ],
+        "start": "2026-11-17 15:35:00",
+        "until": "2026-11-17 16:35:00"
       },
       "upcoming": [
         [
-          "2026-11-17 16:00:00",
+          "2026-11-17 16:05:00",
           "미국 CPI"
         ],
         [
-          "2026-11-19 15:40:00",
+          "2026-11-19 15:45:00",
           "FOMC"
         ]
       ],
-      "window_msgs": [],
-      "window_ids": [],
+      "window_msgs": [
+        "⛔ 이벤트 회피: 미국 CPI BTC·ETH 11-17 15:35~16:35"
+      ],
+      "window_ids": [
+        "V7100a831fd93"
+      ],
       "off_block": {
         "enabled": false,
         "active": false,
@@ -410,5 +433,5 @@
       "config_eventBlock": true
     }
   },
-  "pass": false
+  "pass": true
 }

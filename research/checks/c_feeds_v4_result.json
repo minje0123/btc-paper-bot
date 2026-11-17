@@ -1,0 +1,821 @@
+{
+  "method": "검증 4 — 이벤트 감지 A안 · 상관 신호 묶음 · v4 30m 짝 그림자 · 손절 분해 (2026-11-17)\n\nF1 캘린더 JSON: USD 만, High→high·Medium→medium, Low·다른 나라 제외, 미국 동부 → KST, 00:00(하루 종일) → medium,\n   같은 시각 합치기, validate_schedule 로 과거 제외·URL·added_at 기록\nF2 RSS: 예시 응답(RSS 2.0 4곳 + Atom 합성) 파싱, 키워드 분류 양성 7·음성 6, 최근 2시간·다음 5분봉 시작·60~180분·하루 한도\nF3 상태: UNKNOWN(한 번도 없음)·OK·STALE 경계, 캘린더 0건이어도 OK(이벤트 없음 ≠ 데이터 없음), 실패 시 last_success 유지,\n   수집 시간 예산 초과 시 남은 소스 건너뜀, gemini 상태 파일 형식도 판정\nF4 묶음 ID: 같은 봉·±1봉 사슬은 한 묶음, 2봉 떨어지거나 반대 방향이면 별개, 독립 묶음 수\nF5 30m 재현: bot.tf_data + v4 그림자 설정(engine.run)이 E2E8 의 30m 기준(gate=0)·E3(gate=1) 거래를 신호 ID 까지 재현\n   (18개월 개발·선택 구간 데이터 — 최종 시험 데이터 아님). R 차이는 자본·수량 내림 차이만큼 작아야 함\nF6 같은 신호 같은 signal_id: 두 장부 모두 진입한 신호는 진입·청산·R 이 같음, pairs.csv 생성(한쪽만 진입한 신호 포함, 국면 라벨)\nF7 손절 분해 합 = 실제 R (±0.001R): 본 장부 + baseline + F5 의 30m 거래 전부. 손절은 계획R = −1\nF8 검정력 계산 예시: σ_d=1 → 785쌍, power_stats 합성 예시, power_prior.json 형식\nF9 Gemini 해설 429 → 24시간 백오프(그동안 호출 0), 503 은 기존처럼 거래 실패로 셈\nF10 bot 연결: 임시 폴더에서 run_shadows(오프라인) → v4 두 장부 같은 시작 시각, pairs.csv·pair_summary·일지 새 열,\n    tf_data 완성 봉만, event_data_fields 상태\n결과: research/checks/c_feeds_v4_result.json",
+  "tests": {
+    "F1_calendar": {
+      "pass_": true,
+      "parsed": [
+        [
+          "2026-12-10 22:30",
+          "CPI m/m",
+          "high"
+        ],
+        [
+          "2026-12-10 22:30",
+          "Core CPI m/m",
+          "high"
+        ],
+        [
+          "2026-12-11 14:00",
+          "Bank Holiday",
+          "medium"
+        ],
+        [
+          "2026-12-10 22:30",
+          "Claims",
+          "medium"
+        ],
+        [
+          "2026-12-17 04:00",
+          "FOMC Statement",
+          "high"
+        ]
+      ],
+      "items": [
+        [
+          "2026-12-10 22:30",
+          "[일정] CPI m/m · Core CPI m/m (USD)",
+          "high"
+        ],
+        [
+          "2026-12-11 14:00",
+          "[일정] Bank Holiday (하루 종일/미정) (USD)",
+          "medium"
+        ],
+        [
+          "2026-12-17 04:00",
+          "[일정] FOMC Statement (USD)",
+          "high"
+        ]
+      ],
+      "sample_usd_high_medium": 8,
+      "sample_added": [
+        [
+          "2026-11-17 22:30",
+          "[일정] Core Retail Sales m/m · Retail Sales m/m (USD)",
+          "high"
+        ],
+        [
+          "2026-11-19 04:00",
+          "[일정] FOMC Meeting Minutes (USD)",
+          "high"
+        ],
+        [
+          "2026-11-19 22:30",
+          "[일정] Philly Fed Manufacturing Index · Unemployment Claims (USD)",
+          "medium"
+        ],
+        [
+          "2026-11-21 00:00",
+          "[일정] Revised UoM Consumer Sentiment · Revised UoM Inflation Expectations (USD)",
+          "medium"
+        ]
+      ],
+      "sample_rejected": [
+        [
+          "[일정] Fed Chairman Warsh Speaks (USD)",
+          "과거 시각"
+        ]
+      ],
+      "second_run_added": 0,
+      "checks": {
+        "kst_high": true,
+        "all_day_medium": true,
+        "fomc_kst": true,
+        "no_eur_low": true,
+        "merged_same_time": true,
+        "sample_retail": true,
+        "sample_fomc": true,
+        "past_rejected": true,
+        "csv_rows": true,
+        "no_dup_second_run": true
+      }
+    },
+    "F2_rss_keywords": {
+      "pass_": true,
+      "pos": [
+        [
+          "Hackers drain $120 million from Solana DeFi protocol",
+          "high",
+          "SOL",
+          "hack"
+        ],
+        [
+          "Binance suspends withdrawals amid network congestion",
+          "high",
+          "ALL",
+          "halt"
+        ],
+        [
+          "업비트, 입출금 중단 공지",
+          "high",
+          "ALL",
+          "halt"
+        ],
+        [
+          "XRP Ledger halts block production for 40 minutes",
+          "high",
+          "XRP",
+          "network"
+        ],
+        [
+          "Upbit designates XRP as investment warning",
+          "high",
+          "XRP",
+          "delist"
+        ],
+        [
+          "SEC sues Coinbase over unregistered securities",
+          "medium",
+          "ALL",
+          "regulation"
+        ],
+        [
+          "$1.2 billion in longs liquidated as bitcoin plunges",
+          "medium",
+          "BTC",
+          "liquidation"
+        ]
+      ],
+      "neg": [
+        [
+          "Bitcoin price prediction: could BTC hit $100K?",
+          null
+        ],
+        [
+          "Cardano bridge hack drains $5 million",
+          null
+        ],
+        [
+          "Ethereum developers discuss Fusaka upgrade timeline",
+          null
+        ],
+        [
+          "What the Solana outage of 2022 taught us",
+          null
+        ],
+        [
+          "Ex-Robinhood engineer pleads guilty to $125K Hyperliquid trading scheme",
+          null
+        ],
+        [
+          "Ripple CEO says XRP adoption is growing",
+          null
+        ]
+      ],
+      "rss_coindesk.xml": 25,
+      "rss_cointelegraph.xml": 30,
+      "rss_theblock.xml": 20,
+      "rss_decrypt.xml": 39,
+      "atom": [
+        [
+          "Ethereum mainnet stalled: network halts after bug",
+          "https://example.org/a",
+          "2026-11-17 15:30:00+09:00",
+          "Blocks stopped."
+        ]
+      ],
+      "breaking_added": [
+        [
+          "2026-11-17 16:05",
+          "[돌발] 네트워크 중단 (ETH): Ethereum mainnet sta",
+          "high",
+          "ETH",
+          "180"
+        ],
+        [
+          "2026-11-17 16:05",
+          "[돌발] 상장폐지/유의 종목 (XRP): Upbit designates ",
+          "high",
+          "XRP",
+          "120"
+        ],
+        [
+          "2026-11-17 16:05",
+          "[돌발] 네트워크 중단 (XRP): XRP Ledger halts blo",
+          "high",
+          "XRP",
+          "180"
+        ],
+        [
+          "2026-11-17 16:05",
+          "[돌발] 대규모 청산 (BTC): $1.2 billion in longs",
+          "medium",
+          "BTC",
+          "90"
+        ],
+        [
+          "2026-11-17 16:05",
+          "[돌발] SEC·규제 조치 (ALL): SEC sues Coinbase ",
+          "medium",
+          "ALL",
+          "120"
+        ]
+      ],
+      "breaking_rejected": [
+        [
+          "입출금 중단 (ALL): 업비트, 입출금 중단 공지",
+          "하루 돌발 한도"
+        ],
+        [
+          "해킹/익스플로잇 (SOL): Hackers drain $120 milli",
+          "하루 돌발 한도"
+        ]
+      ],
+      "dedup_same_cat": 1
+    },
+    "F3_stale_unknown": {
+      "pass_": true,
+      "judge": [
+        "UNKNOWN",
+        "OK",
+        "STALE",
+        "UNKNOWN"
+      ],
+      "after_first": {
+        "schedule": "OK",
+        "breaking": "OK",
+        "sources": {
+          "ff_thisweek": {
+            "ok": true,
+            "last_success": "2026-11-18 12:00:00",
+            "count": 0,
+            "error": null,
+            "optional": false
+          },
+          "ff_nextweek": {
+            "ok": false,
+            "last_success": null,
+            "count": null,
+            "error": "HTTP 404",
+            "optional": true
+          },
+          "coindesk": {
+            "ok": true,
+            "last_success": "2026-11-18 12:00:00",
+            "count": 25,
+            "error": null,
+            "optional": false
+          },
+          "cointelegraph": {
+            "ok": false,
+            "last_success": null,
+            "count": null,
+            "error": "TimeoutError: timed out",
+            "optional": false
+          },
+          "theblock": {
+            "ok": false,
+            "last_success": null,
+            "count": null,
+            "error": "TimeoutError: timed out",
+            "optional": false
+          }
+        },
+        "schedule_items": 0
+      },
+      "calls_after_5min": 0,
+      "calls_after_31min": 3,
+      "fail_states": [
+        "OK",
+        "STALE",
+        "STALE",
+        false
+      ],
+      "budget": {
+        "elapsed": 0.41,
+        "calls": 1,
+        "skipped": [
+          "ff_nextweek",
+          "coindesk",
+          "cointelegraph",
+          "theblock"
+        ]
+      },
+      "gemini_state": [
+        "gemini",
+        "OK",
+        "UNKNOWN"
+      ]
+    },
+    "F4_clusters": {
+      "pass_": true,
+      "ids": [
+        [
+          "BTC",
+          1,
+          "M202611171000L",
+          4
+        ],
+        [
+          "ETH",
+          1,
+          "M202611171000L",
+          4
+        ],
+        [
+          "SOL",
+          1,
+          "M202611171000L",
+          4
+        ],
+        [
+          "XRP",
+          1,
+          "M202611171000L",
+          4
+        ],
+        [
+          "BTC",
+          1,
+          "M202611171025L",
+          1
+        ],
+        [
+          "XRP",
+          -1,
+          "M202611171000S",
+          1
+        ]
+      ],
+      "independent": 3,
+      "tf30": [
+        "M202611171000L",
+        "M202611171000L",
+        "M202611171130L"
+      ],
+      "signal_id": [
+        "SOL-202611171000S",
+        "BTC-202611170930L"
+      ]
+    },
+    "F5_reproduce_E2E8_30m": {
+      "pass_": true,
+      "v4_30m_fixed": {
+        "research": 2941,
+        "shadow_engine": 2941,
+        "same_ids": 2941,
+        "only_research": 0,
+        "only_shadow": 0,
+        "mean_abs_dR": 0.000308789814821453,
+        "max_abs_dR": 0.03291048767803284,
+        "share_dR_over_0_01": 0.008160489629377763,
+        "mean_R_shadow": -0.16625788873038963,
+        "mean_R_research": -0.16629273648418905,
+        "largest": [
+          [
+            0.0329,
+            "BTC 202510020400L"
+          ],
+          [
+            0.0308,
+            "BTC 202511150200S"
+          ],
+          [
+            0.0296,
+            "BTC 202606021430S"
+          ]
+        ]
+      },
+      "v4_30m_cost": {
+        "research": 454,
+        "shadow_engine": 454,
+        "same_ids": 454,
+        "only_research": 0,
+        "only_shadow": 0,
+        "mean_abs_dR": 0.0006075248088850886,
+        "max_abs_dR": 0.030277015280819164,
+        "share_dR_over_0_01": 0.015418502202643172,
+        "mean_R_shadow": 0.03532659494093847,
+        "mean_R_research": 0.03524369162995595,
+        "largest": [
+          [
+            0.0303,
+            "BTC 202511050930S"
+          ],
+          [
+            0.0239,
+            "BTC 202606021430S"
+          ],
+          [
+            0.0222,
+            "BTC 202602061530S"
+          ]
+        ]
+      }
+    },
+    "F6_signal_id_pairs": {
+      "pass_": true,
+      "rows": 3011,
+      "both_closed": 387,
+      "only_A": 2554,
+      "only_B": 67,
+      "open_rows": 3,
+      "header_ok": true,
+      "labeled": 2914,
+      "regimes": {
+        "상승": 803,
+        "하락": 1041,
+        "횡보": 1070
+      },
+      "high_vol": 1064,
+      "preR_filled": 2941,
+      "example_onlyA": {
+        "signal_id": "SOL-202506011400S",
+        "coin": "SOL",
+        "signal_time": "2025-06-01 14:00",
+        "side": "S",
+        "regime": "",
+        "high_vol": "",
+        "ret30": "",
+        "vol7_pct": "",
+        "A_status": "closed",
+        "A_entry_time": "2025-06-01 14:30",
+        "A_entry": "220050",
+        "A_stop0": "221110",
+        "A_exit_time": "2025-06-01 17:00",
+        "A_exit_reason": "T1 후 다음 스윙",
+        "A_R": "2.198232",
+        "A_preR": "2.572984",
+        "B_status": "none",
+        "B_entry_time": "",
+        "B_entry": "",
+        "B_stop0": "",
+        "B_exit_time": "",
+        "B_exit_reason": "",
+        "B_R": "",
+        "B_preR": "",
+        "d_sig": "-2.198232",
+        "d_both": ""
+      },
+      "signal_id_format_ok": true,
+      "both_identical": true,
+      "max_abs_d_both": 0.030277,
+      "n_d_both_over_0_01": 6,
+      "no_lookahead": true
+    },
+    "F7_decomp_sum": {
+      "pass_": true,
+      "main": {
+        "trades": 4,
+        "decomposed": 4,
+        "missing": 0,
+        "max_abs_err": 2.220446049250313e-16,
+        "stops": 3,
+        "stop_plan_is_minus1": true,
+        "exit_reasons": [
+          "다음 스윙",
+          "손절"
+        ],
+        "stop_avg": {
+          "plan_R": -1.0,
+          "gap_R": 0.0,
+          "slip_R": -0.008899528623187056,
+          "fee_entry_R": -0.10893848848425713,
+          "fee_exit_R": -0.10876822620550503,
+          "sum_R": -1.2266062433129494,
+          "R": -1.226606243312949,
+          "risk_ratio": 1.017992162120424,
+          "n": 3
+        }
+      },
+      "baseline": {
+        "trades": 1,
+        "decomposed": 1,
+        "missing": 0,
+        "max_abs_err": 2.220446049250313e-16,
+        "stops": 1,
+        "stop_plan_is_minus1": true,
+        "exit_reasons": [
+          "손절"
+        ],
+        "stop_avg": {
+          "plan_R": -1.0,
+          "gap_R": 0.0,
+          "slip_R": -0.021762785636561477,
+          "fee_entry_R": -0.10817192600652883,
+          "fee_exit_R": -0.10766104461371055,
+          "sum_R": -1.237595756256801,
+          "R": -1.2375957562568007,
+          "risk_ratio": 1.15018364,
+          "n": 1
+        }
+      },
+      "v4_30m_fixed(18개월 30m)": {
+        "trades": 2941,
+        "decomposed": 2941,
+        "missing": 0,
+        "max_abs_err": 8.881784197001252e-16,
+        "stops": 1566,
+        "stop_plan_is_minus1": true,
+        "exit_reasons": [
+          "거래량 급증",
+          "다음 스윙",
+          "돌파 실패",
+          "반대 장악형",
+          "본절",
+          "손절"
+        ],
+        "stop_avg": {
+          "plan_R": -1.0,
+          "gap_R": -5.98594465107764e-05,
+          "slip_R": -0.045867433683902004,
+          "fee_entry_R": -0.08292250675490197,
+          "fee_exit_R": -0.08296167584023305,
+          "sum_R": -1.2118114757255478,
+          "R": -1.2118114757255478,
+          "risk_ratio": 1.0352532080972907,
+          "n": 1566
+        }
+      },
+      "v4_30m_cost(18개월 30m)": {
+        "trades": 454,
+        "decomposed": 454,
+        "missing": 0,
+        "max_abs_err": 4.440892098500626e-16,
+        "stops": 215,
+        "stop_plan_is_minus1": true,
+        "exit_reasons": [
+          "거래량 급증",
+          "다음 스윙",
+          "돌파 실패",
+          "반대 장악형",
+          "본절",
+          "손절"
+        ],
+        "stop_avg": {
+          "plan_R": -1.0,
+          "gap_R": -0.00016289189106879698,
+          "slip_R": -0.015074077067629884,
+          "fee_entry_R": -0.039110925020649605,
+          "fee_exit_R": -0.039169992064481816,
+          "sum_R": -1.0935178860438302,
+          "R": -1.0935178860438302,
+          "risk_ratio": 1.0085992431710327,
+          "n": 215
+        }
+      },
+      "worst_abs_err": 8.881784197001252e-16,
+      "main_detail": [
+        {
+          "id": "202611161510S",
+          "coin": "BTC",
+          "R": -1.229,
+          "stop_pct": 0.4518,
+          "rm": 2500,
+          "rw": 2420,
+          "pnl": -2974,
+          "pnl_over_rm": -1.1894,
+          "plan_R": -1.0,
+          "gap_R": 0.0,
+          "slip_R": -0.0026,
+          "fee_entry_R": -0.1129,
+          "fee_exit_R": -0.1134,
+          "sum_R": -1.229,
+          "risk_ratio": 0.9678,
+          "entry_slip_won": 6.2,
+          "pre_cost_R": -1.0
+        },
+        {
+          "id": "202611161705S",
+          "coin": "BTC",
+          "R": 0.9422,
+          "stop_pct": 0.4204,
+          "rm": 2493,
+          "rw": 2491,
+          "pnl": 2347,
+          "pnl_over_rm": 0.9417,
+          "plan_R": 1.1763,
+          "gap_R": 0.0,
+          "slip_R": 0.0,
+          "fee_entry_R": -0.1174,
+          "fee_exit_R": -0.1168,
+          "sum_R": 0.9422,
+          "risk_ratio": 0.9995,
+          "entry_slip_won": 6.6,
+          "pre_cost_R": 1.1821
+        },
+        {
+          "id": "202611170625L",
+          "coin": "BTC",
+          "R": -1.2133,
+          "stop_pct": 0.501,
+          "rm": 4997,
+          "rw": 4677,
+          "pnl": -5674,
+          "pnl_over_rm": -1.1356,
+          "plan_R": -1.0,
+          "gap_R": 0.0,
+          "slip_R": -0.0024,
+          "fee_entry_R": -0.1057,
+          "fee_exit_R": -0.1052,
+          "sum_R": -1.2133,
+          "risk_ratio": 0.936,
+          "entry_slip_won": 11.1,
+          "pre_cost_R": -1.0
+        },
+        {
+          "id": "SOL-202611171425L",
+          "coin": "SOL",
+          "R": -1.2376,
+          "stop_pct": 0.4021,
+          "rm": 4968,
+          "rw": 5715,
+          "pnl": -7072,
+          "pnl_over_rm": -1.4235,
+          "plan_R": -1.0,
+          "gap_R": 0.0,
+          "slip_R": -0.0218,
+          "fee_entry_R": -0.1082,
+          "fee_exit_R": -0.1077,
+          "sum_R": -1.2376,
+          "risk_ratio": 1.1502,
+          "entry_slip_won": 124.367,
+          "pre_cost_R": -1.0
+        }
+      ]
+    },
+    "F8_power": {
+      "pass_": true,
+      "n_sd1": 785,
+      "n_sd_1_13078": 1004,
+      "n_none": null,
+      "synthetic": {
+        "n_signals": 3,
+        "n_both": 1,
+        "n_only_A": 1,
+        "n_only_B": 1,
+        "n_open": 1,
+        "mean_d": 1.0666666666666667,
+        "sd_d": 1.0066445913694333,
+        "rho": 0.9285714285714283,
+        "n_required": 796,
+        "progress": 0.0038
+      },
+      "prior": {
+        "n_signals": 1739,
+        "mean_d": 0.17103,
+        "sd_d": 1.13078,
+        "rho": 0.35416,
+        "n_required": 1004
+      }
+    },
+    "F9_gemini_429_backoff": {
+      "pass_": true,
+      "first_calls": 1,
+      "backoff_until": "2026-11-18 16:00:00",
+      "calls_5h_later": 0,
+      "calls_25h_later": 1,
+      "fails_recorded": 0
+    },
+    "F10_bot_wiring": {
+      "pass_": true,
+      "run_shadows_s": 0.27,
+      "start_times": {
+        "baseline_v141_5m": "2026-11-17 09:10",
+        "v4_30m_fixed": "2026-11-21 09:30",
+        "v4_30m_cost": "2026-11-21 09:30"
+      },
+      "first_5m": "2026-11-13 13:40:00+09:00",
+      "pair_summary": {
+        "group": "v4_30m",
+        "A": "v4_30m_fixed",
+        "B": "v4_30m_cost",
+        "n_signals": 0,
+        "n_both": 0,
+        "n_only_A": 0,
+        "n_only_B": 0,
+        "n_open": 0,
+        "mean_d": null,
+        "sd_d": null,
+        "rho": null,
+        "n_required": null,
+        "progress": 0.0,
+        "n_required_prior": 1004,
+        "delta_R": 0.1,
+        "definition": "d = R_B − R_A (신호마다, 진입 안 한 쪽 0R). 필요 쌍 수 = ((1.96+0.84)·σ_d/0.10)²",
+        "pairs_csv": "../../../AppData/Local/Temp/feedsv4_8ax_5p2b/v4/pairs.csv",
+        "pairs_csv_ledger": "../../../AppData/Local/Temp/feedsv4_8ax_5p2b/shadow/v4_pairs.csv"
+      },
+      "pairs_rows_from_11_15": 24,
+      "pairs_example": [
+        {
+          "signal_id": "BTC-202611151000S",
+          "coin": "BTC",
+          "signal_time": "2026-11-15 10:00",
+          "side": "S",
+          "regime": "",
+          "high_vol": "",
+          "ret30": "",
+          "vol7_pct": "",
+          "A_status": "closed",
+          "A_entry_time": "2026-11-15 10:30",
+          "A_entry": "86787000",
+          "A_stop0": "88078017",
+          "A_exit_time": "2026-11-15 11:00",
+          "A_exit_reason": "손절",
+          "A_R": "-1.068499",
+          "A_preR": "-1.000000",
+          "B_status": "closed",
+          "B_entry_time": "2026-11-15 10:30",
+          "B_entry": "86787000",
+          "B_stop0": "88078017",
+          "B_exit_time": "2026-11-15 11:00",
+          "B_exit_reason": "손절",
+          "B_R": "-1.068499",
+          "B_preR": "-1.000000",
+          "d_sig": "0.000000",
+          "d_both": "0.000000"
+        },
+        {
+          "signal_id": "BTC-202611151230S",
+          "coin": "BTC",
+          "signal_time": "2026-11-15 12:30",
+          "side": "S",
+          "regime": "",
+          "high_vol": "",
+          "ret30": "",
+          "vol7_pct": "",
+          "A_status": "closed",
+          "A_entry_time": "2026-11-15 13:00",
+          "A_entry": "89440000",
+          "A_stop0": "90203079",
+          "A_exit_time": "2026-11-15 17:30",
+          "A_exit_reason": "T1 후 본절",
+          "A_R": "0.542482",
+          "A_preR": "0.662205",
+          "B_status": "closed",
+          "B_entry_time": "2026-11-15 13:00",
+          "B_entry": "89440000",
+          "B_stop0": "90203079",
+          "B_exit_time": "2026-11-15 17:30",
+          "B_exit_reason": "T1 후 본절",
+          "B_R": "0.542482",
+          "B_preR": "0.662205",
+          "d_sig": "0.000000",
+          "d_both": "0.000000"
+        },
+        {
+          "signal_id": "BTC-202611151800S",
+          "coin": "BTC",
+          "signal_time": "2026-11-15 18:00",
+          "side": "S",
+          "regime": "",
+          "high_vol": "",
+          "ret30": "",
+          "vol7_pct": "",
+          "A_status": "closed",
+          "A_entry_time": "2026-11-15 18:30",
+          "A_entry": "90496000",
+          "A_stop0": "91164560",
+          "A_exit_time": "2026-11-15 21:30",
+          "A_exit_reason": "T1 후 반대 장악형",
+          "A_R": "0.710912",
+          "A_preR": "0.849362",
+          "B_status": "closed",
+          "B_entry_time": "2026-11-15 18:30",
+          "B_entry": "90496000",
+          "B_stop0": "91164560",
+          "B_exit_time": "2026-11-15 21:30",
+          "B_exit_reason": "T1 후 반대 장악형",
+          "B_R": "0.710912",
+          "B_preR": "0.849362",
+          "d_sig": "0.000000",
+          "d_both": "0.000000"
+        }
+      ],
+      "v4_fixed_status": {
+        "trades_count": 23,
+        "avg_R": 0.088,
+        "independent_clusters": 15,
+        "start_time": "2026-11-15 09:00"
+      },
+      "tf_data": {
+        "bars": 196,
+        "same_as_research_aggregate": true,
+        "incomplete_dropped": true,
+        "dir_aux": [
+          90,
+          360,
+          30
+        ]
+      },
+      "event_data": [
+        [
+          "UNKNOWN",
+          "UNKNOWN"
+        ],
+        [
+          "OK",
+          "STALE"
+        ],
+        [
+          "[일정] CPI (USD)",
+          "[일정] Claims (USD)"
+        ]
+      ]
+    }
+  },
+  "v4_runs_s": 22.1,
+  "total_s": 29.6,
+  "pass": true
+}

@@ -69,6 +69,9 @@ DEFAULTS = dict(
     maxOpenPositions=1,      # 동시 보유(진입 대기 포함) 상한 개수. 한 코인에는 항상 1개
     maxOpenRiskPct=0.0,      # 열린 포지션(진입 대기 포함) 최초 위험금액 합계 상한, 거래 시드 % (0 = 끔)
     minRoomFrac=0.25,        # 위험 여유가 1R × 이 값 미만이면 진입 안 함(여유만큼 줄여 진입할 때의 하한)
+    # ---- v4 그림자 장부용(2026-11-17) — run() 전용. 0 이면 끔 = 기존과 같은 코드 경로 ----
+    costGateR=0.0,           # >0 이면 PREREG v3 E3 '비용 기준 손절': 왕복 비용(2×0.05%×종가 + 2틱) ÷ 손절 거리 > 값이면
+                             # 진입 안 함, 최소 손절 minStopP 조건은 없앰(research/E2E8/decisions.md D3-1·D3-2 와 같은 식)
 )
 
 # run_multi: 같은 봉에서 신호가 여러 개일 때 우선순위 (결과 보기 전 고정, 2026-11-17)
@@ -193,7 +196,7 @@ def load_params(config):
     for k in ("riskPct", "redPct", "maxLev", "minStopP", "maxStopP", "bufP", "zoneTolP", "slopeThr",
               "chaseP", "t1MinR", "t1MaxR", "t1FbR", "volExitX", "dayLossP", "fee", "slip", "capital",
               "dayTargetP", "afterTargetMinFrac", "withdrawPct", "maxRiskCapP", "slipTicks", "eventBeforeMin",
-              "eventAfterMin"):
+              "eventAfterMin", "costGateR"):
         P[k] = float(P[k])
     P["eventBlock"] = bool(P["eventBlock"])
     P["swLen"] = int(P["swLen"]); P["maxConsec"] = int(P["maxConsec"])
@@ -798,7 +801,12 @@ def run(D, P, start_time=None, close_at_end=False, events=None, coin=None):
                 t1 = next_above(phV, c) if side == 1 else next_below(plV, c)
                 t1 = c + side * P["t1FbR"] * dist if t1 is None else t1
                 gap = abs(t1 - c)
-                if P["minStopP"] <= dp <= P["maxStopP"] and gap >= P["t1MinR"] * dist:
+                _cg = P.get("costGateR") or 0.0
+                if _cg > 0:      # v4 그림자: E3 비용 기준 손절(항상 기본 비용 0.05%·1틱으로 판정, 최소 손절% 대체)
+                    _lo_ok = dist > 0 and (2 * 0.0005 * c + 2 * tick_size(c)) / dist <= _cg
+                else:
+                    _lo_ok = P["minStopP"] <= dp
+                if _lo_ok and dp <= P["maxStopP"] and gap >= P["t1MinR"] * dist:
                     if gap > P["t1MaxR"] * dist:
                         t1 = c + side * P["t1FbR"] * dist
                     if P["exitMode"] == "v13":

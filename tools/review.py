@@ -29,6 +29,8 @@ TREND_EXT_MIN_R = 1.0       # '추세 연장 익절': T1 뒤 다음 스윙/반�
 TREND_EXIT_REASONS = ("다음 스윙", "반대 장악형", "거래량 급증")
 GEMINI_MAX_CALLS_PER_RUN = 3   # 한 번 실행에서 새로 부르는 복기 해설 수(나머지는 다음 실행)
 GEMINI_MAX_FAILS = 3           # 같은 거래에서 이만큼 실패하면 더는 부르지 않음(빈칸)
+GEMINI_BACKOFF_H = 24          # 429·할당량 오류면 이 시간 동안 해설 호출을 쉼(실행 시간 낭비 방지, 거래 실패 횟수엔 안 셈)
+QUOTA_RE = re.compile(r"\b429\b|RESOURCE_EXHAUSTED|quota", re.I)
 
 LOSS_TAGS = ("즉시 역행", "T1 근접 후 반전", "1시간 추세 역방향 진입", "변동성 급등", "이벤트 근처")
 WIN_TAGS = ("T1 후 본절", "추세 연장 익절", "T1 반익절만")
@@ -250,6 +252,15 @@ def gemini_reviews(trades, path, now, log=None, key=None, generate=None, max_cal
     key = key if key is not None else gc.api_key()
     generate = generate or gc.generate
     calls, changed = 0, False
+    bo = d.get("backoff_until")
+    if key and bo:
+        try:
+            if now < dt.datetime.strptime(bo[:19], "%Y-%m-%d %H:%M:%S").replace(tzinfo=now.tzinfo):
+                key = None                       # 할당량 백오프 중: 캐시만 돌려줌
+                if log:
+                    log(f"Gemini 복기 해설: 할당량 오류로 {bo[:16]} 까지 쉼(캐시만 사용)")
+        except ValueError:
+            pass
     if key:
         for t in sorted(trades, key=lambda x: x["exit_time"], reverse=True):     # 최근 거래부터
             ent = rv.get(t["id"])
@@ -265,6 +276,14 @@ def gemini_reviews(trades, path, now, log=None, key=None, generate=None, max_cal
                     raise ValueError("빈 답")
                 rv[t["id"]] = dict(text=txt, model=model, at=now.strftime("%Y-%m-%d %H:%M:%S"))
             except Exception as e:
+                if QUOTA_RE.search(str(e)):
+                    until = now + dt.timedelta(hours=GEMINI_BACKOFF_H)
+                    d["backoff_until"] = until.strftime("%Y-%m-%d %H:%M:%S")
+                    d["backoff_reason"] = str(e)[:200]
+                    changed = True
+                    if log:
+                        log(f"Gemini 복기 해설: 429/할당량 오류 → {until:%m-%d %H:%M} 까지 해설 호출 쉼", warn=True)
+                    break
                 ent = rv.get(t["id"]) or {}
                 rv[t["id"]] = dict(text="", fails=int(ent.get("fails", 0)) + 1, last_error=str(e)[:200],
                                    at=now.strftime("%Y-%m-%d %H:%M:%S"))
@@ -293,6 +312,23 @@ def daily_report(day, trades, texts=None, recent=None):
     wins = sum(1 for t in ts if t["pnl"] > 0)
     sumR = sum(t["R"] for t in ts)
     L.append(f"- 거래 {n}건 · 이익 {wins}건 · 합계 {sumR:+.2f}R · 손익 {_won(pnl)}\n")
+    try:                                    # (2) 상관 신호 묶음 · (4) 손절 손익 분해 — 정보가 있을 때만
+        from tools.extras import independent_count, stop_decomp_summary
+        if ts and any(t.get("cluster") for t in ts):
+            L.append(f"- 독립 묶음 {independent_count(ts)}개 (같은 방향 신호가 여러 코인에 ±1봉 안에 동시에 나면 한 묶음 — "
+                     f"거래 {n}건을 독립 {n}건으로 세지 않음)\n")
+        sd = stop_decomp_summary(ts) if ts else None
+        if sd:
+            L.append(f"## 손절 거래 평균 손익 분해 (R, T1 전 손절 {sd['n']}건)\n")
+            L.append("| 계획 손절 | 갭 | 슬리피지 | 진입 수수료 | 청산 수수료 | 합계 | 실제 R | 실제위험/계획위험 |")
+            L.append("|---|---|---|---|---|---|---|---|")
+            L.append(f"| {sd['plan_R']:+.3f} | {sd['gap_R']:+.3f} | {sd['slip_R']:+.3f} | {sd['fee_entry_R']:+.3f} | "
+                     f"{sd['fee_exit_R']:+.3f} | {sd['sum_R']:+.3f} | {sd['R']:+.3f} | "
+                     f"{'' if sd['risk_ratio'] is None else format(sd['risk_ratio'], '.3f')} |")
+            L.append("\nR 분모 = 수량 × |진입 체결가 − 최초 손절가| (계획 손절까지 잃는 돈, 비용 제외). "
+                     "진입 슬리피지는 분모(진입 체결가)에 들어가 있어 따로 빼지 않음.\n")
+    except Exception:
+        pass
     if not ts:
         L.append("이날 청산된 거래가 없습니다.\n")
     else:

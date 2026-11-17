@@ -35,6 +35,13 @@ v2.2 자동 복기 · Gemini 이벤트 회피 (2026-11-17) — 기본 설정(eve
         eventBlock=true 일 때만 high 일정 창 동안 그 코인 신규 진입 금지(engine), status.json event_block·upcoming_events,
         새 창 ntfy "⛔ 이벤트 회피" 1회. 막힌 신호는 ledger/blocked_signals.csv·status.json event_blocked_signals.
   - 복기·이벤트 기능의 어떤 오류도 경고 로그만 남기고 봇은 계속 실행.
+v2.3 이벤트 감지 A안 · 상관 묶음 · v4 30m 짝 그림자 · 손절 분해 (2026-11-17) — 본 장부·기존 그림자 매매 규칙은 그대로
+  - eventSource "feeds"(기본): tools/event_feeds.py 경제 캘린더 JSON(6시간)·코인 뉴스 RSS(30분) → data/events.csv,
+    state/event_feed.json, status.json event_data(OK/STALE/UNKNOWN). "gemini" 면 예전 Gemini 수집. Gemini 는 복기 해설만,
+    429·할당량 오류면 하루 쉼.
+  - tools/extras.py: 일지에 신호ID·묶음ID·묶음크기·손익 분해(계획/갭/슬리피지/수수료 R) 열, status 에 독립 묶음 수·손절 분해 평균
+  - 그림자 장부 timeframe(기본 5) — 30 이면 5분봉을 30분봉으로 묶어(완성된 봉만) 실행. pair_group 이 같은 두 장부는
+    research/v4/pairs.csv 를 매 실행 다시 쓴다(tools/v4pairs.py, 국면 라벨 tools/regime.py).
 표준 라이브러리만 사용.
 """
 import argparse
@@ -72,6 +79,10 @@ REVIEW_DIR = os.path.join(LEDGER_DIR, "review")              # 하루 복기 리
 BLOCKED_CSV = os.path.join(LEDGER_DIR, "blocked_signals.csv")  # 이벤트 회피로 막힌 신호(있을 때만)
 REVIEWS_STATE = os.path.join(STATE_DIR, "reviews.json")       # Gemini 복기 해설 캐시
 GEM_EVENTS_STATE = os.path.join(STATE_DIR, "gemini_events.json")
+EVENT_FEED_STATE = os.path.join(STATE_DIR, "event_feed.json")     # 이벤트 피드(캘린더·RSS) 수집 상태
+PAIRS_CSV = os.path.join(HERE, "research", "v4", "pairs.csv")      # v4 30m 짝 비교(봇이 매 실행 다시 씀)
+DAILY_CSV = os.path.join(DATA_DIR, "btc_daily.csv")                # 국면 라벨용 BTC 일봉(업비트 공개 API)
+POWER_PRIOR = os.path.join(HERE, "research", "v4", "power_prior.json")   # 개발 구간 사전 검정력(필요 쌍 수)
 
 BAR = dt.timedelta(minutes=5)
 TFMT = "%Y-%m-%d %H:%M:%S"
@@ -337,24 +348,34 @@ def near_events(t, events, hours=2):
 REVIEW_COLS = ["보유봉수", "MFE_R", "MAE_R", "원인태그"]
 
 
-def write_journal(trades, path, coin_of=None, events=None, review=False, texts=None):
+def write_journal(trades, path, coin_of=None, events=None, review=False, texts=None, extras=None, bar_min=5):
     """매매 일지: 거래마다 진입 근거(셋업·구간·보조 근거·상위봉 방향·손절폭·T1 배수)와 결과.
     review=True 면 끝에 자동 복기 열(보유봉수, MFE_R, MAE_R, 원인태그)을, texts(dict 거래ID→해설)가 있으면 '복기해설' 열도
-    덧붙인다. review=False(기본)면 기존 형식 그대로."""
+    덧붙인다. extras(기본 = review 와 같음)면 그 뒤에 신호ID·묶음ID·묶음크기·손익 분해 열(tools/extras.py).
+    review=False(기본)면 기존 형식 그대로."""
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with_text = texts is not None
+    extras = review if extras is None else extras
     if review:
         try:
             from tools.review import journal_cols
         except Exception as e:
             log(f"복기 모듈을 못 읽어 일지에 복기 열을 뺍니다: {e!r}", warn=True)
             review = False
+    xcols = []
+    if extras:
+        try:
+            from tools.extras import DECOMP_COLS, journal_cols as x_cols
+            xcols = DECOMP_COLS
+        except Exception as e:
+            log(f"부가 계산 모듈을 못 읽어 일지에 묶음·분해 열을 뺍니다: {e!r}", warn=True)
+            extras = False
     with open(path, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f)
         w.writerow(["번호", "코인", "거래ID", "진입시각", "청산시각", "방향", "셋업", "등급", "진입 구간 근거", "보조 근거",
                     "15분 방향", "1시간 방향", "손절폭%", "T1까지(R)", "진입가", "최초손절", "T1", "결과", "마지막청산",
                     "청산내역", "손익원", "R", "진입 앞뒤 2시간 경제 일정"]
-                   + ((REVIEW_COLS + (["복기해설"] if with_text else [])) if review else []))
+                   + ((REVIEW_COLS + (["복기해설"] if with_text else [])) if review else []) + xcols)
         for k, t in enumerate(trades, 1):
             why = t.get("why") or {}
             extra = []
@@ -363,6 +384,11 @@ def write_journal(trades, path, coin_of=None, events=None, review=False, texts=N
                     extra = journal_cols(t, with_text, texts)
                 except Exception:
                     extra = [""] * (len(REVIEW_COLS) + (1 if with_text else 0))
+            if extras:
+                try:
+                    extra = extra + x_cols(t, bar_min)
+                except Exception:
+                    extra = extra + [""] * len(xcols)
             w.writerow([k, coin_of(t) if coin_of else "BTC", t["id"], t["entry_time"].strftime("%Y-%m-%d %H:%M"),
                         t["exit_time"].strftime("%Y-%m-%d %H:%M"), side_ko(t["side"]), t["tag"], t["grade"],
                         " + ".join(why.get("zone", [])), " + ".join(why.get("support", [])),
@@ -370,6 +396,61 @@ def write_journal(trades, path, coin_of=None, events=None, review=False, texts=N
                         why.get("stop_pct", ""), why.get("t1_R", ""), _fp(t["entry"]), _fp(t["stop0"]), _fp(t["t1"]),
                         result_ko(t), t["exit_reason"], " | ".join(t["exits"]), f"{t['pnl']:.0f}", f"{t['R']:.3f}",
                         near_events(t, events)] + extra)
+
+
+def attach_extras(trades, datas, bar_min=5, opened=None, fee=0.0005):
+    """(2) 상관 신호 묶음·(4) 손익 분해를 거래 dict 에 붙인다(cluster, decomp). 계산 결과는 바꾸지 않음. 실패는 경고만.
+    opened: 보유 포지션·진입 대기 목록 — 묶음 ID 가 나중에 바뀌지 않게 함께 묶는다(일지에는 청산 거래만)."""
+    try:
+        from tools import extras as X
+        X.assign_clusters(list(trades) + list(opened or []), bar_min)
+        X.attach_decomp(trades, datas, fee, log)
+    except Exception as e:
+        log(f"묶음·손익 분해 계산 실패(장부는 정상): {e!r}", warn=True)
+
+
+def extras_fields(trades):
+    """status.json 에 넣을 독립 묶음 수·손절 분해 평균(정보가 없으면 빈 dict — 기존 형식 그대로)"""
+    if not any("cluster" in t or "decomp" in t for t in trades):
+        return {}
+    try:
+        from tools import extras as X
+        sd = X.stop_decomp_summary(trades)
+        return dict(independent_clusters=X.independent_count(trades),
+                    stop_decomp=None if sd is None else {k: (round(v, 4) if isinstance(v, float) else v) for k, v in sd.items()},
+                    r_definition="R = 거래 손익(수수료 포함) ÷ (수량 × |진입 체결가 − 최초 손절가|)")
+    except Exception as e:
+        log(f"묶음·분해 요약 실패(무시): {e!r}", warn=True)
+        return {}
+
+
+def event_data_fields(cfg, now, R=None, events=None):
+    """status.json event_data: 이벤트 데이터 수집 상태(OK/STALE/UNKNOWN)와 다가오는 일정(high·medium, 7일 안 8개).
+    일정 0건을 '이벤트 없음'으로 표시하지 않도록 상태를 그대로 싣는다. 실패해도 UNKNOWN 기본값."""
+    src = cfg.get("eventSource", "feeds")
+    out = dict(source=src, schedule="UNKNOWN", breaking="UNKNOWN", last_success_schedule=None,
+               last_success_breaking=None, upcoming=[])
+    try:
+        from tools import event_feeds as ef
+        st = read_json(GEM_EVENTS_STATE if src == "gemini" else EVENT_FEED_STATE, {}) or {}
+        out.update(ef.data_status(st, now, cfg))
+        if events is None:
+            try:
+                events = engine.load_events(os.path.join(HERE, cfg["events_file"]) if cfg.get("events_file")
+                                            else EVENTS_DEFAULT)
+            except Exception:
+                events = []
+        up = []
+        for e in events or []:
+            imp = (e[2] or "").lower()
+            if imp not in ("high", "medium") or e[0] < now - dt.timedelta(hours=1) or e[0] > now + dt.timedelta(days=7):
+                continue
+            up.append(dict(time=e[0].strftime(TFMT), name=e[1], importance=imp,
+                           coins="ALL" if e[3] is None else "|".join(sorted(e[3])), source=e[7] or None))
+        out["upcoming"] = sorted(up, key=lambda x: x["time"])[:8]
+    except Exception as e:
+        log(f"이벤트 데이터 상태 계산 실패(UNKNOWN 으로 둠): {e!r}", warn=True)
+    return dict(event_data=out)
 
 
 def write_blocked(blocked, path):
@@ -591,6 +672,7 @@ def build_status(cfg, P, R, start_time, primary, used, now):
         updated_at=now.strftime(TFMT),
         warnings=_warnings[:],
         **multi_fields(P, R),
+        **extras_fields(trades),
     )
 
 
@@ -776,6 +858,106 @@ def write_trades_coin(trades, path, coin_of):
                         t.get("sizeTag", "1")])
 
 
+def tf_data(c, tf):
+    """5분봉 dict → tf분봉 engine.Data (KST 00:00 기준 정렬, 봉 시각 = 구간 시작 — research/common.aggregate 와 같은 묶기).
+    마지막 구간은 그 구간의 마지막 5분봉(시작+tf−5분)까지 들어왔을 때만 '완성'으로 넣는다(진행 중 봉 제외).
+    PREREG v3 E1 구현 세부: 방향 3×tf 분, 보조 12×tf 분."""
+    ts = sorted(c)
+    sec = tf * 60
+    off = engine.KST_OFFSET_SEC
+    T, O, H, L, C, V = [], [], [], [], [], []
+    cur = None
+    for t in ts:
+        o, h, l, cl, v = c[t][:5]
+        b = (int(t.timestamp()) + off) // sec
+        if b != cur:
+            cur = b
+            T.append(dt.datetime.fromtimestamp(b * sec - off, KST))
+            O.append(o); H.append(h); L.append(l); C.append(cl); V.append(v)
+        else:
+            H[-1] = max(H[-1], h); L[-1] = min(L[-1], l); C[-1] = cl; V[-1] += v
+    if T and ts[-1] < T[-1] + dt.timedelta(minutes=tf - 5):
+        for a in (T, O, H, L, C, V):
+            a.pop()
+    if not T:
+        return None
+    return engine.Data(T, O, H, L, C, V, dir_min=3 * tf, aux_min=12 * tf, bar_min=tf)
+
+
+def regime_for(btc_candles, end, offline):
+    """국면 라벨용 BTC 일봉: data/btc_daily.csv(온라인이면 6시간마다 필요할 때만 업비트에서 받음) + 저장된 5분봉으로 만든
+    완성 일봉(파일에 없는 날만). 실패하면 None(라벨 빈칸)."""
+    try:
+        from tools import regime as RG
+        rows = RG.load_daily(DAILY_CSV) if offline else RG.update_daily(DAILY_CSV, end, log=log, budget_s=15)
+        rows = dict(rows)
+        cur = RG.day_start_kst(end)
+        if btc_candles:
+            ts = sorted(btc_candles)
+            for d, cl in RG.daily_from_5m(ts, [btc_candles[t][3] for t in ts]):
+                if d < cur and d not in rows:          # 완성된 날만(종가 = 그날 마지막 5분봉 종가)
+                    rows[d] = cl
+        return RG.Regime(sorted(rows.items())) if rows else None
+    except Exception as e:
+        log(f"국면 라벨 준비 실패(라벨 빈칸): {e!r}", warn=True)
+        return None
+
+
+def write_pairs_all(results, btc_candles, end, offline):
+    """pair_group 이 같은 두 그림자 장부(A·B) → research/v4/pairs.csv, 두 장부 status.json 에 짝 비교 요약(pair_summary)."""
+    groups = {}
+    for name, (trades, opened, datas, tf, sh) in results.items():
+        g = sh.get("pair_group")
+        if g and sh.get("pair_role") in ("A", "B"):
+            groups.setdefault(g, {})[sh["pair_role"]] = (name, trades, opened, datas, tf)
+    if not groups:
+        return
+    from tools import v4pairs as VP
+    reg = None
+    for g, m in groups.items():
+        if set(m) != {"A", "B"}:
+            log(f"짝 비교 '{g}': A·B 두 장부가 모두 있어야 함 — 건너뜀", warn=True)
+            continue
+        if reg is None:
+            reg = regime_for(btc_candles, end, offline)
+        tf = m["A"][4]
+        datas = dict(m["B"][3]); datas.update(m["A"][3])
+        rows = VP.build_rows({k: (m[k][1], m[k][2]) for k in ("A", "B")}, datas, tf, reg)
+        path = PAIRS_CSV if g == "v4_30m" else os.path.join(os.path.dirname(PAIRS_CSV), f"pairs_{g}.csv")
+        VP.write_pairs(path, rows)
+        mirror = os.path.join(SHADOW_DIR, f"{g.replace('v4_30m', 'v4')}_pairs.csv")   # 워크플로가 ledger/ 만 커밋해도 보이게
+        try:
+            VP.write_pairs(mirror, rows)
+        except Exception as e:
+            log(f"짝 비교 사본(ledger) 쓰기 실패(무시): {e!r}", warn=True)
+        ps = VP.power_stats(rows)
+        summ = dict(group=g, A=m["A"][0], B=m["B"][0], n_signals=ps["n_signals"], n_both=ps["n_both"],
+                    n_only_A=ps["n_only_A"], n_only_B=ps["n_only_B"], n_open=ps["n_open"],
+                    mean_d=None if ps["mean_d"] is None else round(ps["mean_d"], 4),
+                    sd_d=None if ps["sd_d"] is None else round(ps["sd_d"], 4),
+                    rho=None if ps["rho"] is None else round(ps["rho"], 4),
+                    n_required=ps["n_required"], progress=ps.get("progress"),
+                    n_required_prior=None, delta_R=VP.DELTA,
+                    definition="d = R_B − R_A (신호마다, 진입 안 한 쪽 0R). 필요 쌍 수 = ((1.96+0.84)·σ_d/0.10)²",
+                    pairs_csv=os.path.relpath(path, HERE).replace("\\", "/"),
+                    pairs_csv_ledger=os.path.relpath(mirror, HERE).replace("\\", "/"))
+        try:
+            pr = read_json(POWER_PRIOR, {}) or {}
+            summ["n_required_prior"] = (pr.get("primary") or {}).get("n_required")
+            if summ["n_required"] is None and summ["n_required_prior"]:
+                summ["progress"] = round(ps["n_signals"] / summ["n_required_prior"], 4)
+        except Exception:
+            pass
+        for k in ("A", "B"):
+            p = os.path.join(SHADOW_DIR, m[k][0], "status.json")
+            sj = read_json(p, None)
+            if sj is not None:
+                sj["pair_summary"] = summ
+                write_json(p, sj)
+        log(f"v4 짝 비교 '{g}': 신호 {ps['n_signals']}개(둘 다 {ps['n_both']}, A만 {ps['n_only_A']}, B만 {ps['n_only_B']}), "
+            f"열림 {ps['n_open']} → {summ['pairs_csv']}")
+
+
 def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None, review=False):
     """활성 그림자 장부를 모두 계산·저장. 실패해도 본 장부에는 영향 없음.
     preloaded: {market: candles} 이번 실행에서 본 장부가 이미 받아 저장한 코인 봉(같은 데이터, 중복 요청 방지)
@@ -785,40 +967,79 @@ def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None, r
     if not shs:
         return
     cfg_changed = False
+    cache = {}
+    results = {}                      # 이름 → (청산 거래, 열린 포지션·대기, datas, timeframe) — v4 짝 비교용
+
+    def candles_of(market, st):
+        if market in cache:
+            return cache[market]
+        path = candle_path(market)
+        if path == CANDLES:
+            c = main_candles
+        elif market in preloaded:
+            c = preloaded[market]
+        elif offline:
+            c = load_candles(path)
+        else:
+            c, used, _ = update_candles(cfg, st, end, market=market, path=path)
+            if used:
+                save_candles(c, path)
+        cache[market] = c
+        return c
+
+    group_start = {}                  # pair_group → 같은 시작 시각
+    for sh in shs:
+        if sh.get("start_time") and sh.get("pair_group"):
+            group_start.setdefault(sh["pair_group"], sh["start_time"])
     for sh in shs:
         name = sh["name"]
         try:
+            tf = int(sh.get("timeframe", 5) or 5)
             if not sh.get("start_time"):
-                sh["start_time"] = end.strftime("%Y-%m-%d %H:%M")
+                g = sh.get("pair_group")
+                if g and g in group_start:
+                    sh["start_time"] = group_start[g]
+                elif tf == 5:
+                    sh["start_time"] = end.strftime("%Y-%m-%d %H:%M")
+                else:                 # 큰 시간봉: 지표 준비(warmup_days)가 끝난 뒤부터, 시간봉 경계로 올림
+                    mk = sh.get("markets") or [cfg.get("market", "KRW-BTC")]
+                    firsts = [min(c) for c in (candles_of(m, end) for m in mk) if c]
+                    t0 = max([end] + [f + dt.timedelta(days=float(sh.get("warmup_days", 7))) for f in firsts])
+                    sec = tf * 60
+                    b = -(-(int(t0.timestamp()) + engine.KST_OFFSET_SEC) // sec)
+                    sh["start_time"] = dt.datetime.fromtimestamp(b * sec - engine.KST_OFFSET_SEC, KST).strftime("%Y-%m-%d %H:%M")
+                if g:
+                    group_start[g] = sh["start_time"]
                 cfg_changed = True
                 log(f"그림자 장부 '{name}' 시작 시각 = {sh['start_time']}")
             st = engine.parse_kst(sh["start_time"])
             P = shadow_params(cfg, sh)
             out_dir = os.path.join(SHADOW_DIR, name)
-            all_trades, per, datas = [], {}, {}
+            all_trades, per, datas, opened = [], {}, {}, []
             for market in sh.get("markets") or [cfg.get("market", "KRW-BTC")]:
                 coin = market.split("-")[-1]
-                path = candle_path(market)
-                if path == CANDLES:
-                    c = main_candles
-                elif market in preloaded:
-                    c = preloaded[market]
-                elif offline:
-                    c = load_candles(path)
-                else:
-                    c, used, _ = update_candles(cfg, st, end, market=market, path=path)
-                    if used:
-                        save_candles(c, path)
+                c = candles_of(market, st)
                 if not c:
                     log(f"그림자 '{name}' {coin}: 봉 없음 — 건너뜀", warn=True)
                     continue
-                ts = sorted(c)
-                D = engine.Data(ts, [c[t][0] for t in ts], [c[t][1] for t in ts], [c[t][2] for t in ts],
-                                [c[t][3] for t in ts], [c[t][4] for t in ts])
+                if tf == 5:
+                    ts = sorted(c)
+                    D = engine.Data(ts, [c[t][0] for t in ts], [c[t][1] for t in ts], [c[t][2] for t in ts],
+                                    [c[t][3] for t in ts], [c[t][4] for t in ts])
+                else:
+                    D = tf_data(c, tf)
+                    if D is None:
+                        log(f"그림자 '{name}' {coin}: 완성된 {tf}분봉 없음 — 건너뜀", warn=True)
+                        continue
+                    ts = D.T
                 R = engine.run(D, P, start_time=st, close_at_end=False, events=events, coin=coin)
                 datas[coin] = D
                 for t in R["trades"]:
                     t["coin"] = coin
+                for x in (R["position"], R["pending"]):
+                    if x is not None:
+                        x["coin"] = coin
+                        opened.append(x)
                 all_trades += R["trades"]
                 s = engine.stats(R["trades"], R["curve"])
                 pend = R["pending"]
@@ -843,16 +1064,28 @@ def run_shadows(cfg, end, main_candles, events, offline=False, preloaded=None, r
                     attach_reviews(all_trades, datas, events, log)
                 except Exception as e:
                     log(f"그림자 '{name}' 복기 계산 실패(장부는 정상): {e!r}", warn=True)
-            write_journal(all_trades, os.path.join(out_dir, "journal.csv"), coin_of, events, review=review)
+            attach_extras(all_trades, datas, tf, opened, P["fee"])
+            write_journal(all_trades, os.path.join(out_dir, "journal.csv"), coin_of, events, review=review, bar_min=tf)
             tot = engine.stats(all_trades)
-            write_json(os.path.join(out_dir, "status.json"), dict(
+            stj = dict(
                 mode="그림자 장부(가상 매매, 본 장부와 별도·알림 없음)", name=name, description=sh.get("description", ""),
                 start_time=sh["start_time"], markets=sh.get("markets"), params_override=sh.get("params") or {},
                 trades_count=tot["N"], win_rate=round(tot["win"], 1), avg_R=round(tot["avgR"], 3),
-                sum_R=round(tot["sumR"], 3), coins=per, updated_at=dt.datetime.now(KST).strftime(TFMT)))
+                sum_R=round(tot["sumR"], 3), coins=per, updated_at=dt.datetime.now(KST).strftime(TFMT))
+            if tf != 5:
+                stj["timeframe"] = tf
+            if sh.get("pair_group"):
+                stj.update(pair_group=sh["pair_group"], pair_role=sh.get("pair_role"))
+            stj.update(extras_fields(all_trades))
+            write_json(os.path.join(out_dir, "status.json"), stj)
+            results[name] = (all_trades, opened, datas, tf, sh)
             log(f"그림자 장부 '{name}': 거래 {tot['N']}건, 평균 {tot['avgR']:+.3f}R → ledger/shadow/{name}/")
         except Exception as e:
             log(f"그림자 장부 '{name}' 계산 실패(본 장부는 정상): {e!r}", warn=True)
+    try:
+        write_pairs_all(results, cache.get("KRW-BTC") or main_candles, end, offline)
+    except Exception as e:
+        log(f"v4 짝 비교 기록 실패(장부는 정상): {e!r}", warn=True)
     if cfg_changed:
         disk = read_json(CONFIG, {})
         for s in disk.get("shadow_ledgers") or []:
@@ -1048,15 +1281,23 @@ def main():
     P = engine.load_params(cfg)
     events_path = os.path.join(HERE, cfg["events_file"]) if cfg.get("events_file") else EVENTS_DEFAULT
 
-    # (B) Gemini 이벤트 수집 — 시간 조건(정기 6시간·돌발 30분)은 모듈이 판단. 키 없음·실패는 경고만, 봇은 계속.
+    # (B) 이벤트 수집 — eventSource "feeds"(기본: 경제 캘린더 JSON + 코인 뉴스 RSS) 또는 "gemini"(예전 방식).
+    #     시간 조건(정기 6시간·돌발 30분)은 모듈이 판단. 실패는 경고만, 봇은 계속. 수집 전체 eventFetchBudgetSec(30초) 이하.
+    ev_src = str(cfg.get("eventSource", "feeds")).lower()
     if a.dry_run:
-        log("dry-run: Gemini 이벤트 수집은 건너뜁니다.")
-    else:
+        log("dry-run: 이벤트 수집은 건너뜁니다.")
+    elif ev_src == "gemini":
         try:
             from tools import gemini_events
             gemini_events.maybe_update(now, cfg, events_path, GEM_EVENTS_STATE, log)
         except Exception as e:
             log(f"Gemini 이벤트 수집 건너뜀(오류): {e!r}", warn=True)
+    else:
+        try:
+            from tools import event_feeds
+            event_feeds.maybe_update(now, cfg, events_path, EVENT_FEED_STATE, log)
+        except Exception as e:
+            log(f"이벤트 피드 수집 건너뜀(오류): {e!r}", warn=True)
 
     candles, used, primary = update_candles(cfg, start_time, end)
     if not candles:
@@ -1098,12 +1339,16 @@ def main():
             f"{side_ko(b['side'])} {b['tag']}{b['grade']} — {b['reason']})")
     ts = [engine.parse_kst(R["last_bar_time"])]
 
+    # (2)(4) 상관 신호 묶음·손익 분해 (기록용, 복기 리포트보다 먼저)
+    attach_extras(R["trades"], R.get("datas") or {}, 5, list(R.get("positions") or []) + list(R.get("pendings") or []),
+                  P["fee"])
     # (A) 자동 복기 (장부 계산이 끝난 뒤, 기록용)
     texts, extra_events = review_main(R, events, now, start_time, a.dry_run)
 
     prev = read_json(STATUS, None)
     status = build_status(cfg, P, R, start_time, primary, used, dt.datetime.now(KST))
     status.update(event_fields(P, R, events, now))
+    status.update(event_data_fields(cfg, now, R, events))
     write_trades(R["trades"])
     write_json(STATUS, status)
     write_account(status, R)
