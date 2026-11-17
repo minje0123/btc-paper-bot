@@ -41,10 +41,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:55:00",
+      "last_bar_time": "2026-11-18 00:00:00",
       "today": {
-        "date": "2026-11-17",
-        "realized_pnl": -6133,
+        "date": "2026-11-18",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -65,10 +65,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:55:00",
+      "last_bar_time": "2026-11-18 00:00:00",
       "today": {
-        "date": "2026-11-17",
-        "realized_pnl": -3194,
+        "date": "2026-11-18",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -89,10 +89,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:55:00",
+      "last_bar_time": "2026-11-18 00:00:00",
       "today": {
-        "date": "2026-11-17",
-        "realized_pnl": 3505,
+        "date": "2026-11-18",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -113,16 +113,16 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:55:00",
+      "last_bar_time": "2026-11-18 00:00:00",
       "today": {
-        "date": "2026-11-17",
-        "realized_pnl": -1344,
+        "date": "2026-11-18",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
     }
   },
-  "updated_at": "2026-11-18 00:00:25",
+  "updated_at": "2026-11-18 00:05:24",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 6,
