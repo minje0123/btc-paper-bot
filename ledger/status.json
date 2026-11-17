@@ -16,13 +16,13 @@
   "total_value": 986627,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 983916,
+  "equity": 982651,
   "realized_pnl": -13373,
-  "unrealized_pnl": -2711,
+  "unrealized_pnl": -3976,
   "trades_count": 4,
   "win_rate": 25.0,
   "avg_R": -0.684,
-  "max_drawdown_pct": 1.84,
+  "max_drawdown_pct": 1.96,
   "has_position": true,
   "position": {
     "market": "KRW-BTC",
@@ -43,23 +43,11 @@
     "risk_money": 4933,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 87789000,
-    "unrealized_pnl": -2711,
+    "last_price": 87776000,
+    "unrealized_pnl": -2545,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
-  "pending_entry": {
-    "market": "KRW-SOL",
-    "coin": "SOL",
-    "side": "롱",
-    "setup": "구간",
-    "grade": "A",
-    "signal_time": "2026-11-17 15:40:00",
-    "signal_close": 98650.0,
-    "stop": 98100.925,
-    "t1": 99100.0,
-    "qty": 8.9844,
-    "note": "다음 봉 시가에 진입 예정"
-  },
+  "pending_entry": null,
   "pending_close": null,
   "today": {
     "date": "2026-11-17",
@@ -79,15 +67,12 @@
     "next_size_mode": "보통",
     "next_risk_won": 4933
   },
-  "last_bar_time": "2026-11-17 15:40:00",
-  "last_price": 87789000,
+  "last_bar_time": "2026-11-17 15:45:00",
+  "last_price": 87776000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 15:47:30",
-  "warnings": [
-    "Gemini 정기 일정 확인 실패(진입 판단은 기존 일정으로 계속): gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-2.5-flash",
-    "Gemini 돌발 확인 실패(진입 판단은 기존 일정으로 계속): gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-2.5-flash"
-  ],
+  "updated_at": "2026-11-17 15:50:26",
+  "warnings": [],
   "markets": [
     "BTC",
     "ETH",
@@ -119,40 +104,48 @@
       "risk_money": 4933,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 87789000,
-      "unrealized_pnl": -2711,
+      "last_price": 87776000,
+      "unrealized_pnl": -2545,
+      "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
+      "pending_close": null
+    },
+    {
+      "market": "KRW-SOL",
+      "coin": "SOL",
+      "id": "SOL-202611171545L",
+      "side": "롱",
+      "setup": "구간",
+      "grade": "A",
+      "entry_time": "2026-11-17 15:45:00",
+      "entry": 98660.0,
+      "stop": 98100.925,
+      "stop0": 98100.925,
+      "t1": 99100.0,
+      "next_target": null,
+      "qty": 8.9844,
+      "qty_open": 8.9844,
+      "leverage": 0.9,
+      "risk_money": 4933,
+      "t1_done": false,
+      "realized_part": 0,
+      "last_price": 98550.0,
+      "unrealized_pnl": -1431,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
-  "pending_entries": [
-    {
-      "market": "KRW-SOL",
-      "coin": "SOL",
-      "side": "롱",
-      "setup": "구간",
-      "grade": "A",
-      "signal_time": "2026-11-17 15:40:00",
-      "signal_close": 98650.0,
-      "stop": 98100.925,
-      "t1": 99100.0,
-      "qty": 8.9844,
-      "note": "다음 봉 시가에 진입 예정",
-      "risk_money": 4933,
-      "risk_cut": false
-    }
-  ],
+  "pending_entries": [],
   "last_prices": {
-    "BTC": 87789000,
-    "ETH": 2483000,
-    "SOL": 98650.0,
-    "XRP": 1303.0
+    "BTC": 87776000,
+    "ETH": 2480000,
+    "SOL": 98550.0,
+    "XRP": 1301.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 15:40:00",
-    "ETH": "2026-11-17 15:40:00",
-    "SOL": "2026-11-17 15:40:00",
-    "XRP": "2026-11-17 15:40:00"
+    "BTC": "2026-11-17 15:45:00",
+    "ETH": "2026-11-17 15:45:00",
+    "SOL": "2026-11-17 15:45:00",
+    "XRP": "2026-11-17 15:45:00"
   },
   "event_block": {
     "enabled": false,
