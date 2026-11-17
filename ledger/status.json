@@ -45,11 +45,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4921
   },
-  "last_bar_time": "2026-11-17 21:05:00",
-  "last_price": 88215000,
+  "last_bar_time": "2026-11-17 21:10:00",
+  "last_price": 88194000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 21:10:28",
+  "updated_at": "2026-11-17 21:15:32",
   "warnings": [],
   "markets": [
     "BTC",
@@ -65,16 +65,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 88215000,
-    "ETH": 2468000,
-    "SOL": 99650.0,
+    "BTC": 88194000,
+    "ETH": 2465000,
+    "SOL": 99400.0,
     "XRP": 1314.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 21:05:00",
-    "ETH": "2026-11-17 21:05:00",
-    "SOL": "2026-11-17 21:05:00",
-    "XRP": "2026-11-17 21:05:00"
+    "BTC": "2026-11-17 21:10:00",
+    "ETH": "2026-11-17 21:10:00",
+    "SOL": "2026-11-17 21:10:00",
+    "XRP": "2026-11-17 21:10:00"
   },
   "independent_clusters": 6,
   "stop_decomp": {
@@ -222,20 +222,20 @@
       "state": "FAIL",
       "last_success": null,
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "queue": 0,
       "backoff_until": null
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-17 20:00:21",
-      "title": "Binance hacker moves $63 million in stolen ether after 2 weeks of silence",
+      "decided_at": "2026-11-17 21:15:20",
+      "title": "US senators seek SEC answers on tokenized stock money laundering risks",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
       "effective_at": null,
       "window_end": null,
       "rules_version": "news_rules_v1.0",
-      "diff": "기존만 차단"
+      "diff": "둘 다 차단 없음"
     },
     "holds_active": 0
   }
