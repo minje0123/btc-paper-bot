@@ -45,11 +45,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4938
   },
-  "last_bar_time": "2026-11-17 22:50:00",
-  "last_price": 88315000,
+  "last_bar_time": "2026-11-17 22:55:00",
+  "last_price": 88614000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 22:55:24",
+  "updated_at": "2026-11-17 23:00:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -65,16 +65,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 88315000,
-    "ETH": 2482000,
-    "SOL": 100000,
-    "XRP": 1325.0
+    "BTC": 88614000,
+    "ETH": 2491000,
+    "SOL": 100400,
+    "XRP": 1331.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 22:50:00",
-    "ETH": "2026-11-17 22:50:00",
-    "SOL": "2026-11-17 22:50:00",
-    "XRP": "2026-11-17 22:50:00"
+    "BTC": "2026-11-17 22:55:00",
+    "ETH": "2026-11-17 22:55:00",
+    "SOL": "2026-11-17 22:55:00",
+    "XRP": "2026-11-17 22:55:00"
   },
   "independent_clusters": 7,
   "stop_decomp": {
@@ -91,27 +91,13 @@
   "r_definition": "R = 거래 손익(수수료 포함) ÷ (수량 × |진입 체결가 − 최초 손절가|)",
   "event_block": {
     "enabled": true,
-    "active": true,
-    "name": "[일정] Core Retail Sales m/m · Retail Sales m/m (USD)",
-    "coins": [
-      "BTC",
-      "ETH",
-      "SOL",
-      "XRP"
-    ],
-    "start": "2026-11-17 22:00:00",
-    "until": "2026-11-17 23:00:00"
+    "active": false,
+    "name": null,
+    "coins": [],
+    "start": null,
+    "until": null
   },
   "upcoming_events": [
-    {
-      "time": "2026-11-17 22:30:00",
-      "name": "[일정] Core Retail Sales m/m · Retail Sales m/m (USD)",
-      "coins": "ALL",
-      "window_start": "2026-11-17 22:00:00",
-      "window_end": "2026-11-17 23:00:00",
-      "added_at": "2026-11-17 18:30:20",
-      "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
-    },
     {
       "time": "2026-11-19 04:00:00",
       "name": "[일정] FOMC Meeting Minutes (USD)",
