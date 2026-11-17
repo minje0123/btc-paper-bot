@@ -1,0 +1,125 @@
+{
+  "mode": "그림자 장부(가상 매매, 본 장부와 별도·알림 없음)",
+  "name": "baseline_v141_5m",
+  "description": "기준선: 현재 규칙(v1.4.1, 5분봉)을 BTC·ETH·XRP·SOL에 그대로 적용. 자금 관리 끔(1R 0.5% 고정, 일일 한도·목표·첫 승 절반·출금 없음). 나중에 후보 규칙과 같은 기간·같은 기준으로 비교하기 위한 전진 기록.",
+  "start_time": "2026-11-17 09:10",
+  "markets": [
+    "KRW-BTC",
+    "KRW-ETH",
+    "KRW-XRP",
+    "KRW-SOL"
+  ],
+  "params_override": {
+    "slipMode": "tick",
+    "riskPct": 0.5,
+    "redPct": 0.5,
+    "dayTargetP": 0,
+    "firstWinHalf": false,
+    "withdrawPct": 0,
+    "dayLossP": 100,
+    "maxConsec": 1000
+  },
+  "trades_count": 0,
+  "win_rate": 0.0,
+  "avg_R": 0.0,
+  "sum_R": 0.0,
+  "coins": {
+    "BTC": {
+      "market": "KRW-BTC",
+      "initial_capital": 1000000.0,
+      "balance": 1000000,
+      "equity": 1000000,
+      "realized_pnl": 0,
+      "withdrawn_total": 0,
+      "trades_count": 0,
+      "win_rate": 0.0,
+      "avg_R": 0.0,
+      "sum_R": 0.0,
+      "max_drawdown_pct": 0.0,
+      "has_position": false,
+      "position": null,
+      "pending_entry": null,
+      "pending_close": null,
+      "last_bar_time": "2026-11-17 09:05:00",
+      "today": {
+        "date": "2026-11-17",
+        "realized_pnl": 0,
+        "no_new_entries": false,
+        "reason": null
+      }
+    },
+    "ETH": {
+      "market": "KRW-ETH",
+      "initial_capital": 1000000.0,
+      "balance": 1000000,
+      "equity": 1000000,
+      "realized_pnl": 0,
+      "withdrawn_total": 0,
+      "trades_count": 0,
+      "win_rate": 0.0,
+      "avg_R": 0.0,
+      "sum_R": 0.0,
+      "max_drawdown_pct": 0.0,
+      "has_position": false,
+      "position": null,
+      "pending_entry": null,
+      "pending_close": null,
+      "last_bar_time": "2026-11-17 09:05:00",
+      "today": {
+        "date": "2026-11-17",
+        "realized_pnl": 0,
+        "no_new_entries": false,
+        "reason": null
+      }
+    },
+    "XRP": {
+      "market": "KRW-XRP",
+      "initial_capital": 1000000.0,
+      "balance": 1000000,
+      "equity": 1000000,
+      "realized_pnl": 0,
+      "withdrawn_total": 0,
+      "trades_count": 0,
+      "win_rate": 0.0,
+      "avg_R": 0.0,
+      "sum_R": 0.0,
+      "max_drawdown_pct": 0.0,
+      "has_position": false,
+      "position": null,
+      "pending_entry": null,
+      "pending_close": null,
+      "last_bar_time": "2026-11-17 09:05:00",
+      "today": {
+        "date": "2026-11-17",
+        "realized_pnl": 0,
+        "no_new_entries": false,
+        "reason": null
+      }
+    },
+    "SOL": {
+      "market": "KRW-SOL",
+      "initial_capital": 1000000.0,
+      "balance": 1000000,
+      "equity": 1000000,
+      "realized_pnl": 0,
+      "withdrawn_total": 0,
+      "trades_count": 0,
+      "win_rate": 0.0,
+      "avg_R": 0.0,
+      "sum_R": 0.0,
+      "max_drawdown_pct": 0.0,
+      "has_position": false,
+      "position": null,
+      "pending_entry": null,
+      "pending_close": null,
+      "last_bar_time": "2026-11-17 09:05:00",
+      "today": {
+        "date": "2026-11-17",
+        "realized_pnl": 0,
+        "no_new_entries": false,
+        "reason": null
+      }
+    }
+  },
+  "updated_at": "2026-11-17 09:10:37"
+}
