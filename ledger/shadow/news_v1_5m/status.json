@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:45:00",
+      "last_bar_time": "2026-11-17 23:50:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": -6133,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:45:00",
+      "last_bar_time": "2026-11-17 23:50:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": -3194,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:45:00",
+      "last_bar_time": "2026-11-17 23:50:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 3505,
@@ -113,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 23:45:00",
+      "last_bar_time": "2026-11-17 23:50:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": -1344,
@@ -122,7 +122,7 @@
       }
     }
   },
-  "updated_at": "2026-11-17 23:50:24",
+  "updated_at": "2026-11-17 23:55:24",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 6,
@@ -235,10 +235,10 @@
   "filter_summary": {
     "signals": 7,
     "blocked": 1,
-    "blocked_base_closed": 0,
-    "blocked_base_sumR": 0,
-    "sum_d": 0.0,
-    "n_d": 6,
+    "blocked_base_closed": 1,
+    "blocked_base_sumR": -1.349,
+    "sum_d": 1.349,
+    "n_d": 7,
     "definition": "d = 필터 R − 무필터 R (같은 신호 ID, 막힌 신호 필터 R = 0). 계좌 경로 차이는 두 장부 status 로 비교",
     "baseline": "baseline_v141_5m",
     "filter_pairs_csv": "research/news/filter_pairs.csv",
