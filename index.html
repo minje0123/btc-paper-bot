@@ -129,7 +129,7 @@
 <div class="ticker"><div class="in">
   <div class="brand">BTC.PAPER//TERM<span class="cur"></span></div>
   <div class="sym">
-    <span class="pair">UPBIT · KRW-BTC</span>
+    <span class="pair" id="pairLbl">UPBIT · KRW-BTC</span>
     <span class="price"><span class="p" id="livePrice">–</span></span>
     <span class="price"><span class="c" id="liveChg"></span></span>
   </div>
@@ -148,6 +148,9 @@
     <section class="card">
       <h2><span>Chart <span class="ko">· 진입/청산 표시</span></span>
         <span style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="seg" id="chartCoinBtns">
+            <button data-coin="BTC" class="on">BTC</button><button data-coin="ETH">ETH</button><button data-coin="XRP">XRP</button><button data-coin="SOL">SOL</button>
+          </span>
           <span class="seg" id="tfBtns">
             <button data-tf="5" class="on">5m</button><button data-tf="15">15m</button><button data-tf="30">30m</button><button data-tf="60">1H</button><button data-tf="240">4H</button>
           </span>
@@ -160,7 +163,7 @@
       <div class="chart" id="chart" style="padding:0"></div>
       <div class="legend">
         <span><span class="up">▲</span> 롱 진입</span><span><span class="down">▼</span> 숏 진입 (#번호 = 매매 기록 번호)</span>
-        <span>● 청산 (초록 이익 / 회색 본절 / 주황 손실)</span><span>┄ 현재 포지션 진입·손절·T1</span>
+        <span>● 청산 (초록 이익 / 회색 본절 / 주황 손실)</span><span>┄ 현재 포지션 진입·손절·T1</span><span class="muted">BTC = 본 장부 거래 · ETH·XRP·SOL = 그림자 장부 거래</span>
       </div>
     </section>
 
@@ -259,21 +262,34 @@
   let S = null, trades = [], candles = [], lastSha = null;
   let livePrice = null, liveBar = null, posLines = [];
   // ---------- 시간봉 전환 (5m = 봇 장부 캔들, 그 외 = 업비트/빗썸 캔들 API) ----------
-  let tf = 5; const tfData = {};
-  const curCandles = () => tf === 5 ? candles : (tfData[tf] || []);
+  let tf = 5; const tfData = {};   // tfData[코인][분]
+  // ---------- 코인 전환 (BTC = 본 장부, ETH·XRP·SOL = 그림자 장부의 5분봉 파일) ----------
+  let coin = 'BTC'; const c5 = {}; let coinPx = {};
+  const c5of = c => c === 'BTC' ? candles : (c5[c] || []);
+  const tfOf = (c, u) => u === 5 ? c5of(c) : ((tfData[c] || {})[u] || []);
+  const curCandles = () => tfOf(coin, tf);
+  async function load5(c, sha) {
+    if (c === 'BTC') return true;
+    try {
+      const rows = parseCSV(await getText(`data/candles_${c}_5m.csv`, sha)).slice(-4000);
+      c5[c] = rows.map(r => ({ time: kstTs(r.time_kst), open: +r.open, high: +r.high, low: +r.low, close: +r.close }))
+                  .filter(x => x.time).sort((a, b) => a.time - b.time);
+      return true;
+    } catch (e) { return false; }
+  }
   async function fetchJSON(url, ms = 4000) {
     const ac = new AbortController(); const to = setTimeout(() => ac.abort(), ms);
     try { const r = await fetch(url, { cache: 'no-store', signal: ac.signal }); if (!r.ok) throw new Error(r.status); return await r.json(); }
     finally { clearTimeout(to); }
   }
-  async function fetchTF(unit) {
-    const q = `candles/minutes/${unit}?market=KRW-BTC&count=200`;
+  async function fetchTF(unit, c = coin) {
+    const q = `candles/minutes/${unit}?market=KRW-${c}&count=200`;
     let arr = null;
     for (const base of ['https://api.upbit.com/v1/', 'https://api.bithumb.com/v1/']) {
       try { arr = await fetchJSON(base + q); if (Array.isArray(arr) && arr.length) break; } catch (e) { arr = null; }
     }
     if (!arr) return false;
-    tfData[unit] = arr.map(c => ({ time: kstTs(c.candle_date_time_kst), open: +c.opening_price, high: +c.high_price, low: +c.low_price, close: +c.trade_price }))
+    (tfData[c] = tfData[c] || {})[unit] = arr.map(c => ({ time: kstTs(c.candle_date_time_kst), open: +c.opening_price, high: +c.high_price, low: +c.low_price, close: +c.trade_price }))
       .filter(c => c.time).sort((a, b) => a.time - b.time);
     return true;
   }
@@ -287,14 +303,16 @@
   function renderMTF() {
     const L = [[5, '5m'], [15, '15m'], [30, '30m'], [60, '1H'], [240, '4H']];
     $('mtf').innerHTML = L.map(([u, nm]) => {
-      const t = trendOf(u === 5 ? candles : tfData[u]);
+      const t = trendOf(tfOf(coin, u));
       const v = !t ? '<b class="muted">…</b>' : t.dir > 0 ? '<b class="up">▲ 상승</b>' : t.dir < 0 ? '<b class="down">▼ 하락</b>' : '<b class="muted">– 횡보</b>';
       const s = t ? `<span class="muted">기울기 ${t.sl >= 0 ? '+' : ''}${t.sl.toFixed(2)}% · 가격 ${t.above ? '위' : '아래'}</span>` : '';
       return `<div class="c${u === tf ? ' on' : ''}"><span class="tfl">${nm}</span>${v}${s}</div>`;
     }).join('');
   }
   async function refreshTFs() {
-    await Promise.all([15, 30, 60, 240].map(fetchTF));
+    const c = coin;
+    await Promise.all([15, 30, 60, 240].map(u => fetchTF(u, c)));
+    if (c !== coin) return;
     renderMTF();
     if (tf !== 5) { liveBar = null; renderChart(); }
   }
@@ -335,8 +353,22 @@
     tf = +b.dataset.tf; liveBar = null;
     $('rangeBtns').style.display = tf === 5 ? '' : 'none';
     renderMTF();
-    if (tf !== 5 && !tfData[tf]) await fetchTF(tf);
+    if (tf !== 5 && !(tfData[coin] || {})[tf]) await fetchTF(tf);
     renderChart();
+  });
+  const TICK = { BTC: 1000, ETH: 1000, XRP: 1, SOL: 1 };
+  $('chartCoinBtns').addEventListener('click', async e => {
+    const b = e.target.closest('button'); if (!b || b.dataset.coin === coin) return;
+    [...$('chartCoinBtns').children].forEach(x => x.classList.toggle('on', x === b));
+    coin = b.dataset.coin; liveBar = null;
+    $('pairLbl').textContent = `UPBIT · KRW-${coin}`;
+    if (cs) cs.applyOptions({ priceFormat: { type: 'price', precision: 0, minMove: TICK[coin] || 1 } });
+    if (coin !== 'BTC' && !c5[coin]) await load5(coin, lastSha);
+    const cc = c5of(coin);
+    if (coinPx[coin]) $('livePrice').textContent = won(coinPx[coin]);
+    else if (cc.length) $('livePrice').textContent = won(cc[cc.length - 1].close);
+    $('liveChg').innerHTML = '';
+    renderMTF(); renderChart(); refreshTFs();
   });
   function applyRange() {
     const cc = curCandles();
@@ -404,6 +436,7 @@
       shadows.push({ cfg: s, status, trades: tr ? parseCSV(tr) : [] });
     }
     renderShadow();
+    if (coin !== 'BTC') { if (sha !== null || DEMO) await load5(coin, sha); renderChart(); }
   }
   function renderJournal() {
     if (!journal.length) { $('journalTbl').innerHTML = '<div class="empty">아직 일지가 없어요. 거래가 끝나면 근거와 함께 기록돼요.</div>'; $('jrnSub').textContent = ''; return; }
@@ -587,14 +620,17 @@
       if (t - times[lo] >= tf * 60 * 2) return;
       m.time = times[lo]; mk.push(m);
     };
-    trades.forEach(t => {
+    // BTC = 본 장부 거래 · 그 외 코인 = 그림자 장부(기준선)의 그 코인 거래
+    const sh0 = shadows[0], shSt = sh0 && sh0.status;
+    const mkTrades = coin === 'BTC' ? trades : (sh0 ? sh0.trades.filter(t => t['코인'] === coin) : []);
+    mkTrades.forEach(t => {
       const long = t['방향'] === '롱', pnl = +t['손익원'];
       add({ time: kstTs(t['진입시각']), position: long ? 'belowBar' : 'aboveBar', color: long ? '#f04452' : '#3182f6',
             shape: long ? 'arrowUp' : 'arrowDown', text: `#${t['번호']}` });
       parseExits(t).forEach(x => x.time && add({ time: x.time, position: long ? 'aboveBar' : 'belowBar',
         color: x.reason.startsWith('T1') || pnl > 0 ? '#2fbf71' : pnl === 0 ? '#8b96a5' : '#f5a524', shape: 'circle', size: 0.8, text: '' }));
     });
-    const p = S.position;
+    const p = coin === 'BTC' ? S.position : (shSt && shSt.coins && shSt.coins[coin] ? shSt.coins[coin].position : null);
     if (p) add({ time: kstTs(p.entry_time), position: p.side === '롱' ? 'belowBar' : 'aboveBar',
       color: p.side === '롱' ? '#f04452' : '#3182f6', shape: p.side === '롱' ? 'arrowUp' : 'arrowDown', text: `${p.side} ${p.setup}${p.grade || ''} (보유)` });
     mk.sort((a, b) => a.time - b.time);
@@ -669,7 +705,7 @@
     renderAge(); renderPosition(); renderKpis();
     try { renderMM(); } catch (e) { $('mmCard').hidden = true; }   // 새 항목 표시가 실패해도 나머지 화면은 그대로
     renderChart(); renderEquity(); renderTrades(); renderPeriods(); renderMTF();
-    if (livePrice == null && S.last_price) $('livePrice').textContent = won(S.last_price);
+    if (coin === 'BTC' && livePrice == null && S.last_price) $('livePrice').textContent = won(S.last_price);
   }
 
   // ---------- 실시간 시세 (업비트 웹소켓) ----------
@@ -679,12 +715,12 @@
   function connect() {
     try { ws = new WebSocket('wss://api.upbit.com/websocket/v1'); } catch (e) { startFallback(); return; }
     ws.binaryType = 'arraybuffer';
-    ws.onopen = () => ws.send(JSON.stringify([{ ticket: 'paper-' + Math.random().toString(36).slice(2) }, { type: 'ticker', codes: ['KRW-BTC'] }]));
+    ws.onopen = () => ws.send(JSON.stringify([{ ticket: 'paper-' + Math.random().toString(36).slice(2) }, { type: 'ticker', codes: ['KRW-BTC', 'KRW-ETH', 'KRW-XRP', 'KRW-SOL'] }]));
     ws.onmessage = e => {
       let d; try { d = JSON.parse(typeof e.data === 'string' ? e.data : new TextDecoder().decode(e.data)); } catch (x) { return; }
       if (!d.trade_price) return;
       upbitAt = Date.now(); stopFallback(); setWs(true, '실시간 (업비트)');
-      onPrice(d.trade_price, d.trade_timestamp || Date.now(), d.signed_change_rate);
+      onPrice(d.trade_price, d.trade_timestamp || Date.now(), d.signed_change_rate, d.code || 'KRW-BTC');
     };
     ws.onclose = () => { clearTimeout(wsTimer); wsTimer = setTimeout(connect, 5000); startFallback(); };
     ws.onerror = () => { try { ws.close(); } catch (x) {} };
@@ -692,23 +728,30 @@
   async function pollBithumb() {
     if (Date.now() - upbitAt < 10000) return;
     try {
-      const r = await fetch('https://api.bithumb.com/v1/ticker?markets=KRW-BTC', { cache: 'no-store' });
-      const d = (await r.json())[0];
-      if (d && d.trade_price) { setWs(true, '실시간 (빗썸 시세 · 업비트 연결 안 됨)'); onPrice(d.trade_price, Date.now(), d.signed_change_rate); }   // 빗썸 trade_timestamp는 KST가 더해진 값이라 쓰지 않음
+      const mk = coin === 'BTC' ? 'KRW-BTC' : `KRW-BTC,KRW-${coin}`;
+      const r = await fetch(`https://api.bithumb.com/v1/ticker?markets=${mk}`, { cache: 'no-store' });
+      const arr = await r.json();
+      (Array.isArray(arr) ? arr : []).forEach(d => {   // 빗썸 trade_timestamp는 KST가 더해진 값이라 쓰지 않음
+        if (d && d.trade_price) { setWs(true, '실시간 (빗썸 시세 · 업비트 연결 안 됨)'); onPrice(d.trade_price, Date.now(), d.signed_change_rate, d.market || 'KRW-BTC'); }
+      });
     } catch (e) { setWs(false, '시세 연결 안 됨 · 장부 가격 표시 중'); }
   }
   function startFallback() { if (!fbTimer) { pollBithumb(); fbTimer = setInterval(pollBithumb, 2000); } }
   function stopFallback() { if (fbTimer) { clearInterval(fbTimer); fbTimer = null; } }
   setTimeout(() => { if (Date.now() - upbitAt > 6000) startFallback(); }, 6000);
   let lastPaint = 0;
-  function onPrice(px, tsMs, chg) {
-    livePrice = px;
-    $('livePrice').textContent = won(px);
-    if (chg != null) { $('liveChg').innerHTML = `<span class="${cls(chg)}">${chg >= 0 ? '+' : ''}${(chg * 100).toFixed(2)}%</span> <span class="muted">전일 대비</span>`; }
+  function onPrice(px, tsMs, chg, code = 'KRW-BTC') {
+    const c_ = code.split('-')[1] || 'BTC';
+    coinPx[c_] = px;
+    if (c_ === 'BTC') livePrice = px;   // 본 장부 평가는 항상 BTC 시세
+    if (c_ === coin) {                  // 화면 상단 시세 · 차트는 고른 코인
+      $('livePrice').textContent = won(px);
+      if (chg != null) { $('liveChg').innerHTML = `<span class="${cls(chg)}">${chg >= 0 ? '+' : ''}${(chg * 100).toFixed(2)}%</span> <span class="muted">전일 대비</span>`; }
+    }
     const step = tf * 60, cc = curCandles();
     const nowS = Math.floor((tsMs + 9 * 3600e3) / 1000);
     const lastC = cc.length ? cc[cc.length - 1] : null;
-    if (cs && lastC) {
+    if (c_ === coin && cs && lastC) {
       if (nowS < lastC.time + step) {
         // 아직 진행 중인 마지막 봉(상위 시간봉 API는 진행 중인 봉을 포함) → 그 봉을 갱신
         if (tf !== 5 && nowS >= lastC.time) {
@@ -722,6 +765,7 @@
         try { cs.update({ ...liveBar }); } catch (x) {}
       }
     }
+    if (c_ !== 'BTC') return;
     const now = Date.now();
     if (S && now - lastPaint > 1000) {
       lastPaint = now;
