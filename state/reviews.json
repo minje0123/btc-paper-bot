@@ -49,6 +49,12 @@
       "text": "상위 시간대와 15분봉의 상승 방향 및 스윙레벨 근거로 진입했으나, 진입 직전 변동성 백분위가 99.0에 달할 정도로 급등한 장세 속에서 노출된 위험을 버티지 못하고 손절되었습니다. 다음에는 극단적인 변동성 국면에서 캔들의 흔들림 폭이 커지는 만큼, 진입 전 가격의 호가 잔량 변화나 단기 과열 여부를 더 세밀히 살펴야 합니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-18 02:00:20"
+    },
+    "ETH-202611180125S": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: TimeoutError: The read operation timed out / gemini-flash-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporar",
+      "at": "2026-11-18 02:10:20"
     }
   },
   "model": "gemini-flash-lite-latest",
