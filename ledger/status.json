@@ -45,12 +45,14 @@
     "next_size_mode": "보통",
     "next_risk_won": 4921
   },
-  "last_bar_time": "2026-11-17 16:35:00",
-  "last_price": 88011000,
+  "last_bar_time": "2026-11-17 16:40:00",
+  "last_price": 87938000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 16:40:26",
-  "warnings": [],
+  "updated_at": "2026-11-17 16:45:25",
+  "warnings": [
+    "Gemini 정기 일정 확인 실패(진입 판단은 기존 일정으로 계속): gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-3.8-flash"
+  ],
   "markets": [
     "BTC",
     "ETH",
@@ -65,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 88011000,
-    "ETH": 2490000,
-    "SOL": 99300.0,
+    "BTC": 87938000,
+    "ETH": 2488000,
+    "SOL": 99200.0,
     "XRP": 1306.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 16:35:00",
-    "ETH": "2026-11-17 16:35:00",
-    "SOL": "2026-11-17 16:35:00",
-    "XRP": "2026-11-17 16:35:00"
+    "BTC": "2026-11-17 16:40:00",
+    "ETH": "2026-11-17 16:40:00",
+    "SOL": "2026-11-17 16:40:00",
+    "XRP": "2026-11-17 16:40:00"
   },
   "event_block": {
     "enabled": true,

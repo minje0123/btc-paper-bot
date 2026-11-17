@@ -1,9 +1,9 @@
 {
   "schedule": {
-    "last_attempt": "2026-11-17 15:45:20",
+    "last_attempt": "2026-11-17 16:45:20",
     "last_ok": false,
-    "fails": 1,
-    "last_error": "gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please "
+    "fails": 2,
+    "last_error": "gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-3.8-flash: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing de"
   },
   "breaking": {
     "last_attempt": "2026-11-17 16:15:21",
