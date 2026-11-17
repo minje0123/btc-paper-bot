@@ -14,8 +14,9 @@ import urllib.error
 import urllib.request
 
 API = "https://generativelanguage.googleapis.com/v1beta"
-DEFAULT_MODEL = "gemini-2.5-flash"
-TIMEOUT = 60
+DEFAULT_MODEL = "gemini-flash-latest"
+MAX_TRIES = 4          # 한 번 호출에서 시도할 모델 수 상한(실행 시간 보호)
+TIMEOUT = 20          # 11/17: 60초면 실패 시 한 번의 실행이 5분봉을 넘김
 
 
 def api_key():
@@ -79,7 +80,7 @@ def generate(prompt, key=None, search=False, state=None, model=None, temperature
     order = list(dict.fromkeys(m for m in ((state or {}).get("model"), model, DEFAULT_MODEL) if m))
     tried, errs = [], []
     fallback_loaded = False
-    while order:
+    while order and len(tried) < MAX_TRIES:
         m = order.pop(0)
         if m in tried:
             continue
