@@ -35,6 +35,7 @@ import csv
 import datetime as dt
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -787,7 +788,12 @@ def notify(events, last_bar, dry_run):
     msgs = [(e["id"], f"{e['time']:%m-%d %H:%M} " + event_message(e)) for e in recent]
     if old:
         msgs.insert(0, (None, f"ℹ️ 봇이 쉬는 동안 생긴 이벤트 {len(old)}건은 알림 생략 — ledger/ACCOUNT.md 확인"))
-    topic = os.environ.get("NTFY_TOPIC", "").strip()
+    topic = os.environ.get("NTFY_TOPIC", "").strip().strip('"').strip("'")
+    # Secret 에 'https://ntfy.sh/토픽' 처럼 주소 전체를 넣었어도 토픽 이름만 쓴다(주소째 보내면 ntfy 가 404).
+    if "/" in topic:
+        topic = topic.rstrip("/").split("/")[-1]
+    if topic and not re.fullmatch(r"[-_A-Za-z0-9]{1,64}", topic):
+        log(f"⚠️ NTFY_TOPIC 형식이 ntfy 토픽 규칙(영문·숫자·-·_ 1~64자)과 다름(길이 {len(topic)}) — 전송이 404 날 수 있음", warn=True)
     ok_ids = [e["id"] for e in old]
     for eid, m in msgs:
         if dry_run or not topic:
@@ -801,7 +807,8 @@ def notify(events, last_bar, dry_run):
             if eid:
                 ok_ids.append(eid)
         except Exception as ex:
-            log(f"ntfy 전송 실패(다음 실행에서 다시 시도): {ex!r}", warn=True)
+            log(f"ntfy 전송 실패(다음 실행에서 다시 시도): {ex!r} (토픽 길이 {len(topic)}, 형식 "
+                f"{'정상' if re.fullmatch(r'[-_A-Za-z0-9]{1,64}', topic) else '이상'})", warn=True)
     if dry_run:
         log("dry-run: notified.json 은 바꾸지 않습니다.")
         return
