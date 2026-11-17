@@ -16,28 +16,38 @@
   "total_value": 987551,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 987551,
+  "equity": 987055,
   "realized_pnl": -12449,
-  "unrealized_pnl": 0,
+  "unrealized_pnl": -496,
   "trades_count": 7,
   "win_rate": 42.9,
   "avg_R": -0.38,
   "max_drawdown_pct": 2.16,
-  "has_position": false,
-  "position": null,
-  "pending_entry": {
+  "has_position": true,
+  "position": {
     "market": "KRW-SOL",
     "coin": "SOL",
+    "id": "SOL-202611172340L",
     "side": "롱",
     "setup": "구간",
     "grade": "A",
-    "signal_time": "2026-11-17 23:35:00",
-    "signal_close": 100800,
+    "entry_time": "2026-11-17 23:40:00",
+    "entry": 100750,
     "stop": 99800.075,
+    "stop0": 99800.075,
     "t1": 102300,
+    "next_target": null,
     "qty": 4.9381,
-    "note": "다음 봉 시가에 진입 예정"
+    "qty_open": 4.9381,
+    "leverage": 0.5,
+    "risk_money": 4938,
+    "t1_done": false,
+    "realized_part": 0,
+    "last_price": 100700,
+    "unrealized_pnl": -496,
+    "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
+  "pending_entry": null,
   "pending_close": null,
   "today": {
     "date": "2026-11-17",
@@ -57,11 +67,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4938
   },
-  "last_bar_time": "2026-11-17 23:35:00",
-  "last_price": 88738000,
+  "last_bar_time": "2026-11-17 23:40:00",
+  "last_price": 88511000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 23:40:24",
+  "updated_at": "2026-11-17 23:45:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -74,35 +84,44 @@
   "open_positions_count": 1,
   "open_risk_won": 4938,
   "open_risk_pct": 0.5,
-  "positions": [],
-  "pending_entries": [
+  "positions": [
     {
       "market": "KRW-SOL",
       "coin": "SOL",
+      "id": "SOL-202611172340L",
       "side": "롱",
       "setup": "구간",
       "grade": "A",
-      "signal_time": "2026-11-17 23:35:00",
-      "signal_close": 100800,
+      "entry_time": "2026-11-17 23:40:00",
+      "entry": 100750,
       "stop": 99800.075,
+      "stop0": 99800.075,
       "t1": 102300,
+      "next_target": null,
       "qty": 4.9381,
-      "note": "다음 봉 시가에 진입 예정",
+      "qty_open": 4.9381,
+      "leverage": 0.5,
       "risk_money": 4938,
-      "risk_cut": false
+      "t1_done": false,
+      "realized_part": 0,
+      "last_price": 100700,
+      "unrealized_pnl": -496,
+      "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
+      "pending_close": null
     }
   ],
+  "pending_entries": [],
   "last_prices": {
-    "BTC": 88738000,
-    "ETH": 2485000,
-    "SOL": 100800,
-    "XRP": 1327.0
+    "BTC": 88511000,
+    "ETH": 2474000,
+    "SOL": 100700,
+    "XRP": 1323.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 23:35:00",
-    "ETH": "2026-11-17 23:35:00",
-    "SOL": "2026-11-17 23:35:00",
-    "XRP": "2026-11-17 23:35:00"
+    "BTC": "2026-11-17 23:40:00",
+    "ETH": "2026-11-17 23:40:00",
+    "SOL": "2026-11-17 23:40:00",
+    "XRP": "2026-11-17 23:40:00"
   },
   "independent_clusters": 7,
   "stop_decomp": {
@@ -157,7 +176,7 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-17 18:30:20",
-    "last_success_breaking": "2026-11-17 23:15:20",
+    "last_success_breaking": "2026-11-17 23:45:20",
     "upcoming": [
       {
         "time": "2026-11-19 04:00:00",
@@ -182,7 +201,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-17 18:30:20",
-    "last_attempt_breaking": "2026-11-17 23:15:20",
+    "last_attempt_breaking": "2026-11-17 23:45:20",
     "schedule_items_last": 8,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -205,21 +224,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-17 23:15:20",
+        "last_success": "2026-11-17 23:45:20",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-17 23:15:20",
+        "last_success": "2026-11-17 23:45:20",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-17 23:15:20",
+        "last_success": "2026-11-17 23:45:20",
         "count": 20,
         "error": null,
         "optional": false
@@ -234,7 +253,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-17 23:15:20",
+      "last_success": "2026-11-17 23:45:20",
       "error": null
     },
     "extractor": {
