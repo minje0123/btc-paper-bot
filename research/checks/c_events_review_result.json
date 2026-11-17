@@ -111,7 +111,7 @@
       "data_events_csv_rows": 0
     },
     "E4_gemini_fake": {
-      "pass_": true,
+      "pass_": false,
       "added": [
         [
           "2026-11-19 22:30",
@@ -169,36 +169,28 @@
         "시작이 과거: 시작이 다음 봉 전",
         "오래된 뉴스: 최근 2시간 밖의 뉴스"
       ],
-      "model_used": "gemini-2.5-flash-preview-x",
+      "model_used": "gemini-flash-latest",
       "calls": [
         [
           "POST",
-          "models/gemini-2.5-flash:generateContent"
-        ],
-        [
-          "GET",
-          "models?pageSize=200"
+          "models/gemini-flash-latest:generateContent"
         ],
         [
           "POST",
-          "models/gemini-2.5-flash-preview-x:generateContent"
+          "models/gemini-flash-latest:generateContent"
         ],
         [
           "POST",
-          "models/gemini-2.5-flash-preview-x:generateContent"
-        ],
-        [
-          "POST",
-          "models/gemini-2.5-flash-preview-x:generateContent"
+          "models/gemini-flash-latest:generateContent"
         ]
       ],
       "돌발 시작 = 다음 봉": true,
       "돌발 짧은 창 → 60분으로": true,
-      "모델 대체": true,
+      "모델 대체": false,
       "added_at = 지금": true,
       "5분 뒤 재호출 수": 0,
       "31분 뒤 호출(돌발만)": [
-        "models/gemini-2.5-flash-preview-x:generateContent"
+        "models/gemini-flash-latest:generateContent"
       ],
       "31분 뒤 중복 거름": true,
       "하루 한도: 8건 중 받음": 6,
@@ -373,11 +365,11 @@
       },
       "upcoming": [
         [
-          "2026-11-17 15:50:00",
+          "2026-11-17 15:55:00",
           "미국 CPI"
         ],
         [
-          "2026-11-19 15:30:00",
+          "2026-11-19 15:35:00",
           "FOMC"
         ]
       ],
@@ -394,7 +386,7 @@
       "off_msgs": 0
     },
     "E9_rule_history": {
-      "pass_": false,
+      "pass_": true,
       "current": true,
       "history": [
         false,

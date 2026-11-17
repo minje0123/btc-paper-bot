@@ -97,9 +97,16 @@ def generate(prompt, key=None, search=False, state=None, model=None, temperature
             try:
                 cands = flash_models(key)
                 order = [c for c in reversed(cands) if c not in tried][:2]
+                # 11/17: 새 사용자에겐 2.5-flash 가 막히고 최신 flash 는 무료 할당량이 0일 수 있음 → 별칭·lite 도 시도
+                _st, d = TRANSPORT("GET", f"{API}/models?pageSize=200", key, None)
+                allm = [m["name"].split("/")[-1] for m in d.get("models", [])
+                        if "generateContent" in m.get("supportedGenerationMethods", [])]
+                extra = [m for m in ("gemini-flash-latest", "gemini-flash-lite-latest") if m in allm]
+                extra += [m for m in reversed(allm) if "flash-lite" in m and not any(x in m for x in ("image", "tts", "live"))][:2]
+                order += [m for m in dict.fromkeys(extra) if m not in tried and m not in order]
             except Exception as e:
                 errs.append(f"모델 목록: {str(e)[:160]}")
-    raise GeminiError(" / ".join(errs)[:400])
+    raise GeminiError(" / ".join(errs)[:900])
 
 
 def extract_json(text):

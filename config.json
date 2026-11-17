@@ -169,7 +169,7 @@
   "eventScheduleHours": 6,
   "eventBreakingMin": 30,
   "eventBreakingMaxPerDay": 6,
-  "geminiModel": "gemini-2.5-flash",
+  "geminiModel": "gemini-flash-latest",
   "_그림자 장부": "본 장부와 별도 규칙·별도 파일(ledger/shadow/이름/)로 나란히 계산하는 가상 장부. 알림 없음. 코인마다 독립 계좌. enabled 가 true 인 항목만 계산. params 는 위 본 설정을 덮어쓸 값. start_time 이 null 이면 첫 실행 시각으로 채워짐. 비어 있으면 본 장부만 계산(기존과 같음).",
   "shadow_ledgers": [
     {
