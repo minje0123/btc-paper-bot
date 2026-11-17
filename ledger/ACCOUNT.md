@@ -6,8 +6,10 @@
 
 > 계좌 성격: **단타 계좌 (쉽알남 단타:스윙:장투 = 2:3:5 중 2)**. 수익 일부는 매주 장투 계좌로 '출금'한 것으로 칩니다.
 
-- 업데이트: 2026-11-17 15:35:25 (KST) · 마지막 봉: 2026-11-17 15:30:00 · 현재가 87,621,000원 · 데이터: 업비트
+- 업데이트: 2026-11-17 15:39:03 (KST) · 마지막 봉: 2026-11-17 15:30:00 · 현재가 87,621,000원 · 데이터: 업비트
 - 시작: 2026-11-16 13:40:00 · 초기 자금 1,000,000원
+
+> ⚠️ 이번 실행 경고: Gemini 정기 일정 확인 실패(진입 판단은 기존 일정으로 계속): gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest / gemini-3.8-flash: H / Gemini 돌발 확인 실패(진입 판단은 기존 일정으로 계속): gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest / gemini-3.8-flash: H / Gemini 복기 해설 실패(SOL-202611171425L): gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-fl
 
 | 항목 | 값 |
 |---|---|

@@ -1,0 +1,22 @@
+{
+  "reviews": {
+    "SOL-202611171425L": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest / gemini-3.8-flash: H",
+      "at": "2026-11-17 15:37:28"
+    },
+    "202611170625L": {
+      "text": "Sentence 2 (What to look at next time): 다음에는 진입 전 상위 프레임",
+      "model": "gemini-3.8-flash",
+      "at": "2026-11-17 15:37:28"
+    },
+    "202611161705S": {
+      "text": "15분과 1시간의 하락 추세가 일치하는 상황에서 스윙 레벨과",
+      "model": "gemini-3.8-flash",
+      "at": "2026-11-17 15:37:28"
+    }
+  },
+  "model": "gemini-3.8-flash",
+  "note": "Gemini 복기 해설 캐시(거래 ID 키). 공부용 — 매매 판단에 쓰지 않음. 한 번 받은 거래는 다시 부르지 않음."
+}

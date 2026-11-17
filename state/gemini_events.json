@@ -1,0 +1,15 @@
+{
+  "schedule": {
+    "last_attempt": "2026-11-17 15:37:28",
+    "last_ok": false,
+    "fails": 1,
+    "last_error": "gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest / gemini-3.8-flash: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing detai"
+  },
+  "breaking": {
+    "last_attempt": "2026-11-17 15:37:28",
+    "last_ok": false,
+    "fails": 1,
+    "last_error": "gemini-2.5-flash: HTTP 404 NOT_FOUND This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest / gemini-3.8-flash: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing detai"
+  },
+  "note": "Gemini 이벤트 수집 호출 기록(봇이 갱신). 키 값은 저장하지 않음."
+}
