@@ -1,0 +1,22 @@
+{
+  "set": "B",
+  "coin": "REQ",
+  "market": "KRW-REQ",
+  "file": "holdout/B/data_REQ_5m.csv",
+  "requested_range_kst": [
+    "2025-05-18 13:05",
+    "2026-11-16 13:00"
+  ],
+  "first_bar_kst": "2025-05-18 13:15",
+  "last_bar_kst": "2026-11-16 13:00",
+  "rows": 36650,
+  "expected_5m_slots": 157536,
+  "missing_slots": 120886,
+  "sha256": "1734e0be743cde9e589997282942e479003e2100a5facf8d48fc6e056686dfe8",
+  "bytes": 1918910,
+  "api_pages": 184,
+  "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+  "fetched_at_kst": "2026-11-17 09:06:50",
+  "excluded": true,
+  "excluded_reason": "결측률 76.74% > 10% (변경 기록 2026-11-17 09:00 품질 기준). 사용 금지."
+}

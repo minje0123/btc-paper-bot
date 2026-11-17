@@ -10,7 +10,7 @@
       ]
     },
     "B": {
-      "desc": "미사용 거래대금 상위 3코인, 18개월 데이터와 같은 기간",
+      "desc": "미사용 거래대금 상위 3코인(품질 기준 통과), 18개월 데이터와 같은 기간: WLD·ENA·NEAR",
       "range_kst": [
         "2025-05-18 13:05",
         "2026-11-16 13:00"
@@ -19,13 +19,22 @@
         "selected": [
           "WLD",
           "ENA",
-          "SHELL"
+          "NEAR"
         ],
         "selected_at_kst": "2026-11-17 08:09:45",
         "criteria": "24시간 거래대금(acc_trade_price_24h) 내림차순. BTC·ETH·XRP·SOL 제외, 스테이블코인 제외, 18개월 데이터 시작 시점에 5분봉이 있는(이미 상장된) 코인만. 위에서부터 3개.",
         "file": "holdout/B/selection.json",
-        "sha256": "7ac36a63f1dd2dce6fe26b1af2372aa90181397d8c032928188c7e47a5eef9b4"
-      }
+        "sha256": "7ac36a63f1dd2dce6fe26b1af2372aa90181397d8c032928188c7e47a5eef9b4",
+        "selected_original": [
+          "WLD",
+          "ENA",
+          "SHELL"
+        ],
+        "quality_rule": "5분봉 결측률 10% 이하 (변경 기록 2026-11-17 09:00, B 후보 전체에 같은 기준)",
+        "replacement_file": "holdout/B/replacement.json",
+        "replacement_sha256": "61667d880b547e8bfd18aa16a547488b14207e683a9539d1163d2651722ea095"
+      },
+      "shell_gap_check": "holdout/B/shell_gap_check.json"
     }
   },
   "files": [
@@ -147,7 +156,10 @@
       "bytes": 4960819,
       "api_pages": 464,
       "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
-      "fetched_at_kst": "2026-11-17 08:15:09"
+      "fetched_at_kst": "2026-11-17 08:15:09",
+      "excluded": true,
+      "excluded_at_kst": "2026-11-17 09:20:55",
+      "excluded_reason": "사전 등록서 v3 변경 기록 2026-11-17 09:00: 최종 시험 B 품질 기준(5분봉 결측률 10% 이하) 미달 — 결측률 41.19%(64,896/157,536). 사용 금지. 결측 원인 조사(holdout/B/shell_gap_check.json): 표본 빈 칸 56개 모두 1분봉도 없음 → 수집 누락이 아니라 체결 부재로 판단."
     },
     {
       "set": "B",
@@ -168,6 +180,54 @@
       "api_pages": 786,
       "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
       "fetched_at_kst": "2026-11-17 08:17:59"
+    },
+    {
+      "set": "B",
+      "coin": "REQ",
+      "market": "KRW-REQ",
+      "file": "holdout/B/data_REQ_5m.csv",
+      "requested_range_kst": [
+        "2025-05-18 13:05",
+        "2026-11-16 13:00"
+      ],
+      "first_bar_kst": "2025-05-18 13:15",
+      "last_bar_kst": "2026-11-16 13:00",
+      "rows": 36650,
+      "expected_5m_slots": 157536,
+      "missing_slots": 120886,
+      "sha256": "1734e0be743cde9e589997282942e479003e2100a5facf8d48fc6e056686dfe8",
+      "bytes": 1918910,
+      "api_pages": 184,
+      "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+      "fetched_at_kst": "2026-11-17 09:06:50",
+      "excluded": true,
+      "excluded_reason": "결측률 76.74% > 10% (변경 기록 2026-11-17 09:00 품질 기준). 사용 금지.",
+      "missing_rate": 0.76735
+    },
+    {
+      "set": "B",
+      "coin": "NEAR",
+      "market": "KRW-NEAR",
+      "file": "holdout/B/data_NEAR_5m.csv",
+      "requested_range_kst": [
+        "2025-05-18 13:05",
+        "2026-11-16 13:00"
+      ],
+      "first_bar_kst": "2025-05-18 13:05",
+      "last_bar_kst": "2026-11-16 13:00",
+      "rows": 142659,
+      "expected_5m_slots": 157536,
+      "missing_slots": 14877,
+      "sha256": "b00823a86616e3a59fcda6f0e2aa699b26af05e6ec4f2f7635471b08317a335d",
+      "bytes": 7668581,
+      "api_pages": 714,
+      "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+      "fetched_at_kst": "2026-11-17 09:18:15",
+      "missing_rate": 0.09444,
+      "excluded": false,
+      "note": "SHELL 대체(변경 기록 2026-11-17 09:00). selection.json 원래 순위 18위."
     }
-  ]
+  ],
+  "updated_at_kst": "2026-11-17 09:20:55",
+  "update_note": "2026-11-17: SHELL 제외(결측률 41%), REQ 후보 제외(결측률 77%), NEAR 추가. 기존 파일 해시는 바꾸지 않음. excluded=true 파일은 최종 시험에 쓰지 않는다."
 }

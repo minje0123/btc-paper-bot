@@ -1,0 +1,56 @@
+{
+  "done_at_kst": "2026-11-17 09:18:15",
+  "rule": "사전 등록서 v3 변경 기록 2026-11-17 09:00: B 후보 5분봉 결측률 10% 이하. SHELL(41%) 제외, selection.json 원래 순위에서 같은 제외 조건 + 결측률 기준을 통과하는 첫 코인으로 대체.",
+  "original_check": {
+    "WLD": 0.00323,
+    "ENA": 0.06989,
+    "SHELL": 0.41194
+  },
+  "candidates": [
+    {
+      "rank": 13,
+      "market": "KRW-CAMP",
+      "bar_before_start": null,
+      "result": "제외: 18개월 시작 시점 5분봉 없음(상장 전)"
+    },
+    {
+      "rank": 14,
+      "market": "KRW-CASHCAT",
+      "bar_before_start": null,
+      "result": "제외: 18개월 시작 시점 5분봉 없음(상장 전)"
+    },
+    {
+      "rank": 15,
+      "market": "KRW-REQ",
+      "bar_before_start": "2025-05-18T12:15:00",
+      "rows": 36650,
+      "missing_slots": 120886,
+      "missing_rate": 0.76735,
+      "sha256": "1734e0be743cde9e589997282942e479003e2100a5facf8d48fc6e056686dfe8",
+      "result": "제외: 결측률 76.7% > 10%"
+    },
+    {
+      "rank": 16,
+      "market": "KRW-AXIS",
+      "bar_before_start": null,
+      "result": "제외: 18개월 시작 시점 5분봉 없음(상장 전)"
+    },
+    {
+      "rank": 17,
+      "market": "KRW-Q",
+      "bar_before_start": null,
+      "result": "제외: 18개월 시작 시점 5분봉 없음(상장 전)"
+    },
+    {
+      "rank": 18,
+      "market": "KRW-NEAR",
+      "bar_before_start": "2025-05-18T13:05:00",
+      "rows": 142659,
+      "missing_slots": 14877,
+      "missing_rate": 0.09444,
+      "sha256": "b00823a86616e3a59fcda6f0e2aa699b26af05e6ec4f2f7635471b08317a335d",
+      "result": "선정(결측률 10% 이하)"
+    }
+  ],
+  "replacement": "NEAR"
+}

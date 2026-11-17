@@ -1,0 +1,20 @@
+{
+  "set": "B",
+  "coin": "NEAR",
+  "market": "KRW-NEAR",
+  "file": "holdout/B/data_NEAR_5m.csv",
+  "requested_range_kst": [
+    "2025-05-18 13:05",
+    "2026-11-16 13:00"
+  ],
+  "first_bar_kst": "2025-05-18 13:05",
+  "last_bar_kst": "2026-11-16 13:00",
+  "rows": 142659,
+  "expected_5m_slots": 157536,
+  "missing_slots": 14877,
+  "sha256": "b00823a86616e3a59fcda6f0e2aa699b26af05e6ec4f2f7635471b08317a335d",
+  "bytes": 7668581,
+  "api_pages": 714,
+  "source": "빗썸 공개 API /v1/candles/minutes/5 (to 파라미터로 거슬러 받기)",
+  "fetched_at_kst": "2026-11-17 09:18:15"
+}
