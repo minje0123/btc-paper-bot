@@ -163,7 +163,7 @@
       <div class="chart" id="chart" style="padding:0"></div>
       <div class="legend">
         <span><span class="up">▲</span> 롱 진입</span><span><span class="down">▼</span> 숏 진입 (#번호 = 매매 기록 번호)</span>
-        <span>● 청산 (초록 이익 / 회색 본절 / 주황 손실)</span><span>┄ 현재 포지션 진입·손절·T1</span><span class="muted">BTC = 본 장부 거래 · ETH·XRP·SOL = 그림자 장부 거래</span>
+        <span>● 청산 (초록 이익 / 회색 본절 / 주황 손실)</span><span>┄ 현재 포지션 진입·손절·T1</span><span class="muted">본 장부 거래 표시 (11/17 15:00부터 4코인 · 그 전 ETH·XRP·SOL은 그림자 장부)</span>
       </div>
     </section>
 
@@ -483,11 +483,14 @@
 
   // ---------- 계산 ----------
   const sideSign = s => s === '롱' ? 1 : -1;
-  function liveUnreal() {
-    const p = S && S.position; if (!p) return 0;
-    const px = livePrice ?? p.last_price;
+  // 본 장부 포지션 목록 (새 status: positions[] · 옛 status: position 하나)
+  const mainPositions = () => !S ? [] : (Array.isArray(S.positions) ? S.positions : (S.position ? [S.position] : []));
+  const posCoin = p => p.coin || (p.market ? p.market.split('-')[1] : 'BTC');
+  function unrealOf(p) {
+    const c = posCoin(p), px = coinPx[c] ?? (c === 'BTC' ? livePrice : null) ?? p.last_price;
     return sideSign(p.side) * (px - p.entry) * p.qty_open - p.entry * p.qty_open * FEE;
   }
+  function liveUnreal() { return mainPositions().reduce((s, p) => s + unrealOf(p), 0); }
   function liveEquity() { return S ? S.equity - (S.unrealized_pnl || 0) + liveUnreal() : null; }
 
   // ---------- 렌더 ----------
@@ -504,7 +507,42 @@
     $('alerts').innerHTML = al.join('');
   }
 
+  const pxFmt = n => (n == null || isNaN(n)) ? '–' : (Math.abs(n) >= 1000 ? won(n) : (+n).toLocaleString('ko-KR', { maximumFractionDigits: 2 }));
   function renderPosition() {
+    const ps = mainPositions();
+    if (Array.isArray(S.positions)) return renderPositionsMulti(ps);
+    return renderPositionSingle();
+  }
+  function renderPositionsMulti(ps) {
+    const qs = S.pending_entries || [];
+    let h = `<div class="note" style="margin:0 0 8px">${(S.markets || []).join('·')} · 동시 ${ps.length}/${S.max_open_positions ?? '–'}개 · 열린 위험 ${(+(S.open_risk_pct || 0)).toFixed(2)}% / ${S.max_open_risk_pct ?? '–'}%</div>`;
+    if (!ps.length) {
+      h += `<div class="pos-head"><span class="badge b-none">포지션 없음</span><span style="font-size:14px;font-weight:500" class="muted">신호를 기다리는 중</span></div>
+        <div class="grid"><div class="kv"><div class="k">롱 진입 / 손절 / 목표</div><div class="v muted">신호 없음</div></div>
+        <div class="kv"><div class="k">숏 진입 / 손절 / 목표</div><div class="v muted">신호 없음</div></div></div>`;
+      $('posTime').textContent = '';
+    } else {
+      ps.forEach((p, i) => {
+        const long = p.side === '롱', c = posCoin(p), u = unrealOf(p), r = p.risk_money ? u / p.risk_money : 0;
+        h += `<div style="${i ? 'margin-top:12px;padding-top:10px;border-top:1px dashed var(--line2)' : ''}">
+          <div class="pos-head"><span class="badge ${long ? 'b-long' : 'b-short'}">${esc(c)} ${long ? '▲ 롱' : '▼ 숏'}</span>
+          <span>${esc(p.setup)}${esc(p.grade || '')}</span>${p.t1_done ? '<span class="badge b-warn">T1 반익절 · 본절</span>' : ''}</div>
+          <div class="grid">
+          <div class="kv"><div class="k">진입가 · ${esc((p.entry_time || '').slice(5, 16))}</div><div class="v">${pxFmt(p.entry)}</div></div>
+          <div class="kv"><div class="k">손절${p.t1_done ? ' (본절)' : ''}</div><div class="v down">${pxFmt(p.stop)}</div></div>
+          <div class="kv"><div class="k">목표 T1${p.t1_done ? ' ✅' : ''}</div><div class="v up">${pxFmt(p.t1)}</div></div>
+          <div class="kv"><div class="k">다음 목표</div><div class="v">${p.next_target ? pxFmt(p.next_target) : '–'}</div></div>
+          <div class="kv"><div class="k">수량 (남은/처음) · 레버리지</div><div class="v">${(+p.qty_open).toFixed(4)} <small>/ ${(+p.qty).toFixed(4)} ${esc(c)} · ${(+p.leverage).toFixed(1)}배</small></div></div>
+          <div class="kv"><div class="k">미실현 (실시간) · 위험 ${won(p.risk_money)}원</div><div class="v ${cls(u)}" id="uPnl_${esc(c)}">${sWon(u)} <small>${r >= 0 ? '+' : '−'}${Math.abs(r).toFixed(2)}R</small></div></div>
+          </div></div>`;
+      });
+      $('posTime').textContent = `${ps.length}개 보유`;
+    }
+    qs.forEach(q => { h += `<div class="alert info" style="margin:10px 0 0">⏳ <b>[${esc(q.coin || '')}]</b> 진입 대기: ${esc((q.signal_time || '').slice(5, 16))} 봉 마감 신호 → 다음 봉 시가에 <b>${esc(q.side)} [${esc(q.setup)}${esc(q.grade || '')}]</b> · 손절 ${pxFmt(q.stop)} · T1 ${pxFmt(q.t1)} · ${(+q.qty).toFixed(4)} ${esc(q.coin || '')}${q.risk_cut ? ' · 위험 축소' : ''}</div>`; });
+    ps.filter(p => p.pending_close).forEach(p => { h += `<div class="alert info" style="margin:10px 0 0">⏳ [${esc(posCoin(p))}] 청산 대기: 다음 봉 시가에 남은 물량 청산 (${esc(p.pending_close)})</div>`; });
+    $('posBody').innerHTML = h;
+  }
+  function renderPositionSingle() {
     const p = S.position, q = S.pending_entry;
     let h = '';
     if (!p) {
@@ -622,7 +660,10 @@
     };
     // BTC = 본 장부 거래 · 그 외 코인 = 그림자 장부(기준선)의 그 코인 거래
     const sh0 = shadows[0], shSt = sh0 && sh0.status;
-    const mkTrades = coin === 'BTC' ? trades : (sh0 ? sh0.trades.filter(t => t['코인'] === coin) : []);
+    // 본 장부가 4코인이면(코인 열 있음) 그 코인의 본 장부 거래, 아니면 BTC=본 장부·나머지=그림자 장부
+    const multi = Array.isArray(S.positions);
+    const mkTrades = multi ? trades.filter(t => (t['코인'] || 'BTC') === coin)
+      : (coin === 'BTC' ? trades : (sh0 ? sh0.trades.filter(t => t['코인'] === coin) : []));
     mkTrades.forEach(t => {
       const long = t['방향'] === '롱', pnl = +t['손익원'];
       add({ time: kstTs(t['진입시각']), position: long ? 'belowBar' : 'aboveBar', color: long ? '#f04452' : '#3182f6',
@@ -630,7 +671,8 @@
       parseExits(t).forEach(x => x.time && add({ time: x.time, position: long ? 'aboveBar' : 'belowBar',
         color: x.reason.startsWith('T1') || pnl > 0 ? '#2fbf71' : pnl === 0 ? '#8b96a5' : '#f5a524', shape: 'circle', size: 0.8, text: '' }));
     });
-    const p = coin === 'BTC' ? S.position : (shSt && shSt.coins && shSt.coins[coin] ? shSt.coins[coin].position : null);
+    const p = multi ? (mainPositions().find(x => posCoin(x) === coin) || null)
+      : (coin === 'BTC' ? S.position : (shSt && shSt.coins && shSt.coins[coin] ? shSt.coins[coin].position : null));
     if (p) add({ time: kstTs(p.entry_time), position: p.side === '롱' ? 'belowBar' : 'aboveBar',
       color: p.side === '롱' ? '#f04452' : '#3182f6', shape: p.side === '롱' ? 'arrowUp' : 'arrowDown', text: `${p.side} ${p.setup}${p.grade || ''} (보유)` });
     mk.sort((a, b) => a.time - b.time);
@@ -667,14 +709,14 @@
       const pnl = +t['손익원'], R = +t['R'], long = t['방향'] === '롱';
       const ex = parseExits(t).map(x => esc(x.raw)).join('<br>');
       return `<tr class="trow" data-i="${i}">
-        <td>${esc(t['번호'])}</td><td class="l">${esc(t['진입시각'].slice(5))}</td>
+        <td>${esc(t['번호'])}</td><td class="l"><b>${esc(t['코인'] || 'BTC')}</b></td><td class="l">${esc(t['진입시각'].slice(5))}</td>
         <td class="l ${long ? 'up' : 'down'}">${long ? '▲ 롱' : '▼ 숏'}</td><td class="l">${esc(t['셋업'])}${esc(t['등급'] || '')}</td>
-        <td>${won(+t['진입가'])}</td><td>${won(+t['최초손절'])}</td><td>${won(+t['T1'])}</td><td>${(+t['수량BTC']).toFixed(4)}</td>
+        <td>${pxFmt(+t['진입가'])}</td><td>${pxFmt(+t['최초손절'])}</td><td>${pxFmt(+t['T1'])}</td><td>${(+t['수량BTC']).toFixed(4)}</td>
         <td class="l">${esc(t['마지막청산'])}</td><td class="l">${esc(t['청산시각'].slice(5))}</td>
         <td class="${cls(pnl)}"><b>${sWon(pnl)}</b></td><td class="${cls(R)}">${R >= 0 ? '+' : '−'}${Math.abs(R).toFixed(2)}R</td></tr>
-        <tr class="detail" data-d="${i}" hidden><td colspan="12">레버리지 ${(+t['레버리지']).toFixed(2)}배 · 위험금액 ${won(+t['위험금액'])}원${t['수량배율'] ? ` · 수량배율 ${esc(t['수량배율'])}` : ''} · 1시간 방향 ${+t['1시간방향'] > 0 ? '상승' : +t['1시간방향'] < 0 ? '하락' : '중립'}<br>${ex}</td></tr>`;
+        <tr class="detail" data-d="${i}" hidden><td colspan="13">레버리지 ${(+t['레버리지']).toFixed(2)}배 · 위험금액 ${won(+t['위험금액'])}원${t['수량배율'] ? ` · 수량배율 ${esc(t['수량배율'])}` : ''} · 1시간 방향 ${+t['1시간방향'] > 0 ? '상승' : +t['1시간방향'] < 0 ? '하락' : '중립'}<br>${ex}</td></tr>`;
     }).join('');
-    $('tradesTbl').innerHTML = `<table><thead><tr><th>#</th><th class="l">진입</th><th class="l">방향</th><th class="l">셋업</th>
+    $('tradesTbl').innerHTML = `<table><thead><tr><th>#</th><th class="l">코인</th><th class="l">진입</th><th class="l">방향</th><th class="l">셋업</th>
       <th>진입가</th><th>손절</th><th>T1</th><th>수량</th><th class="l">청산</th><th class="l">청산 시각</th><th>손익</th><th>R</th></tr></thead><tbody>${rows}</tbody></table>`;
   }
   $('tradesTbl').addEventListener('click', e => {
@@ -765,11 +807,16 @@
         try { cs.update({ ...liveBar }); } catch (x) {}
       }
     }
-    if (c_ !== 'BTC') return;
+    if (!mainPositions().some(p => posCoin(p) === c_) && c_ !== 'BTC') return;
     const now = Date.now();
     if (S && now - lastPaint > 1000) {
       lastPaint = now;
-      if (S.position) {
+      mainPositions().forEach(p => {
+        const el = document.getElementById('uPnl_' + posCoin(p)); if (!el) return;
+        const u = unrealOf(p), r = p.risk_money ? u / p.risk_money : 0;
+        el.className = 'v ' + cls(u); el.innerHTML = `${sWon(u)} <small>${r >= 0 ? '+' : '−'}${Math.abs(r).toFixed(2)}R</small>`;
+      });
+      if (S.position && !Array.isArray(S.positions)) {
         const u = liveUnreal(), r = S.position.risk_money ? u / S.position.risk_money : 0, el = $('uPnl');
         if (el) { el.className = 'v ' + cls(u); el.innerHTML = `${sWon(u)} <small>${r >= 0 ? '+' : '−'}${Math.abs(r).toFixed(2)}R</small>`; }
       }
