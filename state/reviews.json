@@ -16,12 +16,11 @@
       "at": "2026-11-17 15:37:28"
     },
     "202611161510S": {
-      "text": "",
-      "fails": 1,
-      "last_error": "gemini-3.8-flash: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-2.5-flash: HTTP 404 NOT_FOUND This mod",
-      "at": "2026-11-17 15:40:21"
+      "text": "1시간과 15분의 하락 방향 및 5분 FVG를 근거로 진입했으나, 낮은 ATR 백분위 속에서 가격이 반대로 움직여 -1.23R 손실을 기록했습니다. 다음에는 진입 직전의 변동성 수준과 역방향 가격 반응을 더 세밀하게 관찰해야 합니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-17 15:45:20"
     }
   },
-  "model": "gemini-3.8-flash",
+  "model": "gemini-flash-lite-latest",
   "note": "Gemini 복기 해설 캐시(거래 ID 키). 공부용 — 매매 판단에 쓰지 않음. 한 번 받은 거래는 다시 부르지 않음."
 }

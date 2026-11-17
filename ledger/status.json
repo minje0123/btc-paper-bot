@@ -16,13 +16,13 @@
   "total_value": 986627,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 986335,
+  "equity": 983916,
   "realized_pnl": -13373,
-  "unrealized_pnl": -292,
+  "unrealized_pnl": -2711,
   "trades_count": 4,
   "win_rate": 25.0,
   "avg_R": -0.684,
-  "max_drawdown_pct": 1.59,
+  "max_drawdown_pct": 1.84,
   "has_position": true,
   "position": {
     "market": "KRW-BTC",
@@ -43,11 +43,23 @@
     "risk_money": 4933,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 87600000,
-    "unrealized_pnl": -292,
+    "last_price": 87789000,
+    "unrealized_pnl": -2711,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-SOL",
+    "coin": "SOL",
+    "side": "롱",
+    "setup": "구간",
+    "grade": "A",
+    "signal_time": "2026-11-17 15:40:00",
+    "signal_close": 98650.0,
+    "stop": 98100.925,
+    "t1": 99100.0,
+    "qty": 8.9844,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-17",
@@ -67,13 +79,14 @@
     "next_size_mode": "보통",
     "next_risk_won": 4933
   },
-  "last_bar_time": "2026-11-17 15:35:00",
-  "last_price": 87600000,
+  "last_bar_time": "2026-11-17 15:40:00",
+  "last_price": 87789000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-17 15:41:15",
+  "updated_at": "2026-11-17 15:47:30",
   "warnings": [
-    "Gemini 복기 해설 실패(202611161510S): gemini-3.8-flash: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemin"
+    "Gemini 정기 일정 확인 실패(진입 판단은 기존 일정으로 계속): gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-2.5-flash",
+    "Gemini 돌발 확인 실패(진입 판단은 기존 일정으로 계속): gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-2.5-flash"
   ],
   "markets": [
     "BTC",
@@ -83,9 +96,9 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 2.0,
-  "open_positions_count": 1,
-  "open_risk_won": 4933,
-  "open_risk_pct": 0.5,
+  "open_positions_count": 2,
+  "open_risk_won": 9866,
+  "open_risk_pct": 1.0,
   "positions": [
     {
       "market": "KRW-BTC",
@@ -106,24 +119,40 @@
       "risk_money": 4933,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 87600000,
-      "unrealized_pnl": -292,
+      "last_price": 87789000,
+      "unrealized_pnl": -2711,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-SOL",
+      "coin": "SOL",
+      "side": "롱",
+      "setup": "구간",
+      "grade": "A",
+      "signal_time": "2026-11-17 15:40:00",
+      "signal_close": 98650.0,
+      "stop": 98100.925,
+      "t1": 99100.0,
+      "qty": 8.9844,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4933,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 87600000,
-    "ETH": 2476000,
-    "SOL": 98250.0,
-    "XRP": 1300.0
+    "BTC": 87789000,
+    "ETH": 2483000,
+    "SOL": 98650.0,
+    "XRP": 1303.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-17 15:35:00",
-    "ETH": "2026-11-17 15:35:00",
-    "SOL": "2026-11-17 15:35:00",
-    "XRP": "2026-11-17 15:35:00"
+    "BTC": "2026-11-17 15:40:00",
+    "ETH": "2026-11-17 15:40:00",
+    "SOL": "2026-11-17 15:40:00",
+    "XRP": "2026-11-17 15:40:00"
   },
   "event_block": {
     "enabled": false,
