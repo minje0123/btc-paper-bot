@@ -6,10 +6,8 @@
 
 > 계좌 성격: **단타 계좌 (쉽알남 단타:스윙:장투 = 2:3:5 중 2)**. 수익 일부는 매주 장투 계좌로 '출금'한 것으로 칩니다.
 
-- 업데이트: 2026-11-18 02:11:06 (KST) · 마지막 봉: 2026-11-18 02:05:00 · 현재가 87,065,000원 · 데이터: 업비트
+- 업데이트: 2026-11-18 02:15:32 (KST) · 마지막 봉: 2026-11-18 02:10:00 · 현재가 87,061,000원 · 데이터: 업비트
 - 시작: 2026-11-16 13:40:00 · 초기 자금 1,000,000원
-
-> ⚠️ 이번 실행 경고: Gemini 복기 해설 실패(ETH-202611180125S): gemini-flash-lite-latest: TimeoutError: The read operation timed out / gemini-flash-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high deman
 
 | 항목 | 값 |
 |---|---|
