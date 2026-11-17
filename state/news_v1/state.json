@@ -1,10 +1,10 @@
 {
  "active_from": "2026-11-17 19:50:21",
  "collector": {
-  "last_attempt": "2026-11-18 02:25:20",
+  "last_attempt": "2026-11-18 02:55:20",
   "mode": "shared(event_feeds)",
   "ok": true,
-  "last_success": "2026-11-18 02:25:20",
+  "last_success": "2026-11-18 02:55:20",
   "error": null,
   "sources_ok": 3
  },
@@ -23,7 +23,8 @@
   "e929b6fafeb5",
   "c7826edae999",
   "f8d0d161b4be",
-  "693ac26c11ce"
+  "693ac26c11ce",
+  "5acddaecac67"
  ],
  "queue": {
   "7abecec3449e": {
@@ -85,17 +86,21 @@
   "693ac26c11ce": {
    "status": "failed",
    "fails": 3
+  },
+  "5acddaecac67": {
+   "status": "queued",
+   "fails": 1
   }
  },
  "extractor": {
-  "queue": 0,
-  "last_attempt": "2026-11-17 21:15:20",
+  "queue": 1,
+  "last_attempt": "2026-11-18 02:55:20",
   "state": "FAIL",
-  "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  "last_error": "TimeoutError: The read operation timed out"
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 0.0,
+ "elapsed_s": 15.06,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
   "decided_at": "2026-11-17 21:15:20",
