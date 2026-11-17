@@ -20,10 +20,10 @@
     "dayLossP": 100,
     "maxConsec": 1000
   },
-  "trades_count": 2,
-  "win_rate": 0.0,
-  "avg_R": -1.235,
-  "sum_R": -2.469,
+  "trades_count": 3,
+  "win_rate": 33.3,
+  "avg_R": -0.59,
+  "sum_R": -1.77,
   "coins": {
     "BTC": {
       "market": "KRW-BTC",
@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 16:00:00",
+      "last_bar_time": "2026-11-17 16:05:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": -6133,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 16:00:00",
+      "last_bar_time": "2026-11-17 16:05:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 0,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 16:00:00",
+      "last_bar_time": "2026-11-17 16:05:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 0,
@@ -100,47 +100,27 @@
     "SOL": {
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
-      "balance": 994425,
-      "equity": 996417,
-      "realized_pnl": -5575,
+      "balance": 996419,
+      "equity": 996419,
+      "realized_pnl": -3581,
       "withdrawn_total": 0,
-      "trades_count": 1,
-      "win_rate": 0.0,
-      "avg_R": -1.238,
-      "sum_R": -1.238,
+      "trades_count": 2,
+      "win_rate": 50.0,
+      "avg_R": -0.269,
+      "sum_R": -0.538,
       "max_drawdown_pct": 0.86,
-      "has_position": true,
-      "position": {
-        "id": "202611171545L",
-        "side": "롱",
-        "setup": "구간",
-        "grade": "A",
-        "entry_time": "2026-11-17 15:45:00",
-        "entry": 98660,
-        "stop": 98660,
-        "stop0": 98101,
-        "t1": 99100,
-        "next_target": 99200,
-        "qty": 9.0414,
-        "qty_open": 4.5207,
-        "leverage": 0.9,
-        "risk_money": 4964,
-        "t1_done": true,
-        "realized_part": 1542,
-        "last_price": 99150,
-        "unrealized_pnl": 1992,
-        "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
-      },
+      "has_position": false,
+      "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 16:00:00",
+      "last_bar_time": "2026-11-17 16:05:00",
       "today": {
         "date": "2026-11-17",
-        "realized_pnl": -5575,
+        "realized_pnl": -3581,
         "no_new_entries": false,
         "reason": null
       }
     }
   },
-  "updated_at": "2026-11-17 16:05:27"
+  "updated_at": "2026-11-17 16:10:27"
 }
