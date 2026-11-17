@@ -38,9 +38,16 @@
       "max_drawdown_pct": 0.0,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "B+",
+        "grade": "",
+        "signal_time": "2026-11-17 15:30:00",
+        "stop": 88003980.0,
+        "t1": 87046530.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-17 15:25:00",
+      "last_bar_time": "2026-11-17 15:30:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 0,
@@ -64,7 +71,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 15:25:00",
+      "last_bar_time": "2026-11-17 15:30:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 0,
@@ -88,7 +95,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 15:25:00",
+      "last_bar_time": "2026-11-17 15:30:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": 0,
@@ -112,7 +119,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-17 15:25:00",
+      "last_bar_time": "2026-11-17 15:30:00",
       "today": {
         "date": "2026-11-17",
         "realized_pnl": -7117,
@@ -121,5 +128,5 @@
       }
     }
   },
-  "updated_at": "2026-11-17 15:30:24"
+  "updated_at": "2026-11-17 15:35:25"
 }
