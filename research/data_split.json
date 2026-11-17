@@ -51,13 +51,13 @@
     "folder": "research/holdout/A/"
   },
   "holdout_B": {
-    "desc": "미사용 거래대금 상위 3코인, 18개월 데이터와 같은 기간",
+    "desc": "미사용 거래대금 상위 3코인, 18개월 데이터와 같은 기간. 2026-11-17 SHELL(결측 41%)을 결측률 10% 기준에 따라 NEAR(9.44%)로 교체 — PREREG_v3 변경 기록과 같음",
     "start": "2025-05-18 13:05",
     "end": "2026-11-16 13:00",
     "coins": [
       "WLD",
       "ENA",
-      "SHELL"
+      "NEAR"
     ],
     "folder": "research/holdout/B/"
   },
