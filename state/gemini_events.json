@@ -6,9 +6,9 @@
     "last_error": "gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-3.8-flash: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing de"
   },
   "breaking": {
-    "last_attempt": "2026-11-17 16:15:21",
+    "last_attempt": "2026-11-17 16:50:20",
     "last_ok": false,
-    "fails": 2,
+    "fails": 3,
     "last_error": "gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-3.8-flash: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing de"
   },
   "note": "Gemini 이벤트 수집 호출 기록(봇이 갱신). 키 값은 저장하지 않음."

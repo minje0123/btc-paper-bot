@@ -6,10 +6,10 @@
 
 > 계좌 성격: **단타 계좌 (쉽알남 단타:스윙:장투 = 2:3:5 중 2)**. 수익 일부는 매주 장투 계좌로 '출금'한 것으로 칩니다.
 
-- 업데이트: 2026-11-17 16:45:25 (KST) · 마지막 봉: 2026-11-17 16:40:00 · 현재가 87,938,000원 · 데이터: 업비트
+- 업데이트: 2026-11-17 16:50:26 (KST) · 마지막 봉: 2026-11-17 16:45:00 · 현재가 87,978,000원 · 데이터: 업비트
 - 시작: 2026-11-16 13:40:00 · 초기 자금 1,000,000원
 
-> ⚠️ 이번 실행 경고: Gemini 정기 일정 확인 실패(진입 판단은 기존 일정으로 계속): gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-3.8-flash
+> ⚠️ 이번 실행 경고: Gemini 돌발 확인 실패(진입 판단은 기존 일정으로 계속): gemini-flash-latest: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai / gemini-3.8-flash
 
 | 항목 | 값 |
 |---|---|
