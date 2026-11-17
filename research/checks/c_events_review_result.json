@@ -111,7 +111,7 @@
       "data_events_csv_rows": 0
     },
     "E4_gemini_fake": {
-      "pass_": false,
+      "pass_": true,
       "added": [
         [
           "2026-11-19 22:30",
@@ -169,28 +169,40 @@
         "시작이 과거: 시작이 다음 봉 전",
         "오래된 뉴스: 최근 2시간 밖의 뉴스"
       ],
-      "model_used": "gemini-flash-latest",
+      "model_used": "gemini-2.5-flash-preview-x",
       "calls": [
         [
           "POST",
-          "models/gemini-flash-latest:generateContent"
+          "models/gemini-2.5-flash:generateContent"
+        ],
+        [
+          "GET",
+          "models?pageSize=200"
+        ],
+        [
+          "GET",
+          "models?pageSize=200"
         ],
         [
           "POST",
-          "models/gemini-flash-latest:generateContent"
+          "models/gemini-2.5-flash-preview-x:generateContent"
         ],
         [
           "POST",
-          "models/gemini-flash-latest:generateContent"
+          "models/gemini-2.5-flash-preview-x:generateContent"
+        ],
+        [
+          "POST",
+          "models/gemini-2.5-flash-preview-x:generateContent"
         ]
       ],
       "돌발 시작 = 다음 봉": true,
       "돌발 짧은 창 → 60분으로": true,
-      "모델 대체": false,
+      "모델 대체": true,
       "added_at = 지금": true,
       "5분 뒤 재호출 수": 0,
       "31분 뒤 호출(돌발만)": [
-        "models/gemini-flash-latest:generateContent"
+        "models/gemini-2.5-flash-preview-x:generateContent"
       ],
       "31분 뒤 중복 거름": true,
       "하루 한도: 8건 중 받음": 6,

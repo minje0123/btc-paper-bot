@@ -222,7 +222,8 @@ def e4(tmp):
     gc.TRANSPORT = api
     logs = []
     try:
-        cfg = dict(base_cfg())
+        cfg = dict(base_cfg(), geminiModel="gemini-2.5-flash")
+        gc.DEFAULT_MODEL = "gemini-2.5-flash"      # 대체 동작 시험용(실제 기본값은 gemini-flash-latest)
         added = ge.maybe_update(now, cfg, evp, stp, log=lambda m, warn=False: logs.append(m), key="FAKE-KEY")
         st = json.load(open(stp, encoding="utf-8"))
         evs = engine.load_events(evp)
