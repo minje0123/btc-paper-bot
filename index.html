@@ -66,6 +66,12 @@
   .b-long{color:var(--up);background:rgba(255,61,90,.08)}
   .b-short{color:var(--down);background:rgba(47,139,255,.08)}
   .b-warn{color:var(--amber);background:rgba(255,176,32,.08)}
+  .b-red{color:#ff3d5a;background:rgba(255,61,90,.14);animation:pulse 1.6s infinite}
+  .b-ok{color:var(--ok);background:rgba(0,255,156,.06)}
+  .evlist{margin:8px 0 0;padding:0;list-style:none;font-size:11.5px;line-height:1.7}
+  .evlist li{display:flex;gap:8px;border-top:1px dashed var(--line);padding:3px 0}
+  .evlist li .t{color:var(--muted);white-space:nowrap}
+  .evlist a{color:var(--cyan)}
   .pos-head{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:800;margin-bottom:10px}
 
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
@@ -168,6 +174,10 @@
     </section>
 
     <div class="side">
+      <section class="card" id="evCard" hidden>
+        <h2><span>Events <span class="ko">· 이벤트 회피</span></span><span id="evSub" class="ko"></span></h2>
+        <div id="evBody"></div>
+      </section>
       <section class="card" id="posCard">
         <h2><span>Position <span class="ko">· 현재 포지션</span></span><span id="posTime" class="ko"></span></h2>
         <div id="posBody"><div class="empty">불러오는 중…</div></div>
@@ -211,7 +221,8 @@
   </section>
 
   <section class="card">
-    <h2><span>Journal <span class="ko">· 매매 일지 (진입 근거 · 최근 30건)</span></span><span id="jrnSub" class="ko"></span></h2>
+    <h2><span>Journal <span class="ko">· 매매 일지 (진입 근거 · 자동 복기 · 최근 30건)</span></span>
+      <span class="ko"><span id="jrnSub"></span> · <a id="reviewLink" href="#" target="_blank" rel="noopener" style="color:var(--cyan)">복기 리포트 →</a></span></h2>
     <div class="tbl" id="journalTbl" style="padding:0"><div class="empty">매매 일지를 불러오는 중…</div></div>
   </section>
 
@@ -240,6 +251,7 @@
   const nowKst = () => Math.floor((Date.now() + 9*3600e3) / 1000);
   const bar5 = t => t - (t % 300);
   $('repoLink').href = `https://github.com/${OWNER}/${REPO}/blob/main/ledger/ACCOUNT.md`;
+  $('reviewLink').href = `https://github.com/${OWNER}/${REPO}/tree/main/ledger/review`;
 
   // ---------- CSV ----------
   function parseCSV(text) {
@@ -450,10 +462,12 @@
       <td>${esc(j['손절폭%'])}%</td><td>${(+j['T1까지(R)']).toFixed(2)}R</td>
       <td class="l">${esc(j['결과'])} <span class="muted">${esc(j['마지막청산'])}</span></td>
       <td class="${cls(+j['손익원'])}">${sWon(+j['손익원'])}</td><td>${rCell(j['R'])}</td>
-      <td class="l muted" style="white-space:normal">${esc(j['진입 앞뒤 2시간 경제 일정'] || '')}</td></tr>`).join('');
+      <td class="l muted" style="white-space:normal">${esc(j['진입 앞뒤 2시간 경제 일정'] || '')}</td>
+      <td class="l" style="white-space:normal;min-width:120px">${esc(j['원인태그'] || '–')}${j['MFE_R'] ? `<br><span class="muted">${esc(j['보유봉수'] || '')}봉 · MFE ${esc(j['MFE_R'])}R · MAE ${esc(j['MAE_R'] || '')}R</span>` : ''}</td>
+      <td class="l muted" style="white-space:normal;min-width:220px;max-width:360px">${esc(j['복기해설'] || '–')}</td></tr>`).join('');
     $('journalTbl').innerHTML = `<table><thead><tr><th>#</th><th class="l">진입</th><th class="l">방향</th><th class="l">셋업</th>
       <th class="l">진입 구간 근거</th><th class="l">보조 근거</th><th class="l">15분</th><th class="l">1시간</th><th>손절폭</th><th>T1까지</th>
-      <th class="l">결과</th><th>손익</th><th>R</th><th class="l">경제 일정</th></tr></thead><tbody>${rows}</tbody></table>`;
+      <th class="l">결과</th><th>손익</th><th>R</th><th class="l">경제 일정</th><th class="l">원인 태그</th><th class="l">복기 해설 (Gemini · 공부용)</th></tr></thead><tbody>${rows}</tbody></table>`;
     const n = journal.length, stops = journal.filter(j => j['마지막청산'] === '손절').length;
     $('jrnSub').textContent = `${n}건 · 손절 ${stops}건 (${(stops / n * 100).toFixed(0)}%)`;
   }
@@ -742,8 +756,37 @@
       <div style="height:10px"></div><table><thead>${head('날짜')}</thead><tbody>${agg(d => d).slice(0, 14).map(row).join('')}</tbody></table>`;
   }
 
+  // ---------- 이벤트 회피 (status.json 에 event_block·upcoming_events 가 없으면 카드를 숨김) ----------
+  function renderEvents() {
+    const eb = S && S.event_block, up = (S && Array.isArray(S.upcoming_events)) ? S.upcoming_events : [];
+    const bl = (S && Array.isArray(S.event_blocked_signals)) ? S.event_blocked_signals : [];
+    if (!eb && !up.length) { $('evCard').hidden = true; return; }
+    $('evCard').hidden = false;
+    const left = s => { const m = Math.max(0, Math.round((kstTs(s) - nowKst()) / 60)); return m >= 60 ? `${Math.floor(m / 60)}시간 ${m % 60}분` : `${m}분`; };
+    let h = '';
+    if (eb && eb.active) {
+      h += `<div class="pos-head" style="font-size:14px"><span class="badge b-red">⛔ 신규 진입 금지</span>
+        <span>${esc((eb.coins || []).join('·'))}</span></div>
+        <div class="note" style="margin:0">${esc(eb.name || '')} · ${esc(String(eb.start || '').slice(5, 16))} ~ ${esc(String(eb.until || '').slice(11, 16))}
+        · <b style="color:var(--up)">남은 ${left(eb.until)}</b> · 열린 포지션은 그대로 관리</div>`;
+    } else if (eb && eb.enabled) {
+      h += `<div class="pos-head" style="font-size:14px"><span class="badge b-ok">✅ 회피 창 없음</span><span class="muted" style="font-size:12px;font-weight:500">진입 가능</span></div>`;
+    } else {
+      h += `<div class="pos-head" style="font-size:14px"><span class="badge b-none">이벤트 회피 꺼짐</span><span class="muted" style="font-size:12px;font-weight:500">일정 기록만</span></div>`;
+    }
+    h += up.length ? `<ul class="evlist">${up.slice(0, 5).map(u => `<li><span class="t">${esc(String(u.time || '').slice(5, 16))}</span>
+        <span style="flex:1">${esc(u.name)} <span class="muted">· ${esc(u.coins || 'ALL')} · 창 ${esc(String(u.window_start || '').slice(11, 16))}~${esc(String(u.window_end || '').slice(11, 16))}</span>
+        ${/^https?:\/\//.test(u.source || '') ? ` <a href="${esc(u.source)}" target="_blank" rel="noopener">근거</a>` : ''}</span></li>`).join('')}</ul>`
+      : '<div class="note">다가오는 고영향(high) 일정 없음</div>';
+    if (bl.length) h += `<div class="note">최근 막힌 신호: ${bl.slice(-3).reverse().map(b => `${esc(String(b.time || '').slice(5, 16))} ${esc(b.coin)} ${esc(b.side)} ${esc(b.setup)}`).join(' / ')}</div>`;
+    $('evBody').innerHTML = h;
+    $('evSub').textContent = eb && eb.active ? '진행 중' : `다가오는 일정 ${up.length}건`;
+  }
+  setInterval(() => { try { if (S) renderEvents(); } catch (e) {} }, 30000);
+
   function renderAll() {
     if (!S) return;
+    try { renderEvents(); } catch (e) { $('evCard').hidden = true; }   // 새 항목 표시가 실패해도 나머지 화면은 그대로
     renderAge(); renderPosition(); renderKpis();
     try { renderMM(); } catch (e) { $('mmCard').hidden = true; }   // 새 항목 표시가 실패해도 나머지 화면은 그대로
     renderChart(); renderEquity(); renderTrades(); renderPeriods(); renderMTF();
