@@ -79,5 +79,15 @@
   "eventBeforeMin": 30,
   "eventAfterMin": 15,
   "_그림자 장부": "본 장부와 별도 규칙·별도 파일(ledger/shadow/이름/)로 나란히 계산하는 가상 장부. 알림 없음. 코인마다 독립 계좌. enabled 가 true 인 항목만 계산. params 는 위 본 설정을 덮어쓸 값. start_time 이 null 이면 첫 실행 시각으로 채워짐. 비어 있으면 본 장부만 계산(기존과 같음).",
-  "shadow_ledgers": []
+  "shadow_ledgers": [
+    {
+      "name": "baseline_v141_5m",
+      "enabled": true,
+      "description": "기준선: 현재 규칙(v1.4.1, 5분봉)을 BTC·ETH·XRP·SOL에 그대로 적용. 자금 관리 끔(1R 0.5% 고정, 일일 한도·목표·첫 승 절반·출금 없음). 나중에 후보 규칙과 같은 기간·같은 기준으로 비교하기 위한 전진 기록.",
+      "markets": ["KRW-BTC", "KRW-ETH", "KRW-XRP", "KRW-SOL"],
+      "start_time": null,
+      "initial_capital": 1000000,
+      "params": {"slipMode": "tick", "riskPct": 0.5, "redPct": 0.5, "dayTargetP": 0, "firstWinHalf": false, "withdrawPct": 0, "dayLossP": 100, "maxConsec": 1000}
+    }
+  ]
 }
