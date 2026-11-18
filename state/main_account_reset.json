@@ -1,0 +1,9 @@
+{
+  "profile": "baseline_v141_5m_shared_1m_v1",
+  "reset_id": "a28fac209ea549f084df60b65d349a38",
+  "requested_at": "2026-11-18T19:20:46.518398+09:00",
+  "effective_from": "2026-11-18 19:25",
+  "account_structure": "shared",
+  "capital_total": 1000000,
+  "backup": "C:\\Users\\송민제\\Documents\\ClaudeWork\\backups\\main-baseline-reset-20261118-192046-a28fac20"
+}

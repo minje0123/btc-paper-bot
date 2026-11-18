@@ -636,8 +636,9 @@ def build_status(cfg, P, R, start_time, primary, used, now):
     multi = "positions" in R
     return dict(
         mode="가상 매매(paper) — 실제 주문 없음",
-        rules="원칙 v1.4.1 + 쉽알남 자금 관리(v1.4.1-mm)",
-        account_type="단타 계좌 (쉽알남 단타:스윙:장투 = 2:3:5 중 2)",
+        rules=cfg.get("rules_label", "원칙 v1.4.1 + 쉽알남 자금 관리(v1.4.1-mm)"),
+        account_type=cfg.get("account_type_label", "단타 계좌 (쉽알남 단타:스윙:장투 = 2:3:5 중 2)"),
+        account_note=cfg.get("account_note", "수익 일부는 매주 장투 계좌로 출금한 것으로 가정합니다."),
         start_time=start_time.strftime(TFMT),
         initial_capital=eq0,
         balance=round(R["final"]),                       # 거래 계좌 잔고(실현 기준, 출금 뺀 값) = 거래 시드
@@ -697,11 +698,11 @@ def write_account(status, R):
     p = status["position"]
     L = []
     mk = status.get("markets") or ["BTC"]
-    L.append(f"# {'·'.join(mk)} 5분봉 가상 매매 계좌 (원칙 v1.4.1 + 쉽알남 자금 관리)\n")
+    L.append(f"# {'·'.join(mk)} 5분봉 가상 매매 계좌 ({status['rules']})\n")
     np_ = len(status.get("positions") or ([p] if p else []))
     L.append(f"## 포지션: {('있음 ' + str(np_) + '개' if np_ > 1 else '있음') if p else '없음'}\n")
     L.append("> ⚠️ 실제 돈을 쓰지 않는 **가상 매매** 기록입니다. 거래소에 주문하지 않습니다.\n")
-    L.append(f"> 계좌 성격: **{status['account_type']}**. 수익 일부는 매주 장투 계좌로 '출금'한 것으로 칩니다.\n")
+    L.append(f"> 계좌 성격: **{status['account_type']}**. {status.get('account_note', '')}\n")
     L.append(f"- 업데이트: {status['updated_at']} (KST) · 마지막 봉: {status['last_bar_time']} · "
              f"현재가 {status['last_price']:,}원 · 데이터: {SOURCE_KO.get(status['data_source'], status['data_source'])}"
              if status["last_price"] else f"- 업데이트: {status['updated_at']}")

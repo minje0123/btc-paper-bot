@@ -1,56 +1,57 @@
 {
   "mode": "가상 매매(paper) — 실제 주문 없음",
-  "rules": "원칙 v1.4.1 + 쉽알남 자금 관리(v1.4.1-mm)",
-  "account_type": "단타 계좌 (쉽알남 단타:스윙:장투 = 2:3:5 중 2)",
-  "start_time": "2026-11-16 13:40:00",
+  "rules": "기준선 v1.4.1 5분봉 · 100만 원 공동 계좌",
+  "account_type": "BTC·ETH·SOL·XRP 공유 가상 계좌 · 기준선 매매 규칙",
+  "account_note": "뉴스 차단·일일 목표 보호·첫 승 절반·주간 출금 비활성. 그림자는 코인별 독립, 본 장부는 100만 원 공유.",
+  "start_time": "2026-11-18 19:25:00",
   "initial_capital": 1000000.0,
-  "balance": 951991,
-  "trading_seed": 951991,
-  "risk_per_trade_won": 4760,
+  "balance": 1000000,
+  "trading_seed": 1000000,
+  "risk_per_trade_won": 5000,
   "risk_pct": 0.5,
   "reduced_risk_pct": 0.5,
   "withdrawn_total": 0,
-  "withdraw_pct": 30.0,
-  "first_win_half": true,
+  "withdraw_pct": 0.0,
+  "first_win_half": false,
   "withdrawals": [],
-  "total_value": 951991,
+  "total_value": 1000000,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 951991,
-  "realized_pnl": -48009,
+  "equity": 1000000,
+  "realized_pnl": 0,
   "unrealized_pnl": 0,
-  "trades_count": 14,
-  "win_rate": 28.6,
-  "avg_R": -0.681,
-  "max_drawdown_pct": 5.02,
+  "trades_count": 0,
+  "win_rate": 0.0,
+  "avg_R": 0.0,
+  "max_drawdown_pct": 0.0,
   "has_position": false,
   "position": null,
   "pending_entry": null,
   "pending_close": null,
   "today": {
-    "date": "2026-11-18",
-    "realized_pnl": -35560,
-    "consecutive_losses": 3,
+    "date": null,
+    "realized_pnl": 0,
+    "consecutive_losses": 0,
     "no_new_entries": true,
-    "reason": "3연속 손절",
-    "start_equity": 983105,
-    "target_pct": 1.0,
-    "target_amount": 9831,
+    "reason": "새 시작 시각 이후 첫 봇 실행 대기",
+    "start_equity": 1000000,
+    "target_pct": 0.0,
+    "target_amount": null,
     "target_reached": false,
     "loss_limit_pct": null,
-    "max_consec": 3,
+    "max_consec": 1000,
     "loss_limit_on": false,
     "loss_limit_amount": null,
-    "first_trade_result": "손실",
-    "next_size_factor": 0.0,
-    "next_size_mode": "진입 금지(하루 한도)",
-    "next_risk_won": 0
+    "first_trade_result": null,
+    "next_size_factor": 1.0,
+    "next_size_mode": "보통",
+    "next_risk_won": 5000
   },
-  "last_bar_time": "2026-11-18 19:15:00",
-  "last_price": 87490000,
-  "data_source": "upbit",
-  "data_source_this_run": "upbit",
-  "updated_at": "2026-11-18 19:20:25",
+  "last_bar_time": null,
+  "last_price": null,
+  "data_source": "not_started",
+  "data_source_this_run": "not_started",
+  "updated_at": "2026-11-18 19:20:46",
   "warnings": [],
   "markets": [
     "BTC",
@@ -59,176 +60,22 @@
     "XRP"
   ],
   "max_open_positions": 4,
-  "max_open_risk_pct": 2.0,
+  "max_open_risk_pct": 0.0,
   "open_positions_count": 0,
   "open_risk_won": 0,
   "open_risk_pct": 0.0,
   "positions": [],
   "pending_entries": [],
-  "last_prices": {
-    "BTC": 87490000,
-    "ETH": 2450000,
-    "SOL": 101500,
-    "XRP": 1358.0
-  },
-  "last_bar_times": {
-    "BTC": "2026-11-18 19:15:00",
-    "ETH": "2026-11-18 19:15:00",
-    "SOL": "2026-11-18 19:15:00",
-    "XRP": "2026-11-18 19:15:00"
-  },
-  "independent_clusters": 14,
-  "stop_decomp": {
-    "plan_R": -1.0,
-    "gap_R": 0.0,
-    "slip_R": -0.0402,
-    "fee_entry_R": -0.086,
-    "fee_exit_R": -0.0858,
-    "sum_R": -1.212,
-    "R": -1.212,
-    "risk_ratio": 1.0452,
-    "n": 10
-  },
-  "r_definition": "R = 거래 손익(수수료 포함) ÷ (수량 × |진입 체결가 − 최초 손절가|)",
-  "event_block": {
-    "enabled": true,
-    "active": false,
-    "name": null,
-    "coins": [],
-    "start": null,
-    "until": null
-  },
-  "upcoming_events": [
-    {
-      "time": "2026-11-19 04:00:00",
-      "name": "[일정] FOMC Meeting Minutes (USD)",
-      "coins": "ALL",
-      "window_start": "2026-11-19 03:30:00",
-      "window_end": "2026-11-19 04:30:00",
-      "added_at": "2026-11-17 18:30:20",
-      "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
-    }
-  ],
-  "event_blocked_signals": [
-    {
-      "time": "2026-11-17 19:05:00",
-      "coin": "ETH",
-      "side": "숏",
-      "setup": "B+",
-      "reason": "이벤트 회피([돌발] 해킹/익스플로잇 (ETH): Binance hacker moves $63 million in stolen ether a)"
-    },
-    {
-      "time": "2026-11-17 22:50:00",
-      "coin": "XRP",
-      "side": "롱",
-      "setup": "구간B",
-      "reason": "이벤트 회피([일정] Core Retail Sales m/m · Retail Sales m/m (USD))"
-    }
-  ],
-  "event_data": {
-    "source": "feeds",
-    "schedule": "OK",
-    "breaking": "OK",
-    "last_success_schedule": "2026-11-18 18:35:20",
-    "last_success_breaking": "2026-11-18 19:05:20",
-    "upcoming": [
-      {
-        "time": "2026-11-19 04:00:00",
-        "name": "[일정] FOMC Meeting Minutes (USD)",
-        "importance": "high",
-        "coins": "ALL",
-        "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
-      },
-      {
-        "time": "2026-11-19 22:30:00",
-        "name": "[일정] Philly Fed Manufacturing Index · Unemployment Claims (USD)",
-        "importance": "medium",
-        "coins": "ALL",
-        "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
-      },
-      {
-        "time": "2026-11-21 00:00:00",
-        "name": "[일정] Revised UoM Consumer Sentiment · Revised UoM Inflation Expectations (USD)",
-        "importance": "medium",
-        "coins": "ALL",
-        "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
-      }
-    ],
-    "last_attempt_schedule": "2026-11-18 18:35:20",
-    "last_attempt_breaking": "2026-11-18 19:05:20",
-    "schedule_items_last": 8,
-    "breaking_items_last": 75,
-    "schedule_error": null,
-    "breaking_error": null,
-    "stale_rule": "정기 일정 24시간·돌발 120분 넘게 성공 없으면 STALE, 한 번도 성공 없으면 UNKNOWN",
-    "sources": {
-      "ff_thisweek": {
-        "ok": true,
-        "last_success": "2026-11-18 18:35:20",
-        "count": 8,
-        "error": null,
-        "optional": false
-      },
-      "ff_nextweek": {
-        "ok": false,
-        "last_success": null,
-        "count": null,
-        "error": "HTTP 404",
-        "optional": true
-      },
-      "coindesk": {
-        "ok": true,
-        "last_success": "2026-11-18 19:05:20",
-        "count": 25,
-        "error": null,
-        "optional": false
-      },
-      "cointelegraph": {
-        "ok": true,
-        "last_success": "2026-11-18 19:05:20",
-        "count": 30,
-        "error": null,
-        "optional": false
-      },
-      "theblock": {
-        "ok": true,
-        "last_success": "2026-11-18 19:05:20",
-        "count": 20,
-        "error": null,
-        "optional": false
-      }
-    }
-  },
-  "news_v1": {
-    "rules_version": "news_rules_v1.0",
-    "table_hash": "59c0f957d0f6",
-    "candidate_note": "후보값(미검증) — PREREG_news 측정 전. 확정 기준으로 쓰지 않음",
-    "active_from": "2026-11-17 19:50:21",
-    "collector": {
-      "state": "OK",
-      "mode": "shared(event_feeds)",
-      "last_success": "2026-11-18 19:05:20",
-      "error": null
-    },
-    "extractor": {
-      "state": "FAIL",
-      "last_success": null,
-      "last_error": "TimeoutError: The read operation timed out",
-      "queue": 0,
-      "backoff_until": null
-    },
-    "unmapped_count": 0,
-    "last_decision": {
-      "decided_at": "2026-11-18 17:05:21",
-      "title": "Google finds self-running AI hacking tool with Russian comments in its files",
-      "decision": "EXTRACTOR_FAILED",
-      "rows": null,
-      "targets": null,
-      "effective_at": null,
-      "window_end": null,
-      "rules_version": "news_rules_v1.0",
-      "diff": "둘 다 차단 없음"
-    },
-    "holds_active": 0
+  "last_prices": {},
+  "last_bar_times": {},
+  "reset": {
+    "profile": "baseline_v141_5m_shared_1m_v1",
+    "reset_id": "a28fac209ea549f084df60b65d349a38",
+    "requested_at": "2026-11-18T19:20:46.518398+09:00",
+    "effective_from": "2026-11-18 19:25",
+    "account_structure": "shared",
+    "capital_total": 1000000,
+    "state": "WAITING_FIRST_RUN",
+    "note": "새 시작 시각 이후의 실제 봇 재계산 전 초기화 상태. 실행·원격 반영 완료를 뜻하지 않음."
   }
 }
