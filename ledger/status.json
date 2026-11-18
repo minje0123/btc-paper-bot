@@ -17,9 +17,9 @@
   "total_value": 1006701,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 1013613,
+  "equity": 1012289,
   "realized_pnl": 6701,
-  "unrealized_pnl": 6912,
+  "unrealized_pnl": 5587,
   "trades_count": 5,
   "win_rate": 60.0,
   "avg_R": 0.238,
@@ -44,8 +44,8 @@
     "risk_money": 4969,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 99000.0,
-    "unrealized_pnl": 4414,
+    "last_price": 98750.0,
+    "unrealized_pnl": 5334,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,15 +69,12 @@
     "next_size_mode": "보통",
     "next_risk_won": 5034
   },
-  "last_bar_time": "2026-11-19 01:25:00",
-  "last_price": 85223000,
+  "last_bar_time": "2026-11-19 01:30:00",
+  "last_price": 85234000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-19 01:31:22",
-  "warnings": [
-    "Gemini 복기 해설 실패(202611182335S): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-    "Gemini 복기 해설 실패(ETH-202611190005S): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
-  ],
+  "updated_at": "2026-11-19 01:35:47",
+  "warnings": [],
   "markets": [
     "BTC",
     "ETH",
@@ -109,8 +106,8 @@
       "risk_money": 4969,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 99000.0,
-      "unrealized_pnl": 4414,
+      "last_price": 98750.0,
+      "unrealized_pnl": 5334,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -133,24 +130,24 @@
       "risk_money": 4985,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 1318.0,
-      "unrealized_pnl": 2498,
+      "last_price": 1321.0,
+      "unrealized_pnl": 254,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 85223000,
-    "ETH": 2389000,
-    "SOL": 99000.0,
-    "XRP": 1318.0
+    "BTC": 85234000,
+    "ETH": 2385000,
+    "SOL": 98750.0,
+    "XRP": 1321.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-19 01:25:00",
-    "ETH": "2026-11-19 01:25:00",
-    "SOL": "2026-11-19 01:25:00",
-    "XRP": "2026-11-19 01:25:00"
+    "BTC": "2026-11-19 01:30:00",
+    "ETH": "2026-11-19 01:30:00",
+    "SOL": "2026-11-19 01:30:00",
+    "XRP": "2026-11-19 01:30:00"
   },
   "independent_clusters": 5,
   "stop_decomp": {
@@ -274,13 +271,13 @@
       "state": "FAIL",
       "last_success": null,
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "queue": 0,
       "backoff_until": null
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-18 17:05:21",
-      "title": "Google finds self-running AI hacking tool with Russian comments in its files",
+      "decided_at": "2026-11-19 01:35:20",
+      "title": "Crypto Long & Short: Crypto exchanges shouldn’t double as the vault",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,

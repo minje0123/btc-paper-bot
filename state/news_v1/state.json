@@ -98,23 +98,23 @@
    "fails": 3
   },
   "b91c67bf575e": {
-   "status": "queued",
-   "fails": 2
+   "status": "failed",
+   "fails": 3
   }
  },
  "extractor": {
-  "queue": 1,
-  "last_attempt": "2026-11-19 01:30:20",
+  "queue": 0,
+  "last_attempt": "2026-11-19 01:35:20",
   "state": "FAIL",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 3.22,
+ "elapsed_s": 7.42,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-18 17:05:21",
-  "title": "Google finds self-running AI hacking tool with Russian comments in its files",
+  "decided_at": "2026-11-19 01:35:20",
+  "title": "Crypto Long & Short: Crypto exchanges shouldn’t double as the vault",
   "decision": "EXTRACTOR_FAILED",
   "rows": null,
   "targets": null,
