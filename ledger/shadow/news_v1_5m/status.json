@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 1002068,
-      "equity": 1010527,
+      "equity": 1010596,
       "realized_pnl": 2068,
       "withdrawn_total": 0,
       "trades_count": 2,
@@ -55,13 +55,13 @@
         "risk_money": 5010,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 85316000,
-        "unrealized_pnl": 8460,
+        "last_price": 85311000,
+        "unrealized_pnl": 8529,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 04:35:00",
+      "last_bar_time": "2026-11-19 04:40:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": 8201,
@@ -105,7 +105,7 @@
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 04:35:00",
+      "last_bar_time": "2026-11-19 04:40:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": -2900,
@@ -129,7 +129,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 04:35:00",
+      "last_bar_time": "2026-11-19 04:40:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": -4264,
@@ -141,7 +141,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 956096,
-      "equity": 958219,
+      "equity": 958042,
       "realized_pnl": -43904,
       "withdrawn_total": 0,
       "trades_count": 13,
@@ -167,13 +167,13 @@
         "risk_money": 4780,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 99600,
-        "unrealized_pnl": 2123,
+        "last_price": 99650,
+        "unrealized_pnl": 1946,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 04:35:00",
+      "last_bar_time": "2026-11-19 04:40:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": 0,
@@ -182,7 +182,7 @@
       }
     }
   },
-  "updated_at": "2026-11-19 04:40:24",
+  "updated_at": "2026-11-19 04:45:40",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 29,
@@ -206,14 +206,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-19 04:10:21",
+      "last_success": "2026-11-19 04:45:20",
       "error": null
     },
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 0,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 1,
       "backoff_until": null
     },
     "unmapped_count": 0,
