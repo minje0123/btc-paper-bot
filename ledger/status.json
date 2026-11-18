@@ -46,11 +46,11 @@
     "next_size_mode": "진입 금지(하루 한도)",
     "next_risk_won": 0
   },
-  "last_bar_time": "2026-11-18 17:15:00",
-  "last_price": 87600000,
+  "last_bar_time": "2026-11-18 17:20:00",
+  "last_price": 87734000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-18 17:20:24",
+  "updated_at": "2026-11-18 17:25:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -66,16 +66,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 87600000,
-    "ETH": 2452000,
-    "SOL": 101300,
-    "XRP": 1352.0
+    "BTC": 87734000,
+    "ETH": 2458000,
+    "SOL": 101500,
+    "XRP": 1364.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-18 17:15:00",
-    "ETH": "2026-11-18 17:15:00",
-    "SOL": "2026-11-18 17:15:00",
-    "XRP": "2026-11-18 17:15:00"
+    "BTC": "2026-11-18 17:20:00",
+    "ETH": "2026-11-18 17:20:00",
+    "SOL": "2026-11-18 17:20:00",
+    "XRP": "2026-11-18 17:20:00"
   },
   "independent_clusters": 14,
   "stop_decomp": {
