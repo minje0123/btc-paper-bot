@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 16:55:00",
+      "last_bar_time": "2026-11-18 17:00:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": 0,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 16:55:00",
+      "last_bar_time": "2026-11-18 17:00:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -5433,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 16:55:00",
+      "last_bar_time": "2026-11-18 17:00:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -21570,
@@ -113,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 16:55:00",
+      "last_bar_time": "2026-11-18 17:00:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -30340,
@@ -122,7 +122,7 @@
       }
     }
   },
-  "updated_at": "2026-11-18 17:00:30",
+  "updated_at": "2026-11-18 17:05:41",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 21,
@@ -152,14 +152,14 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 0,
       "backoff_until": null
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-18 03:00:21",
-      "title": "Fed’s Waller cites Binance hack in warning over tokenized finance",
+      "decided_at": "2026-11-18 17:05:21",
+      "title": "Google finds self-running AI hacking tool with Russian comments in its files",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
@@ -170,6 +170,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-18 17:05:21",
+        "title": "Google finds self-running AI hacking tool with Russian comments in its files",
+        "url": "https://www.coindesk.com/tech/2026/11/18/google-finds-self-running-ai-hacking-tool-with-russian-comments-in-its-files",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "EXTRACTOR_FAILED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-18 03:00:21",
         "title": "Fed’s Waller cites Binance hack in warning over tokenized finance",
