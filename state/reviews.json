@@ -84,6 +84,18 @@
       "text": "상위 시간대와 15분봉의 하락 추세가 일치하고 변동성이 높은 구간에서 스윙레벨과 오더블록을 활용한 진입 방향이 정확히 맞아떨어져 수익을 거둘 수 있었습니다. 다만 최대 유리한 가격(MFE 3.522R)에 비해 실제 청산 결과가 낮으므로, 다음에는 추세 연장 구간에서 거래량 급증이나 모멘텀 둔화 시 분할 익절 타이밍을 더 세밀하게 조절할지 점검해봐야 합니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-18 23:40:20"
+    },
+    "202611182335S": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
+      "at": "2026-11-19 01:30:20"
+    },
+    "ETH-202611190005S": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
+      "at": "2026-11-19 01:30:20"
     }
   },
   "model": "gemini-flash-lite-latest",
