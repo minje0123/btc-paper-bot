@@ -39,9 +39,16 @@
       "max_drawdown_pct": 0.87,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "A",
+        "signal_time": "2026-11-19 02:35:00",
+        "stop": 86319138.0,
+        "t1": 85007000.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-19 02:30:00",
+      "last_bar_time": "2026-11-19 02:35:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": 8201,
@@ -65,7 +72,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 02:30:00",
+      "last_bar_time": "2026-11-19 02:35:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": -2900,
@@ -89,7 +96,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 02:30:00",
+      "last_bar_time": "2026-11-19 02:35:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": -4264,
@@ -101,7 +108,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 956096,
-      "equity": 954326,
+      "equity": 956096,
       "realized_pnl": -43904,
       "withdrawn_total": 0,
       "trades_count": 13,
@@ -127,13 +134,13 @@
         "risk_money": 4780,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 100700,
-        "unrealized_pnl": -1770,
+        "last_price": 100200,
+        "unrealized_pnl": 0,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 02:30:00",
+      "last_bar_time": "2026-11-19 02:35:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": 0,
@@ -142,7 +149,7 @@
       }
     }
   },
-  "updated_at": "2026-11-19 02:35:25",
+  "updated_at": "2026-11-19 02:40:25",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 29,
@@ -298,7 +305,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 33,
+    "signals": 34,
     "blocked": 1,
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,
