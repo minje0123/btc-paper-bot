@@ -17,9 +17,9 @@
   "total_value": 993855,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 991158,
+  "equity": 990240,
   "realized_pnl": -6145,
-  "unrealized_pnl": -2697,
+  "unrealized_pnl": -3615,
   "trades_count": 3,
   "win_rate": 33.3,
   "avg_R": -0.432,
@@ -44,19 +44,31 @@
     "risk_money": 4953,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 86461000,
-    "unrealized_pnl": -1593,
+    "last_price": 86551000,
+    "unrealized_pnl": -2511,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-ETH",
+    "coin": "ETH",
+    "side": "숏",
+    "setup": "구간",
+    "grade": "B",
+    "signal_time": "2026-11-19 00:00:00",
+    "signal_close": 2406000,
+    "stop": 2421210,
+    "t1": 2383185,
+    "qty": 0.3267,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
-    "date": "2026-11-18",
-    "realized_pnl": -6145,
+    "date": "2026-11-19",
+    "realized_pnl": 0,
     "consecutive_losses": 0,
     "no_new_entries": false,
     "reason": null,
-    "start_equity": 1000000,
+    "start_equity": 990240,
     "target_pct": 0.0,
     "target_amount": null,
     "target_reached": false,
@@ -64,16 +76,16 @@
     "max_consec": 1000,
     "loss_limit_on": false,
     "loss_limit_amount": null,
-    "first_trade_result": "손실",
+    "first_trade_result": null,
     "next_size_factor": 1.0,
     "next_size_mode": "보통",
     "next_risk_won": 4969
   },
-  "last_bar_time": "2026-11-18 23:55:00",
-  "last_price": 86461000,
+  "last_bar_time": "2026-11-19 00:00:00",
+  "last_price": 86551000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-19 00:00:25",
+  "updated_at": "2026-11-19 00:05:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -83,9 +95,9 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 2,
-  "open_risk_won": 9922,
-  "open_risk_pct": 0.998,
+  "open_positions_count": 3,
+  "open_risk_won": 14891,
+  "open_risk_pct": 1.498,
   "positions": [
     {
       "market": "KRW-BTC",
@@ -106,8 +118,8 @@
       "risk_money": 4953,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 86461000,
-      "unrealized_pnl": -1593,
+      "last_price": 86551000,
+      "unrealized_pnl": -2511,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -136,18 +148,34 @@
       "pending_close": null
     }
   ],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-ETH",
+      "coin": "ETH",
+      "side": "숏",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-19 00:00:00",
+      "signal_close": 2406000,
+      "stop": 2421210,
+      "t1": 2383185,
+      "qty": 0.3267,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4969,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 86461000,
-    "ETH": 2410000,
+    "BTC": 86551000,
+    "ETH": 2406000,
     "SOL": 100500,
-    "XRP": 1339.0
+    "XRP": 1336.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-18 23:55:00",
-    "ETH": "2026-11-18 23:55:00",
-    "SOL": "2026-11-18 23:55:00",
-    "XRP": "2026-11-18 23:55:00"
+    "BTC": "2026-11-19 00:00:00",
+    "ETH": "2026-11-19 00:00:00",
+    "SOL": "2026-11-19 00:00:00",
+    "XRP": "2026-11-19 00:00:00"
   },
   "independent_clusters": 3,
   "stop_decomp": {
