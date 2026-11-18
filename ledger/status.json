@@ -46,11 +46,11 @@
     "next_size_mode": "진입 금지(하루 한도)",
     "next_risk_won": 0
   },
-  "last_bar_time": "2026-11-18 12:25:00",
-  "last_price": 87321000,
+  "last_bar_time": "2026-11-18 12:30:00",
+  "last_price": 87469000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-18 12:30:26",
+  "updated_at": "2026-11-18 12:35:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -66,16 +66,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 87321000,
-    "ETH": 2443000,
-    "SOL": 101500,
-    "XRP": 1324.0
+    "BTC": 87469000,
+    "ETH": 2451000,
+    "SOL": 101800,
+    "XRP": 1327.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-18 12:25:00",
-    "ETH": "2026-11-18 12:25:00",
-    "SOL": "2026-11-18 12:25:00",
-    "XRP": "2026-11-18 12:25:00"
+    "BTC": "2026-11-18 12:30:00",
+    "ETH": "2026-11-18 12:30:00",
+    "SOL": "2026-11-18 12:30:00",
+    "XRP": "2026-11-18 12:30:00"
   },
   "independent_clusters": 14,
   "stop_decomp": {
@@ -129,7 +129,7 @@
     "source": "feeds",
     "schedule": "OK",
     "breaking": "OK",
-    "last_success_schedule": "2026-11-18 06:30:21",
+    "last_success_schedule": "2026-11-18 12:35:20",
     "last_success_breaking": "2026-11-18 12:20:21",
     "upcoming": [
       {
@@ -154,7 +154,7 @@
         "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
       }
     ],
-    "last_attempt_schedule": "2026-11-18 06:30:21",
+    "last_attempt_schedule": "2026-11-18 12:35:20",
     "last_attempt_breaking": "2026-11-18 12:20:21",
     "schedule_items_last": 8,
     "breaking_items_last": 75,
@@ -164,7 +164,7 @@
     "sources": {
       "ff_thisweek": {
         "ok": true,
-        "last_success": "2026-11-18 06:30:21",
+        "last_success": "2026-11-18 12:35:20",
         "count": 8,
         "error": null,
         "optional": false
