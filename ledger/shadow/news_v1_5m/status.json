@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 11:25:00",
+      "last_bar_time": "2026-11-18 11:30:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": 0,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 11:25:00",
+      "last_bar_time": "2026-11-18 11:30:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -5433,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 11:25:00",
+      "last_bar_time": "2026-11-18 11:30:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -12822,
@@ -101,14 +101,14 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 984880,
-      "equity": 987556,
+      "equity": 983981,
       "realized_pnl": -15120,
       "withdrawn_total": 0,
       "trades_count": 7,
       "win_rate": 42.9,
       "avg_R": -0.418,
       "sum_R": -2.929,
-      "max_drawdown_pct": 1.75,
+      "max_drawdown_pct": 1.79,
       "has_position": true,
       "position": {
         "id": "202611181120L",
@@ -127,13 +127,13 @@
         "risk_money": 4924,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 101500,
-        "unrealized_pnl": 2676,
+        "last_price": 101100,
+        "unrealized_pnl": -899,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-18 11:25:00",
+      "last_bar_time": "2026-11-18 11:30:00",
       "today": {
         "date": "2026-11-18",
         "realized_pnl": -13776,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-18 11:30:25",
+  "updated_at": "2026-11-18 11:35:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 16,
