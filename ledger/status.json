@@ -46,11 +46,11 @@
     "next_size_mode": "진입 금지(하루 한도)",
     "next_risk_won": 0
   },
-  "last_bar_time": "2026-11-18 16:45:00",
-  "last_price": 87675000,
+  "last_bar_time": "2026-11-18 16:50:00",
+  "last_price": 87901000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-18 16:50:25",
+  "updated_at": "2026-11-18 16:55:41",
   "warnings": [],
   "markets": [
     "BTC",
@@ -66,16 +66,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 87675000,
-    "ETH": 2460000,
-    "SOL": 101700,
-    "XRP": 1358.0
+    "BTC": 87901000,
+    "ETH": 2462000,
+    "SOL": 101800,
+    "XRP": 1361.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-18 16:45:00",
-    "ETH": "2026-11-18 16:45:00",
-    "SOL": "2026-11-18 16:45:00",
-    "XRP": "2026-11-18 16:45:00"
+    "BTC": "2026-11-18 16:50:00",
+    "ETH": "2026-11-18 16:50:00",
+    "SOL": "2026-11-18 16:50:00",
+    "XRP": "2026-11-18 16:50:00"
   },
   "independent_clusters": 14,
   "stop_decomp": {
@@ -130,7 +130,7 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-18 12:35:20",
-    "last_success_breaking": "2026-11-18 16:25:20",
+    "last_success_breaking": "2026-11-18 16:55:21",
     "upcoming": [
       {
         "time": "2026-11-19 04:00:00",
@@ -155,7 +155,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-18 12:35:20",
-    "last_attempt_breaking": "2026-11-18 16:25:20",
+    "last_attempt_breaking": "2026-11-18 16:55:21",
     "schedule_items_last": 8,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -178,21 +178,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-18 16:25:20",
+        "last_success": "2026-11-18 16:55:21",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-18 16:25:20",
+        "last_success": "2026-11-18 16:55:21",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-18 16:25:20",
+        "last_success": "2026-11-18 16:55:21",
         "count": 20,
         "error": null,
         "optional": false
@@ -207,14 +207,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-18 16:25:20",
+      "last_success": "2026-11-18 16:55:21",
       "error": null
     },
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 0,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 1,
       "backoff_until": null
     },
     "unmapped_count": 0,
