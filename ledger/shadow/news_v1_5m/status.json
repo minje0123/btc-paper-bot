@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 1002068,
-      "equity": 1011962,
+      "equity": 1010527,
       "realized_pnl": 2068,
       "withdrawn_total": 0,
       "trades_count": 2,
@@ -55,13 +55,13 @@
         "risk_money": 5010,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 85212000,
-        "unrealized_pnl": 9895,
+        "last_price": 85316000,
+        "unrealized_pnl": 8460,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 04:45:00",
+      "last_bar_time": "2026-11-19 04:50:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": 8201,
@@ -73,7 +73,7 @@
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
       "balance": 994893,
-      "equity": 994548,
+      "equity": 993969,
       "realized_pnl": -5107,
       "withdrawn_total": 0,
       "trades_count": 6,
@@ -99,13 +99,13 @@
         "risk_money": 4974,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 2387000,
-        "unrealized_pnl": -345,
+        "last_price": 2389000,
+        "unrealized_pnl": -923,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 04:45:00",
+      "last_bar_time": "2026-11-19 04:50:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": -2900,
@@ -129,7 +129,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 04:45:00",
+      "last_bar_time": "2026-11-19 04:50:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": -4264,
@@ -173,7 +173,7 @@
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 04:45:00",
+      "last_bar_time": "2026-11-19 04:50:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": 0,
@@ -182,7 +182,7 @@
       }
     }
   },
-  "updated_at": "2026-11-19 04:50:25",
+  "updated_at": "2026-11-19 04:55:39",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 29,
@@ -212,14 +212,14 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 0,
       "backoff_until": null
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-19 01:35:20",
-      "title": "Crypto Long & Short: Crypto exchanges shouldn’t double as the vault",
+      "decided_at": "2026-11-19 04:55:20",
+      "title": "Binance obtains $6.5 billion freezing order from Abu Dhabi court in bid to recover stolen crypto",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
@@ -230,6 +230,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-19 04:55:20",
+        "title": "Binance obtains $6.5 billion freezing order from Abu Dhabi court in bid to recover stolen crypto",
+        "url": "https://www.theblock.co/news/business/2026-11-18-binance-freezing-court-order-adgm-crypto-october-hack-443491",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "EXTRACTOR_FAILED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-19 01:35:20",
         "title": "Crypto Long & Short: Crypto exchanges shouldn’t double as the vault",

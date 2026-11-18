@@ -17,9 +17,9 @@
   "total_value": 994564,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 1006985,
+  "equity": 1004982,
   "realized_pnl": -5436,
-  "unrealized_pnl": 12421,
+  "unrealized_pnl": 10418,
   "trades_count": 8,
   "win_rate": 50.0,
   "avg_R": -0.12,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4973
   },
-  "last_bar_time": "2026-11-19 04:45:00",
-  "last_price": 85212000,
+  "last_bar_time": "2026-11-19 04:50:00",
+  "last_price": 85316000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-19 04:50:25",
+  "updated_at": "2026-11-19 04:55:39",
   "warnings": [],
   "markets": [
     "BTC",
@@ -130,8 +130,8 @@
       "risk_money": 4973,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 85212000,
-      "unrealized_pnl": 9823,
+      "last_price": 85316000,
+      "unrealized_pnl": 8398,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -154,24 +154,24 @@
       "risk_money": 4973,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 2387000,
-      "unrealized_pnl": -345,
+      "last_price": 2389000,
+      "unrealized_pnl": -923,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 85212000,
-    "ETH": 2387000,
+    "BTC": 85316000,
+    "ETH": 2389000,
     "SOL": 99400.0,
-    "XRP": 1316.0
+    "XRP": 1317.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-19 04:45:00",
-    "ETH": "2026-11-19 04:45:00",
-    "SOL": "2026-11-19 04:45:00",
-    "XRP": "2026-11-19 04:45:00"
+    "BTC": "2026-11-19 04:50:00",
+    "ETH": "2026-11-19 04:50:00",
+    "SOL": "2026-11-19 04:50:00",
+    "XRP": "2026-11-19 04:50:00"
   },
   "independent_clusters": 7,
   "stop_decomp": {
@@ -284,14 +284,14 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 0,
       "backoff_until": null
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-19 01:35:20",
-      "title": "Crypto Long & Short: Crypto exchanges shouldn’t double as the vault",
+      "decided_at": "2026-11-19 04:55:20",
+      "title": "Binance obtains $6.5 billion freezing order from Abu Dhabi court in bid to recover stolen crypto",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
