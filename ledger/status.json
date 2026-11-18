@@ -17,9 +17,9 @@
   "total_value": 993883,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 994266,
+  "equity": 992737,
   "realized_pnl": -6117,
-  "unrealized_pnl": 383,
+  "unrealized_pnl": -1147,
   "trades_count": 1,
   "win_rate": 0.0,
   "avg_R": -1.376,
@@ -48,19 +48,7 @@
     "unrealized_pnl": 383,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
-  "pending_entry": {
-    "market": "KRW-SOL",
-    "coin": "SOL",
-    "side": "숏",
-    "setup": "구간",
-    "grade": "B",
-    "signal_time": "2026-11-18 22:20:00",
-    "signal_close": 100500,
-    "stop": 101151,
-    "t1": 99524.175,
-    "qty": 7.6387,
-    "note": "다음 봉 시가에 진입 예정"
-  },
+  "pending_entry": null,
   "pending_close": null,
   "today": {
     "date": "2026-11-18",
@@ -81,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4969
   },
-  "last_bar_time": "2026-11-18 22:20:00",
-  "last_price": 86738000,
+  "last_bar_time": "2026-11-18 22:25:00",
+  "last_price": 86840000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-18 22:25:24",
+  "updated_at": "2026-11-18 22:30:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -122,36 +110,44 @@
       "unrealized_pnl": 383,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
-    }
-  ],
-  "pending_entries": [
+    },
     {
       "market": "KRW-SOL",
       "coin": "SOL",
+      "id": "SOL-202611182225S",
       "side": "숏",
       "setup": "구간",
       "grade": "B",
-      "signal_time": "2026-11-18 22:20:00",
-      "signal_close": 100500,
+      "entry_time": "2026-11-18 22:25:00",
+      "entry": 100450,
       "stop": 101151,
+      "stop0": 101151,
       "t1": 99524.175,
+      "next_target": null,
       "qty": 7.6387,
-      "note": "다음 봉 시가에 진입 예정",
+      "qty_open": 7.6387,
+      "leverage": 0.77,
       "risk_money": 4969,
-      "risk_cut": false
+      "t1_done": false,
+      "realized_part": 0,
+      "last_price": 100600,
+      "unrealized_pnl": -1529,
+      "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
+      "pending_close": null
     }
   ],
+  "pending_entries": [],
   "last_prices": {
-    "BTC": 86738000,
+    "BTC": 86840000,
     "ETH": 2433000,
-    "SOL": 100500,
-    "XRP": 1334.0
+    "SOL": 100600,
+    "XRP": 1335.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-18 22:20:00",
-    "ETH": "2026-11-18 22:20:00",
-    "SOL": "2026-11-18 22:20:00",
-    "XRP": "2026-11-18 22:20:00"
+    "BTC": "2026-11-18 22:25:00",
+    "ETH": "2026-11-18 22:25:00",
+    "SOL": "2026-11-18 22:25:00",
+    "XRP": "2026-11-18 22:25:00"
   },
   "independent_clusters": 1,
   "stop_decomp": {
