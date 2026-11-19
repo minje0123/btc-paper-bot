@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 02:35:00",
+      "last_bar_time": "2026-11-20 02:40:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -882,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 02:35:00",
+      "last_bar_time": "2026-11-20 02:40:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -4442,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 02:35:00",
+      "last_bar_time": "2026-11-20 02:40:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -7480,
@@ -111,9 +111,16 @@
       "max_drawdown_pct": 6.45,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-20 02:40:00",
+        "stop": 100650.29999999999,
+        "t1": 99524.55000000002
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-20 02:35:00",
+      "last_bar_time": "2026-11-20 02:40:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": 2833,
@@ -122,7 +129,7 @@
       }
     }
   },
-  "updated_at": "2026-11-20 02:40:25",
+  "updated_at": "2026-11-20 02:45:26",
   "independent_clusters": 40,
   "stop_decomp": {
     "plan_R": -1.0,
