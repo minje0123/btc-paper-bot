@@ -1,8 +1,8 @@
 {
   "schedule": {
-    "last_attempt": "2026-11-19 12:40:20",
+    "last_attempt": "2026-11-19 18:40:21",
     "ok": true,
-    "last_success": "2026-11-19 12:40:20",
+    "last_success": "2026-11-19 18:40:21",
     "error": null,
     "received": 8,
     "added": 0,
@@ -14,15 +14,15 @@
   },
   "sources": {
     "ff_thisweek": {
-      "last_attempt": "2026-11-19 12:40:20",
+      "last_attempt": "2026-11-19 18:40:21",
       "optional": false,
       "ok": true,
-      "last_success": "2026-11-19 12:40:20",
+      "last_success": "2026-11-19 18:40:21",
       "error": null,
       "count": 8
     },
     "ff_nextweek": {
-      "last_attempt": "2026-11-19 12:40:20",
+      "last_attempt": "2026-11-19 18:40:21",
       "ok": false,
       "error": "HTTP 404",
       "optional": true
