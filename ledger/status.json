@@ -17,9 +17,9 @@
   "total_value": 966607,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 962471,
+  "equity": 965406,
   "realized_pnl": -33393,
-  "unrealized_pnl": -4136,
+  "unrealized_pnl": -1201,
   "trades_count": 15,
   "win_rate": 33.3,
   "avg_R": -0.39,
@@ -44,8 +44,8 @@
     "risk_money": 4833,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 101800,
-    "unrealized_pnl": -750,
+    "last_price": 102000,
+    "unrealized_pnl": 736,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4833
   },
-  "last_bar_time": "2026-11-19 23:40:00",
-  "last_price": 86477000,
+  "last_bar_time": "2026-11-19 23:45:00",
+  "last_price": 86530000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-19 23:45:27",
+  "updated_at": "2026-11-19 23:50:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,8 +106,8 @@
       "risk_money": 4833,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 101800,
-      "unrealized_pnl": -750,
+      "last_price": 102000,
+      "unrealized_pnl": 736,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -130,24 +130,24 @@
       "risk_money": 4833,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 1341.0,
-      "unrealized_pnl": -3386,
+      "last_price": 1343.0,
+      "unrealized_pnl": -1937,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 86477000,
-    "ETH": 2444000,
-    "SOL": 101800,
-    "XRP": 1341.0
+    "BTC": 86530000,
+    "ETH": 2449000,
+    "SOL": 102000,
+    "XRP": 1343.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-19 23:40:00",
-    "ETH": "2026-11-19 23:40:00",
-    "SOL": "2026-11-19 23:40:00",
-    "XRP": "2026-11-19 23:40:00"
+    "BTC": "2026-11-19 23:45:00",
+    "ETH": "2026-11-19 23:45:00",
+    "SOL": "2026-11-19 23:45:00",
+    "XRP": "2026-11-19 23:45:00"
   },
   "independent_clusters": 12,
   "stop_decomp": {
