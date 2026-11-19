@@ -17,9 +17,9 @@
   "total_value": 930523,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 932000,
+  "equity": 931367,
   "realized_pnl": -69477,
-  "unrealized_pnl": 1477,
+  "unrealized_pnl": 844,
   "trades_count": 24,
   "win_rate": 29.2,
   "avg_R": -0.532,
@@ -44,12 +44,12 @@
     "risk_money": 4647,
     "t1_done": true,
     "realized_part": 1055,
-    "last_price": 99850.0,
-    "unrealized_pnl": 1477,
+    "last_price": 100000,
+    "unrealized_pnl": 844,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
-  "pending_close": null,
+  "pending_close": "반대 장악형",
   "today": {
     "date": "2026-11-20",
     "realized_pnl": -23968,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4653
   },
-  "last_bar_time": "2026-11-20 04:15:00",
-  "last_price": 85003000,
+  "last_bar_time": "2026-11-20 04:20:00",
+  "last_price": 85061000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-20 04:20:25",
+  "updated_at": "2026-11-20 04:25:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,24 +106,24 @@
       "risk_money": 4647,
       "t1_done": true,
       "realized_part": 1055,
-      "last_price": 99850.0,
-      "unrealized_pnl": 1477,
+      "last_price": 100000,
+      "unrealized_pnl": 844,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
-      "pending_close": null
+      "pending_close": "반대 장악형"
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 85003000,
-    "ETH": 2405000,
-    "SOL": 99850.0,
-    "XRP": 1312.0
+    "BTC": 85061000,
+    "ETH": 2410000,
+    "SOL": 100000,
+    "XRP": 1313.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-20 04:15:00",
-    "ETH": "2026-11-20 04:15:00",
-    "SOL": "2026-11-20 04:15:00",
-    "XRP": "2026-11-20 04:15:00"
+    "BTC": "2026-11-20 04:20:00",
+    "ETH": "2026-11-20 04:20:00",
+    "SOL": "2026-11-20 04:20:00",
+    "XRP": "2026-11-20 04:20:00"
   },
   "independent_clusters": 19,
   "stop_decomp": {
