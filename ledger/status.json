@@ -29,12 +29,12 @@
   "pending_entry": null,
   "pending_close": null,
   "today": {
-    "date": "2026-11-19",
-    "realized_pnl": -39365,
-    "consecutive_losses": 8,
+    "date": "2026-11-20",
+    "realized_pnl": 0,
+    "consecutive_losses": 0,
     "no_new_entries": false,
     "reason": null,
-    "start_equity": 990240,
+    "start_equity": 954490,
     "target_pct": 0.0,
     "target_amount": null,
     "target_reached": false,
@@ -42,16 +42,16 @@
     "max_consec": 1000,
     "loss_limit_on": false,
     "loss_limit_amount": null,
-    "first_trade_result": "수익",
+    "first_trade_result": null,
     "next_size_factor": 1.0,
     "next_size_mode": "보통",
     "next_risk_won": 4772
   },
-  "last_bar_time": "2026-11-19 23:55:00",
-  "last_price": 85947000,
+  "last_bar_time": "2026-11-20 00:00:00",
+  "last_price": 86420000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-20 00:00:25",
+  "updated_at": "2026-11-20 00:05:26",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 85947000,
-    "ETH": 2432000,
-    "SOL": 101300,
-    "XRP": 1335.0
+    "BTC": 86420000,
+    "ETH": 2449000,
+    "SOL": 102000,
+    "XRP": 1342.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-19 23:55:00",
-    "ETH": "2026-11-19 23:55:00",
-    "SOL": "2026-11-19 23:55:00",
-    "XRP": "2026-11-19 23:55:00"
+    "BTC": "2026-11-20 00:00:00",
+    "ETH": "2026-11-20 00:00:00",
+    "SOL": "2026-11-20 00:00:00",
+    "XRP": "2026-11-20 00:00:00"
   },
   "independent_clusters": 13,
   "stop_decomp": {
@@ -106,7 +106,7 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-19 18:40:21",
-    "last_success_breaking": "2026-11-19 23:30:21",
+    "last_success_breaking": "2026-11-20 00:05:20",
     "upcoming": [
       {
         "time": "2026-11-21 00:00:00",
@@ -117,7 +117,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-19 18:40:21",
-    "last_attempt_breaking": "2026-11-19 23:30:21",
+    "last_attempt_breaking": "2026-11-20 00:05:20",
     "schedule_items_last": 8,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -140,21 +140,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-19 23:30:21",
+        "last_success": "2026-11-20 00:05:20",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-19 23:30:21",
+        "last_success": "2026-11-20 00:05:20",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-19 23:30:21",
+        "last_success": "2026-11-20 00:05:20",
         "count": 20,
         "error": null,
         "optional": false
@@ -169,7 +169,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-19 23:30:21",
+      "last_success": "2026-11-20 00:05:20",
       "error": null
     },
     "extractor": {
