@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4833
   },
-  "last_bar_time": "2026-11-19 20:40:00",
-  "last_price": 86656000,
+  "last_bar_time": "2026-11-19 20:45:00",
+  "last_price": 86750000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-19 20:45:25",
+  "updated_at": "2026-11-19 20:50:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 86656000,
-    "ETH": 2451000,
+    "BTC": 86750000,
+    "ETH": 2453000,
     "SOL": 101500,
-    "XRP": 1340.0
+    "XRP": 1341.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-19 20:40:00",
-    "ETH": "2026-11-19 20:40:00",
-    "SOL": "2026-11-19 20:40:00",
-    "XRP": "2026-11-19 20:40:00"
+    "BTC": "2026-11-19 20:45:00",
+    "ETH": "2026-11-19 20:45:00",
+    "SOL": "2026-11-19 20:45:00",
+    "XRP": "2026-11-19 20:45:00"
   },
   "independent_clusters": 12,
   "stop_decomp": {
@@ -106,7 +106,7 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-19 18:40:21",
-    "last_success_breaking": "2026-11-19 20:20:20",
+    "last_success_breaking": "2026-11-19 20:50:20",
     "upcoming": [
       {
         "time": "2026-11-19 22:30:00",
@@ -124,7 +124,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-19 18:40:21",
-    "last_attempt_breaking": "2026-11-19 20:20:20",
+    "last_attempt_breaking": "2026-11-19 20:50:20",
     "schedule_items_last": 8,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -147,21 +147,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-19 20:20:20",
+        "last_success": "2026-11-19 20:50:20",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-19 20:20:20",
+        "last_success": "2026-11-19 20:50:20",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-19 20:20:20",
+        "last_success": "2026-11-19 20:50:20",
         "count": 20,
         "error": null,
         "optional": false
@@ -176,14 +176,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-19 20:20:20",
+      "last_success": "2026-11-19 20:50:20",
       "error": null
     },
     "extractor": {
       "state": "BACKOFF",
       "last_success": null,
       "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
-      "queue": 0,
+      "queue": 1,
       "backoff_until": "2026-11-20 14:50:20"
     },
     "unmapped_count": 0,
