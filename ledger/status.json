@@ -26,7 +26,19 @@
   "max_drawdown_pct": 6.38,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-BTC",
+    "coin": "BTC",
+    "side": "숏",
+    "setup": "B+",
+    "grade": "",
+    "signal_time": "2026-11-20 00:35:00",
+    "signal_close": 85192000,
+    "stop": 85602780,
+    "t1": 84630000,
+    "qty": 0.0116,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-20",
@@ -47,11 +59,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4772
   },
-  "last_bar_time": "2026-11-20 00:30:00",
-  "last_price": 85530000,
+  "last_bar_time": "2026-11-20 00:35:00",
+  "last_price": 85192000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-20 00:35:26",
+  "updated_at": "2026-11-20 00:40:27",
   "warnings": [],
   "markets": [
     "BTC",
@@ -61,22 +73,38 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 0,
-  "open_risk_won": 0,
-  "open_risk_pct": 0.0,
+  "open_positions_count": 1,
+  "open_risk_won": 4772,
+  "open_risk_pct": 0.5,
   "positions": [],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-BTC",
+      "coin": "BTC",
+      "side": "숏",
+      "setup": "B+",
+      "grade": "",
+      "signal_time": "2026-11-20 00:35:00",
+      "signal_close": 85192000,
+      "stop": 85602780,
+      "t1": 84630000,
+      "qty": 0.0116,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4772,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 85530000,
-    "ETH": 2409000,
-    "SOL": 100600,
-    "XRP": 1322.0
+    "BTC": 85192000,
+    "ETH": 2400000,
+    "SOL": 100000,
+    "XRP": 1315.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-20 00:30:00",
-    "ETH": "2026-11-20 00:30:00",
-    "SOL": "2026-11-20 00:30:00",
-    "XRP": "2026-11-20 00:30:00"
+    "BTC": "2026-11-20 00:35:00",
+    "ETH": "2026-11-20 00:35:00",
+    "SOL": "2026-11-20 00:35:00",
+    "XRP": "2026-11-20 00:35:00"
   },
   "independent_clusters": 13,
   "stop_decomp": {
@@ -105,7 +133,7 @@
     "source": "feeds",
     "schedule": "OK",
     "breaking": "OK",
-    "last_success_schedule": "2026-11-19 18:40:21",
+    "last_success_schedule": "2026-11-20 00:40:21",
     "last_success_breaking": "2026-11-20 00:35:20",
     "upcoming": [
       {
@@ -116,7 +144,7 @@
         "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
       }
     ],
-    "last_attempt_schedule": "2026-11-19 18:40:21",
+    "last_attempt_schedule": "2026-11-20 00:40:21",
     "last_attempt_breaking": "2026-11-20 00:35:20",
     "schedule_items_last": 8,
     "breaking_items_last": 75,
@@ -126,7 +154,7 @@
     "sources": {
       "ff_thisweek": {
         "ok": true,
-        "last_success": "2026-11-19 18:40:21",
+        "last_success": "2026-11-20 00:40:21",
         "count": 8,
         "error": null,
         "optional": false

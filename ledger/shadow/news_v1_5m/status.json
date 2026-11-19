@@ -39,9 +39,16 @@
       "max_drawdown_pct": 0.87,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "B+",
+        "grade": "",
+        "signal_time": "2026-11-20 00:35:00",
+        "stop": 85602780.0,
+        "t1": 84630000.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-20 00:30:00",
+      "last_bar_time": "2026-11-20 00:35:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": 0,
@@ -65,7 +72,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 00:30:00",
+      "last_bar_time": "2026-11-20 00:35:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": 0,
@@ -89,7 +96,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 00:30:00",
+      "last_bar_time": "2026-11-20 00:35:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": 0,
@@ -113,7 +120,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 00:30:00",
+      "last_bar_time": "2026-11-20 00:35:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": 0,
@@ -122,7 +129,7 @@
       }
     }
   },
-  "updated_at": "2026-11-20 00:35:27",
+  "updated_at": "2026-11-20 00:40:27",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 35,
@@ -323,7 +330,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 41,
+    "signals": 42,
     "blocked": 1,
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,
