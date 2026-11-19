@@ -133,12 +133,12 @@
    "fails": 0
   },
   "8aca460ce144": {
-   "status": "queued",
+   "status": "stale",
    "fails": 0
   }
  },
  "extractor": {
-  "queue": 1,
+  "queue": 0,
   "last_attempt": "2026-11-19 14:50:20",
   "state": "BACKOFF",
   "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
@@ -149,8 +149,8 @@
  "elapsed_s": 0.0,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-20 02:50:20",
-  "title": "North Korean hackers used Sky's stablecoin system, putting billions at freeze risk",
+  "decided_at": "2026-11-20 06:35:20",
+  "title": "Binance wins $6.5 billion feezing order against hackers behind crypto's largest theft",
   "decision": "NOT_EXTRACTED",
   "rows": null,
   "targets": null,
