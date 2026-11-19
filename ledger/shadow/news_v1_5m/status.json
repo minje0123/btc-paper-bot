@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 13:15:00",
+      "last_bar_time": "2026-11-19 13:20:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": 14131,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 13:15:00",
+      "last_bar_time": "2026-11-19 13:20:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": -9144,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 13:15:00",
+      "last_bar_time": "2026-11-19 13:20:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": -18769,
@@ -101,7 +101,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 956096,
-      "equity": 954680,
+      "equity": 953972,
       "realized_pnl": -43904,
       "withdrawn_total": 0,
       "trades_count": 13,
@@ -127,13 +127,13 @@
         "risk_money": 4780,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 100600,
-        "unrealized_pnl": -1416,
+        "last_price": 100800,
+        "unrealized_pnl": -2124,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-19 13:15:00",
+      "last_bar_time": "2026-11-19 13:20:00",
       "today": {
         "date": "2026-11-19",
         "realized_pnl": 0,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-19 13:20:28",
+  "updated_at": "2026-11-19 13:25:40",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 33,
@@ -172,14 +172,14 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 0,
       "backoff_until": null
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-19 05:55:21",
-      "title": "Binance says it obtained $6.5B worldwide freezing order after hack",
+      "decided_at": "2026-11-19 13:25:20",
+      "title": "Ledger expands hardware hack investigation to Germany, UAE as new cases emerge",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
@@ -190,6 +190,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-19 13:25:20",
+        "title": "Ledger expands hardware hack investigation to Germany, UAE as new cases emerge",
+        "url": "https://www.theblock.co/news/web3/2026-11-18-ledger-new-hardware-incidents-germany-uae-443530",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "EXTRACTOR_FAILED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-19 05:55:21",
         "title": "Binance says it obtained $6.5B worldwide freezing order after hack",

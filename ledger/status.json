@@ -17,9 +17,9 @@
   "total_value": 979354,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 977882,
+  "equity": 977146,
   "realized_pnl": -20646,
-  "unrealized_pnl": -1472,
+  "unrealized_pnl": -2208,
   "trades_count": 13,
   "win_rate": 38.5,
   "avg_R": -0.265,
@@ -44,8 +44,8 @@
     "risk_money": 4969,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 100600,
-    "unrealized_pnl": -1472,
+    "last_price": 100800,
+    "unrealized_pnl": -2208,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4897
   },
-  "last_bar_time": "2026-11-19 13:15:00",
-  "last_price": 85666000,
+  "last_bar_time": "2026-11-19 13:20:00",
+  "last_price": 85869000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-19 13:20:27",
+  "updated_at": "2026-11-19 13:25:40",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,24 +106,24 @@
       "risk_money": 4969,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 100600,
-      "unrealized_pnl": -1472,
+      "last_price": 100800,
+      "unrealized_pnl": -2208,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 85666000,
-    "ETH": 2432000,
-    "SOL": 100600,
-    "XRP": 1314.0
+    "BTC": 85869000,
+    "ETH": 2435000,
+    "SOL": 100800,
+    "XRP": 1318.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-19 13:15:00",
-    "ETH": "2026-11-19 13:15:00",
-    "SOL": "2026-11-19 13:15:00",
-    "XRP": "2026-11-19 13:15:00"
+    "BTC": "2026-11-19 13:20:00",
+    "ETH": "2026-11-19 13:20:00",
+    "SOL": "2026-11-19 13:20:00",
+    "XRP": "2026-11-19 13:20:00"
   },
   "independent_clusters": 11,
   "stop_decomp": {
@@ -229,14 +229,14 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 0,
       "backoff_until": null
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-19 05:55:21",
-      "title": "Binance says it obtained $6.5B worldwide freezing order after hack",
+      "decided_at": "2026-11-19 13:25:20",
+      "title": "Ledger expands hardware hack investigation to Germany, UAE as new cases emerge",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
