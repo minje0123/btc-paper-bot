@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 1000714,
-      "equity": 999689,
+      "equity": 1003621,
       "realized_pnl": 714,
       "withdrawn_total": 0,
       "trades_count": 8,
@@ -55,13 +55,13 @@
         "risk_money": 5004,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 80869000,
-        "unrealized_pnl": -1026,
+        "last_price": 80530000,
+        "unrealized_pnl": 2907,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 05:45:00",
+      "last_bar_time": "2026-11-21 05:50:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 5178,
@@ -85,7 +85,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 05:45:00",
+      "last_bar_time": "2026-11-21 05:50:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -370,
@@ -107,9 +107,16 @@
       "max_drawdown_pct": 10.19,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-21 05:50:00",
+        "stop": 1235.6174999999998,
+        "t1": 1206.5737500000002
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-21 05:45:00",
+      "last_bar_time": "2026-11-21 05:50:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -14307,
@@ -133,7 +140,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 05:45:00",
+      "last_bar_time": "2026-11-21 05:50:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 11047,
@@ -142,7 +149,7 @@
       }
     }
   },
-  "updated_at": "2026-11-21 05:50:27",
+  "updated_at": "2026-11-21 05:55:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 69,
@@ -343,7 +350,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 80,
+    "signals": 81,
     "blocked": 1,
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,

@@ -17,9 +17,9 @@
   "total_value": 873218,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 872334,
+  "equity": 875724,
   "realized_pnl": -126782,
-  "unrealized_pnl": -884,
+  "unrealized_pnl": 2506,
   "trades_count": 55,
   "win_rate": 36.4,
   "avg_R": -0.428,
@@ -44,11 +44,23 @@
     "risk_money": 4329,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 80869000,
-    "unrealized_pnl": -884,
+    "last_price": 80530000,
+    "unrealized_pnl": 2506,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-XRP",
+    "coin": "XRP",
+    "side": "숏",
+    "setup": "구간",
+    "grade": "B",
+    "signal_time": "2026-11-21 05:50:00",
+    "signal_close": 1224.0,
+    "stop": 1235.6175,
+    "t1": 1206.5738,
+    "qty": 375.8202,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-21",
@@ -69,11 +81,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4366
   },
-  "last_bar_time": "2026-11-21 05:45:00",
-  "last_price": 80869000,
+  "last_bar_time": "2026-11-21 05:50:00",
+  "last_price": 80530000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-21 05:50:26",
+  "updated_at": "2026-11-21 05:55:26",
   "warnings": [],
   "markets": [
     "BTC",
@@ -83,9 +95,9 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 1,
-  "open_risk_won": 4329,
-  "open_risk_pct": 0.496,
+  "open_positions_count": 2,
+  "open_risk_won": 8695,
+  "open_risk_pct": 0.996,
   "positions": [
     {
       "market": "KRW-BTC",
@@ -106,24 +118,40 @@
       "risk_money": 4329,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 80869000,
-      "unrealized_pnl": -884,
+      "last_price": 80530000,
+      "unrealized_pnl": 2506,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-XRP",
+      "coin": "XRP",
+      "side": "숏",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-21 05:50:00",
+      "signal_close": 1224.0,
+      "stop": 1235.6175,
+      "t1": 1206.5738,
+      "qty": 375.8202,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4366,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 80869000,
-    "ETH": 2220000,
-    "SOL": 93450.0,
-    "XRP": 1231.0
+    "BTC": 80530000,
+    "ETH": 2211000,
+    "SOL": 92900.0,
+    "XRP": 1224.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-21 05:45:00",
-    "ETH": "2026-11-21 05:45:00",
-    "SOL": "2026-11-21 05:45:00",
-    "XRP": "2026-11-21 05:45:00"
+    "BTC": "2026-11-21 05:50:00",
+    "ETH": "2026-11-21 05:50:00",
+    "SOL": "2026-11-21 05:50:00",
+    "XRP": "2026-11-21 05:50:00"
   },
   "independent_clusters": 47,
   "stop_decomp": {
@@ -146,17 +174,7 @@
     "start": null,
     "until": null
   },
-  "upcoming_events": [
-    {
-      "time": "2026-11-21 03:55:00",
-      "name": "[돌발] 해킹/익스플로잇 (BTC): Binance hack laundering ramps up as $149 million i",
-      "coins": "BTC",
-      "window_start": "2026-11-21 03:55:00",
-      "window_end": "2026-11-21 05:55:00",
-      "added_at": "2026-11-21 03:50:20",
-      "source": "https://www.theblock.co/news/markets/2026-11-20-binance-hack-laundering-ramps-up-149-million-bitcoin-mixed-coinjoins-elliptic-444758"
-    }
-  ],
+  "upcoming_events": [],
   "event_blocked_signals": [],
   "event_data": {
     "source": "feeds",
