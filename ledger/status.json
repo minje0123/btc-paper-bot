@@ -26,7 +26,19 @@
   "max_drawdown_pct": 15.41,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-BTC",
+    "coin": "BTC",
+    "side": "숏",
+    "setup": "구간",
+    "grade": "A",
+    "signal_time": "2026-11-21 04:45:00",
+    "signal_close": 80822000,
+    "stop": 81252606,
+    "t1": 80000000,
+    "qty": 0.01,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-21",
@@ -47,11 +59,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4329
   },
-  "last_bar_time": "2026-11-21 04:40:00",
-  "last_price": 81149000,
+  "last_bar_time": "2026-11-21 04:45:00",
+  "last_price": 80822000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-21 04:45:25",
+  "updated_at": "2026-11-21 04:50:41",
   "warnings": [],
   "markets": [
     "BTC",
@@ -61,22 +73,68 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 0,
-  "open_risk_won": 0,
-  "open_risk_pct": 0.0,
+  "open_positions_count": 3,
+  "open_risk_won": 12988,
+  "open_risk_pct": 1.5,
   "positions": [],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-BTC",
+      "coin": "BTC",
+      "side": "숏",
+      "setup": "구간",
+      "grade": "A",
+      "signal_time": "2026-11-21 04:45:00",
+      "signal_close": 80822000,
+      "stop": 81252606,
+      "t1": 80000000,
+      "qty": 0.01,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4329,
+      "risk_cut": false
+    },
+    {
+      "market": "KRW-ETH",
+      "coin": "ETH",
+      "side": "숏",
+      "setup": "구간",
+      "grade": "A",
+      "signal_time": "2026-11-21 04:45:00",
+      "signal_close": 2220000,
+      "stop": 2230114,
+      "t1": 2204828,
+      "qty": 0.428,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4329,
+      "risk_cut": false
+    },
+    {
+      "market": "KRW-SOL",
+      "coin": "SOL",
+      "side": "숏",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-21 04:45:00",
+      "signal_close": 94100.0,
+      "stop": 94547.25,
+      "t1": 93600.0,
+      "qty": 9.6795,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4329,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 81149000,
-    "ETH": 2224000,
-    "SOL": 94450.0,
-    "XRP": 1241.0
+    "BTC": 80822000,
+    "ETH": 2220000,
+    "SOL": 94100.0,
+    "XRP": 1238.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-21 04:40:00",
-    "ETH": "2026-11-21 04:40:00",
-    "SOL": "2026-11-21 04:40:00",
-    "XRP": "2026-11-21 04:40:00"
+    "BTC": "2026-11-21 04:45:00",
+    "ETH": "2026-11-21 04:45:00",
+    "SOL": "2026-11-21 04:45:00",
+    "XRP": "2026-11-21 04:45:00"
   },
   "independent_clusters": 45,
   "stop_decomp": {
@@ -116,7 +174,7 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-21 01:00:21",
-    "last_success_breaking": "2026-11-21 04:20:20",
+    "last_success_breaking": "2026-11-21 04:50:21",
     "upcoming": [
       {
         "time": "2026-11-21 03:55:00",
@@ -127,7 +185,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-21 01:00:21",
-    "last_attempt_breaking": "2026-11-21 04:20:20",
+    "last_attempt_breaking": "2026-11-21 04:50:21",
     "schedule_items_last": 9,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -150,21 +208,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-21 04:20:20",
+        "last_success": "2026-11-21 04:50:21",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-21 04:20:20",
+        "last_success": "2026-11-21 04:50:21",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-21 04:20:20",
+        "last_success": "2026-11-21 04:50:21",
         "count": 20,
         "error": null,
         "optional": false
@@ -179,14 +237,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-21 04:20:20",
+      "last_success": "2026-11-21 04:50:21",
       "error": null
     },
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 0,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 1,
       "backoff_until": "2026-11-20 14:50:20"
     },
     "unmapped_count": 0,

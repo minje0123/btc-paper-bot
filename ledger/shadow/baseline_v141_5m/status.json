@@ -39,9 +39,16 @@
       "max_drawdown_pct": 1.87,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "A",
+        "signal_time": "2026-11-21 04:45:00",
+        "stop": 81252606.0,
+        "t1": 80000000.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-21 04:40:00",
+      "last_bar_time": "2026-11-21 04:45:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 5178,
@@ -63,9 +70,16 @@
       "max_drawdown_pct": 3.76,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "A",
+        "signal_time": "2026-11-21 04:45:00",
+        "stop": 2230114.5,
+        "t1": 2204828.25
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-21 04:40:00",
+      "last_bar_time": "2026-11-21 04:45:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -2280,
@@ -89,7 +103,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 04:40:00",
+      "last_bar_time": "2026-11-21 04:45:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -14210,
@@ -111,9 +125,16 @@
       "max_drawdown_pct": 9.29,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-21 04:45:00",
+        "stop": 94547.25,
+        "t1": 93600.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-21 04:40:00",
+      "last_bar_time": "2026-11-21 04:45:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 4986,
@@ -122,7 +143,7 @@
       }
     }
   },
-  "updated_at": "2026-11-21 04:45:25",
+  "updated_at": "2026-11-21 04:50:41",
   "independent_clusters": 68,
   "stop_decomp": {
     "plan_R": -1.0,
