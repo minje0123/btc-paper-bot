@@ -294,6 +294,12 @@
       "text": "상위 타임프레임과 지표 근거를 갖추어 숏 포지션에 진입했으나, 진입 직후 트럼프 대통령 연설이라는 거대 이벤트의 영향으로 즉시 역행하며 최초 설정한 손절가 라인을 이탈하여 -1.34R의 손실로 마감되었습니다. 다음에는 중요한 거시경제 이벤트 일정을 사전에 철저히 확인하고, 변동성이 급증하는 시간대에는 진입을 보류하거나 리스크를 더욱 엄격히 관리해야 합니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-21 03:20:20"
+    },
+    "SOL-202611210155S": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
+      "at": "2026-11-21 03:25:20"
     }
   },
   "model": "gemini-flash-lite-latest",
