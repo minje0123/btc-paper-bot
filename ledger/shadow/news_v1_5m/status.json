@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 1000714,
-      "equity": 1002496,
+      "equity": 1002148,
       "realized_pnl": 714,
       "withdrawn_total": 0,
       "trades_count": 8,
@@ -55,13 +55,13 @@
         "risk_money": 5004,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 80627000,
-        "unrealized_pnl": 1782,
+        "last_price": 80657000,
+        "unrealized_pnl": 1434,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 05:55:00",
+      "last_bar_time": "2026-11-21 06:00:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 5178,
@@ -85,7 +85,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 05:55:00",
+      "last_bar_time": "2026-11-21 06:00:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -370,
@@ -97,7 +97,7 @@
       "market": "KRW-XRP",
       "initial_capital": 1000000.0,
       "balance": 902811,
-      "equity": 901408,
+      "equity": 902185,
       "realized_pnl": -97189,
       "withdrawn_total": 0,
       "trades_count": 24,
@@ -123,13 +123,13 @@
         "risk_money": 4514,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 1225,
-        "unrealized_pnl": -1403,
+        "last_price": 1223,
+        "unrealized_pnl": -626,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 05:55:00",
+      "last_bar_time": "2026-11-21 06:00:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -14307,
@@ -151,9 +151,16 @@
       "max_drawdown_pct": 9.29,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-21 06:00:00",
+        "stop": 93496.72499999999,
+        "t1": 92379.9125
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-21 05:55:00",
+      "last_bar_time": "2026-11-21 06:00:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 11047,
@@ -162,7 +169,7 @@
       }
     }
   },
-  "updated_at": "2026-11-21 06:00:26",
+  "updated_at": "2026-11-21 06:05:25",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 69,
@@ -363,7 +370,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 81,
+    "signals": 82,
     "blocked": 1,
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,
