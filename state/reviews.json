@@ -333,6 +333,6 @@
   },
   "model": "gemini-flash-lite-latest",
   "note": "Gemini 복기 해설 캐시(거래 ID 키). 공부용 — 매매 판단에 쓰지 않음. 한 번 받은 거래는 다시 부르지 않음.",
-  "backoff_until": "2026-11-20 14:50:20",
+  "backoff_until": "2026-11-22 05:00:21",
   "backoff_reason": "news_v1: HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-"
 }

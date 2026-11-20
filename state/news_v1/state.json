@@ -169,14 +169,14 @@
  },
  "extractor": {
   "queue": 1,
-  "last_attempt": "2026-11-21 04:55:20",
-  "state": "FAIL",
-  "last_error": "TimeoutError: The read operation timed out",
-  "backoff_until": "2026-11-20 14:50:20"
+  "last_attempt": "2026-11-21 05:00:21",
+  "state": "BACKOFF",
+  "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
+  "backoff_until": "2026-11-22 05:00:21"
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 15.03,
+ "elapsed_s": 0.12,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
   "decided_at": "2026-11-21 04:00:20",
