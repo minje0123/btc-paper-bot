@@ -304,6 +304,12 @@
       "text": "이번 거래는 상위 추세와 일치하는 방향으로 진입하여 스윙 가짜 이탈 구간을 잘 활용했기에 +0.93R의 수익으로 성공할 수 있었습니다. 다만 최대 유리 구간(MFE)이 2.056R까지 갔던 것에 비해 T1 반익절 이후 추가 청산 과정에서 수익을 일부 반납했으므로, 다음에는 유리한 구간에서 더 적극적으로 분할 청산을 관리하는 것을 살펴봐야 합니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-21 03:50:20"
+    },
+    "202611210345S": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: TimeoutError: Th",
+      "at": "2026-11-21 03:55:20"
     }
   },
   "model": "gemini-flash-lite-latest",
