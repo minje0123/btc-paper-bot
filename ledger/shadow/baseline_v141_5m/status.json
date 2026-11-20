@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 13:55:00",
+      "last_bar_time": "2026-11-20 14:00:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -12461,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 13:55:00",
+      "last_bar_time": "2026-11-20 14:00:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -11133,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 13:55:00",
+      "last_bar_time": "2026-11-20 14:00:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -25667,
@@ -133,7 +133,7 @@
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 13:55:00",
+      "last_bar_time": "2026-11-20 14:00:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -25939,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-20 14:00:25",
+  "updated_at": "2026-11-20 14:05:25",
   "independent_clusters": 53,
   "stop_decomp": {
     "plan_R": -1.0,
