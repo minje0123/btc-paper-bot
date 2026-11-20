@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4411
   },
-  "last_bar_time": "2026-11-21 01:35:00",
-  "last_price": 81780000,
+  "last_bar_time": "2026-11-21 01:40:00",
+  "last_price": 81688000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-21 01:40:25",
+  "updated_at": "2026-11-21 01:45:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 81780000,
-    "ETH": 2260000,
-    "SOL": 95200.0,
-    "XRP": 1257.0
+    "BTC": 81688000,
+    "ETH": 2254000,
+    "SOL": 95150.0,
+    "XRP": 1254.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-21 01:35:00",
-    "ETH": "2026-11-21 01:35:00",
-    "SOL": "2026-11-21 01:35:00",
-    "XRP": "2026-11-21 01:35:00"
+    "BTC": "2026-11-21 01:40:00",
+    "ETH": "2026-11-21 01:40:00",
+    "SOL": "2026-11-21 01:40:00",
+    "XRP": "2026-11-21 01:40:00"
   },
   "independent_clusters": 37,
   "stop_decomp": {
@@ -106,7 +106,7 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-21 01:00:21",
-    "last_success_breaking": "2026-11-21 01:15:20",
+    "last_success_breaking": "2026-11-21 01:45:20",
     "upcoming": [
       {
         "time": "2026-11-21 02:00:00",
@@ -117,7 +117,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-21 01:00:21",
-    "last_attempt_breaking": "2026-11-21 01:15:20",
+    "last_attempt_breaking": "2026-11-21 01:45:20",
     "schedule_items_last": 9,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -140,21 +140,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-21 01:15:20",
+        "last_success": "2026-11-21 01:45:20",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-21 01:15:20",
+        "last_success": "2026-11-21 01:45:20",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-21 01:15:20",
+        "last_success": "2026-11-21 01:45:20",
         "count": 20,
         "error": null,
         "optional": false
@@ -169,7 +169,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-21 01:15:20",
+      "last_success": "2026-11-21 01:45:20",
       "error": null
     },
     "extractor": {
