@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4411
   },
-  "last_bar_time": "2026-11-21 01:15:00",
-  "last_price": 81660000,
+  "last_bar_time": "2026-11-21 01:20:00",
+  "last_price": 81696000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-21 01:20:33",
+  "updated_at": "2026-11-21 01:25:33",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 81660000,
-    "ETH": 2260000,
-    "SOL": 94500.0,
-    "XRP": 1255.0
+    "BTC": 81696000,
+    "ETH": 2257000,
+    "SOL": 94600.0,
+    "XRP": 1256.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-21 01:15:00",
-    "ETH": "2026-11-21 01:15:00",
-    "SOL": "2026-11-21 01:15:00",
-    "XRP": "2026-11-21 01:15:00"
+    "BTC": "2026-11-21 01:20:00",
+    "ETH": "2026-11-21 01:20:00",
+    "SOL": "2026-11-21 01:20:00",
+    "XRP": "2026-11-21 01:20:00"
   },
   "independent_clusters": 37,
   "stop_decomp": {
@@ -176,20 +176,20 @@
       "state": "FAIL",
       "last_success": null,
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "queue": 0,
       "backoff_until": "2026-11-20 14:50:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-20 20:50:21",
-      "title": "Binance hacker moves nearly $600M in ETH, routes funds through THORChain, Chainflip",
+      "decided_at": "2026-11-21 01:25:21",
+      "title": "Wagyu’s XMR1 wrapped Monero plunges 99% after $13 million hack as founder promises refunds",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
       "effective_at": null,
       "window_end": null,
       "rules_version": "news_rules_v1.0",
-      "diff": "기존만 차단"
+      "diff": "둘 다 차단 없음"
     },
     "holds_active": 0
   }
