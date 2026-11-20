@@ -17,9 +17,9 @@
   "total_value": 882210,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 881700,
+  "equity": 876032,
   "realized_pnl": -117790,
-  "unrealized_pnl": -510,
+  "unrealized_pnl": -6178,
   "trades_count": 43,
   "win_rate": 32.6,
   "avg_R": -0.528,
@@ -44,8 +44,8 @@
     "risk_money": 4411,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 94900.0,
-    "unrealized_pnl": 1915,
+    "last_price": 95350.0,
+    "unrealized_pnl": -2563,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4411
   },
-  "last_bar_time": "2026-11-21 02:50:00",
-  "last_price": 81230000,
+  "last_bar_time": "2026-11-21 02:55:00",
+  "last_price": 81338000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-21 02:55:25",
+  "updated_at": "2026-11-21 03:00:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,8 +106,8 @@
       "risk_money": 4411,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 94900.0,
-      "unrealized_pnl": 1915,
+      "last_price": 95350.0,
+      "unrealized_pnl": -2563,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -130,24 +130,24 @@
       "risk_money": 4411,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 2240000,
-      "unrealized_pnl": -2426,
+      "last_price": 2243000,
+      "unrealized_pnl": -3615,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 81230000,
-    "ETH": 2240000,
-    "SOL": 94900.0,
-    "XRP": 1245.0
+    "BTC": 81338000,
+    "ETH": 2243000,
+    "SOL": 95350.0,
+    "XRP": 1246.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-21 02:50:00",
-    "ETH": "2026-11-21 02:50:00",
-    "SOL": "2026-11-21 02:50:00",
-    "XRP": "2026-11-21 02:50:00"
+    "BTC": "2026-11-21 02:55:00",
+    "ETH": "2026-11-21 02:55:00",
+    "SOL": "2026-11-21 02:55:00",
+    "XRP": "2026-11-21 02:55:00"
   },
   "independent_clusters": 37,
   "stop_decomp": {
@@ -178,15 +178,7 @@
     "breaking": "OK",
     "last_success_schedule": "2026-11-21 01:00:21",
     "last_success_breaking": "2026-11-21 02:45:21",
-    "upcoming": [
-      {
-        "time": "2026-11-21 02:00:00",
-        "name": "[일정] President Trump Speaks (USD)",
-        "importance": "medium",
-        "coins": "ALL",
-        "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
-      }
-    ],
+    "upcoming": [],
     "last_attempt_schedule": "2026-11-21 01:00:21",
     "last_attempt_breaking": "2026-11-21 02:45:21",
     "schedule_items_last": 9,
