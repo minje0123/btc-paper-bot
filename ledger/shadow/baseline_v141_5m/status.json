@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 00:15:00",
+      "last_bar_time": "2026-11-21 00:20:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 0,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 00:15:00",
+      "last_bar_time": "2026-11-21 00:20:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 0,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 00:15:00",
+      "last_bar_time": "2026-11-21 00:20:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 4941,
@@ -101,7 +101,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 911965,
-      "equity": 911965,
+      "equity": 914960,
       "realized_pnl": -88035,
       "withdrawn_total": 0,
       "trades_count": 26,
@@ -109,18 +109,31 @@
       "avg_R": -0.676,
       "sum_R": -17.563,
       "max_drawdown_pct": 9.29,
-      "has_position": false,
-      "position": null,
-      "pending_entry": {
+      "has_position": true,
+      "position": {
+        "id": "202611210020S",
         "side": "숏",
         "setup": "B+",
         "grade": "",
-        "signal_time": "2026-11-21 00:15:00",
-        "stop": 95597.775,
-        "t1": 94103.33750000001
+        "entry_time": "2026-11-21 00:20:00",
+        "entry": 94890,
+        "stop": 95598,
+        "stop0": 95598,
+        "t1": 94103,
+        "next_target": null,
+        "qty": 7.6279,
+        "qty_open": 7.6279,
+        "leverage": 0.79,
+        "risk_money": 4560,
+        "t1_done": false,
+        "realized_part": 0,
+        "last_price": 94450,
+        "unrealized_pnl": 2994,
+        "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
+      "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 00:15:00",
+      "last_bar_time": "2026-11-21 00:20:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 0,
@@ -129,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-21 00:20:35",
+  "updated_at": "2026-11-21 00:25:24",
   "independent_clusters": 59,
   "stop_decomp": {
     "plan_R": -1.0,
