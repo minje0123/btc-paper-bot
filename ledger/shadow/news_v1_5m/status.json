@@ -20,10 +20,10 @@
     "dayLossP": 100,
     "maxConsec": 1000
   },
-  "trades_count": 71,
-  "win_rate": 33.8,
-  "avg_R": -0.531,
-  "sum_R": -37.669,
+  "trades_count": 72,
+  "win_rate": 33.3,
+  "avg_R": -0.542,
+  "sum_R": -39.008,
   "coins": {
     "BTC": {
       "market": "KRW-BTC",
@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 03:50:00",
+      "last_bar_time": "2026-11-21 03:55:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 5178,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 03:50:00",
+      "last_bar_time": "2026-11-21 03:55:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -2280,
@@ -76,43 +76,30 @@
     "XRP": {
       "market": "KRW-XRP",
       "initial_capital": 1000000.0,
-      "balance": 914820,
-      "equity": 910249,
-      "realized_pnl": -85180,
+      "balance": 907606,
+      "equity": 907606,
+      "realized_pnl": -92394,
       "withdrawn_total": 0,
-      "trades_count": 21,
-      "win_rate": 28.6,
-      "avg_R": -0.735,
-      "sum_R": -15.441,
-      "max_drawdown_pct": 9.45,
-      "has_position": true,
-      "position": {
-        "id": "202611210345S",
+      "trades_count": 22,
+      "win_rate": 27.3,
+      "avg_R": -0.763,
+      "sum_R": -16.78,
+      "max_drawdown_pct": 9.71,
+      "has_position": false,
+      "position": null,
+      "pending_entry": {
         "side": "숏",
         "setup": "구간",
-        "grade": "B",
-        "entry_time": "2026-11-21 03:45:00",
-        "entry": 1243,
-        "stop": 1250,
-        "stop0": 1250,
-        "t1": 1238,
-        "next_target": null,
-        "qty": 813.2458,
-        "qty_open": 813.2458,
-        "leverage": 1.1,
-        "risk_money": 4574,
-        "t1_done": false,
-        "realized_part": 0,
-        "last_price": 1248,
-        "unrealized_pnl": -4572,
-        "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
+        "grade": "A",
+        "signal_time": "2026-11-21 03:55:00",
+        "stop": 1253.6264999999999,
+        "t1": 1238.0
       },
-      "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 03:50:00",
+      "last_bar_time": "2026-11-21 03:55:00",
       "today": {
         "date": "2026-11-21",
-        "realized_pnl": -2298,
+        "realized_pnl": -9512,
         "no_new_entries": false,
         "reason": null
       }
@@ -133,7 +120,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 03:50:00",
+      "last_bar_time": "2026-11-21 03:55:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -525,
@@ -142,20 +129,20 @@
       }
     }
   },
-  "updated_at": "2026-11-21 03:56:03",
+  "updated_at": "2026-11-21 04:00:28",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 64,
   "stop_decomp": {
     "plan_R": -1.0,
     "gap_R": -0.0,
-    "slip_R": -0.0791,
+    "slip_R": -0.0806,
     "fee_entry_R": -0.0925,
     "fee_exit_R": -0.0927,
-    "sum_R": -1.2642,
-    "R": -1.2642,
-    "risk_ratio": 1.0817,
-    "n": 45
+    "sum_R": -1.2659,
+    "R": -1.2659,
+    "risk_ratio": 1.0838,
+    "n": 46
   },
   "r_definition": "R = 거래 손익(수수료 포함) ÷ (수량 × |진입 체결가 − 최초 손절가|)",
   "news_v1": {
@@ -172,24 +159,39 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "TimeoutError: The read operation timed out",
-      "queue": 1,
+      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+      "queue": 0,
       "backoff_until": "2026-11-20 14:50:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-21 01:25:21",
-      "title": "Wagyu’s XMR1 wrapped Monero plunges 99% after $13 million hack as founder promises refunds",
+      "decided_at": "2026-11-21 04:00:20",
+      "title": "Binance hack laundering ramps up as $149 million in bitcoin mixed through coinjoins: Elliptic",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
       "effective_at": null,
       "window_end": null,
       "rules_version": "news_rules_v1.0",
-      "diff": "둘 다 차단 없음"
+      "diff": "기존만 차단"
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-21 04:00:20",
+        "title": "Binance hack laundering ramps up as $149 million in bitcoin mixed through coinjoins: Elliptic",
+        "url": "https://www.theblock.co/news/markets/2026-11-20-binance-hack-laundering-ramps-up-149-million-bitcoin-mixed-coinjoins-elliptic-444758",
+        "legacy": "high BTC 11-21 03:55~05:55 (규칙 high:BTC:hack)",
+        "decision": "EXTRACTOR_FAILED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "기존만 차단",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-21 01:25:21",
         "title": "Wagyu’s XMR1 wrapped Monero plunges 99% after $13 million hack as founder promises refunds",
@@ -324,31 +326,16 @@
         "diff": "둘 다 차단 없음",
         "event_type": "",
         "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-19 05:55:21",
-        "title": "Binance says it obtained $6.5B worldwide freezing order after hack",
-        "url": "https://cointelegraph.com/news/binance-says-won-65b-worldwide-freezing-order-after-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-        "legacy": "추가 안 됨 (규칙 해당 없음)",
-        "decision": "EXTRACTOR_FAILED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
-        "event_type": "",
-        "confirmation": ""
       }
     ]
   },
   "filter_summary": {
-    "signals": 73,
+    "signals": 74,
     "blocked": 1,
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,
     "sum_d": 1.349,
-    "n_d": 72,
+    "n_d": 73,
     "definition": "d = 필터 R − 무필터 R (같은 신호 ID, 막힌 신호 필터 R = 0). 계좌 경로 차이는 두 장부 status 로 비교",
     "baseline": "baseline_v141_5m",
     "filter_pairs_csv": "research/news/filter_pairs.csv",

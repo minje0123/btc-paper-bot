@@ -158,30 +158,30 @@
    "fails": 3
   },
   "de9f26cf344d": {
-   "status": "queued",
-   "fails": 2
+   "status": "failed",
+   "fails": 3
   }
  },
  "extractor": {
-  "queue": 1,
-  "last_attempt": "2026-11-21 03:55:20",
+  "queue": 0,
+  "last_attempt": "2026-11-21 04:00:20",
   "state": "FAIL",
-  "last_error": "TimeoutError: The read operation timed out",
+  "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
   "backoff_until": "2026-11-20 14:50:20"
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 15.07,
+ "elapsed_s": 1.44,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-21 01:25:21",
-  "title": "Wagyu’s XMR1 wrapped Monero plunges 99% after $13 million hack as founder promises refunds",
+  "decided_at": "2026-11-21 04:00:20",
+  "title": "Binance hack laundering ramps up as $149 million in bitcoin mixed through coinjoins: Elliptic",
   "decision": "EXTRACTOR_FAILED",
   "rows": null,
   "targets": null,
   "effective_at": null,
   "window_end": null,
   "rules_version": "news_rules_v1.0",
-  "diff": "둘 다 차단 없음"
+  "diff": "기존만 차단"
  }
 }

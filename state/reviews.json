@@ -306,10 +306,14 @@
       "at": "2026-11-21 03:50:20"
     },
     "202611210345S": {
-      "text": "",
-      "fails": 1,
-      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: TimeoutError: Th",
-      "at": "2026-11-21 03:55:20"
+      "text": "1시간과 15분 차트의 하락 방향성 일치와 스윙레벨 근거를 바탕으로 진입하여, 2봉 만에 T1 달성 후 거래량 급증 시점에 잔량을 전량 청산하며 +1.04R의 수익을 거두었습니다. MFE 1.674R 대비 MAE가 -0.038R로 리스크 관리가 철저했으며, 추세 연장 구간에서 유연하게 익절을 마무리한 점이 주효했습니다. 다음에는 진입 직후 예정된 트럼프 연설이나 바이낸스 해킹 관련 돌발 뉴스 등 주요 일정과 이슈가 단기 변동성에 미치는 영향을 함께 살펴보면 좋겠습니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-21 04:00:20"
+    },
+    "XRP-202611210345S": {
+      "text": "1시간과 15분 차트의 하락 방향에 맞춰 스윙레벨에서 숏 진입했으나, 트럼프 연설이라는 거시 일정과 맞물려 진입 직후 곧바로 역방향으로 튀며 3봉 만에 손절(-1.34R)로 끝난 거래입니다. 따라서 다음에는 중요한 경제 지표나 고위 인사 연설 같은 대형 이벤트 직전의 변동성 구간인지 한 번 더 확인하고 진입 여부를 신중히 판단해야 합니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-21 04:00:20"
     }
   },
   "model": "gemini-flash-lite-latest",
