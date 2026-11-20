@@ -296,10 +296,9 @@
       "at": "2026-11-21 03:20:20"
     },
     "SOL-202611210155S": {
-      "text": "",
-      "fails": 1,
-      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
-      "at": "2026-11-21 03:25:20"
+      "text": "상위 시간대와 보조 지표의 방향이 일치하여 진입했으나, T1 도달 직전 주요 거시경제 일정 발표와 맞물린 급격한 변동성 확대로 인해 결국 손절로 마무리되었습니다. 다음에는 중요한 경제 지표 발표 시간 임박 여부를 진입 전 일정표에서 한 번 더 확인하고 리스크를 관리해야 합니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-21 03:30:20"
     }
   },
   "model": "gemini-flash-lite-latest",
