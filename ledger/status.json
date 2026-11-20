@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4439
   },
-  "last_bar_time": "2026-11-20 12:00:00",
-  "last_price": 84380000,
+  "last_bar_time": "2026-11-20 12:05:00",
+  "last_price": 84122000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-20 12:05:25",
+  "updated_at": "2026-11-20 12:10:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 84380000,
-    "ETH": 2371000,
-    "SOL": 98800.0,
-    "XRP": 1299.0
+    "BTC": 84122000,
+    "ETH": 2364000,
+    "SOL": 98350.0,
+    "XRP": 1294.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-20 12:00:00",
-    "ETH": "2026-11-20 12:00:00",
-    "SOL": "2026-11-20 12:00:00",
-    "XRP": "2026-11-20 12:00:00"
+    "BTC": "2026-11-20 12:05:00",
+    "ETH": "2026-11-20 12:05:00",
+    "SOL": "2026-11-20 12:05:00",
+    "XRP": "2026-11-20 12:05:00"
   },
   "independent_clusters": 29,
   "stop_decomp": {
