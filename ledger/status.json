@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4380
   },
-  "last_bar_time": "2026-11-20 20:40:00",
-  "last_price": 84066000,
+  "last_bar_time": "2026-11-20 20:45:00",
+  "last_price": 84000000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-20 20:45:39",
+  "updated_at": "2026-11-20 20:50:39",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 84066000,
+    "BTC": 84000000,
     "ETH": 2378000,
-    "SOL": 97750.0,
-    "XRP": 1300.0
+    "SOL": 97650.0,
+    "XRP": 1298.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-20 20:40:00",
-    "ETH": "2026-11-20 20:40:00",
-    "SOL": "2026-11-20 20:40:00",
-    "XRP": "2026-11-20 20:40:00"
+    "BTC": "2026-11-20 20:45:00",
+    "ETH": "2026-11-20 20:45:00",
+    "SOL": "2026-11-20 20:45:00",
+    "XRP": "2026-11-20 20:45:00"
   },
   "independent_clusters": 32,
   "stop_decomp": {
@@ -193,20 +193,20 @@
       "state": "FAIL",
       "last_success": null,
       "last_error": "TimeoutError: The read operation timed out",
-      "queue": 1,
+      "queue": 0,
       "backoff_until": "2026-11-20 14:50:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-20 17:40:20",
-      "title": "SEC charges eight firms over fake crypto platforms tied to $37M fraud",
+      "decided_at": "2026-11-20 20:50:21",
+      "title": "Binance hacker moves nearly $600M in ETH, routes funds through THORChain, Chainflip",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
       "effective_at": null,
       "window_end": null,
       "rules_version": "news_rules_v1.0",
-      "diff": "둘 다 차단 없음"
+      "diff": "기존만 차단"
     },
     "holds_active": 0
   }
