@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 17:30:00",
+      "last_bar_time": "2026-11-20 17:35:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -12461,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 17:30:00",
+      "last_bar_time": "2026-11-20 17:35:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -17635,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 17:30:00",
+      "last_bar_time": "2026-11-20 17:35:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -25842,
@@ -113,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-20 17:30:00",
+      "last_bar_time": "2026-11-20 17:35:00",
       "today": {
         "date": "2026-11-20",
         "realized_pnl": -25172,
@@ -122,7 +122,7 @@
       }
     }
   },
-  "updated_at": "2026-11-20 17:35:30",
+  "updated_at": "2026-11-20 17:40:28",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 54,
@@ -153,14 +153,14 @@
       "state": "FAIL",
       "last_success": null,
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "queue": 0,
       "backoff_until": "2026-11-20 14:50:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-20 14:05:20",
-      "title": "Binance’s $6.5B freeze order, Hong Kong ‘suspicious’ of HYPE: Asia Express",
-      "decision": "NOT_EXTRACTED",
+      "decided_at": "2026-11-20 17:40:20",
+      "title": "SEC charges eight firms over fake crypto platforms tied to $37M fraud",
+      "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
       "effective_at": null,
@@ -170,6 +170,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-20 17:40:20",
+        "title": "SEC charges eight firms over fake crypto platforms tied to $37M fraud",
+        "url": "https://cointelegraph.com/news/sec-charges-eight-fake-crypto-platforms-37m-fraud?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "legacy": "medium ALL 11-20 17:35~19:35 (규칙 medium:ALL:regulation)",
+        "decision": "EXTRACTOR_FAILED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-20 14:05:20",
         "title": "Binance’s $6.5B freeze order, Hong Kong ‘suspicious’ of HYPE: Asia Express",
@@ -294,21 +309,6 @@
         "decided_at": "2026-11-19 01:35:20",
         "title": "Crypto Long & Short: Crypto exchanges shouldn’t double as the vault",
         "url": "https://www.coindesk.com/coindesk-indices/2026/11/18/crypto-long-and-short-crypto-exchanges-shouldn-t-double-as-the-vault",
-        "legacy": "추가 안 됨 (규칙 해당 없음)",
-        "decision": "EXTRACTOR_FAILED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
-        "event_type": "",
-        "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-18 17:05:21",
-        "title": "Google finds self-running AI hacking tool with Russian comments in its files",
-        "url": "https://www.coindesk.com/tech/2026/11/18/google-finds-self-running-ai-hacking-tool-with-russian-comments-in-its-files",
         "legacy": "추가 안 됨 (규칙 해당 없음)",
         "decision": "EXTRACTOR_FAILED",
         "rows": "",

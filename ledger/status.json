@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4380
   },
-  "last_bar_time": "2026-11-20 17:30:00",
-  "last_price": 84070000,
+  "last_bar_time": "2026-11-20 17:35:00",
+  "last_price": 84055000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-20 17:35:30",
+  "updated_at": "2026-11-20 17:40:27",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 84070000,
-    "ETH": 2381000,
-    "SOL": 98750.0,
-    "XRP": 1311.0
+    "BTC": 84055000,
+    "ETH": 2382000,
+    "SOL": 98700.0,
+    "XRP": 1309.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-20 17:30:00",
-    "ETH": "2026-11-20 17:30:00",
-    "SOL": "2026-11-20 17:30:00",
-    "XRP": "2026-11-20 17:30:00"
+    "BTC": "2026-11-20 17:35:00",
+    "ETH": "2026-11-20 17:35:00",
+    "SOL": "2026-11-20 17:35:00",
+    "XRP": "2026-11-20 17:35:00"
   },
   "independent_clusters": 32,
   "stop_decomp": {
@@ -183,14 +183,14 @@
       "state": "FAIL",
       "last_success": null,
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "queue": 0,
       "backoff_until": "2026-11-20 14:50:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-20 14:05:20",
-      "title": "Binance’s $6.5B freeze order, Hong Kong ‘suspicious’ of HYPE: Asia Express",
-      "decision": "NOT_EXTRACTED",
+      "decided_at": "2026-11-20 17:40:20",
+      "title": "SEC charges eight firms over fake crypto platforms tied to $37M fraud",
+      "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
       "effective_at": null,
