@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4281
   },
-  "last_bar_time": "2026-11-21 10:45:00",
-  "last_price": 81000000,
+  "last_bar_time": "2026-11-21 10:50:00",
+  "last_price": 80889000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-21 10:50:25",
+  "updated_at": "2026-11-21 10:55:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 81000000,
-    "ETH": 2229000,
-    "SOL": 94500.0,
+    "BTC": 80889000,
+    "ETH": 2228000,
+    "SOL": 94350.0,
     "XRP": 1247.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-21 10:45:00",
-    "ETH": "2026-11-21 10:45:00",
-    "SOL": "2026-11-21 10:45:00",
-    "XRP": "2026-11-21 10:45:00"
+    "BTC": "2026-11-21 10:50:00",
+    "ETH": "2026-11-21 10:50:00",
+    "SOL": "2026-11-21 10:50:00",
+    "XRP": "2026-11-21 10:50:00"
   },
   "independent_clusters": 49,
   "stop_decomp": {
@@ -168,20 +168,20 @@
       "state": "BACKOFF",
       "last_success": null,
       "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
-      "queue": 1,
+      "queue": 0,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-21 04:00:20",
-      "title": "Binance hack laundering ramps up as $149 million in bitcoin mixed through coinjoins: Elliptic",
-      "decision": "EXTRACTOR_FAILED",
+      "decided_at": "2026-11-21 10:55:20",
+      "title": "Wrapped Monero token crashes 99.8% amid suspected $13.5M exploit",
+      "decision": "NOT_EXTRACTED",
       "rows": null,
       "targets": null,
       "effective_at": null,
       "window_end": null,
       "rules_version": "news_rules_v1.0",
-      "diff": "기존만 차단"
+      "diff": "둘 다 차단 없음"
     },
     "holds_active": 0
   }

@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 10:45:00",
+      "last_bar_time": "2026-11-21 10:50:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -781,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 10:45:00",
+      "last_bar_time": "2026-11-21 10:50:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -370,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 10:45:00",
+      "last_bar_time": "2026-11-21 10:50:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -20464,
@@ -113,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 10:45:00",
+      "last_bar_time": "2026-11-21 10:50:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 4745,
@@ -122,7 +122,7 @@
       }
     }
   },
-  "updated_at": "2026-11-21 10:50:26",
+  "updated_at": "2026-11-21 10:55:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 71,
@@ -153,23 +153,38 @@
       "state": "BACKOFF",
       "last_success": null,
       "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
-      "queue": 1,
+      "queue": 0,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-21 04:00:20",
-      "title": "Binance hack laundering ramps up as $149 million in bitcoin mixed through coinjoins: Elliptic",
-      "decision": "EXTRACTOR_FAILED",
+      "decided_at": "2026-11-21 10:55:20",
+      "title": "Wrapped Monero token crashes 99.8% amid suspected $13.5M exploit",
+      "decision": "NOT_EXTRACTED",
       "rows": null,
       "targets": null,
       "effective_at": null,
       "window_end": null,
       "rules_version": "news_rules_v1.0",
-      "diff": "기존만 차단"
+      "diff": "둘 다 차단 없음"
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-21 10:55:20",
+        "title": "Wrapped Monero token crashes 99.8% amid suspected $13.5M exploit",
+        "url": "https://cointelegraph.com/news/wrapped-monero-token-crashes-998-amid-suspected-135m-exploit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "NOT_EXTRACTED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-21 04:00:20",
         "title": "Binance hack laundering ramps up as $149 million in bitcoin mixed through coinjoins: Elliptic",
@@ -296,21 +311,6 @@
         "url": "https://www.coindesk.com/tech/2026/11/19/ethereum-block-builders-received-the-most-in-a-usd3-4-million-vault-hack-data-shows",
         "legacy": "medium ETH 11-19 14:50~16:50 (규칙 medium:ETH:hack)",
         "decision": "NOT_EXTRACTED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
-        "event_type": "",
-        "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-19 13:25:20",
-        "title": "Ledger expands hardware hack investigation to Germany, UAE as new cases emerge",
-        "url": "https://www.theblock.co/news/web3/2026-11-18-ledger-new-hardware-incidents-germany-uae-443530",
-        "legacy": "추가 안 됨 (규칙 해당 없음)",
-        "decision": "EXTRACTOR_FAILED",
         "rows": "",
         "targets": "",
         "window": "",
