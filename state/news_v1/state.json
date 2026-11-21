@@ -1,10 +1,10 @@
 {
  "active_from": "2026-11-17 19:50:21",
  "collector": {
-  "last_attempt": "2026-11-22 03:25:21",
+  "last_attempt": "2026-11-22 04:00:21",
   "mode": "shared(event_feeds)",
   "ok": true,
-  "last_success": "2026-11-22 03:25:21",
+  "last_success": "2026-11-22 04:00:21",
   "error": null,
   "sources_ok": 3
  },
@@ -42,7 +42,8 @@
   "d96501d7f2ec",
   "59cd1d5801d0",
   "6082857bd291",
-  "c1d289258c9e"
+  "c1d289258c9e",
+  "0ca86751b6f2"
  ],
  "queue": {
   "7abecec3449e": {
@@ -180,10 +181,14 @@
   "c1d289258c9e": {
    "status": "queued",
    "fails": 0
+  },
+  "0ca86751b6f2": {
+   "status": "queued",
+   "fails": 0
   }
  },
  "extractor": {
-  "queue": 1,
+  "queue": 2,
   "last_attempt": "2026-11-21 05:00:21",
   "state": "BACKOFF",
   "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
@@ -191,7 +196,7 @@
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 0.0,
+ "elapsed_s": 0.01,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
   "decided_at": "2026-11-22 03:35:20",
