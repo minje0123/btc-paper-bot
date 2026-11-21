@@ -1,1 +1,2 @@
 signal_id,coin,signal_time,side,regime,high_vol,ret30,vol7_pct,A_status,A_entry_time,A_entry,A_stop0,A_exit_time,A_exit_reason,A_R,A_preR,B_status,B_entry_time,B_entry,B_stop0,B_exit_time,B_exit_reason,B_R,B_preR,d_sig,d_both
+SOL-202611210930S,SOL,2026-11-21 09:30,S,하락,0,-0.2754,0.742,open,,,95348,,,,,none,,,,,,,,,
