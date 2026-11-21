@@ -1,10 +1,10 @@
 {
  "active_from": "2026-11-17 19:50:21",
  "collector": {
-  "last_attempt": "2026-11-21 17:20:20",
+  "last_attempt": "2026-11-21 17:50:20",
   "mode": "shared(event_feeds)",
   "ok": true,
-  "last_success": "2026-11-21 17:20:20",
+  "last_success": "2026-11-21 17:50:20",
   "error": null,
   "sources_ok": 3
  },
@@ -181,7 +181,7 @@
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 0.0,
+ "elapsed_s": 0.01,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
   "decided_at": "2026-11-21 10:55:20",
