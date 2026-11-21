@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4214
   },
-  "last_bar_time": "2026-11-22 05:05:00",
-  "last_price": 82775000,
+  "last_bar_time": "2026-11-22 05:10:00",
+  "last_price": 82698000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-22 05:10:51",
+  "updated_at": "2026-11-22 05:15:52",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 82775000,
-    "ETH": 2313000,
-    "SOL": 96700.0,
-    "XRP": 1283.0
+    "BTC": 82698000,
+    "ETH": 2309000,
+    "SOL": 96600.0,
+    "XRP": 1281.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-22 05:05:00",
-    "ETH": "2026-11-22 05:05:00",
-    "SOL": "2026-11-22 05:05:00",
-    "XRP": "2026-11-22 05:05:00"
+    "BTC": "2026-11-22 05:10:00",
+    "ETH": "2026-11-22 05:10:00",
+    "SOL": "2026-11-22 05:10:00",
+    "XRP": "2026-11-22 05:10:00"
   },
   "independent_clusters": 66,
   "stop_decomp": {
@@ -168,14 +168,14 @@
       "state": "FAIL",
       "last_success": null,
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 2,
+      "queue": 0,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-22 03:35:20",
-      "title": "Ether treasury firm BTCS warns SEC its $54 million Aave loan could be liquidated",
-      "decision": "NOT_EXTRACTED",
+      "decided_at": "2026-11-22 05:15:20",
+      "title": "Cross-chain protocol Chainflip's FLIP tanks 30% after suspected $4.86 million vault drain",
+      "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
       "effective_at": null,

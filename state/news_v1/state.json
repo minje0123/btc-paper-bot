@@ -179,29 +179,29 @@
    "fails": 0
   },
   "c1d289258c9e": {
-   "status": "queued",
-   "fails": 2
+   "status": "failed",
+   "fails": 3
   },
   "0ca86751b6f2": {
-   "status": "queued",
-   "fails": 2
+   "status": "failed",
+   "fails": 3
   }
  },
  "extractor": {
-  "queue": 2,
-  "last_attempt": "2026-11-22 05:10:21",
+  "queue": 0,
+  "last_attempt": "2026-11-22 05:15:20",
   "state": "FAIL",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
   "backoff_until": "2026-11-22 05:00:21"
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 23.25,
+ "elapsed_s": 24.68,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-22 03:35:20",
-  "title": "Ether treasury firm BTCS warns SEC its $54 million Aave loan could be liquidated",
-  "decision": "NOT_EXTRACTED",
+  "decided_at": "2026-11-22 05:15:20",
+  "title": "Cross-chain protocol Chainflip's FLIP tanks 30% after suspected $4.86 million vault drain",
+  "decision": "EXTRACTOR_FAILED",
   "rows": null,
   "targets": null,
   "effective_at": null,
