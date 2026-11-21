@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4297
   },
-  "last_bar_time": "2026-11-21 16:15:00",
-  "last_price": 80184000,
+  "last_bar_time": "2026-11-21 16:20:00",
+  "last_price": 80196000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-21 16:20:25",
+  "updated_at": "2026-11-21 16:25:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 80184000,
-    "ETH": 2249000,
-    "SOL": 93450.0,
-    "XRP": 1234.0
+    "BTC": 80196000,
+    "ETH": 2252000,
+    "SOL": 93650.0,
+    "XRP": 1238.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-21 16:15:00",
-    "ETH": "2026-11-21 16:15:00",
-    "SOL": "2026-11-21 16:15:00",
-    "XRP": "2026-11-21 16:15:00"
+    "BTC": "2026-11-21 16:20:00",
+    "ETH": "2026-11-21 16:20:00",
+    "SOL": "2026-11-21 16:20:00",
+    "XRP": "2026-11-21 16:20:00"
   },
   "independent_clusters": 52,
   "stop_decomp": {
@@ -107,15 +107,7 @@
     "breaking": "OK",
     "last_success_schedule": "2026-11-21 13:10:21",
     "last_success_breaking": "2026-11-21 16:20:20",
-    "upcoming": [
-      {
-        "time": "2026-11-21 15:25:00",
-        "name": "[돌발] 대규모 청산 (XRP): XRP falls 10% as long bets unwind and ETF assets s",
-        "importance": "medium",
-        "coins": "XRP",
-        "source": "https://www.coindesk.com/markets/2026/11/21/xrp-falls-10-as-long-bets-unwind-and-etf-assets-slip-below-usd1-billion"
-      }
-    ],
+    "upcoming": [],
     "last_attempt_schedule": "2026-11-21 13:10:21",
     "last_attempt_breaking": "2026-11-21 16:20:20",
     "schedule_items_last": 9,
