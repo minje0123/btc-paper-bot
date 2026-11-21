@@ -180,23 +180,23 @@
   },
   "c1d289258c9e": {
    "status": "queued",
-   "fails": 1
+   "fails": 2
   },
   "0ca86751b6f2": {
    "status": "queued",
-   "fails": 1
+   "fails": 2
   }
  },
  "extractor": {
   "queue": 2,
-  "last_attempt": "2026-11-22 05:05:21",
+  "last_attempt": "2026-11-22 05:10:21",
   "state": "FAIL",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
   "backoff_until": "2026-11-22 05:00:21"
  },
  "clusters": {},
  "facts": {},
- "elapsed_s": 5.42,
+ "elapsed_s": 23.25,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
   "decided_at": "2026-11-22 03:35:20",
