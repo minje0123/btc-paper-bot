@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4214
   },
-  "last_bar_time": "2026-11-22 04:55:00",
-  "last_price": 82698000,
+  "last_bar_time": "2026-11-22 05:00:00",
+  "last_price": 82669000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-22 05:00:24",
+  "updated_at": "2026-11-22 05:05:33",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 82698000,
-    "ETH": 2310000,
-    "SOL": 96700.0,
-    "XRP": 1282.0
+    "BTC": 82669000,
+    "ETH": 2309000,
+    "SOL": 96550.0,
+    "XRP": 1280.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-22 04:55:00",
-    "ETH": "2026-11-22 04:55:00",
-    "SOL": "2026-11-22 04:55:00",
-    "XRP": "2026-11-22 04:55:00"
+    "BTC": "2026-11-22 05:00:00",
+    "ETH": "2026-11-22 05:00:00",
+    "SOL": "2026-11-22 05:00:00",
+    "XRP": "2026-11-22 05:00:00"
   },
   "independent_clusters": 66,
   "stop_decomp": {
@@ -106,10 +106,10 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-22 01:10:21",
-    "last_success_breaking": "2026-11-22 04:35:20",
+    "last_success_breaking": "2026-11-22 05:05:21",
     "upcoming": [],
     "last_attempt_schedule": "2026-11-22 01:10:21",
-    "last_attempt_breaking": "2026-11-22 04:35:20",
+    "last_attempt_breaking": "2026-11-22 05:05:21",
     "schedule_items_last": 9,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -132,21 +132,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-22 04:35:20",
+        "last_success": "2026-11-22 05:05:21",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-22 04:35:20",
+        "last_success": "2026-11-22 05:05:21",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-22 04:35:20",
+        "last_success": "2026-11-22 05:05:21",
         "count": 20,
         "error": null,
         "optional": false
@@ -161,13 +161,13 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-22 04:35:20",
+      "last_success": "2026-11-22 05:05:21",
       "error": null
     },
     "extractor": {
-      "state": "BACKOFF",
+      "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
+      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
       "queue": 2,
       "backoff_until": "2026-11-22 05:00:21"
     },
