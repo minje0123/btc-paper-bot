@@ -39,9 +39,16 @@
       "max_drawdown_pct": 2.1,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "롱",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-21 20:30:00",
+        "stop": 79618171.0,
+        "t1": 80724000.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-21 20:25:00",
+      "last_bar_time": "2026-11-21 20:30:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 815,
@@ -52,9 +59,9 @@
     "ETH": {
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
-      "balance": 974264,
-      "equity": 970875,
-      "realized_pnl": -25736,
+      "balance": 976811,
+      "equity": 979570,
+      "realized_pnl": -23189,
       "withdrawn_total": 0,
       "trades_count": 19,
       "win_rate": 42.1,
@@ -69,26 +76,26 @@
         "grade": "B",
         "entry_time": "2026-11-21 19:30:00",
         "entry": 2264000,
-        "stop": 2250874,
+        "stop": 2264000,
         "stop0": 2250874,
         "t1": 2280000,
         "next_target": null,
         "qty": 0.3711,
-        "qty_open": 0.3711,
+        "qty_open": 0.1856,
         "leverage": 0.86,
         "risk_money": 4871,
-        "t1_done": false,
-        "realized_part": 0,
-        "last_price": 2256000,
-        "unrealized_pnl": -3389,
+        "t1_done": true,
+        "realized_part": 2547,
+        "last_price": 2280000,
+        "unrealized_pnl": 2760,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
-      "pending_close": null,
-      "last_bar_time": "2026-11-21 20:25:00",
+      "pending_close": "거래량 급증",
+      "last_bar_time": "2026-11-21 20:30:00",
       "today": {
         "date": "2026-11-21",
-        "realized_pnl": -700,
+        "realized_pnl": 1847,
         "no_new_entries": false,
         "reason": null
       }
@@ -109,7 +116,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 20:25:00",
+      "last_bar_time": "2026-11-21 20:30:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -19870,
@@ -133,7 +140,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 20:25:00",
+      "last_bar_time": "2026-11-21 20:30:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 4427,
@@ -142,7 +149,7 @@
       }
     }
   },
-  "updated_at": "2026-11-21 20:30:31",
+  "updated_at": "2026-11-21 20:35:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 76,
@@ -343,7 +350,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 91,
+    "signals": 92,
     "blocked": 1,
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,
