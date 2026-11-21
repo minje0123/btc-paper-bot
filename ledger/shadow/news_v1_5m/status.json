@@ -20,10 +20,10 @@
     "dayLossP": 100,
     "maxConsec": 1000
   },
-  "trades_count": 81,
-  "win_rate": 34.6,
-  "avg_R": -0.496,
-  "sum_R": -40.19,
+  "trades_count": 82,
+  "win_rate": 35.4,
+  "avg_R": -0.454,
+  "sum_R": -37.246,
   "coins": {
     "BTC": {
       "market": "KRW-BTC",
@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 12:30:00",
+      "last_bar_time": "2026-11-21 12:35:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -781,
@@ -52,43 +52,23 @@
     "ETH": {
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
-      "balance": 976956,
-      "equity": 988022,
-      "realized_pnl": -23044,
+      "balance": 987521,
+      "equity": 987521,
+      "realized_pnl": -12479,
       "withdrawn_total": 0,
-      "trades_count": 16,
-      "win_rate": 43.8,
-      "avg_R": -0.234,
-      "sum_R": -3.749,
+      "trades_count": 17,
+      "win_rate": 47.1,
+      "avg_R": -0.047,
+      "sum_R": -0.804,
       "max_drawdown_pct": 3.76,
-      "has_position": true,
-      "position": {
-        "id": "202611211230S",
-        "side": "숏",
-        "setup": "구간",
-        "grade": "A",
-        "entry_time": "2026-11-21 12:30:00",
-        "entry": 2204000,
-        "stop": 2204000,
-        "stop0": 2213106,
-        "t1": 2192000,
-        "next_target": 2189000,
-        "qty": 0.4821,
-        "qty_open": 0.2411,
-        "leverage": 1.09,
-        "risk_money": 4873,
-        "t1_done": true,
-        "realized_part": 2362,
-        "last_price": 2157000,
-        "unrealized_pnl": 11066,
-        "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
-      },
+      "has_position": false,
+      "position": null,
       "pending_entry": null,
-      "pending_close": "거래량 급증",
-      "last_bar_time": "2026-11-21 12:30:00",
+      "pending_close": null,
+      "last_bar_time": "2026-11-21 12:35:00",
       "today": {
         "date": "2026-11-21",
-        "realized_pnl": 1992,
+        "realized_pnl": 12557,
         "no_new_entries": false,
         "reason": null
       }
@@ -109,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 12:30:00",
+      "last_bar_time": "2026-11-21 12:35:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": -20464,
@@ -133,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-21 12:30:00",
+      "last_bar_time": "2026-11-21 12:35:00",
       "today": {
         "date": "2026-11-21",
         "realized_pnl": 4745,
@@ -142,10 +122,10 @@
       }
     }
   },
-  "updated_at": "2026-11-21 12:35:26",
+  "updated_at": "2026-11-21 12:40:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
-  "independent_clusters": 71,
+  "independent_clusters": 72,
   "stop_decomp": {
     "plan_R": -1.0,
     "gap_R": -0.0,
@@ -166,7 +146,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-21 12:10:20",
+      "last_success": "2026-11-21 12:40:20",
       "error": null
     },
     "extractor": {
@@ -348,7 +328,7 @@
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,
     "sum_d": 1.349,
-    "n_d": 82,
+    "n_d": 83,
     "definition": "d = 필터 R − 무필터 R (같은 신호 ID, 막힌 신호 필터 R = 0). 계좌 경로 차이는 두 장부 status 로 비교",
     "baseline": "baseline_v141_5m",
     "filter_pairs_csv": "research/news/filter_pairs.csv",
