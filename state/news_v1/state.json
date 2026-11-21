@@ -168,12 +168,12 @@
    "fails": 2
   },
   "59cd1d5801d0": {
-   "status": "queued",
+   "status": "stale",
    "fails": 0
   }
  },
  "extractor": {
-  "queue": 1,
+  "queue": 0,
   "last_attempt": "2026-11-21 05:00:21",
   "state": "BACKOFF",
   "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
@@ -184,8 +184,8 @@
  "elapsed_s": 0.0,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-21 10:55:20",
-  "title": "Wrapped Monero token crashes 99.8% amid suspected $13.5M exploit",
+  "decided_at": "2026-11-21 21:20:21",
+  "title": "XRP falls 10% as long bets unwind and ETF assets slip below $1 billion",
   "decision": "NOT_EXTRACTED",
   "rows": null,
   "targets": null,
