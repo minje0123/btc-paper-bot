@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 02:00:00",
+      "last_bar_time": "2026-11-22 02:05:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": 0,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 02:00:00",
+      "last_bar_time": "2026-11-22 02:05:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": -18076,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 02:00:00",
+      "last_bar_time": "2026-11-22 02:05:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": -5103,
@@ -101,7 +101,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 913599,
-      "equity": 916735,
+      "equity": 917313,
       "realized_pnl": -86401,
       "withdrawn_total": 0,
       "trades_count": 38,
@@ -127,13 +127,13 @@
         "risk_money": 4559,
         "t1_done": true,
         "realized_part": 1699,
-        "last_price": 96800,
-        "unrealized_pnl": 3136,
+        "last_price": 96900,
+        "unrealized_pnl": 3715,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 02:00:00",
+      "last_bar_time": "2026-11-22 02:05:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": -4237,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-22 02:05:25",
+  "updated_at": "2026-11-22 02:10:25",
   "independent_clusters": 88,
   "stop_decomp": {
     "plan_R": -1.0,
