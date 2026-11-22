@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 995567,
-      "equity": 991271,
+      "equity": 991778,
       "realized_pnl": -4433,
       "withdrawn_total": 0,
       "trades_count": 12,
@@ -55,13 +55,13 @@
         "risk_money": 4978,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 80850000,
-        "unrealized_pnl": -4296,
+        "last_price": 80815000,
+        "unrealized_pnl": -3789,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 15:05:00",
+      "last_bar_time": "2026-11-22 15:10:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": 0,
@@ -85,7 +85,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 15:05:00",
+      "last_bar_time": "2026-11-22 15:10:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": -25598,
@@ -109,7 +109,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 15:05:00",
+      "last_bar_time": "2026-11-22 15:10:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": -5138,
@@ -133,7 +133,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 15:05:00",
+      "last_bar_time": "2026-11-22 15:10:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": 10220,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-22 15:10:29",
+  "updated_at": "2026-11-22 15:15:39",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 91,
@@ -172,14 +172,14 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 0,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-22 05:15:20",
-      "title": "Cross-chain protocol Chainflip's FLIP tanks 30% after suspected $4.86 million vault drain",
+      "decided_at": "2026-11-22 15:15:20",
+      "title": "Chainflip confirms $12M hack, offers attacker 10% bounty",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
@@ -190,6 +190,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-22 15:15:20",
+        "title": "Chainflip confirms $12M hack, offers attacker 10% bounty",
+        "url": "https://cointelegraph.com/news/chainflip-12m-crypto-hack-10-percent-bounty?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "EXTRACTOR_FAILED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-22 05:15:20",
         "title": "Cross-chain protocol Chainflip's FLIP tanks 30% after suspected $4.86 million vault drain",
@@ -316,21 +331,6 @@
         "url": "https://cointelegraph.com/news/sec-charges-eight-fake-crypto-platforms-37m-fraud?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
         "legacy": "medium ALL 11-20 17:35~19:35 (규칙 medium:ALL:regulation)",
         "decision": "EXTRACTOR_FAILED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
-        "event_type": "",
-        "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-20 14:05:20",
-        "title": "Binance’s $6.5B freeze order, Hong Kong ‘suspicious’ of HYPE: Asia Express",
-        "url": "https://cointelegraph.com/magazine/binances-65b-freeze-order-hong-kong-suspicious-of-hype-asia-express?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-        "legacy": "추가 안 됨 (규칙 해당 없음)",
-        "decision": "NOT_EXTRACTED",
         "rows": "",
         "targets": "",
         "window": "",
