@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 04:15:00",
+      "last_bar_time": "2026-11-23 04:20:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 6037,
@@ -53,7 +53,7 @@
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
       "balance": 955362,
-      "equity": 952944,
+      "equity": 952270,
       "realized_pnl": -44638,
       "withdrawn_total": 0,
       "trades_count": 27,
@@ -79,13 +79,13 @@
         "risk_money": 4777,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 2341000,
-        "unrealized_pnl": -2418,
+        "last_price": 2339000,
+        "unrealized_pnl": -3092,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 04:15:00",
+      "last_bar_time": "2026-11-23 04:20:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 0,
@@ -109,7 +109,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 04:15:00",
+      "last_bar_time": "2026-11-23 04:20:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 0,
@@ -133,7 +133,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 04:15:00",
+      "last_bar_time": "2026-11-23 04:20:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 0,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-23 04:20:30",
+  "updated_at": "2026-11-23 04:25:34",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 98,
@@ -170,26 +170,41 @@
       "error": null
     },
     "extractor": {
-      "state": "FAIL",
-      "last_success": null,
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "state": "OK",
+      "last_success": "2026-11-23 04:25:21",
+      "last_error": null,
+      "queue": 0,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-22 18:55:20",
-      "title": "Bitcoin briefly drops to $17K on Kraken, exchange upholds trades",
-      "decision": "EXTRACTOR_FAILED",
-      "rows": null,
-      "targets": null,
-      "effective_at": null,
-      "window_end": null,
+      "decided_at": "2026-11-23 04:25:21",
+      "title": "Chainflip’s losses climb to $12 million after protocol discloses 122.9 BTC theft, offers hacker bounty",
+      "decision": "RECORD",
+      "rows": "D04|D16",
+      "targets": "",
+      "effective_at": "",
+      "window_end": "",
       "rules_version": "news_rules_v1.0",
       "diff": "둘 다 차단 없음"
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-23 04:25:21",
+        "title": "Chainflip’s losses climb to $12 million after protocol discloses 122.9 BTC theft, offers hacker bounty",
+        "url": "https://www.theblock.co/news/defi/2026-11-22-chainflips-losses-climb-to-12-million-after-protocol-discloses-122-9-btc-theft-offers-hacker-bounty-444829",
+        "legacy": "medium BTC 11-23 04:20~06:20 (규칙 medium:BTC:hack)",
+        "decision": "RECORD",
+        "rows": "D04|D16",
+        "targets": "",
+        "window": "",
+        "evidence": "protocol discloses 122.9 BTC theft",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "new_breach",
+        "confirmation": "SINGLE_CLAIM"
+      },
       {
         "decided_at": "2026-11-22 18:55:20",
         "title": "Bitcoin briefly drops to $17K on Kraken, exchange upholds trades",
@@ -322,21 +337,6 @@
         "evidence": "",
         "rules_version": "news_rules_v1.0",
         "diff": "기존만 차단",
-        "event_type": "",
-        "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-21 01:25:21",
-        "title": "Wagyu’s XMR1 wrapped Monero plunges 99% after $13 million hack as founder promises refunds",
-        "url": "https://www.theblock.co/news/defi/2026-11-20-wagyus-xmr1-wrapped-monero-plunges-99-after-13-million-hack-founder-promises-refunds-444747",
-        "legacy": "추가 안 됨 (규칙 해당 없음)",
-        "decision": "EXTRACTOR_FAILED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
         "event_type": "",
         "confirmation": ""
       }

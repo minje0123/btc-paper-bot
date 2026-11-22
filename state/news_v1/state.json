@@ -208,29 +208,80 @@
    "fails": 3
   },
   "2507a52e30d1": {
-   "status": "queued",
+   "status": "done",
    "fails": 2
   }
  },
  "extractor": {
-  "queue": 1,
-  "last_attempt": "2026-11-23 04:20:21",
-  "state": "FAIL",
-  "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-  "backoff_until": "2026-11-22 05:00:21"
+  "queue": 0,
+  "last_attempt": "2026-11-23 04:25:21",
+  "state": "OK",
+  "last_error": null,
+  "backoff_until": "2026-11-22 05:00:21",
+  "last_success": "2026-11-23 04:25:21"
  },
- "clusters": {},
- "facts": {},
- "elapsed_s": 4.57,
+ "clusters": {
+  "security:chainflip": {
+   "sig": {
+    "type": "new_breach",
+    "conf_rank": 1,
+    "scale_rank": 1,
+    "amount": 12000000.0,
+    "persist": "UNCLEAR",
+    "coins": [
+     "BTC"
+    ]
+   },
+   "first_article": "2507a52e30d1"
+  }
+ },
+ "facts": {
+  "2507a52e30d1": {
+   "cluster": "security:chainflip",
+   "facts": {
+    "event_type": "new_breach",
+    "is_new_information": true,
+    "event_time_utc": null,
+    "entity_name": "Chainflip",
+    "entity_kind": "protocol",
+    "venue_name": null,
+    "damage_usd": 12000000.0,
+    "moved_usd": null,
+    "exchange_inflow_usd": null,
+    "same_funds_as_earlier": null,
+    "destination": null,
+    "status": null,
+    "scheduled_in_advance": null,
+    "market_wide": null,
+    "credited_outlet": null,
+    "assets": [
+     {
+      "symbol": "BTC",
+      "role": "stolen_or_moved",
+      "quote": "122.9 BTC theft"
+     }
+    ],
+    "sources_cited": [],
+    "evidence": {
+     "event_type": "protocol discloses 122.9 BTC theft",
+     "is_new_information": "Chainflip’s losses climb to $12 million after protocol discloses 122.9 BTC theft, offers hacker bounty",
+     "entity_name": "protocol",
+     "entity_kind": "protocol",
+     "damage_usd": "$12 million"
+    }
+   }
+  }
+ },
+ "elapsed_s": 8.22,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-22 18:55:20",
-  "title": "Bitcoin briefly drops to $17K on Kraken, exchange upholds trades",
-  "decision": "EXTRACTOR_FAILED",
-  "rows": null,
-  "targets": null,
-  "effective_at": null,
-  "window_end": null,
+  "decided_at": "2026-11-23 04:25:21",
+  "title": "Chainflip’s losses climb to $12 million after protocol discloses 122.9 BTC theft, offers hacker bounty",
+  "decision": "RECORD",
+  "rows": "D04|D16",
+  "targets": "",
+  "effective_at": "",
+  "window_end": "",
   "rules_version": "news_rules_v1.0",
   "diff": "둘 다 차단 없음"
  }
