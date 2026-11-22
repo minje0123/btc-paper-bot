@@ -182,7 +182,7 @@
       }
     }
   },
-  "updated_at": "2026-11-22 20:15:25",
+  "updated_at": "2026-11-22 20:15:40",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 92,
@@ -206,7 +206,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-22 19:45:21",
+      "last_success": "2026-11-22 20:15:39",
       "error": null
     },
     "extractor": {
