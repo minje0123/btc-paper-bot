@@ -17,9 +17,9 @@
   "total_value": 842069,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 841090,
+  "equity": 841198,
   "realized_pnl": -157931,
-  "unrealized_pnl": -980,
+  "unrealized_pnl": -871,
   "trades_count": 83,
   "win_rate": 39.8,
   "avg_R": -0.355,
@@ -44,8 +44,8 @@
     "risk_money": 4210,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 96650.0,
-    "unrealized_pnl": -448,
+    "last_price": 96600.0,
+    "unrealized_pnl": -832,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4210
   },
-  "last_bar_time": "2026-11-22 19:40:00",
-  "last_price": 83251000,
+  "last_bar_time": "2026-11-22 19:45:00",
+  "last_price": 83336000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-22 19:45:25",
+  "updated_at": "2026-11-22 19:50:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,8 +106,8 @@
       "risk_money": 4210,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 96650.0,
-      "unrealized_pnl": -448,
+      "last_price": 96600.0,
+      "unrealized_pnl": -832,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -130,24 +130,24 @@
       "risk_money": 4210,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 83251000,
-      "unrealized_pnl": -532,
+      "last_price": 83336000,
+      "unrealized_pnl": -39,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 83251000,
-    "ETH": 2340000,
-    "SOL": 96650.0,
-    "XRP": 1277.0
+    "BTC": 83336000,
+    "ETH": 2343000,
+    "SOL": 96600.0,
+    "XRP": 1278.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-22 19:40:00",
-    "ETH": "2026-11-22 19:40:00",
-    "SOL": "2026-11-22 19:40:00",
-    "XRP": "2026-11-22 19:40:00"
+    "BTC": "2026-11-22 19:45:00",
+    "ETH": "2026-11-22 19:45:00",
+    "SOL": "2026-11-22 19:45:00",
+    "XRP": "2026-11-22 19:45:00"
   },
   "independent_clusters": 70,
   "stop_decomp": {
@@ -189,13 +189,6 @@
     "last_success_schedule": "2026-11-22 19:15:20",
     "last_success_breaking": "2026-11-22 19:45:21",
     "upcoming": [
-      {
-        "time": "2026-11-22 18:50:00",
-        "name": "[돌발] 해킹/익스플로잇 (BTC): Bitcoin briefly drops to $17K on Kraken  exchange",
-        "importance": "medium",
-        "coins": "BTC",
-        "source": "https://cointelegraph.com/news/bitcoin-17k-kraken-canadian-dollar-market-trades-stand?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
-      },
       {
         "time": "2026-11-23 23:45:00",
         "name": "[일정] Flash Manufacturing PMI · Flash Services PMI (USD)",
