@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4210
   },
-  "last_bar_time": "2026-11-22 19:05:00",
-  "last_price": 83837000,
+  "last_bar_time": "2026-11-22 19:10:00",
+  "last_price": 83653000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-22 19:10:24",
+  "updated_at": "2026-11-22 19:15:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 83837000,
-    "ETH": 2353000,
-    "SOL": 96950.0,
-    "XRP": 1282.0
+    "BTC": 83653000,
+    "ETH": 2348000,
+    "SOL": 96750.0,
+    "XRP": 1279.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-22 19:05:00",
-    "ETH": "2026-11-22 19:05:00",
-    "SOL": "2026-11-22 19:05:00",
-    "XRP": "2026-11-22 19:05:00"
+    "BTC": "2026-11-22 19:10:00",
+    "ETH": "2026-11-22 19:10:00",
+    "SOL": "2026-11-22 19:10:00",
+    "XRP": "2026-11-22 19:10:00"
   },
   "independent_clusters": 70,
   "stop_decomp": {
@@ -99,14 +99,24 @@
     "start": null,
     "until": null
   },
-  "upcoming_events": [],
+  "upcoming_events": [
+    {
+      "time": "2026-11-25 22:30:00",
+      "name": "[일정] Core PCE Price Index m/m · Prelim GDP q/q (USD)",
+      "coins": "ALL",
+      "window_start": "2026-11-25 22:00:00",
+      "window_end": "2026-11-25 23:00:00",
+      "added_at": "2026-11-22 19:15:20",
+      "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
+    }
+  ],
   "event_blocked_signals": [],
   "event_data": {
     "source": "feeds",
     "schedule": "OK",
     "breaking": "OK",
-    "last_success_schedule": "2026-11-22 13:15:20",
-    "last_success_breaking": "2026-11-22 18:45:20",
+    "last_success_schedule": "2026-11-22 19:15:20",
+    "last_success_breaking": "2026-11-22 19:15:20",
     "upcoming": [
       {
         "time": "2026-11-22 18:50:00",
@@ -114,11 +124,32 @@
         "importance": "medium",
         "coins": "BTC",
         "source": "https://cointelegraph.com/news/bitcoin-17k-kraken-canadian-dollar-market-trades-stand?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      {
+        "time": "2026-11-23 23:45:00",
+        "name": "[일정] Flash Manufacturing PMI · Flash Services PMI (USD)",
+        "importance": "medium",
+        "coins": "ALL",
+        "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
+      },
+      {
+        "time": "2026-11-25 00:00:00",
+        "name": "[일정] CB Consumer Confidence (USD)",
+        "importance": "medium",
+        "coins": "ALL",
+        "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
+      },
+      {
+        "time": "2026-11-25 22:30:00",
+        "name": "[일정] Core PCE Price Index m/m · Prelim GDP q/q (USD)",
+        "importance": "high",
+        "coins": "ALL",
+        "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
       }
     ],
-    "last_attempt_schedule": "2026-11-22 13:15:20",
-    "last_attempt_breaking": "2026-11-22 18:45:20",
-    "schedule_items_last": 9,
+    "last_attempt_schedule": "2026-11-22 19:15:20",
+    "last_attempt_breaking": "2026-11-22 19:15:20",
+    "schedule_items_last": 7,
     "breaking_items_last": 75,
     "schedule_error": null,
     "breaking_error": null,
@@ -126,8 +157,8 @@
     "sources": {
       "ff_thisweek": {
         "ok": true,
-        "last_success": "2026-11-22 13:15:20",
-        "count": 9,
+        "last_success": "2026-11-22 19:15:20",
+        "count": 7,
         "error": null,
         "optional": false
       },
@@ -140,21 +171,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-22 18:45:20",
+        "last_success": "2026-11-22 19:15:20",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-22 18:45:20",
+        "last_success": "2026-11-22 19:15:20",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-22 18:45:20",
+        "last_success": "2026-11-22 19:15:20",
         "count": 20,
         "error": null,
         "optional": false
@@ -169,7 +200,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-22 18:45:20",
+      "last_success": "2026-11-22 19:15:20",
       "error": null
     },
     "extractor": {

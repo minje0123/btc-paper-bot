@@ -16,3 +16,6 @@ time_kst,name,importance,coins,before_min,after_min,added_at,source
 2026-11-21 03:55,[돌발] 해킹/익스플로잇 (BTC): Binance hack laundering ramps up as $149 million i,high,BTC,0,120,2026-11-21 03:50:20,https://www.theblock.co/news/markets/2026-11-20-binance-hack-laundering-ramps-up-149-million-bitcoin-mixed-coinjoins-elliptic-444758
 2026-11-21 15:25,[돌발] 대규모 청산 (XRP): XRP falls 10% as long bets unwind and ETF assets s,medium,XRP,0,90,2026-11-21 15:20:20,https://www.coindesk.com/markets/2026/11/21/xrp-falls-10-as-long-bets-unwind-and-etf-assets-slip-below-usd1-billion
 2026-11-22 18:50,[돌발] 해킹/익스플로잇 (BTC): Bitcoin briefly drops to $17K on Kraken  exchange,medium,BTC,0,120,2026-11-22 18:45:20,https://cointelegraph.com/news/bitcoin-17k-kraken-canadian-dollar-market-trades-stand?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+2026-11-23 23:45,[일정] Flash Manufacturing PMI · Flash Services PMI (USD),medium,ALL,,,2026-11-22 19:15:20,https://nfs.faireconomy.media/ff_calendar_thisweek.json
+2026-11-25 00:00,[일정] CB Consumer Confidence (USD),medium,ALL,,,2026-11-22 19:15:20,https://nfs.faireconomy.media/ff_calendar_thisweek.json
+2026-11-25 22:30,[일정] Core PCE Price Index m/m · Prelim GDP q/q (USD),high,ALL,,,2026-11-22 19:15:20,https://nfs.faireconomy.media/ff_calendar_thisweek.json
