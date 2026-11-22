@@ -17,9 +17,9 @@
   "total_value": 848006,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 841692,
+  "equity": 843556,
   "realized_pnl": -151994,
-  "unrealized_pnl": -6314,
+  "unrealized_pnl": -4451,
   "trades_count": 87,
   "win_rate": 41.4,
   "avg_R": -0.321,
@@ -44,8 +44,8 @@
     "risk_money": 4240,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 83150000,
-    "unrealized_pnl": 632,
+    "last_price": 83143000,
+    "unrealized_pnl": 563,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4240
   },
-  "last_bar_time": "2026-11-22 22:05:00",
-  "last_price": 83150000,
+  "last_bar_time": "2026-11-22 22:10:00",
+  "last_price": 83143000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-22 22:10:25",
+  "updated_at": "2026-11-22 22:15:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,8 +106,8 @@
       "risk_money": 4240,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 83150000,
-      "unrealized_pnl": 632,
+      "last_price": 83143000,
+      "unrealized_pnl": 563,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -154,8 +154,8 @@
       "risk_money": 4240,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 96000.0,
-      "unrealized_pnl": -3050,
+      "last_price": 96050.0,
+      "unrealized_pnl": -2624,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -178,24 +178,24 @@
       "risk_money": 4240,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 1262.0,
-      "unrealized_pnl": -3489,
+      "last_price": 1264.0,
+      "unrealized_pnl": -1983,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 83150000,
+    "BTC": 83143000,
     "ETH": 2333000,
-    "SOL": 96000.0,
-    "XRP": 1262.0
+    "SOL": 96050.0,
+    "XRP": 1264.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-22 22:05:00",
-    "ETH": "2026-11-22 22:05:00",
-    "SOL": "2026-11-22 22:05:00",
-    "XRP": "2026-11-22 22:05:00"
+    "BTC": "2026-11-22 22:10:00",
+    "ETH": "2026-11-22 22:10:00",
+    "SOL": "2026-11-22 22:10:00",
+    "XRP": "2026-11-22 22:10:00"
   },
   "independent_clusters": 74,
   "stop_decomp": {
