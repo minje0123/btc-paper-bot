@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 16:40:00",
+      "last_bar_time": "2026-11-22 16:45:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": -6195,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 16:40:00",
+      "last_bar_time": "2026-11-22 16:45:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": -25598,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 16:40:00",
+      "last_bar_time": "2026-11-22 16:45:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": -5138,
@@ -113,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 16:40:00",
+      "last_bar_time": "2026-11-22 16:45:00",
       "today": {
         "date": "2026-11-22",
         "realized_pnl": 10220,
@@ -122,7 +122,7 @@
       }
     }
   },
-  "updated_at": "2026-11-22 16:45:39",
+  "updated_at": "2026-11-22 16:50:40",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 92,
@@ -153,13 +153,13 @@
       "state": "FAIL",
       "last_success": null,
       "last_error": "TimeoutError: The read operation timed out",
-      "queue": 1,
+      "queue": 0,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-22 15:15:20",
-      "title": "Chainflip confirms $12M hack, offers attacker 10% bounty",
+      "decided_at": "2026-11-22 16:50:21",
+      "title": "South Korean exchanges halt CYBER transfers amid suspected bridge exploit",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
@@ -170,6 +170,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-22 16:50:21",
+        "title": "South Korean exchanges halt CYBER transfers amid suspected bridge exploit",
+        "url": "https://cointelegraph.com/news/upbit-bithumb-suspend-cyber-transfers-bridge-exploit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "EXTRACTOR_FAILED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-22 15:15:20",
         "title": "Chainflip confirms $12M hack, offers attacker 10% bounty",
@@ -302,21 +317,6 @@
         "evidence": "",
         "rules_version": "news_rules_v1.0",
         "diff": "기존만 차단",
-        "event_type": "",
-        "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-20 17:40:20",
-        "title": "SEC charges eight firms over fake crypto platforms tied to $37M fraud",
-        "url": "https://cointelegraph.com/news/sec-charges-eight-fake-crypto-platforms-37m-fraud?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-        "legacy": "medium ALL 11-20 17:35~19:35 (규칙 medium:ALL:regulation)",
-        "decision": "EXTRACTOR_FAILED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
         "event_type": "",
         "confirmation": ""
       }
