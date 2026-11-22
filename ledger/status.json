@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4174
   },
-  "last_bar_time": "2026-11-23 04:10:00",
-  "last_price": 82859000,
+  "last_bar_time": "2026-11-23 04:15:00",
+  "last_price": 82900000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-23 04:15:40",
+  "updated_at": "2026-11-23 04:20:29",
   "warnings": [],
   "markets": [
     "BTC",
@@ -114,16 +114,16 @@
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 82859000,
+    "BTC": 82900000,
     "ETH": 2341000,
-    "SOL": 96100.0,
-    "XRP": 1268.0
+    "SOL": 96000.0,
+    "XRP": 1266.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-23 04:10:00",
-    "ETH": "2026-11-23 04:10:00",
-    "SOL": "2026-11-23 04:10:00",
-    "XRP": "2026-11-23 04:10:00"
+    "BTC": "2026-11-23 04:15:00",
+    "ETH": "2026-11-23 04:15:00",
+    "SOL": "2026-11-23 04:15:00",
+    "XRP": "2026-11-23 04:15:00"
   },
   "independent_clusters": 76,
   "stop_decomp": {
@@ -253,7 +253,7 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "TimeoutError: The read operation timed out",
+      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
       "queue": 1,
       "backoff_until": "2026-11-22 05:00:21"
     },
