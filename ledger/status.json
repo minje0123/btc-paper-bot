@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4210
   },
-  "last_bar_time": "2026-11-22 18:45:00",
-  "last_price": 82625000,
+  "last_bar_time": "2026-11-22 18:50:00",
+  "last_price": 83371000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-22 18:50:40",
+  "updated_at": "2026-11-22 18:55:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 82625000,
-    "ETH": 2330000,
-    "SOL": 96150.0,
-    "XRP": 1273.0
+    "BTC": 83371000,
+    "ETH": 2343000,
+    "SOL": 96750.0,
+    "XRP": 1278.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-22 18:45:00",
-    "ETH": "2026-11-22 18:45:00",
-    "SOL": "2026-11-22 18:45:00",
-    "XRP": "2026-11-22 18:45:00"
+    "BTC": "2026-11-22 18:50:00",
+    "ETH": "2026-11-22 18:50:00",
+    "SOL": "2026-11-22 18:50:00",
+    "XRP": "2026-11-22 18:50:00"
   },
   "independent_clusters": 70,
   "stop_decomp": {
@@ -175,14 +175,14 @@
     "extractor": {
       "state": "FAIL",
       "last_success": null,
-      "last_error": "TimeoutError: The read operation timed out",
-      "queue": 1,
+      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+      "queue": 0,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-22 16:50:21",
-      "title": "South Korean exchanges halt CYBER transfers amid suspected bridge exploit",
+      "decided_at": "2026-11-22 18:55:20",
+      "title": "Bitcoin briefly drops to $17K on Kraken, exchange upholds trades",
       "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
