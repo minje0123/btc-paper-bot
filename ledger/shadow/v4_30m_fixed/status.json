@@ -44,10 +44,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 23:30:00",
+      "last_bar_time": "2026-11-23 00:00:00",
       "today": {
-        "date": "2026-11-22",
-        "realized_pnl": 13450,
+        "date": "2026-11-23",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -68,10 +68,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 23:30:00",
+      "last_bar_time": "2026-11-23 00:00:00",
       "today": {
-        "date": "2026-11-22",
-        "realized_pnl": 8970,
+        "date": "2026-11-23",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -92,10 +92,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 23:30:00",
+      "last_bar_time": "2026-11-23 00:00:00",
       "today": {
-        "date": "2026-11-22",
-        "realized_pnl": 5115,
+        "date": "2026-11-23",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -104,7 +104,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 1011114,
-      "equity": 1011114,
+      "equity": 1011046,
       "realized_pnl": 11114,
       "withdrawn_total": 0,
       "trades_count": 3,
@@ -112,27 +112,40 @@
       "avg_R": 0.855,
       "sum_R": 2.564,
       "max_drawdown_pct": 0.92,
-      "has_position": false,
-      "position": null,
-      "pending_entry": {
+      "has_position": true,
+      "position": {
+        "id": "202611230000L",
         "side": "롱",
         "setup": "구간",
         "grade": "B",
-        "signal_time": "2026-11-22 23:30:00",
-        "stop": 95402.27500000001,
-        "t1": 96800.0
+        "entry_time": "2026-11-23 00:00:00",
+        "entry": 96010,
+        "stop": 95402,
+        "stop0": 95402,
+        "t1": 96800,
+        "next_target": null,
+        "qty": 8.458,
+        "qty_open": 8.458,
+        "leverage": 0.8,
+        "risk_money": 5056,
+        "t1_done": false,
+        "realized_part": 0,
+        "last_price": 96050,
+        "unrealized_pnl": -68,
+        "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
+      "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-22 23:30:00",
+      "last_bar_time": "2026-11-23 00:00:00",
       "today": {
-        "date": "2026-11-22",
-        "realized_pnl": 6342,
+        "date": "2026-11-23",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
     }
   },
-  "updated_at": "2026-11-23 00:25:25",
+  "updated_at": "2026-11-23 00:30:24",
   "timeframe": 30,
   "pair_group": "v4_30m",
   "pair_role": "A",
