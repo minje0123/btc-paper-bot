@@ -213,13 +213,13 @@
    "fails": 2
   },
   "a79e8b82803b": {
-   "status": "queued",
-   "fails": 2
+   "status": "failed",
+   "fails": 3
   }
  },
  "extractor": {
-  "queue": 1,
-  "last_attempt": "2026-11-23 08:40:20",
+  "queue": 0,
+  "last_attempt": "2026-11-23 08:45:20",
   "state": "FAIL",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
   "backoff_until": "2026-11-22 05:00:21",
@@ -277,16 +277,16 @@
    }
   }
  },
- "elapsed_s": 3.82,
+ "elapsed_s": 1.71,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-23 04:25:21",
-  "title": "Chainflip’s losses climb to $12 million after protocol discloses 122.9 BTC theft, offers hacker bounty",
-  "decision": "RECORD",
-  "rows": "D04|D16",
-  "targets": "",
-  "effective_at": "",
-  "window_end": "",
+  "decided_at": "2026-11-23 08:45:20",
+  "title": "A $2 million exploit leads to a $3.7 million free-for-all as traders empty Fusionist’s ACE bridge",
+  "decision": "EXTRACTOR_FAILED",
+  "rows": null,
+  "targets": null,
+  "effective_at": null,
+  "window_end": null,
   "rules_version": "news_rules_v1.0",
   "diff": "둘 다 차단 없음"
  }
