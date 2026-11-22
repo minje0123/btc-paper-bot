@@ -476,10 +476,9 @@
       "at": "2026-11-22 14:25:21"
     },
     "ETH-202611221440S": {
-      "text": "",
-      "fails": 1,
-      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
-      "at": "2026-11-22 14:55:21"
+      "text": "1시간 상방 추세인 상황에서 하방인 15분 방향만 믿고 숏으로 진입했다가 즉시 역행하여 손절로 끝난 거래입니다. 다음에는 1시간 상위 추세와 단기 15분 방향이 충돌할 때 진입 비중을 낮추거나 역추세 진입 자체를 신중히 검토해야 합니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-22 15:00:20"
     }
   },
   "model": "gemini-flash-lite-latest",
