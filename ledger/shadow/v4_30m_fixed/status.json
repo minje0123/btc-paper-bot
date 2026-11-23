@@ -44,7 +44,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 10:00:00",
+      "last_bar_time": "2026-11-23 10:30:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 3599,
@@ -68,7 +68,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 10:00:00",
+      "last_bar_time": "2026-11-23 10:30:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 0,
@@ -90,9 +90,16 @@
       "max_drawdown_pct": 2.35,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-23 10:30:00",
+        "stop": 1260.6299999999999,
+        "t1": 1247.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-23 10:00:00",
+      "last_bar_time": "2026-11-23 10:30:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": -15612,
@@ -104,7 +111,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 1005080,
-      "equity": 1006823,
+      "equity": 1005382,
       "realized_pnl": 5080,
       "withdrawn_total": 0,
       "trades_count": 4,
@@ -130,13 +137,13 @@
         "risk_money": 5025,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 96300,
-        "unrealized_pnl": 1743,
+        "last_price": 96100,
+        "unrealized_pnl": 302,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 10:00:00",
+      "last_bar_time": "2026-11-23 10:30:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": -6034,
@@ -145,7 +152,7 @@
       }
     }
   },
-  "updated_at": "2026-11-23 10:55:26",
+  "updated_at": "2026-11-23 11:00:26",
   "timeframe": 30,
   "pair_group": "v4_30m",
   "pair_role": "A",
@@ -170,7 +177,7 @@
     "n_both": 4,
     "n_only_A": 12,
     "n_only_B": 0,
-    "n_open": 1,
+    "n_open": 2,
     "mean_d": -0.1907,
     "sd_d": 1.3802,
     "rho": 0.3792,
