@@ -26,7 +26,19 @@
   "max_drawdown_pct": 18.96,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-SOL",
+    "coin": "SOL",
+    "side": "롱",
+    "setup": "구간",
+    "grade": "B",
+    "signal_time": "2026-11-23 14:35:00",
+    "signal_close": 98100.0,
+    "stop": 97603.4239,
+    "t1": 98844.8642,
+    "qty": 8.3636,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-23",
@@ -47,11 +59,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4153
   },
-  "last_bar_time": "2026-11-23 14:30:00",
-  "last_price": 83858000,
+  "last_bar_time": "2026-11-23 14:35:00",
+  "last_price": 84010000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-23 14:35:26",
+  "updated_at": "2026-11-23 14:40:26",
   "warnings": [],
   "markets": [
     "BTC",
@@ -61,22 +73,53 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 0,
-  "open_risk_won": 0,
-  "open_risk_pct": 0.0,
+  "open_positions_count": 2,
+  "open_risk_won": 8306,
+  "open_risk_pct": 1.0,
   "positions": [],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-SOL",
+      "coin": "SOL",
+      "side": "롱",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-23 14:35:00",
+      "signal_close": 98100.0,
+      "stop": 97603.4239,
+      "t1": 98844.8642,
+      "qty": 8.3636,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4153,
+      "risk_cut": false
+    },
+    {
+      "market": "KRW-XRP",
+      "coin": "XRP",
+      "side": "롱",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-23 14:35:00",
+      "signal_close": 1281.0,
+      "stop": 1274.3625,
+      "t1": 1290.9562,
+      "qty": 625.7146,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4153,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 83858000,
-    "ETH": 2359000,
-    "SOL": 97750.0,
-    "XRP": 1276.0
+    "BTC": 84010000,
+    "ETH": 2365000,
+    "SOL": 98100.0,
+    "XRP": 1281.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-23 14:30:00",
-    "ETH": "2026-11-23 14:30:00",
-    "SOL": "2026-11-23 14:30:00",
-    "XRP": "2026-11-23 14:30:00"
+    "BTC": "2026-11-23 14:35:00",
+    "ETH": "2026-11-23 14:35:00",
+    "SOL": "2026-11-23 14:35:00",
+    "XRP": "2026-11-23 14:35:00"
   },
   "independent_clusters": 80,
   "stop_decomp": {

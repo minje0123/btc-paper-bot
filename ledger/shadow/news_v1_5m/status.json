@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 14:30:00",
+      "last_bar_time": "2026-11-23 14:35:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 6037,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 14:30:00",
+      "last_bar_time": "2026-11-23 14:35:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": -12346,
@@ -87,9 +87,16 @@
       "max_drawdown_pct": 12.66,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "롱",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-23 14:35:00",
+        "stop": 1274.3625000000002,
+        "t1": 1290.9562499999997
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-23 14:30:00",
+      "last_bar_time": "2026-11-23 14:35:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 813,
@@ -111,9 +118,16 @@
       "max_drawdown_pct": 9.29,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "롱",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-23 14:35:00",
+        "stop": 97603.42387500001,
+        "t1": 98844.86418749999
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-23 14:30:00",
+      "last_bar_time": "2026-11-23 14:35:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 6630,
@@ -122,7 +136,7 @@
       }
     }
   },
-  "updated_at": "2026-11-23 14:35:27",
+  "updated_at": "2026-11-23 14:40:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 102,
@@ -323,7 +337,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 119,
+    "signals": 121,
     "blocked": 1,
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,
