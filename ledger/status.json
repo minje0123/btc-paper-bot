@@ -47,12 +47,21 @@
     "next_size_mode": "보통",
     "next_risk_won": 4148
   },
-  "last_bar_time": "2026-11-23 10:20:00",
-  "last_price": 83197000,
+  "last_bar_time": "2026-11-23 10:25:00",
+  "last_price": 83302000,
   "data_source": "upbit",
-  "data_source_this_run": "upbit",
-  "updated_at": "2026-11-23 10:25:25",
-  "warnings": [],
+  "data_source_this_run": "bithumb",
+  "updated_at": "2026-11-23 10:31:10",
+  "warnings": [
+    "업비트 데이터 받기 실패: RuntimeError(\"upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))\")",
+    "주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시).",
+    "업비트 데이터 받기 실패: RuntimeError(\"upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))\")",
+    "주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시).",
+    "업비트 데이터 받기 실패: RuntimeError(\"upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))\")",
+    "주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시).",
+    "업비트 데이터 받기 실패: RuntimeError(\"upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))\")",
+    "주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시)."
+  ],
   "markets": [
     "BTC",
     "ETH",
@@ -67,16 +76,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 83197000,
-    "ETH": 2339000,
-    "SOL": 96350.0,
-    "XRP": 1254.0
+    "BTC": 83302000,
+    "ETH": 2342000,
+    "SOL": 96300.0,
+    "XRP": 1255.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-23 10:20:00",
-    "ETH": "2026-11-23 10:20:00",
-    "SOL": "2026-11-23 10:20:00",
-    "XRP": "2026-11-23 10:20:00"
+    "BTC": "2026-11-23 10:25:00",
+    "ETH": "2026-11-23 10:25:00",
+    "SOL": "2026-11-23 10:25:00",
+    "XRP": "2026-11-23 10:25:00"
   },
   "independent_clusters": 77,
   "stop_decomp": {
