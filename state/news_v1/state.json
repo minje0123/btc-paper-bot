@@ -219,12 +219,12 @@
   },
   "43700faf2a81": {
    "status": "queued",
-   "fails": 1
+   "fails": 2
   }
  },
  "extractor": {
   "queue": 1,
-  "last_attempt": "2026-11-23 20:05:21",
+  "last_attempt": "2026-11-23 20:10:20",
   "state": "FAIL",
   "last_error": "TimeoutError: The read operation timed out",
   "backoff_until": "2026-11-22 05:00:21",
@@ -282,7 +282,7 @@
    }
   }
  },
- "elapsed_s": 15.09,
+ "elapsed_s": 15.07,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
   "decided_at": "2026-11-23 08:45:20",
