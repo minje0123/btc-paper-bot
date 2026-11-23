@@ -574,6 +574,12 @@
       "text": "상위 추세와 방향이 일치했음에도 진입 직전 가짜 이탈 구간에서의 섣부른 매수로 인해 순식간에 최대 역방향 허용치까지 밀리며 손절로 이어졌습니다. 다음에는 높은 ATR 백분위 환경에서 변동성을 고려하여 진입 타이밍의 정교함을 높이고, 가격이 지지 라인에 완전히 안착하는지 확인하는 여유를 가져야 합니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-23 20:15:20"
+    },
+    "202611240120L": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
+      "at": "2026-11-24 01:40:20"
     }
   },
   "model": "gemini-flash-lite-latest",
