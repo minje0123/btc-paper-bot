@@ -17,13 +17,13 @@
   "total_value": 817110,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 814751,
+  "equity": 812932,
   "realized_pnl": -182890,
-  "unrealized_pnl": -2359,
+  "unrealized_pnl": -4178,
   "trades_count": 100,
   "win_rate": 41.0,
   "avg_R": -0.338,
-  "max_drawdown_pct": 20.22,
+  "max_drawdown_pct": 20.26,
   "has_position": true,
   "position": {
     "market": "KRW-SOL",
@@ -44,8 +44,8 @@
     "risk_money": 4086,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 98600.0,
-    "unrealized_pnl": -2359,
+    "last_price": 98400.0,
+    "unrealized_pnl": -4178,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4086
   },
-  "last_bar_time": "2026-11-23 19:55:00",
-  "last_price": 83757000,
+  "last_bar_time": "2026-11-23 20:00:00",
+  "last_price": 83699000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-23 20:00:25",
+  "updated_at": "2026-11-23 20:05:40",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,24 +106,24 @@
       "risk_money": 4086,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 98600.0,
-      "unrealized_pnl": -2359,
+      "last_price": 98400.0,
+      "unrealized_pnl": -4178,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 83757000,
-    "ETH": 2353000,
-    "SOL": 98600.0,
-    "XRP": 1281.0
+    "BTC": 83699000,
+    "ETH": 2352000,
+    "SOL": 98400.0,
+    "XRP": 1282.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-23 19:55:00",
-    "ETH": "2026-11-23 19:55:00",
-    "SOL": "2026-11-23 19:55:00",
-    "XRP": "2026-11-23 19:55:00"
+    "BTC": "2026-11-23 20:00:00",
+    "ETH": "2026-11-23 20:00:00",
+    "SOL": "2026-11-23 20:00:00",
+    "XRP": "2026-11-23 20:00:00"
   },
   "independent_clusters": 83,
   "stop_decomp": {
@@ -163,7 +163,7 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-23 19:30:20",
-    "last_success_breaking": "2026-11-23 19:35:21",
+    "last_success_breaking": "2026-11-23 20:05:21",
     "upcoming": [
       {
         "time": "2026-11-23 23:45:00",
@@ -188,7 +188,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-23 19:30:20",
-    "last_attempt_breaking": "2026-11-23 19:35:21",
+    "last_attempt_breaking": "2026-11-23 20:05:21",
     "schedule_items_last": 7,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -211,21 +211,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-23 19:35:21",
+        "last_success": "2026-11-23 20:05:21",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-23 19:35:21",
+        "last_success": "2026-11-23 20:05:21",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-23 19:35:21",
+        "last_success": "2026-11-23 20:05:21",
         "count": 20,
         "error": null,
         "optional": false
@@ -240,14 +240,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-23 19:35:21",
+      "last_success": "2026-11-23 20:05:21",
       "error": null
     },
     "extractor": {
       "state": "FAIL",
       "last_success": "2026-11-23 04:25:21",
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 0,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 1,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,
