@@ -579,6 +579,12 @@
       "text": "상위 타임프레임과 보조 지표의 근거가 좋았으나, 주요 경제 지표 발표라는 이벤트를 앞둔 변동성을 피하지 못해 손절로 마감되었습니다. 다음에는 진입 직전 중요 일정과의 시간 간격을 더 철저히 확인하고, 이벤트 직전의 노이즈 구간을 피해 매매 타이밍을 잡아야 합니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-24 01:45:20"
+    },
+    "ETH-202611240155L": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
+      "at": "2026-11-24 02:10:21"
     }
   },
   "model": "gemini-flash-lite-latest",
