@@ -6,10 +6,10 @@
 
 > 계좌 성격: **BTC·ETH·SOL·XRP 공유 가상 계좌 · 기준선 매매 규칙**. 뉴스 차단·일일 목표 보호·첫 승 절반·주간 출금 비활성. 그림자는 코인별 독립, 본 장부는 100만 원 공유.
 
-- 업데이트: 2026-11-23 10:31:10 (KST) · 마지막 봉: 2026-11-23 10:25:00 · 현재가 83,302,000원 · 데이터: 업비트
+- 업데이트: 2026-11-23 10:35:47 (KST) · 마지막 봉: 2026-11-23 10:30:00 · 현재가 83,523,000원 · 데이터: 업비트
 - 시작: 2026-11-18 19:25:00 · 초기 자금 1,000,000원
 
-> ⚠️ 이번 실행 경고: 업비트 데이터 받기 실패: RuntimeError("upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))") / 주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시). / 업비트 데이터 받기 실패: RuntimeError("upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))") / 주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시). / 업비트 데이터 받기 실패: RuntimeError("upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))") / 주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시). / 업비트 데이터 받기 실패: RuntimeError("upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))") / 주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시).
+> ⚠️ 이번 실행 경고: 업비트 데이터 받기 실패: RuntimeError("upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))") / 주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시). / 업비트 데이터 받기 실패: RuntimeError("upbit 요청 실패: URLError(gaierror(-2, 'Name or service not known'))") / 주 출처 업비트 실패로 이번 실행의 봉 1개는 빗썸에서 받았습니다(candles_5m.csv 의 source 열에 표시).
 
 | 항목 | 값 |
 |---|---|
