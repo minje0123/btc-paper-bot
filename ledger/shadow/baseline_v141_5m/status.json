@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 18:35:00",
+      "last_bar_time": "2026-11-23 18:40:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 6037,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 18:35:00",
+      "last_bar_time": "2026-11-23 18:40:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": -12346,
@@ -77,14 +77,14 @@
       "market": "KRW-XRP",
       "initial_capital": 1000000.0,
       "balance": 867249,
-      "equity": 864449,
+      "equity": 863679,
       "realized_pnl": -132751,
       "withdrawn_total": 0,
       "trades_count": 33,
       "win_rate": 30.3,
       "avg_R": -0.742,
       "sum_R": -24.48,
-      "max_drawdown_pct": 14.2,
+      "max_drawdown_pct": 14.28,
       "has_position": true,
       "position": {
         "id": "202611231810L",
@@ -103,13 +103,13 @@
         "risk_money": 4336,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 1280,
-        "unrealized_pnl": -2800,
+        "last_price": 1279,
+        "unrealized_pnl": -3570,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 18:35:00",
+      "last_bar_time": "2026-11-23 18:40:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": -4786,
@@ -121,7 +121,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 937852,
-      "equity": 937154,
+      "equity": 934805,
       "realized_pnl": -62148,
       "withdrawn_total": 0,
       "trades_count": 45,
@@ -147,13 +147,13 @@
         "risk_money": 4689,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 98850,
-        "unrealized_pnl": -698,
+        "last_price": 98650,
+        "unrealized_pnl": -3047,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-23 18:35:00",
+      "last_bar_time": "2026-11-23 18:40:00",
       "today": {
         "date": "2026-11-23",
         "realized_pnl": 11412,
@@ -162,7 +162,7 @@
       }
     }
   },
-  "updated_at": "2026-11-23 18:40:26",
+  "updated_at": "2026-11-23 18:45:26",
   "independent_clusters": 105,
   "stop_decomp": {
     "plan_R": -1.0,
