@@ -6,10 +6,8 @@
 
 > 계좌 성격: **BTC·ETH·SOL·XRP 공유 가상 계좌 · 기준선 매매 규칙**. 뉴스 차단·일일 목표 보호·첫 승 절반·주간 출금 비활성. 그림자는 코인별 독립, 본 장부는 100만 원 공유.
 
-- 업데이트: 2026-11-24 02:30:38 (KST) · 마지막 봉: 2026-11-24 02:25:00 · 현재가 84,081,000원 · 데이터: 업비트
+- 업데이트: 2026-11-24 02:35:31 (KST) · 마지막 봉: 2026-11-24 02:30:00 · 현재가 84,076,000원 · 데이터: 업비트
 - 시작: 2026-11-18 19:25:00 · 초기 자금 1,000,000원
-
-> ⚠️ 이번 실행 경고: Gemini 복기 해설 실패(ETH-202611240215L): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
 
 | 항목 | 값 |
 |---|---|

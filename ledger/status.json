@@ -47,14 +47,12 @@
     "next_size_mode": "보통",
     "next_risk_won": 3977
   },
-  "last_bar_time": "2026-11-24 02:25:00",
-  "last_price": 84081000,
+  "last_bar_time": "2026-11-24 02:30:00",
+  "last_price": 84076000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 02:30:38",
-  "warnings": [
-    "Gemini 복기 해설 실패(ETH-202611240215L): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
-  ],
+  "updated_at": "2026-11-24 02:35:31",
+  "warnings": [],
   "markets": [
     "BTC",
     "ETH",
@@ -69,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 84081000,
+    "BTC": 84076000,
     "ETH": 2392000,
-    "SOL": 100600,
+    "SOL": 100800,
     "XRP": 1317.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 02:25:00",
-    "ETH": "2026-11-24 02:25:00",
-    "SOL": "2026-11-24 02:25:00",
-    "XRP": "2026-11-24 02:25:00"
+    "BTC": "2026-11-24 02:30:00",
+    "ETH": "2026-11-24 02:30:00",
+    "SOL": "2026-11-24 02:30:00",
+    "XRP": "2026-11-24 02:30:00"
   },
   "independent_clusters": 87,
   "stop_decomp": {

@@ -586,10 +586,9 @@
       "at": "2026-11-24 02:20:20"
     },
     "ETH-202611240215L": {
-      "text": "",
-      "fails": 1,
-      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
-      "at": "2026-11-24 02:30:20"
+      "text": "상위 시간대와 보조지표의 상승 근거로 진입했으나, 진입 직후 가격이 즉시 역행하면서 10분 만에 손절가에 도달해 -1.18R의 손실로 마감되었습니다. MFE가 0.0R에 그친 만큼, 다음에는 진입 직전의 높은 변동성 속에서 가격이 지지 라인을 곧바로 이탈하는지 조금 더 확인하고 대응하는 관점을 볼 필요가 있습니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-24 02:35:20"
     }
   },
   "model": "gemini-flash-lite-latest",
