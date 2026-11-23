@@ -1,10 +1,10 @@
 {
   "schedule": {
-    "last_attempt": "2026-11-24 01:30:20",
+    "last_attempt": "2026-11-24 07:30:20",
     "ok": true,
-    "last_success": "2026-11-24 01:30:20",
+    "last_success": "2026-11-24 07:30:20",
     "error": null,
-    "received": 7,
+    "received": 6,
     "added": 0,
     "skipped": [
       "[일정] Flash Manufacturing PMI · Flash Services PMI (USD): 과거 시각"
@@ -12,15 +12,15 @@
   },
   "sources": {
     "ff_thisweek": {
-      "last_attempt": "2026-11-24 01:30:20",
+      "last_attempt": "2026-11-24 07:30:20",
       "optional": false,
       "ok": true,
-      "last_success": "2026-11-24 01:30:20",
+      "last_success": "2026-11-24 07:30:20",
       "error": null,
-      "count": 7
+      "count": 6
     },
     "ff_nextweek": {
-      "last_attempt": "2026-11-24 01:30:20",
+      "last_attempt": "2026-11-24 07:30:20",
       "ok": false,
       "error": "HTTP 404",
       "optional": true
