@@ -26,7 +26,19 @@
   "max_drawdown_pct": 22.87,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-SOL",
+    "coin": "SOL",
+    "side": "숏",
+    "setup": "구간",
+    "grade": "B",
+    "signal_time": "2026-11-24 06:00:00",
+    "signal_close": 99350.0,
+    "stop": 99849.9,
+    "t1": 98750.0,
+    "qty": 7.8651,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-24",
@@ -47,11 +59,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3932
   },
-  "last_bar_time": "2026-11-24 05:55:00",
-  "last_price": 83652000,
+  "last_bar_time": "2026-11-24 06:00:00",
+  "last_price": 83647000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 06:00:24",
+  "updated_at": "2026-11-24 06:05:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -61,22 +73,38 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 0,
-  "open_risk_won": 0,
-  "open_risk_pct": 0.0,
+  "open_positions_count": 1,
+  "open_risk_won": 3932,
+  "open_risk_pct": 0.5,
   "positions": [],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-SOL",
+      "coin": "SOL",
+      "side": "숏",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-24 06:00:00",
+      "signal_close": 99350.0,
+      "stop": 99849.9,
+      "t1": 98750.0,
+      "qty": 7.8651,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 3932,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 83652000,
-    "ETH": 2355000,
-    "SOL": 99400.0,
+    "BTC": 83647000,
+    "ETH": 2356000,
+    "SOL": 99350.0,
     "XRP": 1279.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 05:55:00",
-    "ETH": "2026-11-24 05:55:00",
-    "SOL": "2026-11-24 05:55:00",
-    "XRP": "2026-11-24 05:55:00"
+    "BTC": "2026-11-24 06:00:00",
+    "ETH": "2026-11-24 06:00:00",
+    "SOL": "2026-11-24 06:00:00",
+    "XRP": "2026-11-24 06:00:00"
   },
   "independent_clusters": 89,
   "stop_decomp": {
