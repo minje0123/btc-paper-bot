@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4060
   },
-  "last_bar_time": "2026-11-24 00:35:00",
-  "last_price": 86114000,
+  "last_bar_time": "2026-11-24 00:40:00",
+  "last_price": 85800000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 00:40:24",
+  "updated_at": "2026-11-24 00:45:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 86114000,
-    "ETH": 2428000,
-    "SOL": 103400,
-    "XRP": 1367.0
+    "BTC": 85800000,
+    "ETH": 2422000,
+    "SOL": 103100,
+    "XRP": 1359.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 00:35:00",
-    "ETH": "2026-11-24 00:35:00",
-    "SOL": "2026-11-24 00:35:00",
-    "XRP": "2026-11-24 00:35:00"
+    "BTC": "2026-11-24 00:40:00",
+    "ETH": "2026-11-24 00:40:00",
+    "SOL": "2026-11-24 00:40:00",
+    "XRP": "2026-11-24 00:40:00"
   },
   "independent_clusters": 84,
   "stop_decomp": {
@@ -116,15 +116,8 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-23 19:30:20",
-    "last_success_breaking": "2026-11-24 00:15:21",
+    "last_success_breaking": "2026-11-24 00:45:21",
     "upcoming": [
-      {
-        "time": "2026-11-23 23:45:00",
-        "name": "[일정] Flash Manufacturing PMI · Flash Services PMI (USD)",
-        "importance": "medium",
-        "coins": "ALL",
-        "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
-      },
       {
         "time": "2026-11-25 00:00:00",
         "name": "[일정] CB Consumer Confidence (USD)",
@@ -141,7 +134,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-23 19:30:20",
-    "last_attempt_breaking": "2026-11-24 00:15:21",
+    "last_attempt_breaking": "2026-11-24 00:45:21",
     "schedule_items_last": 7,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -164,21 +157,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-24 00:15:21",
+        "last_success": "2026-11-24 00:45:21",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-24 00:15:21",
+        "last_success": "2026-11-24 00:45:21",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-24 00:15:21",
+        "last_success": "2026-11-24 00:45:21",
         "count": 20,
         "error": null,
         "optional": false
@@ -193,14 +186,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-24 00:15:21",
+      "last_success": "2026-11-24 00:45:21",
       "error": null
     },
     "extractor": {
       "state": "FAIL",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 0,
+      "queue": 1,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,

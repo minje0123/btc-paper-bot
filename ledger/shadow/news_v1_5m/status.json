@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 00:35:00",
+      "last_bar_time": "2026-11-24 00:40:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": 0,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 00:35:00",
+      "last_bar_time": "2026-11-24 00:40:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": 0,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 00:35:00",
+      "last_bar_time": "2026-11-24 00:40:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": 0,
@@ -113,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 00:35:00",
+      "last_bar_time": "2026-11-24 00:40:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": 0,
@@ -122,7 +122,7 @@
       }
     }
   },
-  "updated_at": "2026-11-24 00:40:24",
+  "updated_at": "2026-11-24 00:45:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 106,
@@ -146,14 +146,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-24 00:15:21",
+      "last_success": "2026-11-24 00:45:21",
       "error": null
     },
     "extractor": {
       "state": "FAIL",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 0,
+      "queue": 1,
       "backoff_until": "2026-11-22 05:00:21"
     },
     "unmapped_count": 0,
