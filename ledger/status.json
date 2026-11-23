@@ -47,14 +47,12 @@
     "next_size_mode": "보통",
     "next_risk_won": 3954
   },
-  "last_bar_time": "2026-11-24 03:15:00",
-  "last_price": 84000000,
+  "last_bar_time": "2026-11-24 03:20:00",
+  "last_price": 84091000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 03:20:27",
-  "warnings": [
-    "Gemini 복기 해설: 429/할당량 오류 → 11-25 03:20 까지 해설 호출 쉼"
-  ],
+  "updated_at": "2026-11-24 03:25:24",
+  "warnings": [],
   "markets": [
     "BTC",
     "ETH",
@@ -69,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 84000000,
-    "ETH": 2381000,
-    "SOL": 100200,
-    "XRP": 1302.0
+    "BTC": 84091000,
+    "ETH": 2384000,
+    "SOL": 100300,
+    "XRP": 1303.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 03:15:00",
-    "ETH": "2026-11-24 03:15:00",
-    "SOL": "2026-11-24 03:15:00",
-    "XRP": "2026-11-24 03:15:00"
+    "BTC": "2026-11-24 03:20:00",
+    "ETH": "2026-11-24 03:20:00",
+    "SOL": "2026-11-24 03:20:00",
+    "XRP": "2026-11-24 03:20:00"
   },
   "independent_clusters": 88,
   "stop_decomp": {
@@ -120,13 +118,6 @@
     "last_success_schedule": "2026-11-24 01:30:20",
     "last_success_breaking": "2026-11-24 03:20:20",
     "upcoming": [
-      {
-        "time": "2026-11-24 02:25:00",
-        "name": "[돌발] 대규모 청산 (BTC): Bitcoin rebounds 17% from $55K lows as Nvidia rall",
-        "importance": "medium",
-        "coins": "BTC",
-        "source": "https://cointelegraph.com/markets/bitcoin-rebounds-lows-nvidia-rally-sparks-500m-crypto-liquidations?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
-      },
       {
         "time": "2026-11-25 00:00:00",
         "name": "[일정] CB Consumer Confidence (USD)",
