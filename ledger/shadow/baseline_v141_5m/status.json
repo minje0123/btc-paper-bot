@@ -20,10 +20,10 @@
     "dayLossP": 100,
     "maxConsec": 1000
   },
-  "trades_count": 127,
-  "win_rate": 38.6,
-  "avg_R": -0.409,
-  "sum_R": -51.932,
+  "trades_count": 128,
+  "win_rate": 38.3,
+  "avg_R": -0.415,
+  "sum_R": -53.109,
   "coins": {
     "BTC": {
       "market": "KRW-BTC",
@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 02:20:00",
+      "last_bar_time": "2026-11-24 02:25:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -6686,
@@ -52,43 +52,23 @@
     "ETH": {
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
-      "balance": 936512,
-      "equity": 932116,
-      "realized_pnl": -63488,
+      "balance": 929980,
+      "equity": 929980,
+      "realized_pnl": -70020,
       "withdrawn_total": 0,
-      "trades_count": 30,
-      "win_rate": 36.7,
-      "avg_R": -0.357,
-      "sum_R": -10.723,
-      "max_drawdown_pct": 7.17,
-      "has_position": true,
-      "position": {
-        "id": "202611240215L",
-        "side": "롱",
-        "setup": "구간",
-        "grade": "A",
-        "entry_time": "2026-11-24 02:15:00",
-        "entry": 2410000,
-        "stop": 2390804,
-        "stop0": 2390804,
-        "t1": 2420000,
-        "next_target": null,
-        "qty": 0.2891,
-        "qty_open": 0.2891,
-        "leverage": 0.74,
-        "risk_money": 4683,
-        "t1_done": false,
-        "realized_part": 0,
-        "last_price": 2396000,
-        "unrealized_pnl": -4396,
-        "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
-      },
+      "trades_count": 31,
+      "win_rate": 35.5,
+      "avg_R": -0.384,
+      "sum_R": -11.9,
+      "max_drawdown_pct": 7.38,
+      "has_position": false,
+      "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 02:20:00",
+      "last_bar_time": "2026-11-24 02:25:00",
       "today": {
         "date": "2026-11-24",
-        "realized_pnl": -6504,
+        "realized_pnl": -13037,
         "no_new_entries": false,
         "reason": null
       }
@@ -109,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 02:20:00",
+      "last_bar_time": "2026-11-24 02:25:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": 0,
@@ -133,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 02:20:00",
+      "last_bar_time": "2026-11-24 02:25:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": 0,
@@ -142,18 +122,18 @@
       }
     }
   },
-  "updated_at": "2026-11-24 02:25:29",
-  "independent_clusters": 109,
+  "updated_at": "2026-11-24 02:30:38",
+  "independent_clusters": 110,
   "stop_decomp": {
     "plan_R": -1.0,
     "gap_R": -0.0,
-    "slip_R": -0.0744,
-    "fee_entry_R": -0.0914,
-    "fee_exit_R": -0.0915,
-    "sum_R": -1.2572,
-    "R": -1.2572,
-    "risk_ratio": 1.0838,
-    "n": 76
+    "slip_R": -0.0741,
+    "fee_entry_R": -0.091,
+    "fee_exit_R": -0.0911,
+    "sum_R": -1.2562,
+    "R": -1.2562,
+    "risk_ratio": 1.0851,
+    "n": 77
   },
   "r_definition": "R = 거래 손익(수수료 포함) ÷ (수량 × |진입 체결가 − 최초 손절가|)"
 }

@@ -584,6 +584,12 @@
       "text": "상위 타임프레임의 상승 방향과 보조 지표를 근거로 롱 포지션에 진입했으나, 진입 직후 가격이 곧바로 역행하면서 설정된 손절 라인을 이탈해 1.27R의 손실로 마감되었습니다. MFE가 0.159R에 그친 반면 MAE가 -1.349R을 기록한 것은 진입 타이밍이 지연되었거나 반전 압력을 충분히 버티지 못했음을 보여줍니다. 다음에는 진입 직전의 가격 변동성과 호가 흐름을 면밀히 관찰하여 즉시 역행하는 움직임에 대한 대응력을 점검해야 합니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-24 02:20:20"
+    },
+    "ETH-202611240215L": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
+      "at": "2026-11-24 02:30:20"
     }
   },
   "model": "gemini-flash-lite-latest",
