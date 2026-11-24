@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#05070a">
+<title>ML.PAPER // 학습 현황</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body>
+<!-- ML 계좌(ml_paper_v1) 전용. 현재 포지션·대기 주문 카드, 거래 마커, 다른 계좌 그래프 없음. -->
+<div class="ticker"><div class="in">
+  <span class="brand">ML.PAPER // ML 가상계좌</span><nav><a href="./">계좌 요약</a><a href="trades.html">거래 기록</a><a href="learning.html" class="on">학습 현황</a><a href="../accounts/" class="old">기존 계좌 화면 →</a></nav>
+  <span class="conn"><span class="dot" id="dot"></span><span id="liveTxt">불러오는 중</span></span>
+  <div class="phasebar"><span class="phase ready" id="phase">학습 준비 중 · ML 정식 가상매매 미시작</span></div>
+  <div class="meta"><span>계좌 갱신 주기 <b id="m_int">—</b></span><span>마지막 계산 성공 <b id="m_ok">—</b></span>
+  <span>마지막 봉 <b id="m_bar">—</b></span><span>마지막 통신 성공 <b id="m_net">—</b></span><span>화면 확인 60초 · 마지막 확인 <b id="m_chk">—</b></span></div>
+</div></div>
+<div class="wrap"><div class="banner" id="banner"></div>
+
+<div class="card"><h2>LEARNING <span class="ko">학습 현황 (학습 성공 ≠ 성과 개선)</span></h2><div id="learn"></div></div>
+<div class="card"><h2>DECISIONS <span class="ko">판단 기록</span></h2><div id="dec"></div></div>
+</div><script src="common.js"></script>
+<script>
+// 기록이 없을 때 보여 줄 준비 상태. 화면을 배포한 시점(2026-11-24)의 사실만 적는다.
+const READY = `<dl>
+  <dt>단계</dt><dd>학습 준비 중 · ML 정식 가상매매 미시작</dd>
+  <dt>초기 학습</dt><dd>실행하지 않음</dd>
+  <dt>유효 모델</dt><dd>없음 (활성화한 모델 없음)</dd>
+  <dt>정식 시작 승인</dt><dd>없음</dd>
+  <dt>ML 자동 실행</dt><dd>연결하지 않음</dd>
+  <dt>설계 문서</dt><dd>ML_PLAN v0.5 — 제안 단계(승인 전). 독립 검증 통과로 표시하지 않습니다.</dd>
+  <dt>기존 계좌</dt><dd>기존 봇·계좌·규칙은 그대로 운영 중이며 <a href="../accounts/">기존 계좌 화면</a>에서 볼 수 있습니다.</dd>
+  <dt>안내</dt><dd>학습할수록 수익이 보장되지 않습니다. 모델 교체는 승인 뒤 이후 판단부터 적용되며 과거 판단은 바뀌지 않습니다.</dd></dl>`;
+const NOTE = {
+  nodata: '원격 ML 기록이 아직 없습니다(서버 응답 정상). 아래는 이 화면을 배포한 2026-11-24 기준 준비 상태입니다.',
+  error: '통신 오류로 원격 ML 기록을 확인하지 못했습니다. 아래는 이 화면을 배포한 2026-11-24 기준 준비 상태이며, 지금 상태를 확인한 결과가 아닙니다.',
+  mismatch: 'ML 계좌 자료가 아니어서 표시하지 않습니다. 아래는 2026-11-24 기준 준비 상태입니다.',
+};
+ML.start((S, state) => {
+  const D = ML.DASH;
+  if (!S) {
+    ML.$('learn').innerHTML = `<p class="note">${ML.esc(NOTE[state] || NOTE.error)}</p>` + READY;
+    ML.$('dec').innerHTML = `<div class="empty">${state === 'nodata' ? '판단 기록이 없습니다. 정식 가상매매 시작 전이라 후보·진입·거절 기록이 만들어지지 않았습니다.' : '판단 기록을 불러오지 못했습니다. 기록이 없다는 뜻은 아닙니다.'}</div>`;
+    return;
+  }
+  const m = S.model || {}, L = S.learning || {}, d = S.decisions || {};
+  const n = v => (v == null ? D : ML.esc(v));
+  ML.$('learn').innerHTML = `<dl>
+    <dt>학습 상태</dt><dd>${n(L.state)}</dd>
+    <dt>현재 모델 버전</dt><dd>${ML.esc(m.version || '없음')} (${n(m.status)})</dd>
+    <dt>모델 종류</dt><dd>${n(m.kind)} · 특징 ${n(m.feature_set)}</dd>
+    <dt>진입 임계값</dt><dd>${n(m.threshold)}</dd>
+    <dt>학습 자료 범위</dt><dd>${n(L.train_range || (m.meta || {}).train_range)}</dd>
+    <dt>학습 표본 수</dt><dd>${n(L.n_train)}</dd>
+    <dt>완결 결과 수(계좌)</dt><dd>${n(L.complete_labels)}</dd>
+    <dt>마지막 학습 시각</dt><dd>${n(L.last_train_at)}</dd>
+    <dt>기준 전략 버전</dt><dd>${n(S.strategy_version)}</dd>
+    <dt>안내</dt><dd>학습할수록 수익이 보장되지 않습니다. 모델 교체는 승인 뒤 이후 판단부터 적용되며 과거 판단은 바뀌지 않습니다.</dd></dl>`;
+  ML.$('dec').innerHTML = `<dl><dt>후보</dt><dd>${n(d.total)}</dd><dt>진입</dt><dd>${n(d.accepted)}</dd>
+    <dt>거절</dt><dd>${n(d.rejected)}</dd><dt>진입 대기(적용 모델 없음)</dt><dd>${n(d.waiting)}</dd>
+    <dt>늦게 발견(판단 안 함)</dt><dd>${n(d.late)}</dd><dt>미확인(당시 모델 복원 불가)</dt><dd>${n(d.unverified)}</dd>
+    <dt>모델 적용 구간</dt><dd>${(m.timeline || []).map(e => ML.esc(e.version) + ': ' + ML.esc(e.applied_from) + ' ~ ' + ML.esc(e.applied_to || '현재')).join('<br>') || '없음'}</dd></dl>`;
+});
+</script></body></html>

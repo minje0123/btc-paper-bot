@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#05070a">
+<title>ML.PAPER // 거래 기록</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body>
+<!-- ML 계좌(ml_paper_v1) 전용. 현재 포지션·대기 주문 카드, 거래 마커, 다른 계좌 그래프 없음. -->
+<div class="ticker"><div class="in">
+  <span class="brand">ML.PAPER // ML 가상계좌</span><nav><a href="./">계좌 요약</a><a href="trades.html" class="on">거래 기록</a><a href="learning.html">학습 현황</a><a href="../accounts/" class="old">기존 계좌 화면 →</a></nav>
+  <span class="conn"><span class="dot" id="dot"></span><span id="liveTxt">불러오는 중</span></span>
+  <div class="phasebar"><span class="phase ready" id="phase">학습 준비 중 · ML 정식 가상매매 미시작</span></div>
+  <div class="meta"><span>계좌 갱신 주기 <b id="m_int">—</b></span><span>마지막 계산 성공 <b id="m_ok">—</b></span>
+  <span>마지막 봉 <b id="m_bar">—</b></span><span>마지막 통신 성공 <b id="m_net">—</b></span><span>화면 확인 60초 · 마지막 확인 <b id="m_chk">—</b></span></div>
+</div></div>
+<div class="wrap"><div class="banner" id="banner"></div>
+
+<div class="card"><h2>TRADES <span class="ko">ML 계좌 거래만 (청산 완료, 최신순)</span></h2><div class="tbl" id="trades"></div></div>
+</div><script src="common.js"></script>
+<script>
+const EMPTY = {
+  nodata: 'ML 기록이 없어 거래표가 비어 있습니다. 정식 가상매매를 시작하기 전이라 거래가 없습니다.',
+  error: '통신 오류로 거래 기록을 불러오지 못했습니다. 거래가 없다는 뜻은 아닙니다.',
+  mismatch: 'ML 계좌 자료가 아니어서 표시하지 않습니다.',
+};
+ML.start((S, state) => {
+  if (!S) { ML.$('trades').innerHTML = `<div class="empty">${ML.esc(EMPTY[state] || EMPTY.error)}</div>`; return; }
+  const tr = (S.trades || []).slice().reverse();
+  ML.$('trades').innerHTML = tr.length ? `<table><tr><th>청산 시각</th><th>코인</th><th>방향</th><th>셋업</th><th>진입 시각</th><th>진입가</th><th>청산가</th><th>분할</th><th>수수료</th><th>손익(비용 후)</th><th>R</th><th>사유</th><th>모델 버전</th></tr>` +
+    tr.map(t => `<tr><td>${ML.esc(t.exit_time)}</td><td>${ML.esc(t.coin)}</td><td>${ML.esc(t.side)}</td><td>${ML.esc(t.setup)}</td><td>${ML.esc(t.entry_time)}</td>` +
+      `<td>${(+t.entry).toLocaleString('ko-KR')}</td><td>${(+t.exit).toLocaleString('ko-KR')}</td><td>${ML.esc(t.n_fills)}</td><td>${ML.won(t.fee)}</td>` +
+      `<td class="${ML.cls(t.pnl)}">${ML.won(t.pnl)}</td><td class="${ML.cls(t.R)}">${(+t.R).toFixed(2)}</td><td>${ML.esc(t.reason)}</td><td>${ML.esc(t.model_id || ML.DASH)}</td></tr>`).join('') + '</table>'
+    : '<div class="empty">ML 계좌 기록은 있지만 청산된 거래가 아직 없습니다.</div>';
+});
+</script></body></html>

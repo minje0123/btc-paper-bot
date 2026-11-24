@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#05070a">
+<title>ML.PAPER // 계좌 요약</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+<link rel="stylesheet" href="style.css"></head><body>
+<!-- ML 계좌(ml_paper_v1) 전용. 현재 포지션·대기 주문 카드, 거래 마커, 다른 계좌 그래프 없음. -->
+<div class="ticker"><div class="in">
+  <span class="brand">ML.PAPER // ML 가상계좌</span><nav><a href="./" class="on">계좌 요약</a><a href="trades.html">거래 기록</a><a href="learning.html">학습 현황</a><a href="../accounts/" class="old">기존 계좌 화면 →</a></nav>
+  <span class="conn"><span class="dot" id="dot"></span><span id="liveTxt">불러오는 중</span></span>
+  <div class="phasebar"><span class="phase ready" id="phase">학습 준비 중 · ML 정식 가상매매 미시작</span></div>
+  <div class="meta"><span>계좌 갱신 주기 <b id="m_int">—</b></span><span>마지막 계산 성공 <b id="m_ok">—</b></span>
+  <span>마지막 봉 <b id="m_bar">—</b></span><span>마지막 통신 성공 <b id="m_net">—</b></span><span>화면 확인 60초 · 마지막 확인 <b id="m_chk">—</b></span></div>
+</div></div>
+<div class="wrap"><div class="banner" id="banner"></div>
+
+<div class="card"><h2>EQUITY <span class="ko">ML 계좌 자산 곡선 (다른 계좌 없음)</span></h2><div id="chart"></div><div class="empty" id="chartEmpty" style="display:none"></div></div>
+<div class="card"><h2>P&amp;L <span class="ko">손익 요약 (수수료·미끄러짐 반영)</span></h2><div class="grid" id="pnl"></div></div>
+</div><script src="common.js"></script>
+<script>
+let chart = null, series = null;
+const EMPTY = {
+  nodata: 'ML 기록이 없어 자산 곡선이 비어 있습니다. 초기 학습과 정식 가상매매를 시작하기 전이라 그릴 기록이 없습니다.',
+  error: '통신 오류로 기록을 불러오지 못해 자산 곡선을 그리지 못했습니다. 기록이 없다는 뜻은 아닙니다.',
+  mismatch: 'ML 계좌 자료가 아니어서 그리지 않습니다.',
+  nocurve: '아직 자산 곡선 기록점이 없습니다.',
+};
+function showChart(msg) {
+  ML.$('chart').style.display = msg ? 'none' : 'block';
+  ML.$('chartEmpty').style.display = msg ? 'block' : 'none';
+  ML.$('chartEmpty').textContent = msg || '';
+}
+ML.start((S, state) => {
+  const D = ML.DASH;
+  if (!S) {
+    showChart(EMPTY[state] || EMPTY.error);
+    const kv = ['평가 자산', '누적 총손익', '수익률', '누적 실현', '미실현', '당일 실현', '수수료 합계', '최대 낙폭', '청산 거래', '승률', '시작 자금', '시작 시각'];
+    ML.$('pnl').innerHTML = kv.map(k => `<div class="kv"><div class="k">${ML.esc(k)}</div><div class="v">${D}</div></div>`).join('');
+    return;
+  }
+  const curve = S.curve || [];
+  if (!curve.length) showChart(EMPTY.nocurve);
+  else {
+    showChart(null);
+    if (!chart && window.LightweightCharts) {
+      chart = LightweightCharts.createChart(ML.$('chart'), { autoSize: true,
+        layout: { background: { color: 'transparent' }, textColor: '#6b7787' },
+        grid: { vertLines: { color: '#111821' }, horzLines: { color: '#111821' } }, timeScale: { timeVisible: true } });
+      series = chart.addAreaSeries({ lineColor: '#00ff9c', topColor: 'rgba(0,255,156,.18)', bottomColor: 'rgba(0,255,156,0)', lineWidth: 2 });
+    }
+    if (series) { series.setData(curve.map(([t, v]) => ({ time: Date.parse(t.replace(' ', 'T') + ':00+09:00') / 1000, value: v }))); chart.timeScale().fitContent(); }
+  }
+  const w = S.n_trades ? (S.wins / S.n_trades * 100).toFixed(1) + '%' : D;
+  const kv = [['평가 자산', ML.won(S.equity), ''], ['누적 총손익', ML.won(S.total_pnl), ML.cls(S.total_pnl)], ['수익률', ML.pct(S.return_pct), ML.cls(S.return_pct)],
+    ['누적 실현', ML.won(S.realized), ML.cls(S.realized)], ['미실현', ML.won(S.unrealized), ML.cls(S.unrealized)],
+    ['당일 실현 (' + (S.today || D) + ')', ML.won(S.today_realized), ML.cls(S.today_realized)], ['수수료 합계', ML.won(S.fees), ''],
+    ['최대 낙폭', S.mdd_pct == null ? D : S.mdd_pct.toFixed(2) + '%', ''], ['청산 거래', S.n_trades == null ? D : S.n_trades + '건', ''], ['승률', w, ''],
+    ['시작 자금', ML.won(S.capital), ''], ['시작 시각', S.start_time || D, ''], ['마지막 갱신', S.updated_at || D, '']];
+  ML.$('pnl').innerHTML = kv.map(([k, v, c]) => `<div class="kv"><div class="k">${ML.esc(k)}</div><div class="v ${c}">${ML.esc(v)}</div></div>`).join('');
+});
+</script></body></html>
