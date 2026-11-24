@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3838
   },
-  "last_bar_time": "2026-11-24 21:40:00",
-  "last_price": 82543000,
+  "last_bar_time": "2026-11-24 21:45:00",
+  "last_price": 82420000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 21:45:24",
+  "updated_at": "2026-11-24 21:50:26",
   "warnings": [],
   "markets": [
     "BTC",
@@ -114,16 +114,16 @@
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 82543000,
-    "ETH": 2324000,
-    "SOL": 96650.0,
+    "BTC": 82420000,
+    "ETH": 2319000,
+    "SOL": 96550.0,
     "XRP": 1269.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 21:40:00",
-    "ETH": "2026-11-24 21:40:00",
-    "SOL": "2026-11-24 21:40:00",
-    "XRP": "2026-11-24 21:40:00"
+    "BTC": "2026-11-24 21:45:00",
+    "ETH": "2026-11-24 21:45:00",
+    "SOL": "2026-11-24 21:45:00",
+    "XRP": "2026-11-24 21:45:00"
   },
   "independent_clusters": 105,
   "stop_decomp": {
@@ -247,20 +247,20 @@
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 3,
+      "queue": 2,
       "backoff_until": "2026-11-25 03:20:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-24 19:35:21",
-      "title": "Kalshi halts operations in Utah while dodging immediate ban in New York",
+      "decided_at": "2026-11-24 21:50:21",
+      "title": "DOJ moves to recover $1.17 billion from Binance hack, Strategy buys another 457 BTC, and more",
       "decision": "NOT_EXTRACTED",
       "rows": null,
       "targets": null,
       "effective_at": null,
       "window_end": null,
       "rules_version": "news_rules_v1.0",
-      "diff": "둘 다 차단 없음"
+      "diff": "기존만 차단"
     },
     "holds_active": 0
   }

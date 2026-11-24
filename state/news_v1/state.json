@@ -250,7 +250,7 @@
    "fails": 0
   },
   "b3e6fc7c8454": {
-   "status": "queued",
+   "status": "stale",
    "fails": 0
   },
   "4dd29143426f": {
@@ -263,7 +263,7 @@
   }
  },
  "extractor": {
-  "queue": 3,
+  "queue": 2,
   "last_attempt": "2026-11-24 02:30:20",
   "state": "BACKOFF",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
@@ -325,14 +325,14 @@
  "elapsed_s": 0.0,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-24 19:35:21",
-  "title": "Kalshi halts operations in Utah while dodging immediate ban in New York",
+  "decided_at": "2026-11-24 21:50:21",
+  "title": "DOJ moves to recover $1.17 billion from Binance hack, Strategy buys another 457 BTC, and more",
   "decision": "NOT_EXTRACTED",
   "rows": null,
   "targets": null,
   "effective_at": null,
   "window_end": null,
   "rules_version": "news_rules_v1.0",
-  "diff": "둘 다 차단 없음"
+  "diff": "기존만 차단"
  }
 }
