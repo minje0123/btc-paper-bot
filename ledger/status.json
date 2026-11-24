@@ -17,9 +17,9 @@
   "total_value": 783736,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 781363,
+  "equity": 780977,
   "realized_pnl": -216264,
-  "unrealized_pnl": -2373,
+  "unrealized_pnl": -2759,
   "trades_count": 111,
   "win_rate": 38.7,
   "avg_R": -0.373,
@@ -44,11 +44,23 @@
     "risk_money": 3919,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 2308000,
-    "unrealized_pnl": -2373,
+    "last_price": 2309000,
+    "unrealized_pnl": -2759,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-SOL",
+    "coin": "SOL",
+    "side": "숏",
+    "setup": "구간",
+    "grade": "B",
+    "signal_time": "2026-11-24 12:50:00",
+    "signal_close": 97000.0,
+    "stop": 97398.675,
+    "t1": 96401.9875,
+    "qty": 9.8292,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-24",
@@ -69,11 +81,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3919
   },
-  "last_bar_time": "2026-11-24 12:45:00",
-  "last_price": 82223000,
+  "last_bar_time": "2026-11-24 12:50:00",
+  "last_price": 82135000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 12:50:24",
+  "updated_at": "2026-11-24 12:55:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -83,9 +95,9 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 1,
-  "open_risk_won": 3919,
-  "open_risk_pct": 0.5,
+  "open_positions_count": 2,
+  "open_risk_won": 7837,
+  "open_risk_pct": 1.0,
   "positions": [
     {
       "market": "KRW-ETH",
@@ -106,24 +118,40 @@
       "risk_money": 3919,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 2308000,
-      "unrealized_pnl": -2373,
+      "last_price": 2309000,
+      "unrealized_pnl": -2759,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-SOL",
+      "coin": "SOL",
+      "side": "숏",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-24 12:50:00",
+      "signal_close": 97000.0,
+      "stop": 97398.675,
+      "t1": 96401.9875,
+      "qty": 9.8292,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 3919,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 82223000,
-    "ETH": 2308000,
-    "SOL": 97100.0,
+    "BTC": 82135000,
+    "ETH": 2309000,
+    "SOL": 97000.0,
     "XRP": 1290.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 12:45:00",
-    "ETH": "2026-11-24 12:45:00",
-    "SOL": "2026-11-24 12:45:00",
-    "XRP": "2026-11-24 12:45:00"
+    "BTC": "2026-11-24 12:50:00",
+    "ETH": "2026-11-24 12:50:00",
+    "SOL": "2026-11-24 12:50:00",
+    "XRP": "2026-11-24 12:50:00"
   },
   "independent_clusters": 93,
   "stop_decomp": {
