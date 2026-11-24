@@ -17,9 +17,9 @@
   "total_value": 766612,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 771906,
+  "equity": 770039,
   "realized_pnl": -233388,
-  "unrealized_pnl": 5293,
+  "unrealized_pnl": 3427,
   "trades_count": 116,
   "win_rate": 37.9,
   "avg_R": -0.397,
@@ -44,8 +44,8 @@
     "risk_money": 3868,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 2314000,
-    "unrealized_pnl": 1221,
+    "last_price": 2315000,
+    "unrealized_pnl": 903,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3833
   },
-  "last_bar_time": "2026-11-24 15:35:00",
-  "last_price": 82165000,
+  "last_bar_time": "2026-11-24 15:40:00",
+  "last_price": 82328000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 15:40:24",
+  "updated_at": "2026-11-24 15:45:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,8 +106,8 @@
       "risk_money": 3868,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 2314000,
-      "unrealized_pnl": 1221,
+      "last_price": 2315000,
+      "unrealized_pnl": 903,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -130,24 +130,24 @@
       "risk_money": 3860,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 82165000,
-      "unrealized_pnl": 4072,
+      "last_price": 82328000,
+      "unrealized_pnl": 2524,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 82165000,
-    "ETH": 2314000,
-    "SOL": 97550.0,
+    "BTC": 82328000,
+    "ETH": 2315000,
+    "SOL": 97800.0,
     "XRP": 1291.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 15:35:00",
-    "ETH": "2026-11-24 15:35:00",
-    "SOL": "2026-11-24 15:35:00",
-    "XRP": "2026-11-24 15:35:00"
+    "BTC": "2026-11-24 15:40:00",
+    "ETH": "2026-11-24 15:40:00",
+    "SOL": "2026-11-24 15:40:00",
+    "XRP": "2026-11-24 15:40:00"
   },
   "independent_clusters": 98,
   "stop_decomp": {
@@ -172,6 +172,15 @@
   },
   "upcoming_events": [
     {
+      "time": "2026-11-24 15:50:00",
+      "name": "[돌발] 해킹/익스플로잇 (BTC): DOJ moves to recover $1.17 billion from Binance ha",
+      "coins": "BTC",
+      "window_start": "2026-11-24 15:50:00",
+      "window_end": "2026-11-24 17:50:00",
+      "added_at": "2026-11-24 15:45:21",
+      "source": "https://www.theblock.co/newsletters/the-daily/2026-11-24-doj-binance-hack-strategy-bitcoin-more-crypto-news-445430"
+    },
+    {
       "time": "2026-11-25 22:30:00",
       "name": "[일정] Core PCE Price Index m/m · Prelim GDP q/q (USD)",
       "coins": "ALL",
@@ -187,8 +196,15 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-24 13:30:20",
-    "last_success_breaking": "2026-11-24 15:10:21",
+    "last_success_breaking": "2026-11-24 15:45:21",
     "upcoming": [
+      {
+        "time": "2026-11-24 15:50:00",
+        "name": "[돌발] 해킹/익스플로잇 (BTC): DOJ moves to recover $1.17 billion from Binance ha",
+        "importance": "high",
+        "coins": "BTC",
+        "source": "https://www.theblock.co/newsletters/the-daily/2026-11-24-doj-binance-hack-strategy-bitcoin-more-crypto-news-445430"
+      },
       {
         "time": "2026-11-25 00:00:00",
         "name": "[일정] CB Consumer Confidence (USD)",
@@ -205,7 +221,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-24 13:30:20",
-    "last_attempt_breaking": "2026-11-24 15:10:21",
+    "last_attempt_breaking": "2026-11-24 15:45:21",
     "schedule_items_last": 6,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -228,21 +244,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-24 15:10:21",
+        "last_success": "2026-11-24 15:45:21",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-24 15:10:21",
+        "last_success": "2026-11-24 15:45:21",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-24 15:10:21",
+        "last_success": "2026-11-24 15:45:21",
         "count": 20,
         "error": null,
         "optional": false
@@ -257,14 +273,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-24 15:10:21",
+      "last_success": "2026-11-24 15:45:21",
       "error": null
     },
     "extractor": {
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "queue": 2,
       "backoff_until": "2026-11-25 03:20:20"
     },
     "unmapped_count": 0,
