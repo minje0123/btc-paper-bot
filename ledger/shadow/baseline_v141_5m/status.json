@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 981172,
-      "equity": 981213,
+      "equity": 984299,
       "realized_pnl": -18828,
       "withdrawn_total": 0,
       "trades_count": 20,
@@ -55,13 +55,13 @@
         "risk_money": 4906,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 81930000,
-        "unrealized_pnl": 42,
+        "last_price": 81708000,
+        "unrealized_pnl": 3128,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 18:40:00",
+      "last_bar_time": "2026-11-24 18:45:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -19030,
@@ -83,9 +83,16 @@
       "max_drawdown_pct": 7.96,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "A",
+        "signal_time": "2026-11-24 18:45:00",
+        "stop": 2308153.5,
+        "t1": 2282000.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-24 18:40:00",
+      "last_bar_time": "2026-11-24 18:45:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -17530,
@@ -109,7 +116,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 18:40:00",
+      "last_bar_time": "2026-11-24 18:45:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -9666,
@@ -133,7 +140,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 18:40:00",
+      "last_bar_time": "2026-11-24 18:45:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -5127,
@@ -142,7 +149,7 @@
       }
     }
   },
-  "updated_at": "2026-11-24 18:45:25",
+  "updated_at": "2026-11-24 18:50:25",
   "independent_clusters": 124,
   "stop_decomp": {
     "plan_R": -1.0,
