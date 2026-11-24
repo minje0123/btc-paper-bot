@@ -17,9 +17,9 @@
   "total_value": 773557,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 772061,
+  "equity": 771863,
   "realized_pnl": -226443,
-  "unrealized_pnl": -1496,
+  "unrealized_pnl": -1694,
   "trades_count": 118,
   "win_rate": 39.0,
   "avg_R": -0.375,
@@ -44,8 +44,8 @@
     "risk_money": 3868,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 82069000,
-    "unrealized_pnl": -1496,
+    "last_price": 82087000,
+    "unrealized_pnl": -1694,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3868
   },
-  "last_bar_time": "2026-11-24 17:40:00",
-  "last_price": 82069000,
+  "last_bar_time": "2026-11-24 17:45:00",
+  "last_price": 82087000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 17:45:25",
+  "updated_at": "2026-11-24 17:50:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,24 +106,24 @@
       "risk_money": 3868,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 82069000,
-      "unrealized_pnl": -1496,
+      "last_price": 82087000,
+      "unrealized_pnl": -1694,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 82069000,
-    "ETH": 2310000,
-    "SOL": 97200.0,
-    "XRP": 1285.0
+    "BTC": 82087000,
+    "ETH": 2308000,
+    "SOL": 97150.0,
+    "XRP": 1286.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 17:40:00",
-    "ETH": "2026-11-24 17:40:00",
-    "SOL": "2026-11-24 17:40:00",
-    "XRP": "2026-11-24 17:40:00"
+    "BTC": "2026-11-24 17:45:00",
+    "ETH": "2026-11-24 17:45:00",
+    "SOL": "2026-11-24 17:45:00",
+    "XRP": "2026-11-24 17:45:00"
   },
   "independent_clusters": 100,
   "stop_decomp": {
@@ -147,15 +147,6 @@
     "until": null
   },
   "upcoming_events": [
-    {
-      "time": "2026-11-24 15:50:00",
-      "name": "[돌발] 해킹/익스플로잇 (BTC): DOJ moves to recover $1.17 billion from Binance ha",
-      "coins": "BTC",
-      "window_start": "2026-11-24 15:50:00",
-      "window_end": "2026-11-24 17:50:00",
-      "added_at": "2026-11-24 15:45:21",
-      "source": "https://www.theblock.co/newsletters/the-daily/2026-11-24-doj-binance-hack-strategy-bitcoin-more-crypto-news-445430"
-    },
     {
       "time": "2026-11-25 22:30:00",
       "name": "[일정] Core PCE Price Index m/m · Prelim GDP q/q (USD)",
