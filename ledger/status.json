@@ -17,9 +17,9 @@
   "total_value": 768749,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 771576,
+  "equity": 772798,
   "realized_pnl": -231251,
-  "unrealized_pnl": 2827,
+  "unrealized_pnl": 4049,
   "trades_count": 119,
   "win_rate": 38.7,
   "avg_R": -0.384,
@@ -44,8 +44,8 @@
     "risk_money": 3868,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 81619000,
-    "unrealized_pnl": 3454,
+    "last_price": 81561000,
+    "unrealized_pnl": 4092,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3844
   },
-  "last_bar_time": "2026-11-24 19:20:00",
-  "last_price": 81619000,
+  "last_bar_time": "2026-11-24 19:25:00",
+  "last_price": 81561000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 19:25:25",
+  "updated_at": "2026-11-24 19:30:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,8 +106,8 @@
       "risk_money": 3868,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 81619000,
-      "unrealized_pnl": 3454,
+      "last_price": 81561000,
+      "unrealized_pnl": 4092,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -130,24 +130,24 @@
       "risk_money": 3844,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 2296000,
-      "unrealized_pnl": -627,
+      "last_price": 2294000,
+      "unrealized_pnl": -43,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 81619000,
-    "ETH": 2296000,
-    "SOL": 96300.0,
-    "XRP": 1270.0
+    "BTC": 81561000,
+    "ETH": 2294000,
+    "SOL": 96250.0,
+    "XRP": 1268.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 19:20:00",
-    "ETH": "2026-11-24 19:20:00",
-    "SOL": "2026-11-24 19:20:00",
-    "XRP": "2026-11-24 19:20:00"
+    "BTC": "2026-11-24 19:25:00",
+    "ETH": "2026-11-24 19:25:00",
+    "SOL": "2026-11-24 19:25:00",
+    "XRP": "2026-11-24 19:25:00"
   },
   "independent_clusters": 101,
   "stop_decomp": {
@@ -186,8 +186,8 @@
     "source": "feeds",
     "schedule": "OK",
     "breaking": "OK",
-    "last_success_schedule": "2026-11-24 13:30:20",
-    "last_success_breaking": "2026-11-24 18:55:21",
+    "last_success_schedule": "2026-11-24 19:30:20",
+    "last_success_breaking": "2026-11-24 19:30:20",
     "upcoming": [
       {
         "time": "2026-11-25 00:00:00",
@@ -204,8 +204,8 @@
         "source": "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
       }
     ],
-    "last_attempt_schedule": "2026-11-24 13:30:20",
-    "last_attempt_breaking": "2026-11-24 18:55:21",
+    "last_attempt_schedule": "2026-11-24 19:30:20",
+    "last_attempt_breaking": "2026-11-24 19:30:20",
     "schedule_items_last": 6,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -214,7 +214,7 @@
     "sources": {
       "ff_thisweek": {
         "ok": true,
-        "last_success": "2026-11-24 13:30:20",
+        "last_success": "2026-11-24 19:30:20",
         "count": 6,
         "error": null,
         "optional": false
@@ -228,21 +228,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-24 18:55:21",
+        "last_success": "2026-11-24 19:30:20",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-24 18:55:21",
+        "last_success": "2026-11-24 19:30:20",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-24 18:55:21",
+        "last_success": "2026-11-24 19:30:20",
         "count": 20,
         "error": null,
         "optional": false
@@ -257,7 +257,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-24 18:55:21",
+      "last_success": "2026-11-24 19:30:20",
       "error": null
     },
     "extractor": {
