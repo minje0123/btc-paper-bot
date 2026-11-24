@@ -627,13 +627,18 @@
     },
     "SOL-202611241950S": {
       "text": "",
-      "fails": 1,
+      "fails": 2,
       "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
-      "at": "2026-11-25 03:30:20"
+      "at": "2026-11-25 03:35:20"
+    },
+    "ETH-202611241850S": {
+      "text": "스윙 레벨과 오더블록 저항 및 하위 프레임과 상위 프레임의 하방 정렬을 근거로 진입하여, 유리한 MFE 구간을 거쳐 거래량 급증 시점에 청산함으로써 수익을 거둘 수 있었습니다. 다만 진입 후 거래량 변화와 가격 반응을 모니터링하며 T1 반익절 외의 추가 청산 대응을 유연하게 가져간 점이 이번 거래의 성과를 만들었습니다. 다음에 볼 점은 진입 직전의 높은 변동성(ATR 백분위 73.0) 환경에서 거래량 급증 시그널이 발생했을 때의 가격 반응 속도를 세밀하게 관찰하는 것입니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-25 03:35:20"
     }
   },
   "model": "gemini-flash-lite-latest",
   "note": "Gemini 복기 해설 캐시(거래 ID 키). 공부용 — 매매 판단에 쓰지 않음. 한 번 받은 거래는 다시 부르지 않음.",
-  "backoff_until": "2026-11-25 03:20:20",
-  "backoff_reason": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 429 RESOURC"
+  "backoff_until": "2026-11-26 03:35:20",
+  "backoff_reason": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL"
 }
