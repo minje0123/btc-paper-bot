@@ -20,10 +20,10 @@
     "dayLossP": 100,
     "maxConsec": 1000
   },
-  "trades_count": 148,
-  "win_rate": 38.5,
-  "avg_R": -0.4,
-  "sum_R": -59.159,
+  "trades_count": 149,
+  "win_rate": 38.9,
+  "avg_R": -0.392,
+  "sum_R": -58.436,
   "coins": {
     "BTC": {
       "market": "KRW-BTC",
@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 00:00:00",
+      "last_bar_time": "2026-11-25 00:05:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 00:00:00",
+      "last_bar_time": "2026-11-25 00:05:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -76,43 +76,23 @@
     "XRP": {
       "market": "KRW-XRP",
       "initial_capital": 1000000.0,
-      "balance": 848860,
-      "equity": 849518,
-      "realized_pnl": -151140,
+      "balance": 851010,
+      "equity": 851010,
+      "realized_pnl": -148990,
       "withdrawn_total": 0,
-      "trades_count": 39,
-      "win_rate": 30.8,
-      "avg_R": -0.73,
-      "sum_R": -28.489,
+      "trades_count": 40,
+      "win_rate": 32.5,
+      "avg_R": -0.694,
+      "sum_R": -27.766,
       "max_drawdown_pct": 16.65,
-      "has_position": true,
-      "position": {
-        "id": "202611242335S",
-        "side": "숏",
-        "setup": "구간",
-        "grade": "A",
-        "entry_time": "2026-11-24 23:35:00",
-        "entry": 1259,
-        "stop": 1259,
-        "stop0": 1268,
-        "t1": 1253,
-        "next_target": 1250,
-        "qty": 555.1469,
-        "qty_open": 277.5735,
-        "leverage": 0.82,
-        "risk_money": 4238,
-        "t1_done": true,
-        "realized_part": 1317,
-        "last_price": 1256,
-        "unrealized_pnl": 658,
-        "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
-      },
+      "has_position": false,
+      "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 00:00:00",
+      "last_bar_time": "2026-11-25 00:05:00",
       "today": {
         "date": "2026-11-25",
-        "realized_pnl": 0,
+        "realized_pnl": 2150,
         "no_new_entries": false,
         "reason": null
       }
@@ -133,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 00:00:00",
+      "last_bar_time": "2026-11-25 00:05:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -142,8 +122,8 @@
       }
     }
   },
-  "updated_at": "2026-11-25 00:05:25",
-  "independent_clusters": 129,
+  "updated_at": "2026-11-25 00:10:25",
+  "independent_clusters": 130,
   "stop_decomp": {
     "plan_R": -1.0,
     "gap_R": -0.0,
