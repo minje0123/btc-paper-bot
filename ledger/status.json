@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3805
   },
-  "last_bar_time": "2026-11-25 08:10:00",
-  "last_price": 81767000,
+  "last_bar_time": "2026-11-25 08:15:00",
+  "last_price": 81713000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-25 08:15:24",
+  "updated_at": "2026-11-25 08:20:23",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 81767000,
-    "ETH": 2293000,
-    "SOL": 95300.0,
-    "XRP": 1262.0
+    "BTC": 81713000,
+    "ETH": 2291000,
+    "SOL": 95150.0,
+    "XRP": 1261.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-25 08:10:00",
-    "ETH": "2026-11-25 08:10:00",
-    "SOL": "2026-11-25 08:10:00",
-    "XRP": "2026-11-25 08:10:00"
+    "BTC": "2026-11-25 08:15:00",
+    "ETH": "2026-11-25 08:15:00",
+    "SOL": "2026-11-25 08:15:00",
+    "XRP": "2026-11-25 08:15:00"
   },
   "independent_clusters": 111,
   "stop_decomp": {
@@ -118,13 +118,6 @@
     "last_success_schedule": "2026-11-25 07:35:20",
     "last_success_breaking": "2026-11-25 08:15:21",
     "upcoming": [
-      {
-        "time": "2026-11-25 07:20:00",
-        "name": "[돌발] SEC·규제 조치 (ALL): Europol follows $28.5M crypto trail in streaming p",
-        "importance": "medium",
-        "coins": "ALL",
-        "source": "https://cointelegraph.com/news/europol-crypto-trail-streaming-piracy-crackdown?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
-      },
       {
         "time": "2026-11-25 22:30:00",
         "name": "[일정] Core PCE Price Index m/m · Prelim GDP q/q (USD)",
