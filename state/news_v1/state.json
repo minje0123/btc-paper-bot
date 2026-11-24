@@ -244,7 +244,7 @@
    "fails": 0
   },
   "d81fbdc34cf0": {
-   "status": "queued",
+   "status": "stale",
    "fails": 0
   },
   "b3e6fc7c8454": {
@@ -253,7 +253,7 @@
   }
  },
  "extractor": {
-  "queue": 2,
+  "queue": 1,
   "last_attempt": "2026-11-24 02:30:20",
   "state": "BACKOFF",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
@@ -312,11 +312,11 @@
    }
   }
  },
- "elapsed_s": 0.01,
+ "elapsed_s": 0.0,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-24 12:25:20",
-  "title": "US seeks to recover $1.1B in crypto stolen in North Korea-linked Binance hack",
+  "decided_at": "2026-11-24 19:35:21",
+  "title": "Kalshi halts operations in Utah while dodging immediate ban in New York",
   "decision": "NOT_EXTRACTED",
   "rows": null,
   "targets": null,
