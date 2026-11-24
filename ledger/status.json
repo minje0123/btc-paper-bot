@@ -17,9 +17,9 @@
   "total_value": 758771,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 758347,
+  "equity": 759694,
   "realized_pnl": -241229,
-  "unrealized_pnl": -424,
+  "unrealized_pnl": 923,
   "trades_count": 129,
   "win_rate": 39.5,
   "avg_R": -0.369,
@@ -44,8 +44,8 @@
     "risk_money": 3794,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 1259.0,
-    "unrealized_pnl": -424,
+    "last_price": 1257.0,
+    "unrealized_pnl": 923,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,13 +69,13 @@
     "next_size_mode": "보통",
     "next_risk_won": 3794
   },
-  "last_bar_time": "2026-11-25 03:20:00",
-  "last_price": 81857000,
+  "last_bar_time": "2026-11-25 03:25:00",
+  "last_price": 81871000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-25 03:26:12",
+  "updated_at": "2026-11-25 03:31:10",
   "warnings": [
-    "Gemini 복기 해설 실패(XRP-202611242335S): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+    "Gemini 복기 해설 실패(SOL-202611241950S): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
   ],
   "markets": [
     "BTC",
@@ -108,24 +108,24 @@
       "risk_money": 3794,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 1259.0,
-      "unrealized_pnl": -424,
+      "last_price": 1257.0,
+      "unrealized_pnl": 923,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 81857000,
-    "ETH": 2296000,
-    "SOL": 94850.0,
-    "XRP": 1259.0
+    "BTC": 81871000,
+    "ETH": 2297000,
+    "SOL": 95000.0,
+    "XRP": 1257.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-25 03:20:00",
-    "ETH": "2026-11-25 03:20:00",
-    "SOL": "2026-11-25 03:20:00",
-    "XRP": "2026-11-25 03:20:00"
+    "BTC": "2026-11-25 03:25:00",
+    "ETH": "2026-11-25 03:25:00",
+    "SOL": "2026-11-25 03:25:00",
+    "XRP": "2026-11-25 03:25:00"
   },
   "independent_clusters": 110,
   "stop_decomp": {
@@ -235,14 +235,14 @@
       "state": "FAIL",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 4,
+      "queue": 2,
       "backoff_until": "2026-11-25 03:20:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-25 03:10:21",
-      "title": "Bitcoin hands back Monday's Nvidia-driven gains, liquidations triple",
-      "decision": "NOT_EXTRACTED",
+      "decided_at": "2026-11-25 03:30:20",
+      "title": "Ethereum treasury firm BTCS sells $43.8 million in ETH to cut Aave debt, CEO says ‘we do not take this lightly’",
+      "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
       "effective_at": null,

@@ -611,15 +611,25 @@
       "at": "2026-11-25 03:25:20"
     },
     "XRP-202611242335S": {
-      "text": "",
-      "fails": 1,
-      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
-      "at": "2026-11-25 03:25:20"
+      "text": "상위 타임프레임의 하락 방향성과 다중 저항 구간의 근거가 잘 맞아떨어져 수익으로 마감되었습니다. 다음에는 MFE 기록을 참고하여 익절 타이밍을 더 효율적으로 가져가는 방안을 관찰해 볼 수 있습니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-25 03:30:20"
     },
     "XRP-202611242115S": {
       "text": "상위 타임프레임의 하락 방향성과 주요 저항 구간의 근거가 잘 맞아떨어져 유리한 손익비를 확보하며 수익으로 마감했습니다. 다만 최대 유리한 구간(MFE)에 비해 이른 시점에 청산이 이루어졌으므로, 다음에는 거래량 급증 구간에서 추세를 더 길게 가져갈 수 있는 청산 기준을 점검해 볼 필요가 있습니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-25 03:25:20"
+    },
+    "XRP-202611241940S": {
+      "text": "상위 타임프레임과 진입 근거가 일치하는 자리였으나, 진입 직전 낮은 변동성 속에서 역방향 압력을 버티지 못하고 손절가에 도달하여 마감되었습니다. 다음에는 낮은 ATR 구간에서의 진입 시 가격의 호가 반응과 잠재적 노이즈 범위를 좀 더 세밀하게 관찰할 필요가 있습니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-25 03:30:20"
+    },
+    "SOL-202611241950S": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
+      "at": "2026-11-25 03:30:20"
     }
   },
   "model": "gemini-flash-lite-latest",
