@@ -26,7 +26,19 @@
   "max_drawdown_pct": 25.02,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-SOL",
+    "coin": "SOL",
+    "side": "숏",
+    "setup": "C",
+    "grade": "",
+    "signal_time": "2026-11-25 02:20:00",
+    "signal_close": 94450.0,
+    "stop": 94997.475,
+    "t1": 94000.0,
+    "qty": 7.0819,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-25",
@@ -47,11 +59,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3877
   },
-  "last_bar_time": "2026-11-25 02:15:00",
-  "last_price": 81413000,
+  "last_bar_time": "2026-11-25 02:20:00",
+  "last_price": 81442000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-25 02:20:24",
+  "updated_at": "2026-11-25 02:25:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -61,22 +73,38 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 0,
-  "open_risk_won": 0,
-  "open_risk_pct": 0.0,
+  "open_positions_count": 1,
+  "open_risk_won": 3877,
+  "open_risk_pct": 0.5,
   "positions": [],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-SOL",
+      "coin": "SOL",
+      "side": "숏",
+      "setup": "C",
+      "grade": "",
+      "signal_time": "2026-11-25 02:20:00",
+      "signal_close": 94450.0,
+      "stop": 94997.475,
+      "t1": 94000.0,
+      "qty": 7.0819,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 3877,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 81413000,
-    "ETH": 2283000,
-    "SOL": 94350.0,
-    "XRP": 1249.0
+    "BTC": 81442000,
+    "ETH": 2284000,
+    "SOL": 94450.0,
+    "XRP": 1250.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-25 02:15:00",
-    "ETH": "2026-11-25 02:15:00",
-    "SOL": "2026-11-25 02:15:00",
-    "XRP": "2026-11-25 02:15:00"
+    "BTC": "2026-11-25 02:20:00",
+    "ETH": "2026-11-25 02:20:00",
+    "SOL": "2026-11-25 02:20:00",
+    "XRP": "2026-11-25 02:20:00"
   },
   "independent_clusters": 108,
   "stop_decomp": {
