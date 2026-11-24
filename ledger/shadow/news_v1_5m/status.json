@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 981172,
-      "equity": 983966,
+      "equity": 985328,
       "realized_pnl": -18828,
       "withdrawn_total": 0,
       "trades_count": 20,
@@ -55,13 +55,13 @@
         "risk_money": 4906,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 81732000,
-        "unrealized_pnl": 2794,
+        "last_price": 81634000,
+        "unrealized_pnl": 4156,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 18:15:00",
+      "last_bar_time": "2026-11-24 18:20:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -19030,
@@ -83,9 +83,16 @@
       "max_drawdown_pct": 7.96,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-24 18:20:00",
+        "stop": 2301448.1489999993,
+        "t1": 2279000.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-24 18:15:00",
+      "last_bar_time": "2026-11-24 18:20:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -11742,
@@ -109,7 +116,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 18:15:00",
+      "last_bar_time": "2026-11-24 18:20:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -9732,
@@ -133,7 +140,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 18:15:00",
+      "last_bar_time": "2026-11-24 18:20:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -5127,
@@ -142,7 +149,7 @@
       }
     }
   },
-  "updated_at": "2026-11-24 18:20:26",
+  "updated_at": "2026-11-24 18:25:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 122,
@@ -166,7 +173,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-24 17:55:20",
+      "last_success": "2026-11-24 18:25:21",
       "error": null
     },
     "extractor": {
@@ -343,7 +350,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 143,
+    "signals": 144,
     "blocked": 1,
     "blocked_base_closed": 1,
     "blocked_base_sumR": -1.349,
