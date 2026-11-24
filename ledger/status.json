@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3805
   },
-  "last_bar_time": "2026-11-25 07:05:00",
-  "last_price": 81641000,
+  "last_bar_time": "2026-11-25 07:10:00",
+  "last_price": 81620000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-25 07:10:24",
+  "updated_at": "2026-11-25 07:15:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 81641000,
-    "ETH": 2291000,
+    "BTC": 81620000,
+    "ETH": 2290000,
     "SOL": 94750.0,
-    "XRP": 1258.0
+    "XRP": 1257.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-25 07:05:00",
-    "ETH": "2026-11-25 07:05:00",
-    "SOL": "2026-11-25 07:05:00",
-    "XRP": "2026-11-25 07:05:00"
+    "BTC": "2026-11-25 07:10:00",
+    "ETH": "2026-11-25 07:10:00",
+    "SOL": "2026-11-25 07:10:00",
+    "XRP": "2026-11-25 07:10:00"
   },
   "independent_clusters": 111,
   "stop_decomp": {
@@ -116,8 +116,15 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-25 01:30:21",
-    "last_success_breaking": "2026-11-25 06:40:21",
+    "last_success_breaking": "2026-11-25 07:15:20",
     "upcoming": [
+      {
+        "time": "2026-11-25 07:20:00",
+        "name": "[돌발] SEC·규제 조치 (ALL): Europol follows $28.5M crypto trail in streaming p",
+        "importance": "medium",
+        "coins": "ALL",
+        "source": "https://cointelegraph.com/news/europol-crypto-trail-streaming-piracy-crackdown?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
       {
         "time": "2026-11-25 22:30:00",
         "name": "[일정] Core PCE Price Index m/m · Prelim GDP q/q (USD)",
@@ -127,7 +134,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-25 01:30:21",
-    "last_attempt_breaking": "2026-11-25 06:40:21",
+    "last_attempt_breaking": "2026-11-25 07:15:20",
     "schedule_items_last": 6,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -150,21 +157,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-25 06:40:21",
+        "last_success": "2026-11-25 07:15:20",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-25 06:40:21",
+        "last_success": "2026-11-25 07:15:20",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-25 06:40:21",
+        "last_success": "2026-11-25 07:15:20",
         "count": 20,
         "error": null,
         "optional": false
@@ -179,14 +186,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-25 06:40:21",
+      "last_success": "2026-11-25 07:15:20",
       "error": null
     },
     "extractor": {
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 2,
+      "queue": 3,
       "backoff_until": "2026-11-26 03:35:20"
     },
     "unmapped_count": 0,
