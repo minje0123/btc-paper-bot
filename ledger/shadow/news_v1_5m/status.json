@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 22:00:00",
+      "last_bar_time": "2026-11-24 22:05:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -8538,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 22:00:00",
+      "last_bar_time": "2026-11-24 22:05:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -14818,
@@ -76,9 +76,9 @@
     "XRP": {
       "market": "KRW-XRP",
       "initial_capital": 1000000.0,
-      "balance": 848974,
-      "equity": 849251,
-      "realized_pnl": -151026,
+      "balance": 850005,
+      "equity": 853533,
+      "realized_pnl": -149995,
       "withdrawn_total": 0,
       "trades_count": 37,
       "win_rate": 29.7,
@@ -93,26 +93,26 @@
         "grade": "A",
         "entry_time": "2026-11-24 21:15:00",
         "entry": 1265,
-        "stop": 1273,
+        "stop": 1265,
         "stop0": 1273,
         "t1": 1261,
-        "next_target": null,
+        "next_target": 1260,
         "qty": 753.1709,
-        "qty_open": 753.1709,
+        "qty_open": 376.5855,
         "leverage": 1.12,
         "risk_money": 4245,
-        "t1_done": false,
-        "realized_part": 0,
-        "last_price": 1264,
-        "unrealized_pnl": 277,
+        "t1_done": true,
+        "realized_part": 1031,
+        "last_price": 1255,
+        "unrealized_pnl": 3528,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
-      "pending_close": null,
-      "last_bar_time": "2026-11-24 22:00:00",
+      "pending_close": "거래량 급증",
+      "last_bar_time": "2026-11-24 22:05:00",
       "today": {
         "date": "2026-11-24",
-        "realized_pnl": -17257,
+        "realized_pnl": -16227,
         "no_new_entries": false,
         "reason": null
       }
@@ -133,7 +133,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-24 22:00:00",
+      "last_bar_time": "2026-11-24 22:05:00",
       "today": {
         "date": "2026-11-24",
         "realized_pnl": -10918,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-24 22:05:25",
+  "updated_at": "2026-11-24 22:10:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 127,
@@ -166,7 +166,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-24 21:40:20",
+      "last_success": "2026-11-24 22:10:20",
       "error": null
     },
     "extractor": {

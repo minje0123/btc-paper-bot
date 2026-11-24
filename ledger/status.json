@@ -5,21 +5,21 @@
   "account_note": "뉴스 차단·일일 목표 보호·첫 승 절반·주간 출금 비활성. 그림자는 코인별 독립, 본 장부는 100만 원 공유.",
   "start_time": "2026-11-18 19:25:00",
   "initial_capital": 1000000.0,
-  "balance": 767684,
-  "trading_seed": 767684,
-  "risk_per_trade_won": 3838,
+  "balance": 768616,
+  "trading_seed": 768616,
+  "risk_per_trade_won": 3843,
   "risk_pct": 0.5,
   "reduced_risk_pct": 0.5,
   "withdrawn_total": 0,
   "withdraw_pct": 0.0,
   "first_win_half": false,
   "withdrawals": [],
-  "total_value": 767684,
+  "total_value": 768616,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 767934,
-  "realized_pnl": -232316,
-  "unrealized_pnl": 250,
+  "equity": 771806,
+  "realized_pnl": -231384,
+  "unrealized_pnl": 3190,
   "trades_count": 123,
   "win_rate": 39.0,
   "avg_R": -0.37,
@@ -34,25 +34,25 @@
     "grade": "A",
     "entry_time": "2026-11-24 21:15:00",
     "entry": 1265.0,
-    "stop": 1272.636,
+    "stop": 1265.0,
     "stop0": 1272.636,
     "t1": 1261.0,
-    "next_target": null,
+    "next_target": 1260.0,
     "qty": 681.054,
-    "qty_open": 681.054,
+    "qty_open": 340.527,
     "leverage": 1.12,
     "risk_money": 3838,
-    "t1_done": false,
-    "realized_part": 0,
-    "last_price": 1264.0,
-    "unrealized_pnl": 250,
+    "t1_done": true,
+    "realized_part": 932,
+    "last_price": 1255.0,
+    "unrealized_pnl": 3190,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
-  "pending_close": null,
+  "pending_close": "거래량 급증",
   "today": {
     "date": "2026-11-24",
-    "realized_pnl": -44262,
+    "realized_pnl": -43330,
     "consecutive_losses": 2,
     "no_new_entries": false,
     "reason": null,
@@ -67,13 +67,13 @@
     "first_trade_result": "손실",
     "next_size_factor": 1.0,
     "next_size_mode": "보통",
-    "next_risk_won": 3838
+    "next_risk_won": 3843
   },
-  "last_bar_time": "2026-11-24 22:00:00",
-  "last_price": 82388000,
+  "last_bar_time": "2026-11-24 22:05:00",
+  "last_price": 81812000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-24 22:05:25",
+  "updated_at": "2026-11-24 22:10:26",
   "warnings": [],
   "markets": [
     "BTC",
@@ -85,7 +85,7 @@
   "max_open_risk_pct": 0.0,
   "open_positions_count": 1,
   "open_risk_won": 3838,
-  "open_risk_pct": 0.5,
+  "open_risk_pct": 0.499,
   "positions": [
     {
       "market": "KRW-XRP",
@@ -96,34 +96,34 @@
       "grade": "A",
       "entry_time": "2026-11-24 21:15:00",
       "entry": 1265.0,
-      "stop": 1272.636,
+      "stop": 1265.0,
       "stop0": 1272.636,
       "t1": 1261.0,
-      "next_target": null,
+      "next_target": 1260.0,
       "qty": 681.054,
-      "qty_open": 681.054,
+      "qty_open": 340.527,
       "leverage": 1.12,
       "risk_money": 3838,
-      "t1_done": false,
-      "realized_part": 0,
-      "last_price": 1264.0,
-      "unrealized_pnl": 250,
+      "t1_done": true,
+      "realized_part": 932,
+      "last_price": 1255.0,
+      "unrealized_pnl": 3190,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
-      "pending_close": null
+      "pending_close": "거래량 급증"
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 82388000,
-    "ETH": 2322000,
-    "SOL": 96350.0,
-    "XRP": 1264.0
+    "BTC": 81812000,
+    "ETH": 2303000,
+    "SOL": 95700.0,
+    "XRP": 1255.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-24 22:00:00",
-    "ETH": "2026-11-24 22:00:00",
-    "SOL": "2026-11-24 22:00:00",
-    "XRP": "2026-11-24 22:00:00"
+    "BTC": "2026-11-24 22:05:00",
+    "ETH": "2026-11-24 22:05:00",
+    "SOL": "2026-11-24 22:05:00",
+    "XRP": "2026-11-24 22:05:00"
   },
   "independent_clusters": 105,
   "stop_decomp": {
@@ -163,15 +163,8 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-24 19:30:20",
-    "last_success_breaking": "2026-11-24 21:40:20",
+    "last_success_breaking": "2026-11-24 22:10:20",
     "upcoming": [
-      {
-        "time": "2026-11-24 21:10:00",
-        "name": "[돌발] 대규모 청산 (BTC): Bitcoin hands back Monday's Nvidia-driven gains  l",
-        "importance": "medium",
-        "coins": "BTC",
-        "source": "https://www.coindesk.com/markets/2026/11/24/bitcoin-hands-back-monday-s-nvidia-driven-gains-liquidations-triple"
-      },
       {
         "time": "2026-11-25 00:00:00",
         "name": "[일정] CB Consumer Confidence (USD)",
@@ -188,7 +181,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-24 19:30:20",
-    "last_attempt_breaking": "2026-11-24 21:40:20",
+    "last_attempt_breaking": "2026-11-24 22:10:20",
     "schedule_items_last": 6,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -211,21 +204,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-24 21:40:20",
+        "last_success": "2026-11-24 22:10:20",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-24 21:40:20",
+        "last_success": "2026-11-24 22:10:20",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-24 21:40:20",
+        "last_success": "2026-11-24 22:10:20",
         "count": 20,
         "error": null,
         "optional": false
@@ -240,7 +233,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-24 21:40:20",
+      "last_success": "2026-11-24 22:10:20",
       "error": null
     },
     "extractor": {
