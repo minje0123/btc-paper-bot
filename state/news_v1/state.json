@@ -332,7 +332,7 @@
    }
   }
  },
- "elapsed_s": 0.0,
+ "elapsed_s": 0.01,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
   "decided_at": "2026-11-24 21:50:21",
