@@ -26,7 +26,19 @@
   "max_drawdown_pct": 25.57,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-XRP",
+    "coin": "XRP",
+    "side": "숏",
+    "setup": "구간",
+    "grade": "A",
+    "signal_time": "2026-11-25 03:05:00",
+    "signal_close": 1260.0,
+    "stop": 1265.6325,
+    "t1": 1255.0,
+    "qty": 673.565,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-25",
@@ -47,11 +59,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3794
   },
-  "last_bar_time": "2026-11-25 03:00:00",
-  "last_price": 82063000,
+  "last_bar_time": "2026-11-25 03:05:00",
+  "last_price": 82000000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-25 03:05:24",
+  "updated_at": "2026-11-25 03:10:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -61,22 +73,38 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 0,
-  "open_risk_won": 0,
-  "open_risk_pct": 0.0,
+  "open_positions_count": 1,
+  "open_risk_won": 3794,
+  "open_risk_pct": 0.5,
   "positions": [],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-XRP",
+      "coin": "XRP",
+      "side": "숏",
+      "setup": "구간",
+      "grade": "A",
+      "signal_time": "2026-11-25 03:05:00",
+      "signal_close": 1260.0,
+      "stop": 1265.6325,
+      "t1": 1255.0,
+      "qty": 673.565,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 3794,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 82063000,
-    "ETH": 2300000,
-    "SOL": 95000.0,
-    "XRP": 1262.0
+    "BTC": 82000000,
+    "ETH": 2297000,
+    "SOL": 94850.0,
+    "XRP": 1260.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-25 03:00:00",
-    "ETH": "2026-11-25 03:00:00",
-    "SOL": "2026-11-25 03:00:00",
-    "XRP": "2026-11-25 03:00:00"
+    "BTC": "2026-11-25 03:05:00",
+    "ETH": "2026-11-25 03:05:00",
+    "SOL": "2026-11-25 03:05:00",
+    "XRP": "2026-11-25 03:05:00"
   },
   "independent_clusters": 110,
   "stop_decomp": {
@@ -186,13 +214,13 @@
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 5,
+      "queue": 4,
       "backoff_until": "2026-11-25 03:20:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-25 02:00:21",
-      "title": "U.S. seeks $1.1 billion seized in Binance hack as North Korean funds keep moving",
+      "decided_at": "2026-11-25 03:10:21",
+      "title": "Bitcoin hands back Monday's Nvidia-driven gains, liquidations triple",
       "decision": "NOT_EXTRACTED",
       "rows": null,
       "targets": null,
