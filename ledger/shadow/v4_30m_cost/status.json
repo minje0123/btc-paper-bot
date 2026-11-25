@@ -44,7 +44,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 00:30:00",
+      "last_bar_time": "2026-11-26 01:00:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": 0,
@@ -68,7 +68,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 00:30:00",
+      "last_bar_time": "2026-11-26 01:00:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": 0,
@@ -92,7 +92,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 00:30:00",
+      "last_bar_time": "2026-11-26 01:00:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": 0,
@@ -116,7 +116,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 00:30:00",
+      "last_bar_time": "2026-11-26 01:00:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": 0,
@@ -125,7 +125,7 @@
       }
     }
   },
-  "updated_at": "2026-11-26 01:25:26",
+  "updated_at": "2026-11-26 01:30:26",
   "timeframe": 30,
   "pair_group": "v4_30m",
   "pair_role": "B",
@@ -150,7 +150,7 @@
     "n_both": 7,
     "n_only_A": 23,
     "n_only_B": 0,
-    "n_open": 0,
+    "n_open": 1,
     "mean_d": -0.1669,
     "sd_d": 1.2115,
     "rho": 0.3866,
