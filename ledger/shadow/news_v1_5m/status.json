@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 17:35:00",
+      "last_bar_time": "2026-11-25 17:40:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 17:35:00",
+      "last_bar_time": "2026-11-25 17:40:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": -3683,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 17:35:00",
+      "last_bar_time": "2026-11-25 17:40:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": -2153,
@@ -101,7 +101,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 896887,
-      "equity": 895803,
+      "equity": 896149,
       "realized_pnl": -103113,
       "withdrawn_total": 0,
       "trades_count": 55,
@@ -127,13 +127,13 @@
         "risk_money": 4484,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 92750,
-        "unrealized_pnl": -1084,
+        "last_price": 92700,
+        "unrealized_pnl": -737,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 17:35:00",
+      "last_bar_time": "2026-11-25 17:40:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": -17493,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-25 17:40:26",
+  "updated_at": "2026-11-25 17:45:27",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 136,
@@ -166,14 +166,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-25 17:10:21",
+      "last_success": "2026-11-25 17:45:20",
       "error": null
     },
     "extractor": {
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 1,
+      "queue": 2,
       "backoff_until": "2026-11-26 03:35:20"
     },
     "unmapped_count": 0,
