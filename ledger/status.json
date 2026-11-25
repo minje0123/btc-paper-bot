@@ -26,7 +26,19 @@
   "max_drawdown_pct": 27.63,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-SOL",
+    "coin": "SOL",
+    "side": "롱",
+    "setup": "구간",
+    "grade": "B",
+    "signal_time": "2026-11-26 03:35:00",
+    "signal_close": 94350.0,
+    "stop": 93903.025,
+    "t1": 95300.0,
+    "qty": 8.2533,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-26",
@@ -47,11 +59,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3689
   },
-  "last_bar_time": "2026-11-26 03:30:00",
-  "last_price": 80924000,
+  "last_bar_time": "2026-11-26 03:35:00",
+  "last_price": 81020000,
   "data_source": "upbit",
-  "data_source_this_run": null,
-  "updated_at": "2026-11-26 03:36:27",
+  "data_source_this_run": "upbit",
+  "updated_at": "2026-11-26 03:40:48",
   "warnings": [],
   "markets": [
     "BTC",
@@ -61,22 +73,38 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 0,
-  "open_risk_won": 0,
-  "open_risk_pct": 0.0,
+  "open_positions_count": 1,
+  "open_risk_won": 3689,
+  "open_risk_pct": 0.5,
   "positions": [],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-SOL",
+      "coin": "SOL",
+      "side": "롱",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-26 03:35:00",
+      "signal_close": 94350.0,
+      "stop": 93903.025,
+      "t1": 95300.0,
+      "qty": 8.2533,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 3689,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 80924000,
-    "ETH": 2281000,
-    "SOL": 94200.0,
-    "XRP": 1255.0
+    "BTC": 81020000,
+    "ETH": 2283000,
+    "SOL": 94350.0,
+    "XRP": 1257.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-26 03:30:00",
-    "ETH": "2026-11-26 03:30:00",
-    "SOL": "2026-11-26 03:30:00",
-    "XRP": "2026-11-26 03:30:00"
+    "BTC": "2026-11-26 03:35:00",
+    "ETH": "2026-11-26 03:35:00",
+    "SOL": "2026-11-26 03:35:00",
+    "XRP": "2026-11-26 03:35:00"
   },
   "independent_clusters": 121,
   "stop_decomp": {
@@ -175,15 +203,15 @@
     "extractor": {
       "state": "FAIL",
       "last_success": "2026-11-23 04:25:21",
-      "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 2,
+      "last_error": "TimeoutError: The read operation timed out",
+      "queue": 0,
       "backoff_until": "2026-11-26 03:35:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-25 23:45:21",
-      "title": "EU seeks up to $55B for AI and quantum computing fund: Report",
-      "decision": "NOT_EXTRACTED",
+      "decided_at": "2026-11-26 03:40:20",
+      "title": "South Korean crypto exchange Bithumb warns of phishing after deeper October breach probe",
+      "decision": "EXTRACTOR_FAILED",
       "rows": null,
       "targets": null,
       "effective_at": null,
