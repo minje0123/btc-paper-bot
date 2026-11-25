@@ -32,14 +32,14 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 992487,
-      "equity": 991519,
+      "equity": 990226,
       "realized_pnl": -7513,
       "withdrawn_total": 0,
       "trades_count": 3,
       "win_rate": 33.3,
       "avg_R": -0.506,
       "sum_R": -1.518,
-      "max_drawdown_pct": 1.26,
+      "max_drawdown_pct": 1.39,
       "has_position": true,
       "position": {
         "id": "202611252030S",
@@ -58,13 +58,13 @@
         "risk_money": 4962,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 79879000,
-        "unrealized_pnl": -967,
+        "last_price": 80026000,
+        "unrealized_pnl": -2261,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 21:00:00",
+      "last_bar_time": "2026-11-25 21:30:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -88,7 +88,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 21:00:00",
+      "last_bar_time": "2026-11-25 21:30:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -112,7 +112,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 21:00:00",
+      "last_bar_time": "2026-11-25 21:30:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -156,7 +156,7 @@
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 21:00:00",
+      "last_bar_time": "2026-11-25 21:30:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -165,7 +165,7 @@
       }
     }
   },
-  "updated_at": "2026-11-25 21:55:41",
+  "updated_at": "2026-11-25 22:00:26",
   "timeframe": 30,
   "pair_group": "v4_30m",
   "pair_role": "B",
@@ -190,7 +190,7 @@
     "n_both": 5,
     "n_only_A": 22,
     "n_only_B": 0,
-    "n_open": 2,
+    "n_open": 3,
     "mean_d": -0.1324,
     "sd_d": 1.2539,
     "rho": 0.3572,
