@@ -680,6 +680,22 @@
       "text": "상위 타임프레임의 하락 방향과 거래량 증가 조건을 근거로 진입한 뒤 추세 연장에 따라 익절하여 1.20R의 수익을 거두었습니다. 다만 진입 직후 예상치 못한 입출금 중단 돌발 이슈로 인해 MAE -0.923R까지 역방향 흔들림을 겪었으므로, 다음에는 주요 이벤트 전후의 외부 변동성 위험을 더욱 철저히 고려해야 합니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-26 03:40:20"
+    },
+    "ETH-202611251640S": {
+      "text": "상위 1시간과 15분 차트 모두 하락 방향이며 셋업 조건에 부합하여 진입했으나, 11봉 동안 역방향 압력을 견디지 못하고 최초 손절가에 도달하여 마감되었습니다. MFE가 0.397R에 그친 반면 MAE가 -1.124R을 기록한 만큼, 다음에는 진입 직전의 가격 변동성과 역방향 눌림 폭을 더 세밀하게 살펴 손절 범위를 점검해야 합니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-26 03:45:20"
+    },
+    "SOL-202611251305S": {
+      "text": "진입 직후 돌발 입출금 중단 이슈와 함께 변동성이 급등하며 5분 만에 손절가에 도달해 1.26R 손실로 마감했습니다. 상위 프레임 방향과 RSI 근거는 적절했으나, 진입 직전 ATR 백분위가 88로 매우 높았고 주요 일정 리스크가 겹친 구간이었습니다. 다음에는 진입 전 주변의 돌발 이슈나 극단적인 변동성 상태를 먼저 확인해야 합니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-26 03:45:20"
+    },
+    "ETH-202611251035S": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
+      "at": "2026-11-26 03:45:20"
     }
   },
   "model": "gemini-flash-lite-latest",

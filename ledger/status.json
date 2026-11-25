@@ -17,28 +17,38 @@
   "total_value": 737804,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 737804,
+  "equity": 739395,
   "realized_pnl": -262196,
-  "unrealized_pnl": 0,
+  "unrealized_pnl": 1591,
   "trades_count": 142,
   "win_rate": 39.4,
   "avg_R": -0.374,
   "max_drawdown_pct": 27.63,
-  "has_position": false,
-  "position": null,
-  "pending_entry": {
+  "has_position": true,
+  "position": {
     "market": "KRW-SOL",
     "coin": "SOL",
+    "id": "SOL-202611260340L",
     "side": "롱",
     "setup": "구간",
     "grade": "B",
-    "signal_time": "2026-11-26 03:35:00",
-    "signal_close": 94350.0,
+    "entry_time": "2026-11-26 03:40:00",
+    "entry": 94410.0,
     "stop": 93903.025,
+    "stop0": 93903.025,
     "t1": 95300.0,
+    "next_target": null,
     "qty": 8.2533,
-    "note": "다음 봉 시가에 진입 예정"
+    "qty_open": 8.2533,
+    "leverage": 1.06,
+    "risk_money": 3689,
+    "t1_done": false,
+    "realized_part": 0,
+    "last_price": 94650.0,
+    "unrealized_pnl": 1591,
+    "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
+  "pending_entry": null,
   "pending_close": null,
   "today": {
     "date": "2026-11-26",
@@ -59,12 +69,14 @@
     "next_size_mode": "보통",
     "next_risk_won": 3689
   },
-  "last_bar_time": "2026-11-26 03:35:00",
-  "last_price": 81020000,
+  "last_bar_time": "2026-11-26 03:40:00",
+  "last_price": 81146000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-26 03:40:48",
-  "warnings": [],
+  "updated_at": "2026-11-26 03:45:50",
+  "warnings": [
+    "Gemini 복기 해설 실패(ETH-202611251035S): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+  ],
   "markets": [
     "BTC",
     "ETH",
@@ -76,35 +88,44 @@
   "open_positions_count": 1,
   "open_risk_won": 3689,
   "open_risk_pct": 0.5,
-  "positions": [],
-  "pending_entries": [
+  "positions": [
     {
       "market": "KRW-SOL",
       "coin": "SOL",
+      "id": "SOL-202611260340L",
       "side": "롱",
       "setup": "구간",
       "grade": "B",
-      "signal_time": "2026-11-26 03:35:00",
-      "signal_close": 94350.0,
+      "entry_time": "2026-11-26 03:40:00",
+      "entry": 94410.0,
       "stop": 93903.025,
+      "stop0": 93903.025,
       "t1": 95300.0,
+      "next_target": null,
       "qty": 8.2533,
-      "note": "다음 봉 시가에 진입 예정",
+      "qty_open": 8.2533,
+      "leverage": 1.06,
       "risk_money": 3689,
-      "risk_cut": false
+      "t1_done": false,
+      "realized_part": 0,
+      "last_price": 94650.0,
+      "unrealized_pnl": 1591,
+      "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
+      "pending_close": null
     }
   ],
+  "pending_entries": [],
   "last_prices": {
-    "BTC": 81020000,
-    "ETH": 2283000,
-    "SOL": 94350.0,
-    "XRP": 1257.0
+    "BTC": 81146000,
+    "ETH": 2287000,
+    "SOL": 94650.0,
+    "XRP": 1260.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-26 03:35:00",
-    "ETH": "2026-11-26 03:35:00",
-    "SOL": "2026-11-26 03:35:00",
-    "XRP": "2026-11-26 03:35:00"
+    "BTC": "2026-11-26 03:40:00",
+    "ETH": "2026-11-26 03:40:00",
+    "SOL": "2026-11-26 03:40:00",
+    "XRP": "2026-11-26 03:40:00"
   },
   "independent_clusters": 121,
   "stop_decomp": {
