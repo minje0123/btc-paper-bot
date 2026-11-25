@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 12:00:00",
+      "last_bar_time": "2026-11-25 12:05:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -53,7 +53,7 @@
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
       "balance": 930876,
-      "equity": 934054,
+      "equity": 931338,
       "realized_pnl": -69124,
       "withdrawn_total": 0,
       "trades_count": 37,
@@ -79,13 +79,13 @@
         "risk_money": 4641,
         "t1_done": true,
         "realized_part": 2677,
-        "last_price": 2244000,
-        "unrealized_pnl": 3178,
+        "last_price": 2255000,
+        "unrealized_pnl": 462,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
-      "pending_close": null,
-      "last_bar_time": "2026-11-25 12:00:00",
+      "pending_close": "반대 장악형",
+      "last_bar_time": "2026-11-25 12:05:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 2677,
@@ -109,7 +109,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 12:00:00",
+      "last_bar_time": "2026-11-25 12:05:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": -2153,
@@ -133,7 +133,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 12:00:00",
+      "last_bar_time": "2026-11-25 12:05:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": -11684,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-25 12:05:27",
+  "updated_at": "2026-11-25 12:10:26",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 133,
@@ -173,13 +173,13 @@
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 3,
+      "queue": 2,
       "backoff_until": "2026-11-26 03:35:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-25 11:05:20",
-      "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
+      "decided_at": "2026-11-25 12:10:20",
+      "title": "SEC staff gives Molecule no-action relief for scientific research tokens",
       "decision": "NOT_EXTRACTED",
       "rows": null,
       "targets": null,
@@ -190,6 +190,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-25 12:10:20",
+        "title": "SEC staff gives Molecule no-action relief for scientific research tokens",
+        "url": "https://www.theblock.co/news/regulation/2026-11-24-sec-staff-gives-molecule-no-action-relief-scientific-research-tokens-446067",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "NOT_EXTRACTED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-25 11:05:20",
         "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
@@ -314,21 +329,6 @@
         "decided_at": "2026-11-24 19:35:21",
         "title": "Kalshi halts operations in Utah while dodging immediate ban in New York",
         "url": "https://www.theblock.co/news/regulation/2026-11-23-kalshi-pauses-operations-utah-dodging-ban-new-york-445456",
-        "legacy": "추가 안 됨 (규칙 해당 없음)",
-        "decision": "NOT_EXTRACTED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
-        "event_type": "",
-        "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-24 12:25:20",
-        "title": "US seeks to recover $1.1B in crypto stolen in North Korea-linked Binance hack",
-        "url": "https://cointelegraph.com/news/us-seeks-11b-crypto-stolen-north-korea-binance-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
         "legacy": "추가 안 됨 (규칙 해당 없음)",
         "decision": "NOT_EXTRACTED",
         "rows": "",

@@ -290,7 +290,7 @@
    "fails": 0
   },
   "54660523431a": {
-   "status": "queued",
+   "status": "stale",
    "fails": 0
   },
   "c61c84384868": {
@@ -303,7 +303,7 @@
   }
  },
  "extractor": {
-  "queue": 3,
+  "queue": 2,
   "last_attempt": "2026-11-25 03:35:20",
   "state": "BACKOFF",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
@@ -365,8 +365,8 @@
  "elapsed_s": 0.0,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-25 11:05:20",
-  "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
+  "decided_at": "2026-11-25 12:10:20",
+  "title": "SEC staff gives Molecule no-action relief for scientific research tokens",
   "decision": "NOT_EXTRACTED",
   "rows": null,
   "targets": null,
