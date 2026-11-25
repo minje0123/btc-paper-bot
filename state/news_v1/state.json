@@ -304,7 +304,7 @@
    "fails": 0
   },
   "cac981a48f7f": {
-   "status": "queued",
+   "status": "stale",
    "fails": 0
   },
   "a4c5b8f57bed": {
@@ -313,7 +313,7 @@
   }
  },
  "extractor": {
-  "queue": 2,
+  "queue": 1,
   "last_attempt": "2026-11-25 03:35:20",
   "state": "BACKOFF",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
@@ -375,8 +375,8 @@
  "elapsed_s": 0.0,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-25 14:50:20",
-  "title": "Hackers breach CIA intelligence network in latest US cyberattack",
+  "decided_at": "2026-11-25 21:00:21",
+  "title": "Solana DEX Velocity halts trading over bug just months after relaunch",
   "decision": "NOT_EXTRACTED",
   "rows": null,
   "targets": null,
