@@ -47,11 +47,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3790
   },
-  "last_bar_time": "2026-11-25 14:50:00",
-  "last_price": 80448000,
+  "last_bar_time": "2026-11-25 14:55:00",
+  "last_price": 80391000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-25 14:55:25",
+  "updated_at": "2026-11-25 15:00:26",
   "warnings": [],
   "markets": [
     "BTC",
@@ -67,16 +67,16 @@
   "positions": [],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 80448000,
+    "BTC": 80391000,
     "ETH": 2253000,
-    "SOL": 93400.0,
-    "XRP": 1247.0
+    "SOL": 93350.0,
+    "XRP": 1246.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-25 14:50:00",
-    "ETH": "2026-11-25 14:50:00",
-    "SOL": "2026-11-25 14:50:00",
-    "XRP": "2026-11-25 14:50:00"
+    "BTC": "2026-11-25 14:55:00",
+    "ETH": "2026-11-25 14:55:00",
+    "SOL": "2026-11-25 14:55:00",
+    "XRP": "2026-11-25 14:55:00"
   },
   "independent_clusters": 113,
   "stop_decomp": {
@@ -116,8 +116,15 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-25 13:35:20",
-    "last_success_breaking": "2026-11-25 14:30:20",
+    "last_success_breaking": "2026-11-25 15:00:21",
     "upcoming": [
+      {
+        "time": "2026-11-25 15:05:00",
+        "name": "[돌발] 입출금 중단 (SOL): Solana DEX Velocity halts trading over bug just mo",
+        "importance": "medium",
+        "coins": "SOL",
+        "source": "https://cointelegraph.com/news/solana-dex-velocity-halts-transactions-over-bug-coming-2-months-after-relaunch?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
       {
         "time": "2026-11-25 22:30:00",
         "name": "[일정] Core PCE Price Index m/m · Prelim GDP q/q (USD)",
@@ -127,7 +134,7 @@
       }
     ],
     "last_attempt_schedule": "2026-11-25 13:35:20",
-    "last_attempt_breaking": "2026-11-25 14:30:20",
+    "last_attempt_breaking": "2026-11-25 15:00:21",
     "schedule_items_last": 6,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -150,21 +157,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-25 14:30:20",
+        "last_success": "2026-11-25 15:00:21",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-25 14:30:20",
+        "last_success": "2026-11-25 15:00:21",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-25 14:30:20",
+        "last_success": "2026-11-25 15:00:21",
         "count": 20,
         "error": null,
         "optional": false
@@ -179,14 +186,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-25 14:30:20",
+      "last_success": "2026-11-25 15:00:21",
       "error": null
     },
     "extractor": {
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 0,
+      "queue": 1,
       "backoff_until": "2026-11-26 03:35:20"
     },
     "unmapped_count": 0,
