@@ -6,10 +6,10 @@
 
 > 계좌 성격: **BTC·ETH·SOL·XRP 공유 가상 계좌 · 기준선 매매 규칙**. 뉴스 차단·일일 목표 보호·첫 승 절반·주간 출금 비활성. 그림자는 코인별 독립, 본 장부는 100만 원 공유.
 
-- 업데이트: 2026-11-26 03:50:40 (KST) · 마지막 봉: 2026-11-26 03:45:00 · 현재가 81,296,000원 · 데이터: 업비트
+- 업데이트: 2026-11-26 03:55:30 (KST) · 마지막 봉: 2026-11-26 03:50:00 · 현재가 81,279,000원 · 데이터: 업비트
 - 시작: 2026-11-18 19:25:00 · 초기 자금 1,000,000원
 
-> ⚠️ 이번 실행 경고: Gemini 복기 해설 실패(ETH-202611251035S): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / Gemini 복기 해설 실패(SOL-202611241950S): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
+> ⚠️ 이번 실행 경고: Gemini 복기 해설 실패(ETH-202611251035S): gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
 
 | 항목 | 값 |
 |---|---|
@@ -18,9 +18,9 @@
 | 출금 누적(장투 계좌로) | 0원 (0회, 지난주 수익의 0%) |
 | 잔고 + 출금 합계 | 737,804원 (-26.22%) |
 | 원금 회수 | 0.0% 회수 |
-| 평가 잔고(미실현 포함) | 741,458원 |
+| 평가 잔고(미실현 포함) | 741,871원 |
 | 누적 실현손익 | −262,196원 (-26.22%) |
-| 미실현손익 | +3,655원 |
+| 미실현손익 | +4,067원 |
 | 거래 수 / 승률 | 142건 / 39.4% |
 | 평균 R | -0.374R |
 | 최대낙폭(MDD, 잔고+출금 기준) | 27.63% |
@@ -35,7 +35,7 @@
 
 | 코인 | 방향 | 셋업 | 등급 | 진입 시각 | 진입가 | 손절 | T1 | 수량(남은/처음) | 레버리지 | 위험 | 미실현손익 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| SOL | 롱 | 구간 | B | 11-26 03:40 | 94,410.0 | 93,903.025 | 95,300.0 | 8.2533 / 8.2533 SOL | 1.1배 | 3,689원 | +3,655원 |
+| SOL | 롱 | 구간 | B | 11-26 03:40 | 94,410.0 | 93,903.025 | 95,300.0 | 8.2533 / 8.2533 SOL | 1.1배 | 3,689원 | +4,067원 |
 
 ## 최근 거래 20건 (최신순)
 
