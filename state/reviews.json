@@ -726,6 +726,22 @@
       "text": "상위 시간대와 보조 지표의 방향성 및 거래량을 근거로 진입했으나, 진입 직후 5분봉 2개 만에 가격이 즉시 역행하며 최초 손절가 아래로 밀려 -1.41R의 손실로 마감되었습니다. MFE가 0.0R에 그치고 MAE가 -1.062R을 기록한 만큼, 진입 타이밍이 단기 고점이었거나 호가 유입이 부족했던 원인을 다음 거래에서 되짚어 봐야 합니다.",
       "model": "gemini-flash-lite-latest",
       "at": "2026-11-26 04:00:20"
+    },
+    "XRP-202611241405L": {
+      "text": "상위 시간대와 보조지표의 방향성이 일치한 상태에서 계획한 스윙 레벨을 정확히 활용하여 +0.63R의 수익을 거둘 수 있었습니다. 다만 최대 유리 구간(MFE)이 1.505R에 달했던 만큼, 다음에는 반익절 이후 남은 물량의 청산 타이밍을 조금 더 세밀하게 관리할 필요가 있습니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-26 04:05:21"
+    },
+    "202611241400S": {
+      "text": "",
+      "fails": 1,
+      "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
+      "at": "2026-11-26 04:05:21"
+    },
+    "ETH-202611241245S": {
+      "text": "상위 타임프레임과 보조 지표의 하락 방향성 및 다중 근거를 바탕으로 숏 진입했으나, 진입 직전 89.0에 달했던 높은 ATR 백분위 속에서 변동성이 급등하며 1.30R의 손실로 이어졌습니다. 다음에는 변동성 지표가 극단적으로 높을 때 노출될 수 있는 가격의 불규칙한 확대 범위를 염두에 두고 리스크 관리를 점검해야 합니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-26 04:05:21"
     }
   },
   "model": "gemini-flash-lite-latest",
