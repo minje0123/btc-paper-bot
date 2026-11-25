@@ -17,9 +17,9 @@
   "total_value": 760956,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 761308,
+  "equity": 763737,
   "realized_pnl": -239044,
-  "unrealized_pnl": 353,
+  "unrealized_pnl": 2781,
   "trades_count": 130,
   "win_rate": 40.0,
   "avg_R": -0.362,
@@ -44,8 +44,8 @@
     "risk_money": 3805,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 2256000,
-    "unrealized_pnl": 353,
+    "last_price": 2250000,
+    "unrealized_pnl": 2781,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3805
   },
-  "last_bar_time": "2026-11-25 10:55:00",
-  "last_price": 80638000,
+  "last_bar_time": "2026-11-25 11:00:00",
+  "last_price": 80410000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-25 11:00:26",
+  "updated_at": "2026-11-25 11:05:28",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,24 +106,24 @@
       "risk_money": 3805,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 2256000,
-      "unrealized_pnl": 353,
+      "last_price": 2250000,
+      "unrealized_pnl": 2781,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 80638000,
-    "ETH": 2256000,
-    "SOL": 93950.0,
-    "XRP": 1243.0
+    "BTC": 80410000,
+    "ETH": 2250000,
+    "SOL": 93700.0,
+    "XRP": 1242.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-25 10:55:00",
-    "ETH": "2026-11-25 10:55:00",
-    "SOL": "2026-11-25 10:55:00",
-    "XRP": "2026-11-25 10:55:00"
+    "BTC": "2026-11-25 11:00:00",
+    "ETH": "2026-11-25 11:00:00",
+    "SOL": "2026-11-25 11:00:00",
+    "XRP": "2026-11-25 11:00:00"
   },
   "independent_clusters": 111,
   "stop_decomp": {
@@ -233,13 +233,13 @@
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 4,
+      "queue": 3,
       "backoff_until": "2026-11-26 03:35:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-25 04:45:20",
-      "title": "Crypto trader Ansem says his wallet was hacked as $2 million in memecoins were sold",
+      "decided_at": "2026-11-25 11:05:20",
+      "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
       "decision": "NOT_EXTRACTED",
       "rows": null,
       "targets": null,

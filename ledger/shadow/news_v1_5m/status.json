@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 10:55:00",
+      "last_bar_time": "2026-11-25 11:00:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -53,7 +53,7 @@
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
       "balance": 928199,
-      "equity": 928629,
+      "equity": 931591,
       "realized_pnl": -71801,
       "withdrawn_total": 0,
       "trades_count": 37,
@@ -79,13 +79,13 @@
         "risk_money": 4641,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 2256000,
-        "unrealized_pnl": 430,
+        "last_price": 2250000,
+        "unrealized_pnl": 3392,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 10:55:00",
+      "last_bar_time": "2026-11-25 11:00:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": 0,
@@ -109,7 +109,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 10:55:00",
+      "last_bar_time": "2026-11-25 11:00:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": -2153,
@@ -133,7 +133,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 10:55:00",
+      "last_bar_time": "2026-11-25 11:00:00",
       "today": {
         "date": "2026-11-25",
         "realized_pnl": -11684,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-25 11:00:26",
+  "updated_at": "2026-11-25 11:05:29",
   "events_source": "news_v1",
   "blocked_signals": 1,
   "independent_clusters": 133,
@@ -173,13 +173,13 @@
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-      "queue": 4,
+      "queue": 3,
       "backoff_until": "2026-11-26 03:35:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-25 04:45:20",
-      "title": "Crypto trader Ansem says his wallet was hacked as $2 million in memecoins were sold",
+      "decided_at": "2026-11-25 11:05:20",
+      "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
       "decision": "NOT_EXTRACTED",
       "rows": null,
       "targets": null,
@@ -190,6 +190,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-25 11:05:20",
+        "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
+        "url": "https://cointelegraph.com/news/bitcoin-selloff-weak-demand-forced-liquidations-21shares?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "legacy": "medium BTC 11-25 05:10~06:40 (규칙 medium:BTC:liquidation)",
+        "decision": "NOT_EXTRACTED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-25 04:45:20",
         "title": "Crypto trader Ansem says his wallet was hacked as $2 million in memecoins were sold",
@@ -314,21 +329,6 @@
         "decided_at": "2026-11-24 12:25:20",
         "title": "US seeks to recover $1.1B in crypto stolen in North Korea-linked Binance hack",
         "url": "https://cointelegraph.com/news/us-seeks-11b-crypto-stolen-north-korea-binance-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-        "legacy": "추가 안 됨 (규칙 해당 없음)",
-        "decision": "NOT_EXTRACTED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
-        "event_type": "",
-        "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-24 11:25:20",
-        "title": "DOJ seeks $1.17 billion in USDC tied to Binance hack; Circle could issue replacement tokens",
-        "url": "https://www.theblock.co/news/regulation/2026-11-23-doj-1-17-billion-usdc-binance-hack-circle-replacement-tokens-445398",
         "legacy": "추가 안 됨 (규칙 해당 없음)",
         "decision": "NOT_EXTRACTED",
         "rows": "",

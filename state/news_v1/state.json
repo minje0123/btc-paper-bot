@@ -286,7 +286,7 @@
    "fails": 3
   },
   "d3f18c72c10b": {
-   "status": "queued",
+   "status": "stale",
    "fails": 0
   },
   "54660523431a": {
@@ -303,7 +303,7 @@
   }
  },
  "extractor": {
-  "queue": 4,
+  "queue": 3,
   "last_attempt": "2026-11-25 03:35:20",
   "state": "BACKOFF",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
@@ -365,8 +365,8 @@
  "elapsed_s": 0.0,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-25 04:45:20",
-  "title": "Crypto trader Ansem says his wallet was hacked as $2 million in memecoins were sold",
+  "decided_at": "2026-11-25 11:05:20",
+  "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
   "decision": "NOT_EXTRACTED",
   "rows": null,
   "targets": null,
