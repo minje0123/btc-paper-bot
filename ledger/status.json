@@ -17,13 +17,13 @@
   "total_value": 741894,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 740963,
+  "equity": 739106,
   "realized_pnl": -258106,
-  "unrealized_pnl": -931,
+  "unrealized_pnl": -2788,
   "trades_count": 141,
   "win_rate": 39.7,
   "avg_R": -0.368,
-  "max_drawdown_pct": 27.32,
+  "max_drawdown_pct": 27.5,
   "has_position": true,
   "position": {
     "market": "KRW-BTC",
@@ -44,8 +44,8 @@
     "risk_money": 3727,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 79668000,
-    "unrealized_pnl": -931,
+    "last_price": 79879000,
+    "unrealized_pnl": -2788,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 3709
   },
-  "last_bar_time": "2026-11-26 01:50:00",
-  "last_price": 79668000,
+  "last_bar_time": "2026-11-26 01:55:00",
+  "last_price": 79879000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-26 01:55:26",
+  "updated_at": "2026-11-26 02:00:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,24 +106,24 @@
       "risk_money": 3727,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 79668000,
-      "unrealized_pnl": -931,
+      "last_price": 79879000,
+      "unrealized_pnl": -2788,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 79668000,
-    "ETH": 2241000,
-    "SOL": 92250.0,
-    "XRP": 1234.0
+    "BTC": 79879000,
+    "ETH": 2245000,
+    "SOL": 92500.0,
+    "XRP": 1237.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-26 01:50:00",
-    "ETH": "2026-11-26 01:50:00",
-    "SOL": "2026-11-26 01:50:00",
-    "XRP": "2026-11-26 01:50:00"
+    "BTC": "2026-11-26 01:55:00",
+    "ETH": "2026-11-26 01:55:00",
+    "SOL": "2026-11-26 01:55:00",
+    "XRP": "2026-11-26 01:55:00"
   },
   "independent_clusters": 121,
   "stop_decomp": {
