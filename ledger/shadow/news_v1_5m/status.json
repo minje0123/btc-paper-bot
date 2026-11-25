@@ -41,9 +41,9 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 23:55:00",
+      "last_bar_time": "2026-11-26 00:00:00",
       "today": {
-        "date": "2026-11-25",
+        "date": "2026-11-26",
         "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
@@ -65,10 +65,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 23:55:00",
+      "last_bar_time": "2026-11-26 00:00:00",
       "today": {
-        "date": "2026-11-25",
-        "realized_pnl": -3683,
+        "date": "2026-11-26",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -89,10 +89,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 23:55:00",
+      "last_bar_time": "2026-11-26 00:00:00",
       "today": {
-        "date": "2026-11-25",
-        "realized_pnl": -366,
+        "date": "2026-11-26",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -113,16 +113,16 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-25 23:55:00",
+      "last_bar_time": "2026-11-26 00:00:00",
       "today": {
-        "date": "2026-11-25",
-        "realized_pnl": -17433,
+        "date": "2026-11-26",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
     }
   },
-  "updated_at": "2026-11-26 00:00:26",
+  "updated_at": "2026-11-26 00:05:26",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 138,
@@ -325,10 +325,10 @@
   "filter_summary": {
     "signals": 164,
     "blocked": 5,
-    "blocked_base_closed": 2,
-    "blocked_base_sumR": 0.122,
-    "sum_d": -0.122,
-    "n_d": 160,
+    "blocked_base_closed": 3,
+    "blocked_base_sumR": -1.055,
+    "sum_d": 1.055,
+    "n_d": 161,
     "definition": "d = 필터 R − 무필터 R (같은 신호 ID, 막힌 신호 필터 R = 0). 계좌 경로 차이는 두 장부 status 로 비교",
     "baseline": "baseline_v141_5m",
     "filter_pairs_csv": "research/news/filter_pairs.csv",
