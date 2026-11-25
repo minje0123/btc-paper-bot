@@ -627,9 +627,9 @@
     },
     "SOL-202611241950S": {
       "text": "",
-      "fails": 2,
+      "fails": 3,
       "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
-      "at": "2026-11-25 03:35:20"
+      "at": "2026-11-26 03:50:20"
     },
     "ETH-202611241850S": {
       "text": "스윙 레벨과 오더블록 저항 및 하위 프레임과 상위 프레임의 하방 정렬을 근거로 진입하여, 유리한 MFE 구간을 거쳐 거래량 급증 시점에 청산함으로써 수익을 거둘 수 있었습니다. 다만 진입 후 거래량 변화와 가격 반응을 모니터링하며 T1 반익절 외의 추가 청산 대응을 유연하게 가져간 점이 이번 거래의 성과를 만들었습니다. 다음에 볼 점은 진입 직전의 높은 변동성(ATR 백분위 73.0) 환경에서 거래량 급증 시그널이 발생했을 때의 가격 반응 속도를 세밀하게 관찰하는 것입니다.",
@@ -693,9 +693,14 @@
     },
     "ETH-202611251035S": {
       "text": "",
-      "fails": 1,
+      "fails": 2,
       "last_error": "gemini-flash-lite-latest: HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. / gemini-flash-latest: HTTP 503 UNAVAIL",
-      "at": "2026-11-26 03:45:20"
+      "at": "2026-11-26 03:50:20"
+    },
+    "XRP-202611250310S": {
+      "text": "1시간과 15분 차트의 하락 방향에 맞춰 스윙레벨과 오더블록 저항 구간에서 숏 포지션을 진입한 것이 주효하여 수익을 거두었습니다. 다만 최대 유리한 구간(MFE)에 비해 실제 청산 결과가 아쉬웠으므로, 다음에는 반익절 이후 남은 물량의 청산 타이밍을 고도화하는 방안을 점검해 볼 필요가 있습니다.",
+      "model": "gemini-flash-lite-latest",
+      "at": "2026-11-26 03:50:20"
     }
   },
   "model": "gemini-flash-lite-latest",
