@@ -329,10 +329,10 @@
  },
  "extractor": {
   "queue": 1,
-  "last_attempt": "2026-11-26 14:30:20",
-  "state": "FAIL",
-  "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-  "backoff_until": "2026-11-26 03:35:20",
+  "last_attempt": "2026-11-26 14:35:20",
+  "state": "BACKOFF",
+  "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
+  "backoff_until": "2026-11-27 14:35:20",
   "last_success": "2026-11-23 04:25:21"
  },
  "clusters": {
@@ -387,7 +387,7 @@
    }
   }
  },
- "elapsed_s": 1.77,
+ "elapsed_s": 0.14,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
   "decided_at": "2026-11-26 03:40:20",
