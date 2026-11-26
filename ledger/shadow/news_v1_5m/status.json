@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 980979,
-      "equity": 983990,
+      "equity": 984347,
       "realized_pnl": -19021,
       "withdrawn_total": 0,
       "trades_count": 23,
@@ -55,13 +55,13 @@
         "risk_money": 4905,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 82655000,
-        "unrealized_pnl": 3011,
+        "last_price": 82686000,
+        "unrealized_pnl": 3367,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 13:05:00",
+      "last_bar_time": "2026-11-26 13:10:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -10684,
@@ -85,7 +85,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 13:05:00",
+      "last_bar_time": "2026-11-26 13:10:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -5568,
@@ -107,9 +107,16 @@
       "max_drawdown_pct": 16.56,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "롱",
+        "setup": "구간",
+        "grade": "A",
+        "signal_time": "2026-11-26 13:10:00",
+        "stop": 1296.3515,
+        "t1": 1310.47275
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-26 13:05:00",
+      "last_bar_time": "2026-11-26 13:10:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -9196,
@@ -153,7 +160,7 @@
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 13:05:00",
+      "last_bar_time": "2026-11-26 13:10:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": 4669,
@@ -162,7 +169,7 @@
       }
     }
   },
-  "updated_at": "2026-11-26 13:10:27",
+  "updated_at": "2026-11-26 13:15:27",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 148,
@@ -363,7 +370,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 178,
+    "signals": 179,
     "blocked": 5,
     "blocked_base_closed": 3,
     "blocked_base_sumR": -1.055,
