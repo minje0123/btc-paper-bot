@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 980979,
-      "equity": 982668,
+      "equity": 982495,
       "realized_pnl": -19021,
       "withdrawn_total": 0,
       "trades_count": 23,
@@ -55,13 +55,13 @@
         "risk_money": 4905,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 82540000,
-        "unrealized_pnl": 1688,
+        "last_price": 82525000,
+        "unrealized_pnl": 1516,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 14:45:00",
+      "last_bar_time": "2026-11-26 14:50:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -10684,
@@ -85,7 +85,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 14:45:00",
+      "last_bar_time": "2026-11-26 14:50:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -5568,
@@ -97,7 +97,7 @@
       "market": "KRW-XRP",
       "initial_capital": 1000000.0,
       "balance": 845060,
-      "equity": 844573,
+      "equity": 843077,
       "realized_pnl": -154940,
       "withdrawn_total": 0,
       "trades_count": 48,
@@ -123,13 +123,13 @@
         "risk_money": 4225,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 1303,
-        "unrealized_pnl": -487,
+        "last_price": 1301,
+        "unrealized_pnl": -1983,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 14:45:00",
+      "last_bar_time": "2026-11-26 14:50:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -9196,
@@ -173,7 +173,7 @@
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 14:45:00",
+      "last_bar_time": "2026-11-26 14:50:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": 4669,
@@ -182,7 +182,7 @@
       }
     }
   },
-  "updated_at": "2026-11-26 14:50:26",
+  "updated_at": "2026-11-26 14:55:26",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 148,
