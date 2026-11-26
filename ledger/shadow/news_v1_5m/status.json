@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 975135,
-      "equity": 975267,
+      "equity": 975626,
       "realized_pnl": -24865,
       "withdrawn_total": 0,
       "trades_count": 24,
@@ -55,13 +55,13 @@
         "risk_money": 4876,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 81837000,
-        "unrealized_pnl": 131,
+        "last_price": 81774000,
+        "unrealized_pnl": 490,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 00:15:00",
+      "last_bar_time": "2026-11-27 00:20:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -85,7 +85,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 00:15:00",
+      "last_bar_time": "2026-11-27 00:20:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -109,7 +109,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 00:15:00",
+      "last_bar_time": "2026-11-27 00:20:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -133,7 +133,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 00:15:00",
+      "last_bar_time": "2026-11-27 00:20:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-27 00:20:26",
+  "updated_at": "2026-11-27 00:25:27",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 152,
@@ -166,7 +166,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-26 23:55:20",
+      "last_success": "2026-11-27 00:25:20",
       "error": null
     },
     "extractor": {
