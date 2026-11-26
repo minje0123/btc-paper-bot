@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 20:40:00",
+      "last_bar_time": "2026-11-26 20:45:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -16528,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 20:40:00",
+      "last_bar_time": "2026-11-26 20:45:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -5568,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 20:40:00",
+      "last_bar_time": "2026-11-26 20:45:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -21783,
@@ -113,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 20:40:00",
+      "last_bar_time": "2026-11-26 20:45:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -647,
@@ -122,7 +122,7 @@
       }
     }
   },
-  "updated_at": "2026-11-26 20:45:26",
+  "updated_at": "2026-11-26 20:50:27",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 152,
@@ -146,14 +146,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-26 20:20:20",
+      "last_success": "2026-11-26 20:50:20",
       "error": null
     },
     "extractor": {
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
-      "queue": 1,
+      "queue": 2,
       "backoff_until": "2026-11-27 14:35:20"
     },
     "unmapped_count": 0,
