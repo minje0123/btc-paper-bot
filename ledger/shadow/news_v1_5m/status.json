@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 20:20:00",
+      "last_bar_time": "2026-11-26 20:25:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -16528,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 20:20:00",
+      "last_bar_time": "2026-11-26 20:25:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -5568,
@@ -89,7 +89,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 20:20:00",
+      "last_bar_time": "2026-11-26 20:25:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -21783,
@@ -113,7 +113,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 20:20:00",
+      "last_bar_time": "2026-11-26 20:25:00",
       "today": {
         "date": "2026-11-26",
         "realized_pnl": -647,
@@ -122,7 +122,7 @@
       }
     }
   },
-  "updated_at": "2026-11-26 20:25:25",
+  "updated_at": "2026-11-26 20:30:25",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 152,
@@ -153,14 +153,14 @@
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
-      "queue": 2,
+      "queue": 1,
       "backoff_until": "2026-11-27 14:35:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-26 03:40:20",
-      "title": "South Korean crypto exchange Bithumb warns of phishing after deeper October breach probe",
-      "decision": "EXTRACTOR_FAILED",
+      "decided_at": "2026-11-26 20:30:21",
+      "title": "1Password hacker stole customer names and emails, but vaults safe",
+      "decision": "NOT_EXTRACTED",
       "rows": null,
       "targets": null,
       "effective_at": null,
@@ -170,6 +170,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-26 20:30:21",
+        "title": "1Password hacker stole customer names and emails, but vaults safe",
+        "url": "https://cointelegraph.com/news/1password-hacker-stole-customer-names-and-emails-but-vaults-safe?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "NOT_EXTRACTED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-26 03:40:20",
         "title": "South Korean crypto exchange Bithumb warns of phishing after deeper October breach probe",
@@ -296,21 +311,6 @@
         "url": "https://www.coindesk.com/markets/2026/11/24/a-wallet-linked-to-popular-crypto-trader-ansem-sold-usd2-million-in-memecoins-as-his-namesake-token-cratered",
         "legacy": "추가 안 됨 (규칙 해당 없음)",
         "decision": "NOT_EXTRACTED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
-        "event_type": "",
-        "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-25 03:35:20",
-        "title": "South Korea proposes ending 2017 ICO ban to boost jobs and onshore crypto investment",
-        "url": "https://www.coindesk.com/policy/2026/11/24/south-korea-proposes-ending-2017-ico-ban-to-boost-jobs-and-onshore-crypto-investment",
-        "legacy": "medium ALL 11-24 23:50~01:50 (규칙 medium:ALL:regulation)",
-        "decision": "EXTRACTOR_FAILED",
         "rows": "",
         "targets": "",
         "window": "",
