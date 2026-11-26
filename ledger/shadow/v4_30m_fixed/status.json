@@ -32,7 +32,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 1007747,
-      "equity": 1004835,
+      "equity": 1006089,
       "realized_pnl": 7747,
       "withdrawn_total": 0,
       "trades_count": 7,
@@ -58,13 +58,13 @@
         "risk_money": 5039,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 82072000,
-        "unrealized_pnl": -2912,
+        "last_price": 82200000,
+        "unrealized_pnl": -1658,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 03:30:00",
+      "last_bar_time": "2026-11-27 04:00:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -88,7 +88,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 03:30:00",
+      "last_bar_time": "2026-11-27 04:00:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -112,7 +112,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 03:30:00",
+      "last_bar_time": "2026-11-27 04:00:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -136,7 +136,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 03:30:00",
+      "last_bar_time": "2026-11-27 04:00:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -145,7 +145,7 @@
       }
     }
   },
-  "updated_at": "2026-11-27 04:25:25",
+  "updated_at": "2026-11-27 04:30:25",
   "timeframe": 30,
   "pair_group": "v4_30m",
   "pair_role": "A",
