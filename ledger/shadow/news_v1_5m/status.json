@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 975135,
-      "equity": 974144,
+      "equity": 974036,
       "realized_pnl": -24865,
       "withdrawn_total": 0,
       "trades_count": 24,
@@ -55,13 +55,13 @@
         "risk_money": 4876,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 82034000,
-        "unrealized_pnl": -992,
+        "last_price": 82053000,
+        "unrealized_pnl": -1100,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 02:40:00",
+      "last_bar_time": "2026-11-27 02:45:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -85,7 +85,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 02:40:00",
+      "last_bar_time": "2026-11-27 02:45:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -109,7 +109,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 02:40:00",
+      "last_bar_time": "2026-11-27 02:45:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -133,7 +133,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 02:40:00",
+      "last_bar_time": "2026-11-27 02:45:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -142,7 +142,7 @@
       }
     }
   },
-  "updated_at": "2026-11-27 02:45:25",
+  "updated_at": "2026-11-27 02:50:26",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 152,
@@ -173,13 +173,13 @@
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
-      "queue": 3,
+      "queue": 2,
       "backoff_until": "2026-11-27 14:35:20"
     },
     "unmapped_count": 0,
     "last_decision": {
-      "decided_at": "2026-11-26 21:05:20",
-      "title": "UK regulator plans tighter DeFi rules, citing $6.3B Binance hack: Report",
+      "decided_at": "2026-11-27 02:50:21",
+      "title": "Standard Chartered’s Zodia Custody suffers data breach: Report",
       "decision": "NOT_EXTRACTED",
       "rows": null,
       "targets": null,
@@ -190,6 +190,21 @@
     },
     "holds_active": 0,
     "recent": [
+      {
+        "decided_at": "2026-11-27 02:50:21",
+        "title": "Standard Chartered’s Zodia Custody suffers data breach: Report",
+        "url": "https://cointelegraph.com/news/standard-chartered-zodia-suffers-data-breach?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "legacy": "추가 안 됨 (규칙 해당 없음)",
+        "decision": "NOT_EXTRACTED",
+        "rows": "",
+        "targets": "",
+        "window": "",
+        "evidence": "",
+        "rules_version": "news_rules_v1.0",
+        "diff": "둘 다 차단 없음",
+        "event_type": "",
+        "confirmation": ""
+      },
       {
         "decided_at": "2026-11-26 21:05:20",
         "title": "UK regulator plans tighter DeFi rules, citing $6.3B Binance hack: Report",
@@ -315,21 +330,6 @@
         "title": "SEC staff gives Molecule no-action relief for scientific research tokens",
         "url": "https://www.theblock.co/news/regulation/2026-11-24-sec-staff-gives-molecule-no-action-relief-scientific-research-tokens-446067",
         "legacy": "추가 안 됨 (규칙 해당 없음)",
-        "decision": "NOT_EXTRACTED",
-        "rows": "",
-        "targets": "",
-        "window": "",
-        "evidence": "",
-        "rules_version": "news_rules_v1.0",
-        "diff": "둘 다 차단 없음",
-        "event_type": "",
-        "confirmation": ""
-      },
-      {
-        "decided_at": "2026-11-25 11:05:20",
-        "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
-        "url": "https://cointelegraph.com/news/bitcoin-selloff-weak-demand-forced-liquidations-21shares?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-        "legacy": "medium BTC 11-25 05:10~06:40 (규칙 medium:BTC:liquidation)",
         "decision": "NOT_EXTRACTED",
         "rows": "",
         "targets": "",
