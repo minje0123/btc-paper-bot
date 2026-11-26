@@ -32,7 +32,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 1007747,
-      "equity": 1007747,
+      "equity": 1005011,
       "realized_pnl": 7747,
       "withdrawn_total": 0,
       "trades_count": 7,
@@ -40,18 +40,31 @@
       "avg_R": 0.217,
       "sum_R": 1.522,
       "max_drawdown_pct": 0.96,
-      "has_position": false,
-      "position": null,
-      "pending_entry": {
+      "has_position": true,
+      "position": {
+        "id": "202611270100L",
         "side": "롱",
         "setup": "구간",
         "grade": "B",
-        "signal_time": "2026-11-27 00:30:00",
-        "stop": 81815072.0,
-        "t1": 82740000.0
+        "entry_time": "2026-11-27 01:00:00",
+        "entry": 82328000,
+        "stop": 81815072,
+        "stop0": 81815072,
+        "t1": 82740000,
+        "next_target": null,
+        "qty": 0.0098,
+        "qty_open": 0.0098,
+        "leverage": 0.8,
+        "risk_money": 5039,
+        "t1_done": false,
+        "realized_part": 0,
+        "last_price": 82090000,
+        "unrealized_pnl": -2736,
+        "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
+      "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 00:30:00",
+      "last_bar_time": "2026-11-27 01:00:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -75,7 +88,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 00:30:00",
+      "last_bar_time": "2026-11-27 01:00:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -99,7 +112,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 00:30:00",
+      "last_bar_time": "2026-11-27 01:00:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -123,7 +136,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 00:30:00",
+      "last_bar_time": "2026-11-27 01:00:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -132,7 +145,7 @@
       }
     }
   },
-  "updated_at": "2026-11-27 01:25:26",
+  "updated_at": "2026-11-27 01:30:27",
   "timeframe": 30,
   "pair_group": "v4_30m",
   "pair_role": "A",
