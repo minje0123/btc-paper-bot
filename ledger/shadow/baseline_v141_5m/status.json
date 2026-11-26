@@ -39,12 +39,19 @@
       "max_drawdown_pct": 3.83,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "구간",
+        "grade": "B",
+        "signal_time": "2026-11-27 00:00:00",
+        "stop": 82721340.0,
+        "t1": 80587990.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-26 23:55:00",
+      "last_bar_time": "2026-11-27 00:00:00",
       "today": {
-        "date": "2026-11-26",
-        "realized_pnl": -16625,
+        "date": "2026-11-27",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -65,10 +72,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 23:55:00",
+      "last_bar_time": "2026-11-27 00:00:00",
       "today": {
-        "date": "2026-11-26",
-        "realized_pnl": -5568,
+        "date": "2026-11-27",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -89,10 +96,10 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 23:55:00",
+      "last_bar_time": "2026-11-27 00:00:00",
       "today": {
-        "date": "2026-11-26",
-        "realized_pnl": -21440,
+        "date": "2026-11-27",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
@@ -113,16 +120,16 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-26 23:55:00",
+      "last_bar_time": "2026-11-27 00:00:00",
       "today": {
-        "date": "2026-11-26",
-        "realized_pnl": -647,
+        "date": "2026-11-27",
+        "realized_pnl": 0,
         "no_new_entries": false,
         "reason": null
       }
     }
   },
-  "updated_at": "2026-11-27 00:00:26",
+  "updated_at": "2026-11-27 00:05:26",
   "independent_clusters": 154,
   "stop_decomp": {
     "plan_R": -1.0,
