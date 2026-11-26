@@ -1,10 +1,10 @@
 {
  "active_from": "2026-11-17 19:50:21",
  "collector": {
-  "last_attempt": "2026-11-26 14:30:20",
+  "last_attempt": "2026-11-26 15:00:21",
   "mode": "shared(event_feeds)",
   "ok": true,
-  "last_success": "2026-11-26 14:30:20",
+  "last_success": "2026-11-26 15:00:21",
   "error": null,
   "sources_ok": 3
  },
@@ -71,7 +71,8 @@
   "a4c5b8f57bed",
   "dfef5a706a04",
   "21c5556dbd5e",
-  "fd5c97f432bc"
+  "fd5c97f432bc",
+  "049e4a568dcf"
  ],
  "queue": {
   "7abecec3449e": {
@@ -325,10 +326,14 @@
   "fd5c97f432bc": {
    "status": "queued",
    "fails": 1
+  },
+  "049e4a568dcf": {
+   "status": "queued",
+   "fails": 0
   }
  },
  "extractor": {
-  "queue": 1,
+  "queue": 2,
   "last_attempt": "2026-11-26 14:35:20",
   "state": "BACKOFF",
   "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
