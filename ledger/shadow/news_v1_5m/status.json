@@ -39,9 +39,16 @@
       "max_drawdown_pct": 4.39,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "롱",
+        "setup": "B+",
+        "grade": "",
+        "signal_time": "2026-11-27 11:05:00",
+        "stop": 82375791.5,
+        "t1": 84646312.75
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-27 11:00:00",
+      "last_bar_time": "2026-11-27 11:05:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": -5151,
@@ -65,7 +72,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 11:00:00",
+      "last_bar_time": "2026-11-27 11:05:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -89,7 +96,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 11:00:00",
+      "last_bar_time": "2026-11-27 11:05:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -111,9 +118,16 @@
       "max_drawdown_pct": 11.12,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "롱",
+        "setup": "B+",
+        "grade": "",
+        "signal_time": "2026-11-27 11:05:00",
+        "stop": 96951.5,
+        "t1": 99947.75
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-27 11:00:00",
+      "last_bar_time": "2026-11-27 11:05:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": -5808,
@@ -122,7 +136,7 @@
       }
     }
   },
-  "updated_at": "2026-11-27 11:05:26",
+  "updated_at": "2026-11-27 11:10:25",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 154,
@@ -323,7 +337,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 182,
+    "signals": 184,
     "blocked": 5,
     "blocked_base_closed": 3,
     "blocked_base_sumR": -1.055,
