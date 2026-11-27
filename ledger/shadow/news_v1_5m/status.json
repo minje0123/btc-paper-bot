@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-28 01:35:00",
+      "last_bar_time": "2026-11-28 01:40:00",
       "today": {
         "date": "2026-11-28",
         "realized_pnl": 0,
@@ -63,9 +63,16 @@
       "max_drawdown_pct": 9.32,
       "has_position": false,
       "position": null,
-      "pending_entry": null,
+      "pending_entry": {
+        "side": "숏",
+        "setup": "C",
+        "grade": "",
+        "signal_time": "2026-11-28 01:40:00",
+        "stop": 2286142.5,
+        "t1": 2256000.0
+      },
       "pending_close": null,
-      "last_bar_time": "2026-11-28 01:35:00",
+      "last_bar_time": "2026-11-28 01:40:00",
       "today": {
         "date": "2026-11-28",
         "realized_pnl": 0,
@@ -77,7 +84,7 @@
       "market": "KRW-XRP",
       "initial_capital": 1000000.0,
       "balance": 839320,
-      "equity": 839585,
+      "equity": 838842,
       "realized_pnl": -160680,
       "withdrawn_total": 0,
       "trades_count": 52,
@@ -103,13 +110,13 @@
         "risk_money": 4197,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 1285,
-        "unrealized_pnl": 265,
+        "last_price": 1286,
+        "unrealized_pnl": -478,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-28 01:35:00",
+      "last_bar_time": "2026-11-28 01:40:00",
       "today": {
         "date": "2026-11-28",
         "realized_pnl": 0,
@@ -133,7 +140,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-28 01:35:00",
+      "last_bar_time": "2026-11-28 01:40:00",
       "today": {
         "date": "2026-11-28",
         "realized_pnl": -5657,
@@ -142,7 +149,7 @@
       }
     }
   },
-  "updated_at": "2026-11-28 01:40:25",
+  "updated_at": "2026-11-28 01:45:26",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 161,
@@ -166,7 +173,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-28 01:10:21",
+      "last_success": "2026-11-28 01:45:21",
       "error": null
     },
     "extractor": {
@@ -343,7 +350,7 @@
     ]
   },
   "filter_summary": {
-    "signals": 191,
+    "signals": 192,
     "blocked": 5,
     "blocked_base_closed": 3,
     "blocked_base_sumR": -1.055,
