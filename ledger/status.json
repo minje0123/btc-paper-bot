@@ -17,9 +17,9 @@
   "total_value": 982780,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 983709,
+  "equity": 982994,
   "realized_pnl": -17220,
-  "unrealized_pnl": 929,
+  "unrealized_pnl": 214,
   "trades_count": 9,
   "win_rate": 44.4,
   "avg_R": -0.391,
@@ -44,8 +44,8 @@
     "risk_money": 4868,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 83502000,
-    "unrealized_pnl": 929,
+    "last_price": 83367000,
+    "unrealized_pnl": 214,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4914
   },
-  "last_bar_time": "2026-11-27 20:35:00",
-  "last_price": 83502000,
+  "last_bar_time": "2026-11-27 20:40:00",
+  "last_price": 83367000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-27 20:40:25",
+  "updated_at": "2026-11-27 20:45:25",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,24 +106,24 @@
       "risk_money": 4868,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 83502000,
-      "unrealized_pnl": 929,
+      "last_price": 83367000,
+      "unrealized_pnl": 214,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 83502000,
-    "ETH": 2336000,
-    "SOL": 99000.0,
+    "BTC": 83367000,
+    "ETH": 2335000,
+    "SOL": 98900.0,
     "XRP": 1321.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-27 20:35:00",
-    "ETH": "2026-11-27 20:35:00",
-    "SOL": "2026-11-27 20:35:00",
-    "XRP": "2026-11-27 20:35:00"
+    "BTC": "2026-11-27 20:40:00",
+    "ETH": "2026-11-27 20:40:00",
+    "SOL": "2026-11-27 20:40:00",
+    "XRP": "2026-11-27 20:40:00"
   },
   "independent_clusters": 9,
   "stop_decomp": {
