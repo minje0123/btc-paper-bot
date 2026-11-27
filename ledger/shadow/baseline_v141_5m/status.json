@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 977346,
-      "equity": 978858,
+      "equity": 978264,
       "realized_pnl": -22654,
       "withdrawn_total": 0,
       "trades_count": 26,
@@ -55,13 +55,13 @@
         "risk_money": 4887,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 83612000,
-        "unrealized_pnl": 1512,
+        "last_price": 83500000,
+        "unrealized_pnl": 919,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 14:05:00",
+      "last_bar_time": "2026-11-27 14:10:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": -5151,
@@ -73,7 +73,7 @@
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
       "balance": 918948,
-      "equity": 920767,
+      "equity": 920013,
       "realized_pnl": -81052,
       "withdrawn_total": 0,
       "trades_count": 40,
@@ -99,13 +99,13 @@
         "risk_money": 4595,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 2364000,
-        "unrealized_pnl": 1819,
+        "last_price": 2362000,
+        "unrealized_pnl": 1065,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 14:05:00",
+      "last_bar_time": "2026-11-27 14:10:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -129,7 +129,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 14:05:00",
+      "last_bar_time": "2026-11-27 14:10:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -173,7 +173,7 @@
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 14:05:00",
+      "last_bar_time": "2026-11-27 14:10:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": -5808,
@@ -182,7 +182,7 @@
       }
     }
   },
-  "updated_at": "2026-11-27 14:10:25",
+  "updated_at": "2026-11-27 14:15:24",
   "independent_clusters": 156,
   "stop_decomp": {
     "plan_R": -1.0,
