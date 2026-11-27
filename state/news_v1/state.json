@@ -368,13 +368,13 @@
    "fails": 3
   },
   "72634380a990": {
-   "status": "queued",
-   "fails": 2
+   "status": "failed",
+   "fails": 3
   }
  },
  "extractor": {
-  "queue": 1,
-  "last_attempt": "2026-11-27 19:35:21",
+  "queue": 0,
+  "last_attempt": "2026-11-27 19:40:20",
   "state": "FAIL",
   "last_error": "HTTP 503 UNAVAILABLE This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
   "backoff_until": "2026-11-27 14:35:20",
@@ -432,11 +432,11 @@
    }
   }
  },
- "elapsed_s": 0.95,
+ "elapsed_s": 6.67,
  "note": "news_v1 기록 전용 파이프라인 상태(봇이 갱신). 본 장부·baseline·v4 뉴스 정책과 무관. collector=뉴스 수집기, extractor=Gemini 사실 추출 — 두 실패는 따로 기록.",
  "last_decision": {
-  "decided_at": "2026-11-27 14:50:20",
-  "title": "Japan’s crypto security group taps SEAL to speed up hack response",
+  "decided_at": "2026-11-27 19:40:20",
+  "title": "Tether can freeze stolen crypto in minutes. Getting it back can take years.",
   "decision": "EXTRACTOR_FAILED",
   "rows": null,
   "targets": null,
