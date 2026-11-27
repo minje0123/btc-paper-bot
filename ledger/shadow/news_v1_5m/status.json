@@ -29,7 +29,7 @@
       "market": "KRW-BTC",
       "initial_capital": 1000000.0,
       "balance": 969985,
-      "equity": 970220,
+      "equity": 971497,
       "realized_pnl": -30015,
       "withdrawn_total": 0,
       "trades_count": 25,
@@ -55,13 +55,13 @@
         "risk_money": 4850,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 83371000,
-        "unrealized_pnl": 235,
+        "last_price": 83612000,
+        "unrealized_pnl": 1512,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 14:00:00",
+      "last_bar_time": "2026-11-27 14:05:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": -5151,
@@ -73,7 +73,7 @@
       "market": "KRW-ETH",
       "initial_capital": 1000000.0,
       "balance": 918948,
-      "equity": 915861,
+      "equity": 920767,
       "realized_pnl": -81052,
       "withdrawn_total": 0,
       "trades_count": 40,
@@ -99,13 +99,13 @@
         "risk_money": 4595,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 2351000,
-        "unrealized_pnl": -3087,
+        "last_price": 2364000,
+        "unrealized_pnl": 1819,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 14:00:00",
+      "last_bar_time": "2026-11-27 14:05:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -129,7 +129,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 14:00:00",
+      "last_bar_time": "2026-11-27 14:05:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": 0,
@@ -141,7 +141,7 @@
       "market": "KRW-SOL",
       "initial_capital": 1000000.0,
       "balance": 890491,
-      "equity": 892315,
+      "equity": 893801,
       "realized_pnl": -109509,
       "withdrawn_total": 0,
       "trades_count": 62,
@@ -167,13 +167,13 @@
         "risk_money": 4452,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 98700,
-        "unrealized_pnl": 1824,
+        "last_price": 99100,
+        "unrealized_pnl": 3310,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-27 14:00:00",
+      "last_bar_time": "2026-11-27 14:05:00",
       "today": {
         "date": "2026-11-27",
         "realized_pnl": -5808,
@@ -182,7 +182,7 @@
       }
     }
   },
-  "updated_at": "2026-11-27 14:05:25",
+  "updated_at": "2026-11-27 14:10:25",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 154,
@@ -206,14 +206,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-27 13:40:20",
+      "last_success": "2026-11-27 14:10:21",
       "error": null
     },
     "extractor": {
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
-      "queue": 0,
+      "queue": 1,
       "backoff_until": "2026-11-27 14:35:20"
     },
     "unmapped_count": 0,

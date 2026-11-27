@@ -17,9 +17,9 @@
   "total_value": 973604,
   "principal_recovered": false,
   "principal_recovered_pct": 0.0,
-  "equity": 972563,
+  "equity": 980663,
   "realized_pnl": -26396,
-  "unrealized_pnl": -1042,
+  "unrealized_pnl": 7059,
   "trades_count": 4,
   "win_rate": 0.0,
   "avg_R": -1.279,
@@ -44,8 +44,8 @@
     "risk_money": 4868,
     "t1_done": false,
     "realized_part": 0,
-    "last_price": 83371000,
-    "unrealized_pnl": 235,
+    "last_price": 83612000,
+    "unrealized_pnl": 1512,
     "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
   },
   "pending_entry": null,
@@ -69,11 +69,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4868
   },
-  "last_bar_time": "2026-11-27 14:00:00",
-  "last_price": 83371000,
+  "last_bar_time": "2026-11-27 14:05:00",
+  "last_price": 83612000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-27 14:05:24",
+  "updated_at": "2026-11-27 14:10:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -106,8 +106,8 @@
       "risk_money": 4868,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 83371000,
-      "unrealized_pnl": 235,
+      "last_price": 83612000,
+      "unrealized_pnl": 1512,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -130,8 +130,8 @@
       "risk_money": 4868,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 98700.0,
-      "unrealized_pnl": 1994,
+      "last_price": 99100.0,
+      "unrealized_pnl": 3619,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     },
@@ -154,24 +154,24 @@
       "risk_money": 4868,
       "t1_done": false,
       "realized_part": 0,
-      "last_price": 2351000,
-      "unrealized_pnl": -3271,
+      "last_price": 2364000,
+      "unrealized_pnl": 1928,
       "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)",
       "pending_close": null
     }
   ],
   "pending_entries": [],
   "last_prices": {
-    "BTC": 83371000,
-    "ETH": 2351000,
-    "SOL": 98700.0,
-    "XRP": 1302.0
+    "BTC": 83612000,
+    "ETH": 2364000,
+    "SOL": 99100.0,
+    "XRP": 1308.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-27 14:00:00",
-    "ETH": "2026-11-27 14:00:00",
-    "SOL": "2026-11-27 14:00:00",
-    "XRP": "2026-11-27 14:00:00"
+    "BTC": "2026-11-27 14:05:00",
+    "ETH": "2026-11-27 14:05:00",
+    "SOL": "2026-11-27 14:05:00",
+    "XRP": "2026-11-27 14:05:00"
   },
   "independent_clusters": 4,
   "stop_decomp": {
@@ -201,10 +201,10 @@
     "schedule": "OK",
     "breaking": "OK",
     "last_success_schedule": "2026-11-27 13:45:21",
-    "last_success_breaking": "2026-11-27 13:40:20",
+    "last_success_breaking": "2026-11-27 14:10:21",
     "upcoming": [],
     "last_attempt_schedule": "2026-11-27 13:45:21",
-    "last_attempt_breaking": "2026-11-27 13:40:20",
+    "last_attempt_breaking": "2026-11-27 14:10:21",
     "schedule_items_last": 6,
     "breaking_items_last": 75,
     "schedule_error": null,
@@ -227,21 +227,21 @@
       },
       "coindesk": {
         "ok": true,
-        "last_success": "2026-11-27 13:40:20",
+        "last_success": "2026-11-27 14:10:21",
         "count": 25,
         "error": null,
         "optional": false
       },
       "cointelegraph": {
         "ok": true,
-        "last_success": "2026-11-27 13:40:20",
+        "last_success": "2026-11-27 14:10:21",
         "count": 30,
         "error": null,
         "optional": false
       },
       "theblock": {
         "ok": true,
-        "last_success": "2026-11-27 13:40:20",
+        "last_success": "2026-11-27 14:10:21",
         "count": 20,
         "error": null,
         "optional": false
@@ -256,14 +256,14 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-27 13:40:20",
+      "last_success": "2026-11-27 14:10:21",
       "error": null
     },
     "extractor": {
       "state": "BACKOFF",
       "last_success": "2026-11-23 04:25:21",
       "last_error": "HTTP 429 RESOURCE_EXHAUSTED You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-",
-      "queue": 0,
+      "queue": 1,
       "backoff_until": "2026-11-27 14:35:20"
     },
     "unmapped_count": 0,
