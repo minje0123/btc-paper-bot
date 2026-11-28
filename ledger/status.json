@@ -62,8 +62,8 @@
   "last_bar_time": "2026-11-28 17:50:00",
   "last_price": 80793000,
   "data_source": "upbit",
-  "data_source_this_run": "upbit",
-  "updated_at": "2026-11-28 17:55:24",
+  "data_source_this_run": null,
+  "updated_at": "2026-11-28 17:55:38",
   "warnings": [],
   "markets": [
     "BTC",
