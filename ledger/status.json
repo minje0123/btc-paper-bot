@@ -26,7 +26,19 @@
   "max_drawdown_pct": 3.23,
   "has_position": false,
   "position": null,
-  "pending_entry": null,
+  "pending_entry": {
+    "market": "KRW-XRP",
+    "coin": "XRP",
+    "side": "숏",
+    "setup": "구간",
+    "grade": "B",
+    "signal_time": "2026-11-28 17:50:00",
+    "signal_close": 1274.0,
+    "stop": 1279.6395,
+    "t1": 1265.5408,
+    "qty": 861.5563,
+    "note": "다음 봉 시가에 진입 예정"
+  },
   "pending_close": null,
   "today": {
     "date": "2026-11-28",
@@ -47,11 +59,11 @@
     "next_size_mode": "보통",
     "next_risk_won": 4859
   },
-  "last_bar_time": "2026-11-28 17:45:00",
-  "last_price": 80848000,
+  "last_bar_time": "2026-11-28 17:50:00",
+  "last_price": 80793000,
   "data_source": "upbit",
   "data_source_this_run": "upbit",
-  "updated_at": "2026-11-28 17:50:25",
+  "updated_at": "2026-11-28 17:55:24",
   "warnings": [],
   "markets": [
     "BTC",
@@ -61,22 +73,38 @@
   ],
   "max_open_positions": 4,
   "max_open_risk_pct": 0.0,
-  "open_positions_count": 0,
-  "open_risk_won": 0,
-  "open_risk_pct": 0.0,
+  "open_positions_count": 1,
+  "open_risk_won": 4859,
+  "open_risk_pct": 0.5,
   "positions": [],
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "market": "KRW-XRP",
+      "coin": "XRP",
+      "side": "숏",
+      "setup": "구간",
+      "grade": "B",
+      "signal_time": "2026-11-28 17:50:00",
+      "signal_close": 1274.0,
+      "stop": 1279.6395,
+      "t1": 1265.5408,
+      "qty": 861.5563,
+      "note": "다음 봉 시가에 진입 예정",
+      "risk_money": 4859,
+      "risk_cut": false
+    }
+  ],
   "last_prices": {
-    "BTC": 80848000,
-    "ETH": 2241000,
-    "SOL": 96350.0,
-    "XRP": 1276.0
+    "BTC": 80793000,
+    "ETH": 2240000,
+    "SOL": 96300.0,
+    "XRP": 1274.0
   },
   "last_bar_times": {
-    "BTC": "2026-11-28 17:45:00",
-    "ETH": "2026-11-28 17:45:00",
-    "SOL": "2026-11-28 17:45:00",
-    "XRP": "2026-11-28 17:45:00"
+    "BTC": "2026-11-28 17:50:00",
+    "ETH": "2026-11-28 17:50:00",
+    "SOL": "2026-11-28 17:50:00",
+    "XRP": "2026-11-28 17:50:00"
   },
   "independent_clusters": 15,
   "stop_decomp": {
