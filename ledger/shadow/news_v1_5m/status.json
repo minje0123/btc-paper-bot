@@ -41,7 +41,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-28 20:25:00",
+      "last_bar_time": "2026-11-28 20:30:00",
       "today": {
         "date": "2026-11-28",
         "realized_pnl": -3771,
@@ -65,7 +65,7 @@
       "position": null,
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-28 20:25:00",
+      "last_bar_time": "2026-11-28 20:30:00",
       "today": {
         "date": "2026-11-28",
         "realized_pnl": -1105,
@@ -77,7 +77,7 @@
       "market": "KRW-XRP",
       "initial_capital": 1000000.0,
       "balance": 843744,
-      "equity": 841024,
+      "equity": 844016,
       "realized_pnl": -156256,
       "withdrawn_total": 0,
       "trades_count": 53,
@@ -103,13 +103,13 @@
         "risk_money": 4219,
         "t1_done": false,
         "realized_part": 0,
-        "last_price": 1276,
-        "unrealized_pnl": -2720,
+        "last_price": 1272,
+        "unrealized_pnl": 272,
         "note": "미실현손익 = (현재가−진입가)×남은 수량 − 진입 수수료 (청산 수수료 미포함)"
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-28 20:25:00",
+      "last_bar_time": "2026-11-28 20:30:00",
       "today": {
         "date": "2026-11-28",
         "realized_pnl": 4424,
@@ -153,7 +153,7 @@
       },
       "pending_entry": null,
       "pending_close": null,
-      "last_bar_time": "2026-11-28 20:25:00",
+      "last_bar_time": "2026-11-28 20:30:00",
       "today": {
         "date": "2026-11-28",
         "realized_pnl": -11154,
@@ -162,7 +162,7 @@
       }
     }
   },
-  "updated_at": "2026-11-28 20:30:26",
+  "updated_at": "2026-11-28 20:35:26",
   "events_source": "news_v1",
   "blocked_signals": 5,
   "independent_clusters": 165,
@@ -186,7 +186,7 @@
     "collector": {
       "state": "OK",
       "mode": "shared(event_feeds)",
-      "last_success": "2026-11-28 20:05:20",
+      "last_success": "2026-11-28 20:35:20",
       "error": null
     },
     "extractor": {
